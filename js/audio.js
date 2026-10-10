@@ -16,19 +16,29 @@ const FX={click:[[84,0,.05]],open:[[72,0,.07],[76,.06,.07],[79,.12,.11]],close:[
 day:[[72,0,.08],[76,.07,.08],[79,.14,.08],[84,.21,.16]],night:[[84,0,.08],[79,.07,.08],[76,.14,.08],[72,.21,.16]],lang:[[88,0,.04],[91,.05,.07]],
 ok:[[72,0,.09],[76,.09,.09],[79,.18,.09],[84,.27,.22]],err:[[48,0,.13,'sawtooth',.2],[43,.14,.2,'sawtooth',.2]]};
 const play=k=>{if(!st.sfx||!FX[k]||!ensure())return;const t=ctx.currentTime+.005;FX[k].forEach(([m,o,d,ty,v])=>tone(sg,mf(m),t+o,d,ty||'square',v||.16))};
-const NIGHT={bpm:92,ch:[[57,60,64],[53,57,60],[60,64,67],[55,59,62]],bs:[45,41,48,43]};
-const DAY={bpm:120,ch:[[60,64,67],[55,59,62],[57,60,64],[53,57,60]],bs:[48,43,45,41]};
-const MEL=[[2,-1,1,-1,2,-1,3,2],[1,-1,0,-1,1,2,-1,1],[3,-1,2,-1,1,-1,2,0],[0,-1,1,2,3,-1,2,-1]];
-const ARP=[0,1,2,1];
-const stepAt=(t,S,sd)=>{const c=S.ch[bar],s=step;
-tone(mg,mf(c[ARP[s%4]]+12),t,sd*.9,'square',.035);
-if(s%2===0){const v=MEL[bar][s>>1];if(v>=0)tone(mg,mf(c[v%3]+12+(v>=3?12:0)),t,sd*1.7,'square',.07)}
-if(s===0||s===8)tone(mg,mf(S.bs[bar]),t,sd*3.5,'triangle',.2);else if(s===4||s===12)tone(mg,mf(S.bs[bar]+(s===12?7:0)),t,sd*3,'triangle',.16);
-if(s===0||s===8)tone(mg,150,t,.1,'sine',.3,40);
-if(s===4||s===12)noise(mg,t,.09,.07,1500);
-if(s%2===0)noise(mg,t,.03,.025,7000)};
-const sched=()=>{if(!ctx)return;const S=document.body.classList.contains('day')?DAY:NIGHT,sd=60/S.bpm/4;
-while(nextT<ctx.currentTime+.3){stepAt(nextT,S,sd);nextT+=sd;if(++step===16){step=0;bar=(bar+1)%4}}};
+/* Public-domain classical themes arranged for 8-bit: Beethoven "Ode to Joy" + Petzold/Bach "Minuet in G".
+   Grid = eighth notes. Melody notation: "NoteOctave:eighths" (R = rest). */
+const NV={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+const mid=n=>{const m=/^([A-G])(#?)(\d)$/.exec(n);return 12*(+m[3]+1)+NV[m[1]]+(m[2]?1:0)};
+const CH={C:[48,52,55],G:[43,47,50],D:[50,54,57]};
+const mk=(len,mel,ch)=>({len,ch:CH[ch],mel:(()=>{let p=0;return mel.split(' ').map(x=>{const[n,d]=x.split(':');const o=[n==='R'?-1:mid(n),p,+d];p+=+d;return o})})()});
+const OA='E4:2 E4:2 F4:2 G4:2',OB='G4:2 F4:2 E4:2 D4:2',OC='C4:2 C4:2 D4:2 E4:2',OD='E4:3 D4:1 D4:4';
+const SONG=[mk(8,OA,'C'),mk(8,OB,'G'),mk(8,OC,'C'),mk(8,OD,'G'),mk(8,OA,'C'),mk(8,OB,'G'),mk(8,OC,'C'),mk(8,'D4:3 C4:1 C4:4','C'),
+mk(8,'D4:2 D4:2 E4:2 C4:2','G'),mk(8,'D4:2 E4:1 F4:1 E4:2 C4:2','G'),mk(8,'D4:2 E4:1 F4:1 E4:2 D4:2','G'),mk(8,'C4:2 D4:2 G3:4','G'),
+mk(8,OA,'C'),mk(8,OB,'G'),mk(8,OC,'C'),mk(8,'D4:3 C4:1 C4:4','C'),
+mk(6,'D5:2 G4:1 A4:1 B4:1 C5:1','G'),mk(6,'D5:2 G4:2 G4:2','G'),mk(6,'E5:2 C5:1 D5:1 E5:1 F#5:1','C'),mk(6,'G5:2 G4:2 G4:2','G'),
+mk(6,'C5:2 D5:1 C5:1 B4:1 A4:1','C'),mk(6,'B4:2 C5:1 B4:1 A4:1 G4:1','G'),mk(6,'F#4:2 G4:1 A4:1 B4:1 G4:1','D'),mk(6,'A4:6','D')];
+const NIGHT={bpm:104,vol:.8},DAY={bpm:132,vol:1};
+const stepAt=(t,S,sd)=>{const B=SONG[bar],c=B.ch,s=step,v=S.vol;
+B.mel.forEach(([m,p,d])=>{if(p===s&&m>=0){tone(mg,mf(m),t,sd*d*.9,'square',.075*v);tone(mg,mf(m)*1.004,t,sd*d*.9,'square',.02*v)}});
+tone(mg,mf(c[[0,1,2,1][s%4]]+12),t,sd*.9,'square',.022*v);
+if(s===0)tone(mg,mf(c[0]),t,sd*(B.len===8?3.5:2.5),'triangle',.2*v);
+if(B.len===8&&s===4)tone(mg,mf(c[0]+7),t,sd*3,'triangle',.15*v);
+if(B.len===6&&(s===2||s===4))tone(mg,mf(c[2]+12),t,sd*1.6,'square',.03*v);
+if(s===0||(B.len===8&&s===4))tone(mg,150,t,.1,'sine',.25*v,40);
+noise(mg,t,.025,s%2?.012:.025,7000)};
+const sched=()=>{if(!ctx)return;const S=document.body.classList.contains('day')?DAY:NIGHT,sd=60/S.bpm/2;
+while(nextT<ctx.currentTime+.3){stepAt(nextT,S,sd);nextT+=sd;if(++step===SONG[bar].len){step=0;bar=(bar+1)%SONG.length}}};
 const start=()=>{if(timer||!ensure())return;mg.gain.cancelScheduledValues(ctx.currentTime);mg.gain.setTargetAtTime(.5,ctx.currentTime,.03);nextT=ctx.currentTime+.08;step=0;bar=0;timer=setInterval(sched,80)};
 const stop=()=>{clearInterval(timer);timer=null;if(ctx){mg.gain.cancelScheduledValues(ctx.currentTime);mg.gain.setTargetAtTime(0,ctx.currentTime,.03)}};
 const setMusic=v=>{st.music=v;save();v?start():stop();audioUI()};

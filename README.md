@@ -4,7 +4,7 @@ Interactive mini MBA simulations in a static web page, set over an animated 3D J
 
 - **SMART Decision Studio**: multi-criteria decision analysis with an editable matrix, weights, aggregate scores, drill-down and sensitivity analysis.
 - Night / Day mode, pause, camera controls.
-- 8-bit music and sound effects (Web Audio, no audio files).
+- 8-bit music (Beethoven "Ode to Joy" and the Minuet in G, public-domain themes) and sound effects, generated with Web Audio, no audio files.
 - Languages: English, Bahasa Indonesia, 日本語, 中文.
 
 No build step, no backend. Open `index.html` in a browser (Three.js loads from a CDN, so the 3D scene needs an internet connection), or serve the folder with any static server, e.g. `python3 -m http.server`.
@@ -37,7 +37,26 @@ Scripts are classic (non-module) scripts that share one global scope, so the loa
 
 ## Configuration
 
-`js/config.js` holds `MBALAB_CONFIG`. The idea form sends submissions only when `formEndpoint` is set (a URL that accepts a JSON `POST`); otherwise it shows that submissions are temporarily unavailable.
+`js/config.js` holds `MBALAB_CONFIG`:
+
+```js
+window.MBALAB_CONFIG={
+  formEndpoint:'https://api.web3forms.com/submit',
+  formFields:{access_key:'YOUR-ACCESS-KEY'}
+};
+```
+
+### Make the Share an Idea form deliver to email
+
+The page is static, so submissions go through a form-to-email service. With **Web3Forms** (free, no backend):
+
+1. Go to https://web3forms.com, enter the email address that should receive ideas, and copy the access key sent to that inbox.
+2. Put the key in `formFields.access_key` as above. Web3Forms access keys are designed to be public, and your address is not exposed in the page.
+3. Deploy, then send one test idea from the live site.
+
+**Formspree** also works: set `formEndpoint` to your `https://formspree.io/f/xxxx` URL and leave `formFields` empty.
+
+While `formEndpoint` is empty the form shows "Submissions are temporarily unavailable." Success is shown only after the service confirms. A hidden honeypot field filters simple bots.
 
 ## Adding a translation key
 
