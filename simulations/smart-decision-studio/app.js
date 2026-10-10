@@ -141,7 +141,7 @@
       }
       function updateNorm() {
         const T = totalW();
-        host.querySelectorAll('[data-nw]').forEach(td => { const a = S.attrs[+td.dataset.nw]; td.textContent = T > 0 && Number.isFinite(a.w) ? f(100 * a.w / T) + '%' : '–'; });
+        host.querySelectorAll('[data-nw]').forEach(td => { const a = S.attrs[+td.dataset.nw]; td.textContent = T > 0 && Number.isFinite(a.w) ? f(a.w / T, 3) : '–'; });
         const m = q('msg'); if (m) m.textContent = '';
       }
       function updateChecklist() {
@@ -188,7 +188,7 @@
   <div class="rks">${r.map((x, k) => {
     const tie = (k === 0 && r[1] && Math.abs(r[1].V - top) < 1e-9) || (k > 0 && Math.abs(x.V - top) < 1e-9);
     return `<button type="button" class="rk${k === 0 ? ' top' : ''}${G.drilled === x.j ? ' sel' : ''}" data-r="${x.j}" style="--d:${k * 80}ms">
-      <span class="med">${tie ? '=1' : (medal[k] || k + 1)}</span><span class="nm">${esc(x.n)}<svg class="srch" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><title>${esc(t('srchTip'))}</title><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+      <span class="med">${tie ? '=1' : (medal[k] || k + 1)}</span><span class="nm">${esc(x.n)}<svg class="srch" viewBox="0 0 24 24" aria-hidden="true"><title>${esc(t('srchTip'))}</title><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
       <span class="bw"><span class="bs">${S.attrs.map((a, i) => `<i data-w="${a.w / TW * S.m[x.j][i]}" style="background:${COL[i % 8]}"></i>`).join('')}</span></span>
       <b class="val" data-to="${x.V}">0.00</b><span class="vs">${f(x.V - top)}</span></button>`;
   }).join('')}</div>
@@ -202,7 +202,7 @@
         host.querySelectorAll('.rk').forEach(b => b.classList.toggle('sel', +b.dataset.r === j));
         q('drill').innerHTML = `<h4>${esc(t('breakdown', { a: aName(j) }))}</h4>` + S.attrs.map((a, i) => {
           const c = a.w / T * S.m[j][i];
-          return `<div class="dr"><span class="dn"><i style="background:${COL[i % 8]}"></i>${esc(kName(i))}</span><span class="db"><i style="width:${Math.min(100, c)}%;background:${COL[i % 8]}"></i></span><code>${f(a.w / T, 4)} × ${S.m[j][i]} = ${f(c)}</code></div>`;
+          return `<div class="dr"><span class="dnm"><i style="background:${COL[i % 8]}"></i>${esc(kName(i))}</span><span class="db"><i style="width:${Math.min(100, c)}%;background:${COL[i % 8]}"></i></span><code>${f(a.w / T, 4)} × ${S.m[j][i]} = ${f(c)}</code></div>`;
         }).join('') ;
       }
       function bind2() {
@@ -228,7 +228,7 @@
         cs.forEach(c => { const eps = Math.max(1e-6, xm * 1e-6); c.lo = M.win(Math.max(0, c.x - eps)); c.hi = M.win(c.x + eps); c.sw = c.lo != c.hi; });
         return cs.sort((a, b) => a.x - b.x);
       }
-      const pct = (M, x) => (M.Sx + x > 0 ? 100 * x / (M.Sx + x) : 0);
+      const pct = (M, x) => (M.Sx + x > 0 ? x / (M.Sx + x) : 0); // normalized weight, 0..1
       const flips = (k, xm) => { const m = model(k), b = m.win(m.bx); for (let s = 0; s <= 200; s++) if (m.win(xm * s / 200) !== b) return true; return false; };
 
       /* chart: mode "screen" uses theme variables, "report" uses fixed print colours */
@@ -240,7 +240,7 @@
         const X0 = xp(0), X1 = xp(xm), px = x => 56 + 614 * (xp(x) - X0) / ((X1 - X0) || 1), py = v => 300 - 270 * v / 100;
         let g = `<line x1=56 y1=300 x2=670 y2=300 stroke="${C.mut}"/><line x1=56 y1=30 x2=56 y2=300 stroke="${C.mut}"/>`;
         for (let v = 0; v <= 100; v += 25) g += `<text x=48 y=${py(v) + 4} text-anchor=end font-size=11 fill="${C.mut}">${v}</text><line x1=56 x2=670 y1=${py(v)} y2=${py(v)} stroke="${C.line}"/>`;
-        for (let s = 0; s <= 4; s++) { const x = xm * s / 4; g += `<text x=${px(x)} y=318 text-anchor=middle font-size=11 fill="${C.mut}">${norm ? f(xp(x), 1) + '%' : f(x, 0)}</text>`; }
+        for (let s = 0; s <= 4; s++) { const x = xm * s / 4; g += `<text x=${px(x)} y=318 text-anchor=middle font-size=11 fill="${C.mut}">${norm ? f(xp(x), 2) : f(x, 0)}</text>`; }
         g += `<text x=363 y=343 text-anchor=middle font-size=12 fill="${C.mut}">${esc(norm ? t('axisNorm', { a: kName(k) }) : t('axisRaw', { a: kName(k) }))}</text>`;
         g += `<text transform="rotate(-90 14 165)" x=14 y=165 text-anchor=middle font-size=12 fill="${C.mut}">${esc(t('yAxis'))}</text>`;
         const cs = crossovers(M, xm);
@@ -283,7 +283,7 @@
         const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
         const p = pt.matrixTransform(svg.getScreenCTM().inverse()), u = Math.min(1, Math.max(0, (p.x - 56) / 614));
         let x = xm * u;
-        if (norm) { const pv = pct(M, xm) * u; x = pv >= 100 ? xm : (M.Sx > 0 ? pv * M.Sx / (100 - pv) : 0); }
+        if (norm) { const pv = pct(M, xm) * u; x = pv >= 1 ? xm : (M.Sx > 0 ? pv * M.Sx / (1 - pv) : 0); }
         const r = svg.parentNode.getBoundingClientRect();
         G.focus = { j, x: Math.round(x * 10) / 10, left: e.clientX - r.left + 14, top: e.clientY - r.top + 10 };
         sens();
@@ -296,7 +296,7 @@
         const order = [...Array(n).keys()].sort((a, b) => M.V(b, x) - M.V(a, x));
         const row = (l, v) => `<div class="pr"><span>${l}</span><b>${v}</b></div>`;
         el.innerHTML = `<div class="ph"><i style="background:${COL[j % 8]}"></i><b>${esc(aName(j))}</b><button type="button" class="pvx" aria-label="${esc(t('close'))}">✕</button></div>` +
-          row(esc(t('pvX', { a: kName(k) })), `${f(x, 1)} (${f(pct(M, x), 1)}%)`) +
+          row(esc(t('pvX', { a: kName(k) })), `${f(x, 1)} (w = ${f(pct(M, x), 3)})`) +
           row(esc(t('pvScore')), f(M.V(j, x))) + row(esc(t('pvBase')), f(M.V(j, M.bx))) +
           row(esc(t('pvRank')), `${order.indexOf(j) + 1} / ${n}`) + row(esc(t('pvRating', { a: kName(k) })), M.vk[j]) +
           row(esc(t('pvLeader')), esc(aName(order[0])));
@@ -316,11 +316,11 @@
         const ld = q('ldr');
         ld.className = 'ldr' + (isFlip ? ' flip' : '');
         ld.innerHTML = `<div class="who"><small>${esc(t('leader'))}</small><b style="color:${COL[lead % 8]}">${esc(aName(lead))}</b><span>${f(V(lead, cx))}</span></div>
-          <div class="msg"><span class="x">x = ${cx} (${f(pct(M, cx), 2)}%)</span><span class="st">${isFlip ? '🌀 ' + esc(t('flipped')) : esc(can ? t('flipHint') : t('noFlip'))}</span></div>`;
+          <div class="msg"><span class="x">x = ${cx} (w = ${f(pct(M, cx), 3)})</span><span class="st">${isFlip ? '🌀 ' + esc(t('flipped')) : esc(can ? t('flipHint') : t('noFlip'))}</span></div>`;
         if (lead !== lastLeader) { ld.firstElementChild.classList.remove('pop'); void ld.offsetWidth; ld.firstElementChild.classList.add('pop'); lastLeader = lead; }
         const rows = crossovers(M, xm);
         q('cx').innerHTML = '<tr><th>' + esc(t('thAlts')) + '</th><th>' + esc(t('rawX')) + '</th><th>' + esc(t('normalized')) + '</th><th>' + esc(t('score')) + '</th><th>' + esc(t('typeH')) + '</th></tr>' +
-          (rows.length ? rows.map(c => `<tr><td>${esc(aName(c.a))} × ${esc(aName(c.b))}</td><td>${f(c.x)}</td><td>${f(pct(M, c.x), 2)}%</td><td>${f(V(c.a, c.x))}</td><td>${c.sw ? esc(t('winSwitch')) : esc(t('rankCross'))}</td></tr>`).join('') : `<tr><td colspan=5>${esc(t('noCross'))}</td></tr>`);
+          (rows.length ? rows.map(c => `<tr><td>${esc(aName(c.a))} × ${esc(aName(c.b))}</td><td>${f(c.x)}</td><td>${f(pct(M, c.x), 3)}</td><td>${f(V(c.a, c.x))}</td><td>${c.sw ? esc(t('winSwitch')) : esc(t('rankCross'))}</td></tr>`).join('') : `<tr><td colspan=5>${esc(t('noCross'))}</td></tr>`);
         const sw = rows.filter(c => c.sw);
         q('sum').textContent = sw.length ? t('sumSw', { n: sw.length, m: xm, b: M.bx, w: aName(win(M.bx)), d: f(Math.min(...sw.map(c => Math.abs(c.x - M.bx)))) }) : t('sumStay', { w: aName(win(0)) });
       }
@@ -340,27 +340,31 @@
           return info;
         });
         const flipping = attrs.filter(a => a.sw), most = flipping.slice().sort((a, b) => a.sw.diff - b.sw.diff)[0] || null;
-        const lvl = !most ? 'None' : most.sw.diff < 5 ? 'High' : most.sw.diff < 15 ? 'Mid' : 'Low';
+        const lvl = !most ? 'None' : most.sw.diff < 0.05 ? 'High' : most.sw.diff < 0.15 ? 'Mid' : 'Low';
         return { r, w, w2, tie, contrib, attrs, flipping, most, lvl };
       }
-      function conclusionParts(A) {
-        const out = [];
-        out.push(A.tie ? t('c_tie', { w: esc(A.w.n), w2: esc(A.w2.n), s: f(A.w.V) }) : t('c_win', { w: esc(A.w.n), s: f(A.w.V), d: f(A.w.V - A.w2.V), w2: esc(A.w2.n), s2: f(A.w2.V) }));
-        out.push(t('c_why', { a1: esc(kName(A.contrib[0].i)), c1: f(A.contrib[0].c), a2: esc(kName(A.contrib[1].i)), c2: f(A.contrib[1].c) }));
-        out.push(A.most ? t('c_some', { n: A.flipping.length, t: S.attrs.length, a: esc(kName(A.most.k)), b: f(A.most.pb, 1), p: f(A.most.sw.p, 1), w: esc(aName(A.most.sw.to)), l: t('sens' + A.lvl) }) : t('c_none'));
-        out.push(t('c_note'));
-        return out;
+      /* conclusion as bullet points: [{ t: html, sub: [html...] }] */
+      function conclusionItems(A) {
+        const L = [];
+        if (A.tie) L.push({ t: t('p_tie', { w: esc(A.w.n), w2: esc(A.w2.n), s: f(A.w.V) }) });
+        else { L.push({ t: t('p_win', { w: esc(A.w.n), s: f(A.w.V) }) }); L.push({ t: t('p_gap', { w2: esc(A.w2.n), s2: f(A.w2.V), d: f(A.w.V - A.w2.V) }) }); }
+        L.push({ t: t('p_why', { a1: esc(kName(A.contrib[0].i)), c1: f(A.contrib[0].c), a2: esc(kName(A.contrib[1].i)), c2: f(A.contrib[1].c) }) });
+        if (A.most) L.push({ t: t('p_n', { n: A.flipping.length, t: S.attrs.length }), sub: [t('p_most', { a: esc(kName(A.most.k)), b: f(A.most.pb, 3), p: f(A.most.sw.p, 3) }), t('p_takes', { w: esc(aName(A.most.sw.to)) }), t('p_lvl', { l: t('sens' + A.lvl) })] });
+        else L.push({ t: t('p_none') });
+        return L;
       }
+      const itemsHTML = L => '<ul class="pts">' + L.map(i => `<li>${i.t}${i.sub ? '<ul>' + i.sub.map(x => `<li>${x}</li>`).join('') + '</ul>' : ''}</li>`).join('') + '</ul>';
+      const itemsMD = L => L.flatMap(i => ['- ' + mdb(i.t), ...(i.sub || []).map(x => '  - ' + mdb(x))]);
       function sensRows(A) {
-        return A.attrs.map(a => ({ name: kName(a.k), base: f(a.pb, 1) + '%', sw: a.sw ? f(a.sw.p, 1) + '%' : '–', to: a.sw ? aName(a.sw.to) : t('noSwitch') }));
+        return A.attrs.map(a => ({ name: kName(a.k), base: f(a.pb, 3), sw: a.sw ? f(a.sw.p, 3) : '–', to: a.sw ? aName(a.sw.to) : t('noSwitch') }));
       }
       function stage4() {
         if (valid()) return stage3();
-        const A = analyze(), parts = conclusionParts(A), SR = sensRows(A);
+        const A = analyze(), SR = sensRows(A);
         return `<div class="sd-p4"><section class="sd-card sd-concl">
   <div class="sd-h"><h2>${esc(t('m4h'))}</h2></div>
   <div class="sd-win"><span class="tro">🏆</span><div><small>${esc(t('winnerLbl'))}</small><b>${esc(A.w.n)}</b></div><strong>${f(A.w.V)}</strong></div>
-  <div class="cl">${parts.map((p, i) => `<p class="${i === 3 ? 'note' : ''}">${p}</p>`).join('')}</div>
+  <div class="cl">${itemsHTML(conclusionItems(A))}<p class="note">${esc(t('c_note'))}</p></div>
   <div class="cols">
     <div><h4>${esc(t('r2'))}</h4><div class="sc"><table class="mini l2"><tr><th>${esc(t('rank'))}</th><th>${esc(t('thAlt'))}</th><th>${esc(t('score'))}</th></tr>${A.r.map((x, k) => `<tr><td>${k + 1}</td><td>${esc(x.n)}</td><td>${f(x.V)}</td></tr>`).join('')}</table></div></div>
     <div><h4>${esc(t('r3'))}</h4><div class="sc"><table class="mini"><tr><th>${esc(t('thAttr'))}</th><th>${esc(t('thBase'))}</th><th>${esc(t('thSwitch'))}</th><th>${esc(t('thTakes'))}</th></tr>${SR.map(s => `<tr><td>${esc(s.name)}</td><td>${s.base}</td><td>${s.sw}</td><td>${esc(s.to)}</td></tr>`).join('')}</table></div></div>
@@ -381,12 +385,12 @@
 .rp *{box-sizing:border-box}.rp .blk{padding-bottom:18px}.rp h1{font-size:24px;margin:0 0 4px;color:#1e3a8a}.rp h2{font-size:16px;margin:0 0 8px;color:#1e3a8a;border-bottom:2px solid #c7d2fe;padding-bottom:4px}
 .rp .sub{color:#64748b;margin:0}.rp table{border-collapse:collapse;width:100%;font-size:12px}.rp th,.rp td{border:1px solid #cbd5e1;padding:5px 8px;text-align:right}.rp th:first-child,.rp td:first-child{text-align:left}
 .rp th{background:#eef2ff}.rp tr.sec th{background:#f8fafc;text-align:left;color:#475569;font-weight:600}.rp p{margin:6px 0}.rp .win{background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:8px 12px;margin:8px 0}
-.rp .l2 th:nth-child(2),.rp .l2 td:nth-child(2){text-align:left}.rp .note{color:#64748b;font-size:11px}.rp svg{width:100%;height:auto;display:block;font-family:inherit}.rp h3{font-size:13px;margin:8px 0 4px}`;
+.rp .l2 th:nth-child(2),.rp .l2 td:nth-child(2){text-align:left}.rp ul{margin:6px 0 6px 18px;padding:0}.rp li{margin:3px 0}.rp .note{color:#64748b;font-size:11px}.rp svg{width:100%;height:auto;display:block;font-family:inherit}.rp h3{font-size:13px;margin:8px 0 4px}`;
       function reportBody() {
-        const A = analyze(), parts = conclusionParts(A), SR = sensRows(A), T = totalW(), k = Math.min(G.k == null ? 0 : G.k, S.attrs.length - 1);
+        const A = analyze(), SR = sensRows(A), T = totalW(), k = Math.min(G.k == null ? 0 : G.k, S.attrs.length - 1);
         const model1 = `<table><tr><th>${esc(t('tblCorner'))}</th>${S.attrs.map((a, i) => `<th>${esc(kName(i))}</th>`).join('')}</tr>
 <tr><td><b>${esc(t('rawW'))}</b></td>${S.attrs.map(a => `<td>${a.w}</td>`).join('')}</tr>
-<tr><td>${esc(t('normW'))}</td>${S.attrs.map(a => `<td>${f(100 * a.w / T)}%</td>`).join('')}</tr>
+<tr><td>${esc(t('normW'))}</td>${S.attrs.map(a => `<td>${f(a.w / T, 3)}</td>`).join('')}</tr>
 <tr class="sec"><th colspan="${S.attrs.length + 1}">${esc(t('rateGrp'))}</th></tr>
 ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</table>`;
         const rank2 = `<table class="l2"><tr><th>${esc(t('rank'))}</th><th>${esc(t('thAlt'))}</th><th>${esc(t('score'))}</th><th>${esc(t('vsLeader'))}</th></tr>${A.r.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.n)}</td><td>${f(x.V)}</td><td>${f(x.V - A.r[0].V)}</td></tr>`).join('')}</table>`;
@@ -397,22 +401,22 @@ ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}
 <div class="blk"><h2>${esc(t('r2'))}</h2>${rank2}</div>
 <div class="blk"><h2>${esc(t('r3'))}</h2>${svg}</div>
 <div class="blk">${sens3}</div>
-<div class="blk"><h2>${esc(t('r4'))}</h2><div class="win">🏆 <b>${esc(A.w.n)}</b> · ${f(A.w.V)}</div>${parts.map((p, i) => `<p class="${i === 3 ? 'note' : ''}">${p}</p>`).join('')}</div>`;
+<div class="blk"><h2>${esc(t('r4'))}</h2><div class="win">🏆 <b>${esc(A.w.n)}</b> · ${f(A.w.V)}</div>${itemsHTML(conclusionItems(A))}<p class="note">${esc(t('c_note'))}</p></div>`;
       }
       function reportHTML() {
         return `<!doctype html><html lang="${MBALAB.i18n.get()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(t('rTitle'))}</title><style>body{margin:0;background:#f1f5f9}.rp{margin:0 auto;box-shadow:0 0 0 1px #e2e8f0}@media print{body{background:#fff}.rp{box-shadow:none;width:auto}}${REPORT_CSS}</style></head><body><div class="rp">${reportBody()}</div></body></html>`;
       }
       function reportMD() {
-        const A = analyze(), parts = conclusionParts(A), SR = sensRows(A), T = totalW(), L = [];
+        const A = analyze(), SR = sensRows(A), T = totalW(), L = [];
         L.push(`# ${t('rTitle')}`, '', `*SMART Decision Studio · MBA Lab · ${t('rGen', { d: dateStr() })}*`, '', `## ${t('r1')}`, '');
         L.push('| ' + [t('tblCorner'), ...S.attrs.map((a, i) => kName(i))].map(mdc).join(' | ') + ' |', '|' + Array(S.attrs.length + 1).fill('---').join('|') + '|');
-        L.push('| ' + [`**${t('rawW')}**`, ...S.attrs.map(a => a.w)].join(' | ') + ' |', '| ' + [t('normW'), ...S.attrs.map(a => f(100 * a.w / T) + '%')].join(' | ') + ' |');
+        L.push('| ' + [`**${t('rawW')}**`, ...S.attrs.map(a => a.w)].join(' | ') + ' |', '| ' + [t('normW'), ...S.attrs.map(a => f(a.w / T, 3))].join(' | ') + ' |');
         S.alts.forEach((n, j) => L.push('| ' + [mdc(aName(j)), ...S.m[j]].join(' | ') + ' |'));
         L.push('', `${t('rateGrp')}.`, '', `## ${t('r2')}`, '', `| ${t('rank')} | ${t('thAlt')} | ${t('score')} | ${t('vsLeader')} |`, '|---|---|---|---|');
         A.r.forEach((x, i) => L.push(`| ${i + 1} | ${mdc(x.n)} | ${f(x.V)} | ${f(x.V - A.r[0].V)} |`));
         L.push('', `## ${t('r3')}`, '', `| ${t('thAttr')} | ${t('thBase')} | ${t('thSwitch')} | ${t('thTakes')} |`, '|---|---|---|---|');
         SR.forEach(s => L.push(`| ${mdc(s.name)} | ${s.base} | ${s.sw} | ${mdc(s.to)} |`));
-        L.push('', `## ${t('r4')}`, '', ...parts.flatMap(p => [mdb(p), '']));
+        L.push('', `## ${t('r4')}`, '', ...itemsMD(conclusionItems(A)), '', `*${t('c_note')}*`);
         return L.join('\n');
       }
       async function reportPDF() {
