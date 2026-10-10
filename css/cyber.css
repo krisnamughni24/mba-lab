@@ -121,6 +121,7 @@ html[lang=ja] .hero h1,html[lang=zh] .hero h1,html[lang=ja] .mw h3,html[lang=zh]
 body{font-kerning:normal;font-optical-sizing:auto;font-variant-ligatures:common-ligatures contextual;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;hanging-punctuation:first allow-end}
 p,li,.note,.sim,.feat div,.step{text-wrap:pretty;hyphens:manual;line-height:1.55;max-width:75ch}
 .sim p,.feat div,.step p{max-width:none}
+.mw p,.mw li,.mw .note{max-width:none}
 h1,h2,h3,h4,.brand,.sl-name,.cta{text-wrap:balance}
 /* numbers: tabular mono so columns line up and values do not jitter while animating */
 .sl-pct,.sd table td,.sd input[type=number],.sd .rk .val,.sd .rk .vs,.sd-win strong,.sd .bar b,code,.mw code,kbd,.sd table.grid th small,.sd .pv *[class*=val],.sd .lgd b{font-family:var(--f-mono);font-variant-numeric:tabular-nums slashed-zero;letter-spacing:.02em}
