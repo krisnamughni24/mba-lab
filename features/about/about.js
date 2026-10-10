@@ -14,7 +14,7 @@ MBALAB.feature('about', () => {
   MBALAB.overlay.register(dialog);
 
   bind($('infoT'), () => tr(A.title));
-  bind($('aboutIntro'), () => tr(A.intro));
+  bind($('aboutIntro'), () => tr(A.text));
   bind($('aboutApproachH'), () => tr(A.approachTitle));
   bind($('aboutApproach'), () => tr(A.approach));
   bind($('aboutTopicsH'), () => tr(A.topicsTitle));
