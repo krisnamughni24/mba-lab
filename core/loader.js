@@ -12,7 +12,8 @@
   const style = href => once(href, () => { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; return l; });
 
   MBALAB.load = {
-    scripts: list => Promise.all(list.map(script)),
-    styles: list => Promise.all(list.map(style))
+    /* optional onEach() is called as every file finishes (used for the progress bar) */
+    scripts: (list, onEach) => Promise.all(list.map(u => script(u).then(r => { onEach && onEach(); return r; }))),
+    styles: (list, onEach) => Promise.all(list.map(u => style(u).then(r => { onEach && onEach(); return r; })))
   };
 })();

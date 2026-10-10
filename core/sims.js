@@ -21,15 +21,57 @@
     Object.assign(target, part);
   };
 
-  const load = id => loading[id] || (loading[id] = (async () => {
+  const load = (id, onEach) => loading[id] || (loading[id] = (async () => {
     const m = manifest(id);
     if (!m || m.status !== 'live') throw new Error('Simulation "' + id + '" is not available');
     const base = m.path || ('simulations/' + id + '/');
     await Promise.all([
-      MBALAB.load.styles((m.styles || []).map(s => base + s)),
-      MBALAB.load.scripts((m.scripts || []).map(s => base + s))
+      MBALAB.load.styles((m.styles || []).map(x => base + x), onEach),
+      MBALAB.load.scripts((m.scripts || []).map(x => base + x), onEach)
     ]);
   })().catch(err => { delete loading[id]; throw err; }));
+
+  /* Loading screen: real file progress, but never faster than minMs so it can be read (name, percentage, developer) */
+  let screen = null;
+  const buildScreen = () => {
+    screen = document.createElement('div');
+    screen.className = 'simload'; screen.id = 'simload'; screen.hidden = true;
+    screen.setAttribute('role', 'status'); screen.setAttribute('aria-live', 'polite');
+    screen.innerHTML = '<div class="sl-box"><div class="sl-logo" aria-hidden="true">&#9670;</div><div class="sl-brand">MBA Lab</div>' +
+      '<div class="sl-title" id="slTitle"></div><div class="sl-name" id="slName"></div>' +
+      '<div class="sl-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="slFill"></i></div>' +
+      '<div class="sl-pct" id="slPct">0%</div><div class="sl-dev" id="slDev"></div></div>';
+    document.body.appendChild(screen);
+  };
+  const withLoader = async (id, minMs) => {
+    if (!screen) buildScreen();
+    const m = manifest(id), A = (MBALAB.data && MBALAB.data.about) || {};
+    $('slTitle').textContent = t('loadingT');
+    $('slName').textContent = m ? tr(m.name) : '';
+    $('slDev').textContent = (A.developedBy ? tr(A.developedBy) + ' ' : '') + (A.developer || '');
+    const fill = $('slFill'), pct = $('slPct'), bar = screen.querySelector('.sl-bar');
+    let total = m ? ((m.scripts || []).length + (m.styles || []).length) || 1 : 1, got = 0, ready = false, failed = null;
+    const shown = { v: 0 }, t0 = performance.now();
+    const set = v => { const p = Math.round(v); fill.style.width = p + '%'; pct.textContent = p + '%'; bar.setAttribute('aria-valuenow', p); };
+    set(0); screen.hidden = false; void screen.offsetWidth; screen.classList.add('on');
+    const work = load(id, () => { got++; }).then(() => { ready = true; }, e => { failed = e; ready = true; });
+    await new Promise(res => {
+      const tick = now => {
+        const timePart = Math.min(1, (now - t0) / minMs) * 100;
+        const filePart = ready ? 100 : Math.min(90, got / total * 90);
+        const target = Math.min(timePart, filePart);
+        shown.v += (target - shown.v) * 0.18 + 0.15;
+        if (shown.v > target) shown.v = target;
+        set(shown.v);
+        if (ready && shown.v >= 99.5) { set(100); res(); return; }
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await work;
+    await new Promise(r => setTimeout(r, 180));        // let the 100% register
+    return { hide() { screen.classList.remove('on'); setTimeout(() => { screen.hidden = true; }, 300); }, failed };
+  };
 
   const showError = () => {
     const h = host();
@@ -40,7 +82,8 @@
   const open = async id => {
     MBALAB.overlay.close();
     const h = host();
-    try { await load(id); } catch (err) { console.error('[MBALAB]', err); showError(); show(); return; }
+    const L = await withLoader(id, mounted[id] ? 700 : 1500);
+    if (L.failed) { console.error('[MBALAB]', L.failed); showError(); show(); L.hide(); return; }
     const sim = impl[id];
     if (owner && owner !== id) {                       // park the previous simulation's DOM
       const frag = document.createDocumentFragment();
@@ -59,6 +102,7 @@
     }
     show();
     if (sim.onShow) sim.onShow(h);
+    L.hide();
   };
 
   const show = () => {
