@@ -7,6 +7,7 @@ const cube=(s,l,st,d)=>`<div class="o" style="${st}"><div class="cube" style="--
 $("stage").innerHTML=`<div class="scene"><div class="rig">`+cube(190,["SMART","NPV","EOQ","BEP","5 FORCES","BATNA"],"left:calc(50% - 95px);top:calc(50% - 95px);--z:0px",22)+cube(54,[],"left:6%;top:10%;--z:120px;animation-delay:-2s",11)+cube(38,[],"right:8%;top:16%;--z:-60px;animation-delay:-5s",9)+cube(70,[],"left:12%;bottom:6%;--z:60px;animation-delay:-1s",15)+cube(30,[],"right:14%;bottom:12%;--z:160px;animation-delay:-3s",8)+`<div class="o card" style="left:-4%;top:44%;--z:150px;--r:-16deg;animation-delay:-2s"><b>Demo result</b><br>Digi Nusa <b>82.63</b><div class="mb"><i style="width:100%"></i></div>Parahyangan <b>63.16</b><div class="mb"><i style="width:76%"></i></div></div><div class="o card" style="right:-2%;top:64%;--z:110px;--r:18deg;animation-delay:-4s"><b>Winner switch</b><br>RM weight x = 67<br>(29.52% normalized)</div></div></div>`;
 
 /* 3D city: scene, traffic, aircraft, day/night, camera and render loop */
+const L=$('landing');
 const build=()=>{try{(function(){
 const T=THREE,st=$('stage');st.innerHTML='';let RM=false,t=0;window.cityPause=v=>{RM=v};
 const R=new T.WebGLRenderer({antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio||1,1.5));st.appendChild(R.domElement);
