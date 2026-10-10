@@ -7,7 +7,7 @@ const cube=(s,l,st,d)=>`<div class="o" style="${st}"><div class="cube" style="--
 $("stage").innerHTML=`<div class="scene"><div class="rig">`+cube(190,["SMART","NPV","EOQ","BEP","5 FORCES","BATNA"],"left:calc(50% - 95px);top:calc(50% - 95px);--z:0px",22)+cube(54,[],"left:6%;top:10%;--z:120px;animation-delay:-2s",11)+cube(38,[],"right:8%;top:16%;--z:-60px;animation-delay:-5s",9)+cube(70,[],"left:12%;bottom:6%;--z:60px;animation-delay:-1s",15)+cube(30,[],"right:14%;bottom:12%;--z:160px;animation-delay:-3s",8)+`<div class="o card" style="left:-4%;top:44%;--z:150px;--r:-16deg;animation-delay:-2s"><b>Demo result</b><br>Digi Nusa <b>82.63</b><div class="mb"><i style="width:100%"></i></div>Parahyangan <b>63.16</b><div class="mb"><i style="width:76%"></i></div></div><div class="o card" style="right:-2%;top:64%;--z:110px;--r:18deg;animation-delay:-4s"><b>Winner switch</b><br>RM weight x = 67<br>(29.52% normalized)</div></div></div>`;
 
 /* 3D city: scene, traffic, aircraft, day/night, camera and render loop */
-try{(function(){
+const build=()=>{try{(function(){
 const T=THREE,st=$('stage');st.innerHTML='';let RM=false,t=0;window.cityPause=v=>{RM=v};
 const R=new T.WebGLRenderer({antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio||1,1.5));st.appendChild(R.domElement);
 const sc=new T.Scene();sc.fog=new T.FogExp2(0x0a0f2c,.0022);const cam=new T.PerspectiveCamera(48,1,1,1400);
@@ -301,5 +301,13 @@ for(let i=0;i<fn;i++){fpa[i*3]=fo.x+fv[i][0]*ft;fpa[i*3+1]=fo.y+fv[i][1]*ft-2.5*
 const f=Math.sin(t*.05)*.5,cx0=-10,cy0=7,cz0=36,ox=Math.cos(f)*100,oy=25-my*6,oz=-8+Math.sin(f)*70+mx*10,kd=Math.min(1,dt*5);
 CAMZ+=(CAMZt-CAMZ)*kd;CAME+=(CAMEt-CAME)*kd;CAMA+=(CAMAt-CAMA)*kd;
 const r0=Math.hypot(ox,oy,oz),az=Math.atan2(oz,ox)+CAMA,el=cl(Math.asin(oy/r0)+CAME,.05,1.35),rr=r0*CAMZ;
-cam.position.set(cx0+rr*Math.cos(el)*Math.cos(az),Math.max(2,cy0+rr*Math.sin(el)),cz0+rr*Math.cos(el)*Math.sin(az));cam.lookAt(cx0,cy0,cz0);R.render(sc,cam)};requestAnimationFrame(lp)})()}catch(e){console.warn('3D city unavailable',e)}
+cam.position.set(cx0+rr*Math.cos(el)*Math.cos(az),Math.max(2,cy0+rr*Math.sin(el)),cz0+rr*Math.cos(el)*Math.sin(az));cam.lookAt(cx0,cy0,cz0);R.render(sc,cam)};requestAnimationFrame(lp)})()}catch(e){console.warn('3D city unavailable',e)}};
+/* Three.js: the <script> in index.html normally provides it; if that CDN failed, try the backups */
+const THREE_URLS=['https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js','https://unpkg.com/three@0.128.0/build/three.min.js'];
+const loadThree=i=>{
+  if(typeof THREE!=='undefined')return build();
+  if(i>=THREE_URLS.length){console.warn('Three.js could not be loaded; showing the CSS scene');return}
+  const sc=document.createElement('script');sc.src=THREE_URLS[i];sc.onload=()=>loadThree(i+1);sc.onerror=()=>loadThree(i+1);document.head.appendChild(sc)
+};
+loadThree(0);
 });
