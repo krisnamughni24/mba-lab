@@ -5,6 +5,7 @@
        MBALAB.sims.define('<id>', { strings, template, mount(host), onShow(host), onHide(), onLang(), onTheme(day) })
    Parts from several files are merged. See docs/ADDING-A-SIMULATION.md. */
 (() => {
+  const LOAD_MS = 10000;  // fixed duration of the loading screen (milliseconds)
   const impl = {};        // id -> merged implementation
   const loading = {};     // id -> load promise
   const stash = {};       // id -> DocumentFragment holding a simulation's DOM while another one is shown
@@ -31,7 +32,7 @@
     ]);
   })().catch(err => { delete loading[id]; throw err; }));
 
-  /* Loading screen: real file progress, but never faster than minMs so it can be read (name, percentage, developer) */
+  /* Loading screen: real file progress, fixed duration (LOAD_MS) so every text can be read (name, percentage, developer) */
   let screen = null;
   const buildScreen = () => {
     screen = document.createElement('div');
@@ -82,7 +83,7 @@
   const open = async id => {
     MBALAB.overlay.close();
     const h = host();
-    const L = await withLoader(id, mounted[id] ? 700 : 1500);
+    const L = await withLoader(id, LOAD_MS);
     if (L.failed) { console.error('[MBALAB]', L.failed); showError(); show(); L.hide(); return; }
     const sim = impl[id];
     if (owner && owner !== id) {                       // park the previous simulation's DOM
