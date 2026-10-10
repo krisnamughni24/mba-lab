@@ -10,7 +10,7 @@
   --ink:var(--txt);--mut:var(--txt2);--line:var(--edge);--bd:var(--edge);--card:var(--panel);--bg:var(--panel);--teal:var(--gn);--org:var(--am);--red:var(--rd);--navy:var(--txt);
   /* every themed colour used below goes through one of these tokens; night/day differ ONLY in their values */
   --page:radial-gradient(circle at 12% 18%,rgba(255,106,213,.26),transparent 46%),radial-gradient(circle at 88% 82%,rgba(77,210,255,.26),transparent 48%),linear-gradient(180deg,#060a2c 0%,#0e1450 50%,#2a1058 100%);
-  --scan:rgba(255,255,255,.028);--vig:rgba(0,0,0,.45);
+  --tint-rgb:255,255,255;--scan:rgba(255,255,255,.028);--vig:rgba(0,0,0,.45);
   --btn-bg:linear-gradient(180deg,rgba(77,210,255,.3),rgba(77,210,255,.1));--btn-hover-bg:linear-gradient(180deg,rgba(77,210,255,.5),rgba(255,106,213,.24));--btn-hover-fg:#fff;
   --inp-bg:rgba(8,14,50,.85);--inp-focus-bg:rgba(16,28,86,.96);--inp-focus-fg:#fff;
   --tag-bg:rgba(255,106,213,.24);--tglow:rgba(77,210,255,.55);--h1-glow:rgba(77,210,255,.35);--h1-from:#fff;
@@ -27,26 +27,26 @@
   --t-warn:#fb7185;--t-cta-fg:#06112b;--t-bub-bg:rgba(5,9,30,.94);--t-bub-fg:#e6f6ff}
 /* DAY = the same layout and typography, only these values change */
 body.day{
-  --void:#e9f4ff;--panel:rgba(250,252,255,.94);--panel2:rgba(255,255,255,.86);
+  --void:#e9f4ff;--panel:rgba(226,239,255,.9);--panel2:rgba(240,247,255,.84);
   --edge:rgba(16,60,190,.55);--edge-hi:rgba(16,60,190,.95);--glow:0 0 14px rgba(20,90,255,.3);
   --txt:#081530;--txt2:#26406a;--cy:#0a5fe0;--mg:#c4128a;--am:#8f5a00;--gn:#07765a;--vi:#5b34d1;--rd:#c2123f;
   /* aliases must be re-declared here: a var() alias set on :root keeps its NIGHT value for everything below it */
   --ink:var(--txt);--mut:var(--txt2);--line:var(--edge);--bd:var(--edge);--card:var(--panel);--bg:var(--panel);--teal:var(--gn);--org:var(--am);--red:var(--rd);--navy:var(--txt);
-  --page:linear-gradient(180deg,#74b2f4 0%,#b4d6fb 55%,#dcebfd 100%);
+  --page:linear-gradient(180deg,#3f94ee 0%,#78b9f8 38%,#bcdcfb 72%,#ecdffb 100%);--tint-rgb:16,60,190;
   --scan:rgba(255,255,255,.01);--vig:rgba(20,60,140,0);
-  --btn-bg:linear-gradient(180deg,rgba(255,255,255,.95),rgba(214,230,255,.9));--btn-hover-bg:linear-gradient(180deg,rgba(10,108,255,.28),rgba(196,18,138,.14));--btn-hover-fg:#06235e;
+  --btn-bg:linear-gradient(180deg,rgba(255,255,255,.96),rgba(200,222,255,.92));--btn-hover-bg:linear-gradient(180deg,rgba(10,108,255,.28),rgba(196,18,138,.14));--btn-hover-fg:#06235e;
   --inp-bg:#fff;--inp-focus-bg:#fff;--inp-focus-fg:#0c1a3a;
   --tag-bg:rgba(196,18,138,.14);--tglow:rgba(0,0,0,0);--h1-glow:rgba(0,0,0,0);--h1-from:#0c1a3a;
   --nav-bg:linear-gradient(180deg,rgba(255,255,255,.88),rgba(255,255,255,.6));--nav-line:rgba(20,90,255,.15);--nav-drop:rgba(20,60,140,.15);
-  --ov-bg:rgba(214,232,255,.55);--mw-ring:rgba(16,60,190,.3);--mw-glow:rgba(20,90,255,.16);--mw-drop:rgba(20,60,140,.34);
+  --ov-bg:rgba(24,64,150,.38);--mw-ring:rgba(16,60,190,.3);--mw-glow:rgba(20,90,255,.16);--mw-drop:rgba(20,60,140,.34);
   --on-fg:#06235e;--live-bg:rgba(16,185,129,.2);--dn-bg:rgba(255,255,255,.8);
   --load-bg:radial-gradient(ellipse at 50% 40%,rgba(235,246,255,.98),rgba(180,215,250,.99));--load-scan:rgba(0,0,0,0);
-  --veil:235,246,255;--veil-inapp:235,246,255;--veil-inapp-a:.62;--stage-dim:.9;
+  --veil:150,200,248;--veil-inapp:150,200,248;--veil-inapp-a:.5;--stage-dim:.9;
   --err:#c02646;--ok:#047857;--lang-bg:rgba(255,255,255,.9);--lang-hover:rgba(16,32,63,.08);--lang-on:rgba(16,32,63,.14);--lang-chip:rgba(16,32,63,.12);--lang-bd:rgba(16,32,63,.2);--lang-fg:#10203f;
-  --t-drill:rgba(255,255,255,.5);--t-chw:rgba(255,255,255,.45);--t-toast-bg:rgba(255,255,255,.92);--t-toast-fg:#10203f;--t-thead:rgba(37,99,235,.12);
+  --t-drill:rgba(255,255,255,.5);--t-chw:rgba(255,255,255,.45);--t-toast-bg:rgba(240,247,255,.95);--t-toast-fg:#10203f;--t-thead:rgba(37,99,235,.12);
   --t-st-bg:#e6f0fb;--t-st-hover:#fff;--t-st-active:linear-gradient(135deg,#bcd7f8,#d6cbfa);--t-n:#c3d3ea;--t-lock-bg:#dbe6f3;--t-lock-fg:#5b6b82;--t-lock-n:#bccde4;
   --t-ph:rgba(217,119,6,.10);--t-pv-bg:#fff;--t-pv-fg:#10203f;--t-pv-bd:rgba(16,32,63,.25);
-  --t-guide:rgba(220,235,252,.6);--t-gd-bg:#fff;--t-gd-fg:#10203f;--t-gd-bd:rgba(16,32,63,.2);--t-gtip:rgba(37,99,235,.1);
+  --t-guide:rgba(40,90,190,.4);--t-gd-bg:#fff;--t-gd-fg:#10203f;--t-gd-bd:rgba(16,32,63,.2);--t-gtip:rgba(37,99,235,.1);
   --t-warn:#be123c;--t-cta-fg:#fff;--t-bub-bg:#fff;--t-bub-fg:#0c1a3a}
 html{scrollbar-color:var(--cy) transparent;scrollbar-width:thin}
 ::selection{background:var(--mg);color:#fff}

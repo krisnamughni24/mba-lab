@@ -3,7 +3,7 @@
   position:relative;flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;color:var(--fg);font-size:14px;line-height:1.45}
 .sd *{box-sizing:border-box}
 .sd button{font:inherit;cursor:pointer;color:var(--fg);background:var(--panel);border:1px solid var(--panel-b);border-radius:12px;padding:8px 14px;text-transform:none;font-weight:600;box-shadow:none;backdrop-filter:blur(6px);transition:transform .15s,background .15s,box-shadow .2s,opacity .2s}
-.sd button:hover{transform:translateY(-1px);background:rgba(255,255,255,.22);color:var(--fg)}
+.sd button:hover{transform:translateY(-1px);background:rgba(var(--tint-rgb),.22);color:var(--fg)}
 .sd button:active{transform:scale(.96)}
 .sd input,.sd select{font:inherit;color:var(--fg);background:var(--field);border:1px solid var(--panel-b);border-radius:10px;padding:6px 9px;font-weight:500}
 .sd input:focus,.sd select:focus{outline:none;box-shadow:0 0 0 2px var(--g1)}
@@ -66,7 +66,7 @@
 .sd-quest li.ok{color:var(--fg)}
 .sd-quest li.ok .bx{background:#34d399;border-color:#34d399;color:#06281c}
 .sd-quest li.pop .bx{animation:sdPop .5s}
-.sd-prog{height:8px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden;margin-bottom:14px}
+.sd-prog{height:8px;border-radius:99px;background:rgba(var(--tint-rgb),.18);overflow:hidden;margin-bottom:14px}
 .sd-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#34d399,var(--g1));transition:width .6s cubic-bezier(.2,.8,.2,1)}
 .sd button.sd-cta{width:100%;padding:11px 16px;font-weight:800;border:0;color:var(--t-cta-fg);background:linear-gradient(135deg,var(--g1),var(--g2));opacity:.4;box-shadow:none}
 .sd button.sd-cta.ready{opacity:1;animation:sdPulse 1.8s infinite}
@@ -89,10 +89,10 @@
 .rks{display:grid;gap:8px}
 .sd .rk{display:grid;grid-template-columns:42px minmax(90px,170px) 1fr 64px 56px;gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:14px;opacity:0;animation:sdRow .5s forwards;animation-delay:var(--d)}
 .sd .rk.top{border-color:rgba(251,191,36,.7)}
-.sd .rk.sel{background:rgba(255,255,255,.24);border-color:var(--g1)}
+.sd .rk.sel{background:rgba(var(--tint-rgb),.24);border-color:var(--g1)}
 .sd .rk .med{font-size:20px;text-align:center}
 .sd .rk .nm{font-weight:700;overflow:hidden;text-overflow:ellipsis}
-.sd .rk .bw{height:16px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.sd .rk .bw{height:16px;border-radius:99px;background:rgba(var(--tint-rgb),.14);overflow:hidden}
 .sd .rk .bs{display:flex;height:100%}
 .sd .rk .bs i{display:block;height:100%;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1) .25s}
 .sd .rk .val{font-variant-numeric:tabular-nums;text-align:right;font-size:16px}
@@ -103,7 +103,7 @@
 .sd-drill h4{font-size:14px;margin-bottom:8px}
 .sd .dr{display:grid;grid-template-columns:minmax(110px,190px) 1fr auto;gap:12px;align-items:center;font-size:12px;padding:3px 0}
 .sd .dr .dnm i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
-.sd .dr .db{height:7px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden}
+.sd .dr .db{height:7px;border-radius:99px;background:rgba(var(--tint-rgb),.14);overflow:hidden}
 .sd .dr .db i{display:block;height:100%;border-radius:99px;animation:sdGrow .7s}
 .sd .dr code{font-family:ui-monospace,monospace;font-size:12px}
 .sd .dr.tot{font-weight:800;border-top:1px solid var(--panel-b);margin-top:4px;padding-top:7px}
@@ -160,8 +160,8 @@ body.still .sd *{animation:none!important;transition:none!important}body.still .
 .sd table.grid .corner{text-align:left;padding:8px 10px;min-width:190px;font-size:12px;color:var(--fg2)}
 .sd table.grid .grp{padding:6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2)}
 .sd table.grid .ah .cell{display:flex;align-items:center;gap:2px;padding:2px 4px}
-.sd table.grid th[scope=row]{text-align:left;padding:7px 10px;font-weight:700;background:rgba(255,255,255,.06)}
-.sd table.grid th.an{padding:0;background:rgba(255,255,255,.06)}
+.sd table.grid th[scope=row]{text-align:left;padding:7px 10px;font-weight:700;background:rgba(var(--tint-rgb),.06)}
+.sd table.grid th.an{padding:0;background:rgba(var(--tint-rgb),.06)}
 .sd table.grid td input,.sd table.grid th input{width:100%;min-width:92px;border:0;border-radius:0;background:transparent;text-align:center;padding:9px 6px;font-weight:600;box-shadow:none}
 .sd table.grid th.an input{text-align:left;padding-left:10px;min-width:170px}
 .sd table.grid input.nm{width:100%;min-width:150px;text-align:center;font-weight:700}
@@ -169,10 +169,10 @@ body.still .sd *{animation:none!important;transition:none!important}body.still .
 .sd table.grid input::placeholder{color:var(--fg2);opacity:.65;font-weight:500}
 .sd table.grid .wr td input{color:var(--g1)}
 .sd table.grid .nr td{color:var(--fg2);font-size:12px;padding:6px}
-.sd table.grid .gr th{background:rgba(255,255,255,.08);text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);padding:5px 10px}
+.sd table.grid .gr th{background:rgba(var(--tint-rgb),.08);text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);padding:5px 10px}
 .sd table.grid .act{width:38px;min-width:38px;background:transparent;border-color:transparent;border-block-start:0}
 .sd table.grid td.act,.sd table.grid th.act{border:0}
-.sd table.grid tbody tr:hover td:not(.act){background:rgba(255,255,255,.07)}
+.sd table.grid tbody tr:hover td:not(.act){background:rgba(var(--tint-rgb),.07)}
 .sd table.grid .dot{width:9px;height:9px;border-radius:50%;flex:none;margin:0 4px}
 
 /* part 3 chart title, part 4 conclusion */
@@ -182,8 +182,8 @@ body.still .sd *{animation:none!important;transition:none!important}body.still .
 .sd-concl .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:14px 0}
 .sd-concl h4{margin:0 0 6px;font-size:13px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em}
 .sd table.mini th,.sd table.mini td{border:1px solid var(--grid);padding:6px 10px}
-.sd table.mini th{background:rgba(255,255,255,.08)}
-.sd-dl{margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px dashed var(--panel-b)}
+.sd table.mini th{background:rgba(var(--tint-rgb),.08)}
+.sd-dl{margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(var(--tint-rgb),.07);border:1px dashed var(--panel-b)}
 .sd-dl .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 .sd-dl button{min-width:110px;font-weight:700}
 .sd-dl button:disabled{opacity:.6;cursor:progress}
@@ -275,7 +275,7 @@ body.still .sd-bot *{animation:none!important}
 
 /* ===== Cyberpunk skin: same palette as the 3D city and css/cyber.css (edit the variables on .sd to recolour) ===== */
 .sd{--g1:#4dd2ff;--g2:#ff6ad5;--panel:rgba(14,20,62,.9);--panel-b:rgba(77,210,255,.62);--grid:rgba(77,210,255,.42);--field:rgba(8,14,50,.85);--fg:#f0faff;--fg2:rgba(214,236,255,.86);font-family:var(--f-ui,"Chakra Petch",system-ui,sans-serif)}
-body.day .sd{--g1:#0a5fe0;--g2:#c4128a;--panel:rgba(250,252,255,.94);--panel-b:rgba(16,60,190,.55);--grid:rgba(16,60,190,.45);--field:#fff;--fg:#081530;--fg2:#26406a}
+body.day .sd{--g1:#0a5fe0;--g2:#c4128a;--panel:rgba(226,239,255,.9);--panel-b:rgba(16,60,190,.55);--grid:rgba(16,60,190,.45);--field:#fff;--fg:#081530;--fg2:#26406a}
 .sd button{border-radius:3px;text-transform:uppercase;letter-spacing:.06em;font-size:12.5px;background:var(--btn-bg);border-color:var(--panel-b);box-shadow:inset 0 0 12px rgba(77,210,255,.12)}
 .sd button:hover{background:var(--btn-hover-bg);border-color:var(--g1);box-shadow:0 0 14px rgba(77,210,255,.4);transform:none;color:var(--btn-hover-fg)}
 .sd input,.sd select{border-radius:3px;border-color:var(--panel-b)}
