@@ -258,3 +258,22 @@ body.day .sd-steps .st.locked .n{background:#bccde4}
 .sd-concl .pts li{margin:7px 0}
 .sd-concl .pts ul{margin:5px 0 0;padding-left:20px;font-size:14px;color:var(--fg2)}
 .sd-concl .pts ul li{margin:4px 0}
+
+/* step guide pop-up + info icon */
+.sd .sd-h{position:relative;padding-right:46px}
+.sd .sd-info{position:absolute;top:0;right:0;width:34px;height:34px;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--g1);border-color:var(--g1)}
+.sd .sd-info svg{width:20px!important;height:20px!important}
+.sd .sd-info:hover{background:rgba(125,211,252,.25)}
+.sd-guide{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:16px;background:rgba(2,5,18,.6);backdrop-filter:blur(5px);animation:sdFade .25s}
+.sd-guide[hidden]{display:none}
+body.day .sd-guide{background:rgba(220,235,252,.6)}
+.sd-guide .gd{position:relative;width:min(520px,100%);max-height:100%;overflow:auto;padding:24px 24px 20px;border-radius:22px;background:#0f1a3a;color:#fff;border:1px solid rgba(255,255,255,.3);box-shadow:0 24px 70px rgba(0,0,0,.55);animation:sdPop .35s}
+body.day .sd-guide .gd{background:#fff;color:#10203f;border-color:rgba(16,32,63,.2)}
+.sd-guide .gk{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.sd-guide h3{font-size:20px;margin:4px 0 12px;font-weight:800}
+.sd-guide ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px;line-height:1.5}
+.sd-guide .gtip{margin:0 0 16px;padding:10px 12px;border-radius:12px;background:rgba(125,211,252,.14);font-size:13px}
+body.day .sd-guide .gtip{background:rgba(37,99,235,.1)}
+.sd-guide .gx{position:absolute;top:12px;right:12px;padding:2px 9px;border-radius:9px;background:transparent;color:inherit}
+.sd-guide .sd-cta{width:100%;opacity:1}
+@keyframes sdFade{from{opacity:0}}

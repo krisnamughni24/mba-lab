@@ -56,7 +56,7 @@
         return S.alts.map((n, j) => ({ j, n: aName(j), V: S.attrs.reduce((s, a, i) => s + a.w / T * S.m[j][i], 0) }));
       }
       const ranked = () => scores().sort((a, b) => b.V - a.V);
-      const G = { focus: null, stage: 0, drilled: null, k: null, example: false, busy: false };
+      const G = { guide: null, seen: {}, focus: null, stage: 0, drilled: null, k: null, example: false, busy: false };
 
       /* ---------- small UI helpers ---------- */
       function toast(msg, kind, undo) {
@@ -97,7 +97,26 @@
         st.innerHTML = [stage1, stage2, stage3, stage4][G.stage]();
         if (dir && !reduced()) st.firstElementChild.classList.add(dir > 0 ? 'in-r' : 'in-l');
         [bind1, bind2, bind3, bind4][G.stage]();
+        const h = st.querySelector('.sd-h');
+        if (h && G.stage < 4) h.insertAdjacentHTML('beforeend', `<button type="button" class="sd-info" data-info="${G.stage}" title="${esc(t('infoTip'))}" aria-label="${esc(t('infoTip'))}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7.6" r="1.3" fill="currentColor"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>`);
+        if (!G.seen[G.stage] && !valid1only()) { G.seen[G.stage] = 1; showGuide(G.stage); }
+        else if (G.guide != null) showGuide(G.guide);
       }
+      const valid1only = () => G.stage > 1 && !complete();   // never pop a guide for a part that shows an error
+      /* guide pop-up: auto-opens once per part, ⓘ reopens it */
+      function showGuide(n) {
+        G.guide = n;
+        let el = q('sdGuide');
+        if (!el) { el = document.createElement('div'); el.id = 'sdGuide'; el.className = 'sd-guide'; q('sd').appendChild(el); }
+        const k = 'g' + (n + 1);
+        const pts = [1, 2, 3].map(i => t(k + '_' + i)).map(x => `<li>${x}</li>`).join('');
+        el.innerHTML = `<div class="gd" role="dialog" aria-modal="true" aria-labelledby="gdT"><button type="button" class="gx" data-gclose aria-label="${esc(t('close'))}">✕</button>
+          <div class="gk">${esc(t('partN', { n: n + 1 }))} / 4</div><h3 id="gdT">${esc(t(k + '_t'))}</h3><ul>${pts}</ul>
+          <p class="gtip"><b>💡 ${esc(t('tipLbl'))}:</b> ${t(k + '_tip')}</p><button type="button" class="sd-cta ready" data-gclose>${esc(t('gotIt'))}</button></div>`;
+        el.hidden = false;
+        const b = el.querySelector('.sd-cta'); if (b) b.focus({ preventScroll: true });
+      }
+      function closeGuide() { const el = q('sdGuide'); if (el) el.hidden = true; G.guide = null; }
 
       /* ---------- Part 1: build (spreadsheet-style table) ---------- */
       function stage1() {
@@ -506,12 +525,16 @@ ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}
       host.addEventListener('change', e => {
         if (e.target.id === 'ks') { G.k = +e.target.value; G.focus = null; q('sl').max = Math.max(1, +q('xm').value || 200); q('sl').value = Math.min(+q('sl').max, Math.round(model(G.k).bx)); host.querySelector('.goal').innerHTML = t('flipGoal', { a: esc(kName(G.k)) }); lastLeader = -1; sens(); }
       });
+      host.addEventListener('keydown', e => { if (e.key === 'Escape' && G.guide != null) { closeGuide(); e.stopPropagation(); } });
       host.addEventListener('click', e => {
+        if (e.target.classList && e.target.classList.contains('sd-guide')) { closeGuide(); return; }
         const hit = e.target.closest('path.hit');
         if (hit) { focusLine(+hit.dataset.j, e); return; }
         if (e.target.closest('.pvx') || (e.target.closest('#ch') && !hit)) { closeFocus(); return; }
         const b = e.target.closest('button'); if (!b || !host.contains(b)) return;
         const d = b.dataset;
+        if (d.gclose !== undefined) { closeGuide(); return; }
+        if (d.info !== undefined) { showGuide(+d.info); return; }
         if (d.act) {
           const a = d.act;
           if (a === 'back1') go(0); else if (a === 'back2') go(1); else if (a === 'back3') go(2);
