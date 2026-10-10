@@ -11,11 +11,11 @@ MBALAB.data.about = {
     "zh": "关于 MBA Lab"
   },
 
-  "intro": {
-    "en": "MBA Lab turns MBA frameworks into hands-on business simulations where you can test ideas, make decisions, and explore their real-world implications.",
-    "id": "MBA Lab mengubah kerangka kerja MBA menjadi simulasi bisnis interaktif untuk menguji ide, mengambil keputusan, dan memahami dampaknya dalam praktik.",
-    "ja": "MBA Labは、MBAのフレームワークを実践的なビジネスシミュレーションに変え、アイデアの検証や意思決定、その影響の理解を支援する学習プラットフォームです。",
-    "zh": "MBA Lab 将 MBA 框架转化为互动式商业模拟，让学习者能够检验想法、制定决策，并探索决策在实际业务中的影响。"
+  "text": {
+    "en": "Explore MBA simulations. Test assumptions, adjust variables, and compare business outcomes.",
+    "id": "Jelajahi simulasi MBA. Uji asumsi, ubah variabel, dan bandingkan hasil bisnis.",
+    "ja": "MBAシミュレーションで仮説を検証し、変数を調整して、ビジネスの成果を比較しましょう。",
+    "zh": "探索 MBA 模拟，检验假设、调整变量并比较业务结果。"
   },
 
   "approachTitle": {
