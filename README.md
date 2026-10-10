@@ -7,3 +7,10 @@ Interactive business simulations over an animated 3D Jakarta (day/night), in Eng
 - Save submitted ideas to Google Drive: [docs/FORM-SETUP-GOOGLE-DRIVE.md](docs/FORM-SETUP-GOOGLE-DRIVE.md)
 
 Live simulation: **SMART Decision Studio** (multi-criteria decision analysis). Others are listed as coming soon in `data/simulations.js`.
+
+## Deploy on GitHub Pages
+1. Repo **Settings → Pages**.
+2. **Source:** Deploy from a branch · **Branch:** `main` · **Folder:** `/ (root)` · Save.
+3. After about a minute the site is live at `https://<user>.github.io/mba-lab/`. Every push to `main` redeploys it.
+
+All paths in the site are relative, so it works under the `/mba-lab/` sub-path and on a custom domain. `.nojekyll` tells Pages to serve the files as they are.
