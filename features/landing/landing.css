@@ -42,13 +42,9 @@
 }
 .feat div,.step{background:rgba(255,255,255,.1)}
 #landing .nav:first-child{padding-right:130px}
-body.day .feat div,body.day .step{background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.9)}
-body.day .nav{color:#10203f}
-body.day .hero p{color:#3b4d6b}
 #landing{padding-top:56px}
 #landing>.nav:last-child{padding-bottom:70px}
 .hero{min-height:calc(100vh - 56px - 70px)}
 .hero p{max-width:600px}
 .hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
-body.day .hero h1{text-shadow:none}
 #landing>.hero:last-child{padding-bottom:90px;min-height:calc(100vh - 56px)}

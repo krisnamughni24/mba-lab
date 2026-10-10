@@ -3,17 +3,13 @@
 .fld label{display:block;font-weight:600;margin-bottom:4px}
 .fld input,.fld select,.fld textarea{width:100%;padding:8px 10px;font:inherit;border-radius:8px}
 .fld textarea{min-height:110px;resize:vertical;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:inherit}
-body.day .fld textarea{background:rgba(255,255,255,.7);border-color:rgba(16,32,63,.25);color:#10203f}
 .fld [aria-invalid=true]{border-color:#fb7185!important}
-.err{color:#ffc2cd;font-size:12px;min-height:16px}
-body.day .err{color:#c02646}
+.err{color:var(--err);font-size:12px;min-height:16px}
 .sbm{padding:8px 20px;font-weight:700}
 .sbm:disabled{opacity:.55;cursor:not-allowed}
 #fStatus{font-size:12px;flex:1}
-#fStatus.ok{color:#9ff0c7}
-#fStatus.err{color:#ffc2cd}
-body.day #fStatus.ok{color:#047857}
-body.day #fStatus.err{color:#c02646}
+#fStatus.ok{color:var(--ok)}
+#fStatus.err{color:var(--err)}
 .unav:empty{display:none}
 .unav{margin:10px 0 0;font-weight:600}
 #ideaForm>.row{margin-top:14px}

@@ -41,19 +41,8 @@ body.nomo *,body.nomo *::before,body.nomo *::after{animation:none!important;tran
 body{background:radial-gradient(circle at 20% 15%,rgba(124,58,237,.35),transparent 45%),radial-gradient(circle at 85% 85%,rgba(14,165,233,.25),transparent 45%),linear-gradient(135deg,#050816,#0a0f2c 55%,#120a2e);background-attachment:fixed}
 body::before,body::after{opacity:.22}
 .mw{background:rgba(20,24,60,.6)}
-body.day{background:linear-gradient(180deg,#6cb8f5 0%,#bfe3ff 55%,#eaf6ff 100%);background-attachment:fixed;color:#10203f;--ink:#10203f;--mut:#3b4d6b;--line:rgba(16,32,63,.18);--navy:#10203f;--bd:rgba(255,255,255,.8)}
-body.day::before,body.day::after{opacity:0}
-body.day input,body.day select{background:rgba(255,255,255,.7);border-color:rgba(16,32,63,.25);color:#10203f}
-body.day input:focus,body.day select:focus{background:#fff;color:#10203f;box-shadow:0 0 0 2px rgba(37,99,235,.5)}
-body.day button{background:rgba(255,255,255,.7);color:#10203f;border-color:rgba(16,32,63,.25)}
-body.day button:hover{background:#fff;color:#10203f}
-body.day .cta{background:#10203f;color:#fff}
-body.day .cta:hover{background:#1c3566;color:#fff}
-body.day .tag{background:rgba(255,255,255,.7);color:#10203f;border-color:rgba(16,32,63,.25)}
-body.day .mw{background:rgba(255,255,255,.78)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid #fbbf24;outline-offset:2px}
 body.inapp .camctl,body.inapp .fab{display:none}
-body.day .camctl,body.day .fab button{background:rgba(255,255,255,.66);border-color:rgba(16,32,63,.22)}
 .ov{position:fixed;inset:0;background:rgba(10,10,40,.55);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;z-index:60}
 .ov.on{display:flex;animation:fade .2s}
 .ov.on .mw{animation:pop .3s cubic-bezier(.2,.9,.3,1.2)}
@@ -73,14 +62,12 @@ body.still .hero>*,body.still .nav,body.still .hero>.cta,body.still .feat div{an
 .simload{position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 40%,rgba(18,28,70,.96),rgba(4,7,22,.99));color:#fff;opacity:0;transition:opacity .3s}
 .simload[hidden]{display:none}
 .simload.on{opacity:1}
-body.day .simload{background:radial-gradient(ellipse at 50% 40%,rgba(235,246,255,.98),rgba(190,220,250,.99));color:#10203f}
 .sl-box{width:min(380px,86vw);text-align:center;display:grid;gap:10px;justify-items:center}
 .sl-logo{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-size:30px;background:linear-gradient(135deg,#4f8cff,#a78bfa);color:#fff;box-shadow:0 0 34px rgba(125,150,255,.55);animation:slSpin 2.4s ease-in-out infinite}
 .sl-brand{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:13px;opacity:.85}
 .sl-title{font-size:12px;opacity:.7;margin-top:10px}
 .sl-name{font-size:22px;font-weight:800}
 .sl-bar{width:100%;height:10px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden;margin-top:6px}
-body.day .sl-bar{background:rgba(16,32,63,.14)}
 .sl-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#7dd3fc,#c4b5fd);box-shadow:0 0 14px rgba(125,211,252,.7)}
 .sl-pct{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
 .sl-dev{margin-top:14px;font-size:12px;opacity:.75;letter-spacing:.04em}

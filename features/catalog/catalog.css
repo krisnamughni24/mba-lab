@@ -3,7 +3,7 @@
 #modal.on{display:flex}
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
 .sim{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:14px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3)}
-.sim.live{background:rgba(110,231,183,.22);border-color:rgba(110,231,183,.7)}
+.sim.live{background:var(--live-bg);border-color:rgba(110,231,183,.7)}
 .sim.soon{opacity:.6}
 .bd{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.25);padding:1px 8px;border-radius:999px}
 #modal.on{animation:fade .2s}
@@ -19,13 +19,9 @@
 #modal.on .sim:nth-child(8){animation-delay:.4s}
 .sim{transition:transform .2s,box-shadow .2s}
 .sim.live:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.3)}
-body.day .sim{background:rgba(255,255,255,.55);border-color:rgba(16,32,63,.2)}
-body.day .sim.live{background:rgba(16,185,129,.2);border-color:rgba(5,150,105,.6)}
-body.day .bd{background:rgba(16,32,63,.12)}
 #modal{z-index:60}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
 .chip{border-radius:999px;padding:4px 12px;font-size:12px;text-transform:none}
 .chip[aria-pressed=true]{background:rgba(255,255,255,.38);font-weight:700;border-color:rgba(255,255,255,.8)}
-body.day .chip[aria-pressed=true]{background:#10203f;color:#fff}
 .cat{font-size:11px;opacity:.75}
 .sim.soon{cursor:default}
