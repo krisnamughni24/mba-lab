@@ -7,10 +7,10 @@ MBALAB.data.landing = {
     "zh": "面向 MBA 学习者的互动商业模拟"
   },
   "title": {
-    "en": "Explore business. Experiment with decisions.",
-    "id": "Jelajahi bisnis. Bereksperimen dengan keputusan.",
-    "ja": "ビジネスを探究し、意思決定を試そう。",
-    "zh": "探索商业，实验决策。"
+    "en": "Explore business. Experience with experiment.",
+    "id": "Jelajahi bisnis. Alami lewat eksperimen.",
+    "ja": "ビジネスを探究し、実験で体験しよう。",
+    "zh": "探索商业，在实验中体验。"
   },
   "text": {
     "en": "Explore interactive MBA simulations across strategy, finance, marketing, operations & supply chain, analytics, leadership, and negotiation.",
