@@ -74,6 +74,45 @@
     setTimeout(() => { el.style.minWidth = prev; }, 520);
   }
 
+  /* ambient glitch: every AMBIENT_MS one visible heading / label corrupts for a moment, then resolves */
+  const AMBIENT = '.hero h1,.hero .tag,.brand,.mw h3,.mw h4,.sd-top h1,.sd-card .sd-h h2,.sd-steps .l,.sd-win b,.sd .rk .nm,.how h3,.feat div b,.step b,.sim b,.cat,.sl-dev,.sd-bot .bubble .bn';
+  const AMBIENT_MS = 2000;
+  const visible = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.bottom > 56 && r.top < innerHeight && r.right > 0 && r.left < innerWidth && getComputedStyle(el).visibility !== 'hidden'; };
+  function pulse(el, ratio, dur) {
+    if (timers.has(el)) return;
+    const nodes = textNodes(el).map(n => ({ n, t: n.nodeValue })); if (!nodes.length) return;
+    const bad = nodes.map(x => [...x.t].map(c => !/\s/.test(c) && Math.random() < ratio));
+    const restore = () => nodes.forEach(x => { if (x.n.nodeValue !== x.t) x.n.nodeValue = x.t; });
+    const st = { raf: 0, restore }, t0 = performance.now(); let last = 0;
+    timers.set(el, st); el.classList.add('fx-hit');
+    const end = () => { restore(); el.classList.remove('fx-hit'); timers.delete(el); };
+    const frame = now => {
+      if (now - t0 > dur) return end();
+      if (now - last > 55) {
+        last = now;
+        nodes.forEach((x, k) => { x.n.nodeValue = [...x.t].map((c, i) => bad[k][i] ? POOL[(Math.random() * POOL.length) | 0] : c).join(''); });
+      }
+      st.raf = requestAnimationFrame(frame);
+    };
+    st.raf = requestAnimationFrame(frame);
+  }
+  function ambient() {
+    if (off() || document.hidden) return;
+    const a = document.activeElement; if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+    if (document.querySelector('#simload:not([hidden])')) return;
+    const list = [...document.querySelectorAll(AMBIENT)].filter(el => visible(el) && !el.querySelector('input,textarea,select') && !timers.has(el));
+    if (!list.length) return;
+    const pick = () => list.splice((Math.random() * list.length) | 0, 1)[0];
+    const n = Math.random() < 0.3 ? 2 : 1;
+    for (let i = 0; i < n && list.length; i++) {
+      const el = pick(), r = Math.random();
+      if (r < 0.6) pulse(el, 0.3, 420);                     /* a few characters glitch */
+      else if (r < 0.85) pulse(el, 0.7, 320);               /* heavy corruption */
+      else scramble(el, { dur: 700 });                      /* full decode */
+    }
+  }
+  setInterval(ambient, AMBIENT_MS);
+
   const seen = new WeakSet();
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { io.unobserve(e.target); scramble(e.target, { dur: 650 }); }
@@ -102,6 +141,6 @@
   }
 
   window.MBALAB = window.MBALAB || {};
-  MBALAB.fx = { scramble, type, cancel };
+  MBALAB.fx = { scramble, type, cancel, pulse };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
