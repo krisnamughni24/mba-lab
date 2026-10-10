@@ -1,3 +1,5 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* Core: theme variables, element defaults, glassmorphism layers, dialog base (.ov/.mw), animations.
    Layers are intentionally ordered (earlier = older style that later ones override). */
 :root{--bg:#f5f7fa;--card:#fff;--ink:#12233f;--mut:#5b6b82;--line:#dde3ec;--navy:#12233f;--teal:#0f9d8a;--org:#e8772e;--red:#d33f49;--blue:#2f6fdb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -73,3 +75,4 @@ body.still .hero>*,body.still .nav,body.still .hero>.cta,body.still .feat div{an
 .sl-dev{margin-top:14px;font-size:12px;opacity:.75;letter-spacing:.04em}
 @keyframes slSpin{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.08)}}
 body.still .sl-logo{animation:none}
+}

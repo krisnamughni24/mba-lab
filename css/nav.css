@@ -1,5 +1,7 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* Top navigation bar, pills and the floating Info / Idea buttons */
-.dn{position:fixed;top:10px;right:14px;z-index:30;width:64px;height:30px;border-radius:999px;padding:0;display:flex;align-items:center;justify-content:space-between;font-size:14px;line-height:1;background:rgba(255,255,255,.2)!important;border:1px solid rgba(255,255,255,.5)!important;box-shadow:none!important;backdrop-filter:blur(10px);cursor:pointer;transform:none!important;text-transform:none}
+.dn{position:fixed;top:10px;right:14px;z-index:30;width:64px;height:30px;border-radius:999px;padding:0;display:flex;align-items:center;justify-content:space-between;font-size:14px;line-height:1;backdrop-filter:blur(10px);cursor:pointer;transform:none!important;text-transform:none}
 .dn span{width:30px;text-align:center;position:relative;z-index:1}
 .kn{position:absolute;top:2px;left:2px;width:28px;height:24px;border-radius:999px;background:rgba(255,255,255,.9);transition:transform .3s cubic-bezier(.3,1.3,.5,1)}
 body.day .kn{transform:translateX(32px)}
@@ -29,4 +31,5 @@ body.day .kn{transform:translateX(32px)}
 @media(max-width:640px){
   .navr{gap:4px}
   .pill{padding:0 9px}
+}
 }

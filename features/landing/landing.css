@@ -1,3 +1,5 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* Landing page */
 #landing{flex:1;overflow:auto;display:flex;flex-direction:column}
 #landing.off{display:none}
@@ -48,3 +50,4 @@
 .hero p{max-width:600px}
 .hero h1{text-shadow:0 2px 18px rgba(0,0,0,.45)}
 #landing>.hero:last-child{padding-bottom:90px;min-height:calc(100vh - 56px)}
+}

@@ -1,3 +1,5 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* About window */
 .dlgw.wide{width:min(780px,100%)}
 .about-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:0;margin:8px 0 0;list-style:none}
@@ -5,3 +7,4 @@
 .devname{font-size:16px;font-weight:700;margin:6px 0 0}
 @media(max-width:760px){.about-topics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){.about-topics{grid-template-columns:minmax(0,1fr)}}
+}

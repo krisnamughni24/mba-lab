@@ -200,3 +200,11 @@ label,.mw label,.sd label{font-family:var(--f-mono);letter-spacing:var(--track-l
 
 /* Buttons: text shows exactly as written in the strings files, in night and day. Never uppercase. */
 button,[role=button],.pill,.cta,.chip,.fab button,.camctl button,.sd button,.sd-cta{text-transform:none!important}
+
+/* Rules that used to win on specificity in the legacy stylesheets (now layered below this file, see @layer base) */
+.pill.sw,.dn{padding:0}
+.chip[aria-pressed=true]{font-weight:700}
+.sim.live{background:var(--live-bg)}
+.fld input,.fld select,.fld textarea{padding:8px 10px}
+.sbm{font-weight:700}
+.about-topics li{line-height:1.3}

@@ -1,3 +1,5 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* Share an Idea form */
 .fld{margin:10px 0}
 .fld label{display:block;font-weight:600;margin-bottom:4px}
@@ -13,3 +15,4 @@
 .unav:empty{display:none}
 .unav{margin:10px 0 0;font-weight:600}
 #ideaForm>.row{margin-top:14px}
+}

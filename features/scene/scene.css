@@ -1,3 +1,5 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* 3D stage and CSS fallback cubes */
 .stage{position:absolute;right:2vw;top:60px;width:48vw;height:calc(100vh - 140px);z-index:0;pointer-events:none}
 .scene{position:absolute;inset:0;perspective:1100px}
@@ -29,3 +31,4 @@ body.inapp .stage::after{background:rgba(var(--veil-inapp),var(--veil-inapp-a))}
 /* simulation open: the city stays visible but softly blurred */
 .stage{transition:filter .6s,transform .6s}
 body.inapp .stage{filter:blur(12px) saturate(.9) brightness(var(--stage-dim));transform:scale(1.05)}
+}

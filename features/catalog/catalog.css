@@ -1,3 +1,5 @@
+/* legacy layer: always loses to the unlayered theme in css/cyber.css, whatever the stylesheet load order */
+@layer base{
 /* Simulation catalog window */
 #modal{position:fixed;inset:0;background:rgba(10,10,40,.5);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
 #modal.on{display:flex}
@@ -25,3 +27,4 @@
 .chip[aria-pressed=true]{background:rgba(255,255,255,.38);font-weight:700;border-color:rgba(255,255,255,.8)}
 .cat{font-size:11px;opacity:.75}
 .sim.soon{cursor:default}
+}
