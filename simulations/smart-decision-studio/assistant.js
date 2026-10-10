@@ -43,7 +43,7 @@
   window.SmartAssistant = {
     create(host, ctx) {
       const root = host.querySelector('#sd'); if (!root || root.querySelector('.sd-bot')) return;
-      const reduced = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduced = () => document.body.classList.contains('still');
       const bot = document.createElement('div');
       bot.className = 'sd-bot';
       bot.innerHTML = '<div class="bubble" role="status" aria-live="polite" hidden><button type="button" class="bx" data-bclose></button><div class="bn"></div><p class="bt"></p><button type="button" class="bh" data-bhide></button></div>' +

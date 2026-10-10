@@ -91,6 +91,49 @@ MBALAB.feature('audio', () => {
     FX[name].forEach(([f, o, d, k, v, g]) => blip(f, at + o, d, k, v, g));
   };
 
+  /* ---------- typing sound: soft mechanical tick for every key pressed in a text field ---------- */
+  let lastKey = 0;
+  const keyTick = e => {
+    if (!state.sfx || e.ctrlKey || e.metaKey || e.altKey) return;
+    const el = e.target; if (!el || !(el.matches && el.matches('input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=button]),textarea,[contenteditable=true]'))) return;
+    const k = e.key, printable = k.length === 1, edit = k === 'Backspace' || k === 'Delete', enter = k === 'Enter';
+    if (!printable && !edit && !enter) return;
+    const now = performance.now(); if (now - lastKey < 28) return; lastKey = now;
+    if (!ensure()) return;
+    const at = ctx.currentTime + .002, j = 1 + (Math.random() - .5) * .22;
+    if (k === ' ') { blip(260 * j, at, .07, 'sine', .12, 150); blip(1500 * j, at, .02, 'sine', .04); }
+    else if (enter) { blip(190, at, .1, 'sine', .15, 120); blip(1900, at + .01, .05, 'bell', .05); }
+    else if (edit) { blip(900 * j, at, .045, 'triangle', .07, 520); }
+    else { blip(2300 * j, at, .03, 'sine', .07, 1500 * j); blip(420 * j, at, .035, 'sine', .08, 260); }
+  };
+  document.addEventListener('keydown', keyTick, true);
+
+  /* ---------- loading sound: a rising synth swell that fades in while a simulation loads ---------- */
+  let loadSnd = null;
+  const loadEnd = quiet => {
+    const s = loadSnd; if (!s) return; loadSnd = null;
+    clearInterval(s.iv);
+    try { s.g.gain.cancelScheduledValues(ctx.currentTime); s.g.gain.setTargetAtTime(.0001, ctx.currentTime, .12); } catch (e) {}
+    setTimeout(() => s.nodes.forEach(n => { try { n.disconnect(); } catch (e) {} }), 900);
+    if (!quiet) play('ok');
+  };
+  const loadStart = ms => {
+    if (!state.sfx || !ensure()) return;
+    loadEnd(true);
+    const at = ctx.currentTime + .02, dur = ms / 1000, t0 = performance.now();
+    const g = ctx.createGain(), f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = 4;
+    f.frequency.setValueAtTime(160, at); f.frequency.exponentialRampToValueAtTime(3000, at + dur);
+    g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(.1, at + dur * .92);   // fade in
+    const o1 = osc('sawtooth', 55, at, at + dur + 2, -7), o2 = osc('sawtooth', 55, at, at + dur + 2, 7), o3 = osc('sine', 110, at, at + dur + 2);
+    [o1, o2, o3].forEach(o => { o.frequency.exponentialRampToValueAtTime(o === o3 ? 220 : 110, at + dur); o.connect(f); });
+    f.connect(g); g.connect(sfxBus); g.connect(sfxVerb);
+    const iv = setInterval(() => {                                        // data-stream blips that climb with progress
+      const p = Math.min(1, (performance.now() - t0) / ms);
+      blip(700 + p * 2200 + Math.random() * 500, ctx.currentTime + .005, .05, 'sine', .025 + .035 * p);
+    }, 150);
+    loadSnd = { g, iv, nodes: [g, f, o1, o2, o3] };
+  };
+
   /* ---------- music ---------- */
   /* chord = pad notes (MIDI); bass = bass root. 4-bar cycle. */
   const NIGHT = { bpm: 96, kick: [0, 8, 10], snare: [12], chords: [
@@ -242,6 +285,6 @@ MBALAB.feature('audio', () => {
   ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, firstGesture, { once: true }));
 
   MBALAB.on('lang', refreshButtons);
-  MBALAB.audio = { play, state, setMusic, setSfx };
+  MBALAB.audio = { play, state, setMusic, setSfx, loadStart, loadEnd };
   refreshButtons();
 });

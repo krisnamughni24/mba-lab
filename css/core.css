@@ -89,9 +89,7 @@ body.day .camctl,body.day .fab button{background:rgba(255,255,255,.66);border-co
 .mw h4{margin:14px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.07em;opacity:.85}
 .mw p{margin:6px 0}
 .mw code{background:rgba(255,255,255,.18);padding:0 4px;border-radius:4px}
-@media(prefers-reduced-motion:reduce){
-  .hero>*,.nav,body::before,body::after,.hero>.cta,.feat div{animation:none!important}
-}
+body.still .hero>*,body.still .nav,body.still .hero>.cta,body.still .feat div{animation:none!important}
 /* Simulation host (#app): container for whichever simulation is open */
 #app{display:none;flex:1;min-height:0;flex-direction:column}
 #app.on{display:flex}
@@ -115,4 +113,4 @@ body.day .sl-bar{background:rgba(16,32,63,.14)}
 .sl-pct{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
 .sl-dev{margin-top:14px;font-size:12px;opacity:.75;letter-spacing:.04em}
 @keyframes slSpin{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.08)}}
-@media(prefers-reduced-motion:reduce){.sl-logo{animation:none}}
+body.still .sl-logo{animation:none}

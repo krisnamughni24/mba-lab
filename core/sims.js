@@ -54,6 +54,7 @@
     let total = m ? ((m.scripts || []).length + (m.styles || []).length) || 1 : 1, got = 0, ready = false, failed = null;
     const shown = { v: 0 }, t0 = performance.now();
     const set = v => { const p = Math.round(v); fill.style.width = p + '%'; pct.textContent = p + '%'; bar.setAttribute('aria-valuenow', p); };
+    MBALAB.audio && MBALAB.audio.loadStart && MBALAB.audio.loadStart(minMs);
     set(0); screen.hidden = false; void screen.offsetWidth; screen.classList.add('on');
     const work = load(id, () => { got++; }).then(() => { ready = true; }, e => { failed = e; ready = true; });
     await new Promise(res => {
@@ -70,6 +71,7 @@
       requestAnimationFrame(tick);
     });
     await work;
+    MBALAB.audio && MBALAB.audio.loadEnd && MBALAB.audio.loadEnd(!!failed);
     await new Promise(r => setTimeout(r, 180));        // let the 100% register
     return { hide() { screen.classList.remove('on'); setTimeout(() => { screen.hidden = true; }, 300); }, failed };
   };

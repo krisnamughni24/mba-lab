@@ -148,7 +148,7 @@ h1,h2,h3,h4,.brand,.sl-name,.cta{text-wrap:balance}
 .sim:hover b{text-shadow:0 0 12px rgba(77,210,255,.7)}
 body.day .mw h3,body.day .how h3{text-shadow:none}
 body.nomo .hero h1,body.nomo .hero .tag::after{animation:none}
-@media(prefers-reduced-motion:reduce){.hero h1,.hero .tag::after{animation:none!important}}
+body.still .hero h1,body.still .hero .tag::after,body.still .fx-hit{animation:none!important}
 .fx-typing::after{content:"\258C";margin-left:2px;color:var(--cy);animation:cyCaret .6s steps(1) infinite}
 /* ambient glitch hit: RGB split + a tiny horizontal jolt */
 .fx-hit{animation:cyHit .45s steps(3) 1}

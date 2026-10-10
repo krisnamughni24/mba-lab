@@ -11,7 +11,7 @@
       const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
       const f = (x, d = 2) => Number(x).toFixed(d);
       const sv = v => Number.isFinite(v) ? v : '';
-      const reduced = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduced = () => document.body.classList.contains('still');
       const MAXN = 8;
 
       /* ---------- model ---------- */

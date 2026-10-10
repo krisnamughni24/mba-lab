@@ -14,6 +14,7 @@ MBALAB.feature('theme', () => {
 
   const setMotion = p => {
     paused = p;
+    document.body.classList.toggle('still', p);   // also stills typography effects and the assistant
     window.cityPause && window.cityPause(p);
     $('moi').textContent = p ? '▶' : '⏸';
     $('mol').textContent = t(p ? 'play' : 'pause');

@@ -1,7 +1,7 @@
 /* Kinetic typography: text "decode" (scramble) reveals, typewriter, hover glitch.
    Everything is automatic: it watches the page and animates headlines when they appear (new language, new screen,
    dialog opened, scrolled into view). To animate something yourself: MBALAB.fx.scramble(el), MBALAB.fx.type(el).
-   To tune it, edit the selector lists and timings below. Disabled by "Pause" and by prefers-reduced-motion. */
+   To tune it, edit the selector lists and timings below. Switched off by the Pause button. */
 (() => {
   const POOL = '!<>-_\\/[]{}=+*^?#%&01';
   /* animate when they APPEAR (added to the page) */
@@ -10,8 +10,8 @@
   const ON_VIEW = '.how h3,.step b,.feat div b';
   /* animate on HOVER (short glitch) */
   const ON_HOVER = '.cta,.brand,.sim.live b,.chip,.sd-steps .st button .l';
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const off = () => reduced.matches || document.body.classList.contains('nomo');
+  /* only the in-app Pause button (body.still) switches these effects off; the OS reduce-motion setting is not used */
+  const off = () => document.body.classList.contains('still') || document.body.classList.contains('nomo');
   const timers = new WeakMap();
 
   const textNodes = el => { const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), a = []; let n; while ((n = w.nextNode())) if (n.nodeValue.trim()) a.push(n); return a; };

@@ -177,7 +177,7 @@ body.day .sd-toast{background:rgba(255,255,255,.92);color:#10203f}
 @keyframes sdGrow{from{width:0}}
 @keyframes sdToast{from{opacity:0;transform:translateX(30px)}}
 @keyframes sdShake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
-@media(prefers-reduced-motion:reduce){.sd *{animation:none!important;transition:none!important}.sd .rk{opacity:1}}
+body.still .sd *{animation:none!important;transition:none!important}body.still .sd .rk{opacity:1}
 
 /* spreadsheet-style model table */
 .sd table.grid{border-collapse:collapse;border:2px solid var(--grid);min-width:560px}
@@ -309,7 +309,7 @@ body.day .sd-guide .gtip{background:rgba(37,99,235,.1)}
 @keyframes botWave{0%,100%{transform:rotate(0)}50%{transform:rotate(-70deg)}}
 @keyframes botBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
 @keyframes botAnt{50%{opacity:.35}}
-@media(prefers-reduced-motion:reduce){.sd-bot *{animation:none!important}}
+body.still .sd-bot *{animation:none!important}
 
 /* ===== Cyberpunk skin: same palette as the 3D city and css/cyber.css (edit the variables on .sd to recolour) ===== */
 .sd{--g1:#4dd2ff;--g2:#ff6ad5;--panel:rgba(5,9,30,.8);--panel-b:rgba(77,210,255,.4);--grid:rgba(77,210,255,.3);--field:rgba(2,6,24,.6);--fg:#e6f6ff;--fg2:rgba(200,228,255,.74);font-family:var(--f-ui,"Chakra Petch",system-ui,sans-serif)}
