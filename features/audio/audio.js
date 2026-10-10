@@ -4,6 +4,8 @@
    - UI sounds: short sine/bell blips. Buttons choose their sound with data-sfx="open|close|lang|theme|..." (default: click).
    - Two toggles in the top bar (music, sound). Choices are remembered. Browsers only allow audio after a user gesture. */
 MBALAB.feature('audio', () => {
+  /* Mix levels (0..1): music sits quieter than the UI sounds so clicks stay clear. Tune these two numbers. */
+  const MUSIC_LEVEL = .3, SFX_LEVEL = .8;
   const ICON_MUSIC = '<svg viewBox="0 0 24 24" aria-hidden="true"><g class="ic">' +
     '<line class="eq" x1="4" y1="10" x2="4" y2="14"/><line class="eq" x1="8" y1="6" x2="8" y2="18"/><line class="eq" x1="12" y1="3" x2="12" y2="21"/>' +
     '<line class="eq" x1="16" y1="7" x2="16" y2="17"/><line class="eq" x1="20" y1="10.5" x2="20" y2="13.5"/></g>' +
@@ -44,7 +46,7 @@ MBALAB.feature('audio', () => {
       comp.threshold.value = -20; comp.ratio.value = 3; comp.attack.value = .01; comp.release.value = .25;
       comp.connect(ctx.destination);
       master = ctx.createGain(); master.gain.value = .9; master.connect(comp);
-      sfxBus = ctx.createGain(); sfxBus.gain.value = .55; sfxBus.connect(master);
+      sfxBus = ctx.createGain(); sfxBus.gain.value = SFX_LEVEL; sfxBus.connect(master);
       impulse = makeImpulse(2.6, 2.4);
       sfxVerb = ctx.createConvolver(); sfxVerb.buffer = impulse;
       const sv = ctx.createGain(); sv.gain.value = .28; sfxVerb.connect(sv); sv.connect(sfxBus);
@@ -194,7 +196,7 @@ MBALAB.feature('audio', () => {
   const startMusic = () => {
     if (timer || !ensure()) return;
     session = newSession();
-    session.bus.gain.setTargetAtTime(.6, ctx.currentTime, .5);        // fade in
+    session.bus.gain.setTargetAtTime(MUSIC_LEVEL, ctx.currentTime, .5);        // fade in
     nextTime = ctx.currentTime + .12; step = 0; bar = 0;
     timer = setInterval(schedule, 80);
   };
