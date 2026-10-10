@@ -1,6 +1,6 @@
-/* SMART Decision Studio: a three-part game.
-   Part 1 build the model (alternatives, weighted attributes, ratings) -> Part 2 predict and reveal the ranking
-   -> Part 3 stress-test the winner (sensitivity). XP, levels and badges reward each step.
+/* SMART Decision Studio: four guided parts.
+   1 Build the model (table of alternatives x weighted attributes) -> 2 Ranking -> 3 Stress-test (sensitivity chart)
+   -> 4 Conclusion written from the user's own model, with PDF / HTML / Markdown download.
    Deterministic math:  V_j = sum_i w_i v_ij ;  V_j(x) = (sum_{i!=k} W_i v_ij + x v_kj) / (S + x) ;
    crossover x* = (A_b - A_a) / (v_ka - v_kb). */
 (() => {
@@ -56,66 +56,19 @@
         return S.alts.map((n, j) => ({ j, n: aName(j), V: S.attrs.reduce((s, a, i) => s + a.w / T * S.m[j][i], 0) }));
       }
       const ranked = () => scores().sort((a, b) => b.V - a.V);
+      const G = { stage: 0, drilled: null, k: null, example: false, busy: false };
 
-      /* ---------- game state ---------- */
-      const G = { xp: 0, stage: 0, pred: null, revealed: false, done: {}, badges: {}, flipped: false, k: null, drilled: null };
-      const BADGES = [['builder', '🛠️'], ['oracle', '🔮'], ['detective', '🔍'], ['flipper', '🌀'], ['explorer', '🧭']];
-      const STEP = 40; // XP per level, max level 5
-      const level = () => Math.min(5, Math.floor(G.xp / STEP) + 1);
-
-      function renderHud(pulse) {
-        const lv = level();
-        q('sdLvl').textContent = t('lvl', { n: lv }) + ' · ' + t('lv' + lv);
-        q('sdXp').style.width = (lv >= 5 ? 100 : (G.xp % STEP) / STEP * 100) + '%';
-        q('sdXpT').textContent = t('xpT', { n: G.xp });
-        q('sdBadges').innerHTML = BADGES.map(([id, ic]) =>
-          `<span class="bdg${G.badges[id] ? ' on' : ''}" title="${esc(t('b_' + id) + ': ' + t('bd_' + id))}">${ic}</span>`).join('');
-        if (pulse) { const el = q('sdXp').parentNode; el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
-      }
-      function gain(n) {
-        const before = level();
-        G.xp += n;
-        toast(t('xpGain', { n }), 'xp');
-        renderHud(true);
-        if (level() > before) { toast(t('lvUp', { l: t('lv' + level()) }), 'lv'); confetti(60); }
-      }
-      const award = (key, xp) => { if (!G.done[key]) { G.done[key] = 1; gain(xp); } };
-      function badge(id) {
-        if (G.badges[id]) return;
-        G.badges[id] = 1;
-        renderHud(true);
-        toast(t('badgeUnl', { b: t('b_' + id) }), 'badge');
-        confetti(40);
-      }
+      /* ---------- small UI helpers ---------- */
       function toast(msg, kind, undo) {
         const el = document.createElement('div');
         el.className = 'sd-toast ' + (kind || '');
-        el.innerHTML = '<span>' + esc(msg) + '</span>' + (undo ? `<button type="button" data-undo>${esc(t('undo'))}</button>` : '');
+        el.innerHTML = '<span>' + esc(msg) + '</span>' + (undo ? `<button type="button">${esc(t('undo'))}</button>` : '');
         if (undo) el.querySelector('button').onclick = () => { undo(); el.remove(); };
         q('sdToasts').appendChild(el);
-        while (q('sdToasts').children.length > 4) q('sdToasts').firstChild.remove();
-        setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 350); }, undo ? 5500 : 2600);
+        while (q('sdToasts').children.length > 3) q('sdToasts').firstChild.remove();
+        setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 350); }, undo ? 5500 : 2800);
       }
-
-      /* ---------- effects ---------- */
-      let parts = [], raf = 0;
-      function confetti(n = 80) {
-        if (reduced()) return;
-        const c = q('sdFx'), r = host.getBoundingClientRect();
-        c.width = r.width; c.height = r.height;
-        const cols = COL.concat(['#ffffff']);
-        for (let i = 0; i < n; i++) parts.push({ x: r.width / 2 + (Math.random() - .5) * 160, y: r.height * .35, vx: (Math.random() - .5) * 11, vy: -Math.random() * 11 - 3, s: 4 + Math.random() * 5, r: Math.random() * 6, vr: (Math.random() - .5) * .4, c: cols[i % cols.length], l: 1 });
-        if (!raf) raf = requestAnimationFrame(tick);
-      }
-      function tick() {
-        const c = q('sdFx'), x = c.getContext('2d');
-        x.clearRect(0, 0, c.width, c.height);
-        parts = parts.filter(p => p.l > 0 && p.y < c.height + 20);
-        parts.forEach(p => { p.vy += .32; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.r += p.vr; p.l -= .004; x.save(); x.globalAlpha = Math.min(1, p.l * 2); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); x.restore(); });
-        raf = parts.length ? requestAnimationFrame(tick) : 0;
-        if (!parts.length) x.clearRect(0, 0, c.width, c.height);
-      }
-      function countUp(el, to, ms = 900) {
+      function countUp(el, to, ms = 800) {
         if (reduced()) { el.textContent = f(to); return; }
         const t0 = performance.now();
         const step = now => { const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3); el.textContent = f(to * e); if (p < 1 && el.isConnected) requestAnimationFrame(step); };
@@ -124,35 +77,28 @@
       function shake(el) { if (!el) return; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
 
       /* ---------- stepper ---------- */
-      const unlocked = n => n === 0 || (n === 1 && complete()) || (n === 2 && complete() && G.revealed);
+      const unlocked = n => n === 0 || complete();
       function renderSteps() {
-        q('sdSteps').innerHTML = [0, 1, 2].map(n => {
-          const st = G.stage === n ? 'active' : (G.stage > n || (n === 0 && complete() && G.stage > 0) ? 'done' : (unlocked(n) ? 'open' : 'locked'));
-          const done = (n === 0 && complete()) || (n === 1 && G.revealed) || (n === 2 && G.flipped);
-          return `<li class="st ${st}${done ? ' ok' : ''}"><button type="button" data-go="${n}" ${unlocked(n) ? '' : 'aria-disabled="true"'} ${G.stage === n ? 'aria-current="step"' : ''}>
-            <span class="n">${done && G.stage !== n ? '✓' : n + 1}</span><span class="l"><small>${esc(t('partN', { n: n + 1 }))}</small>${esc(t('stp' + (n + 1)))}</span></button></li>`;
+        q('sdSteps').innerHTML = [0, 1, 2, 3].map(n => {
+          const st = G.stage === n ? 'active' : (unlocked(n) ? (n < G.stage ? 'done' : 'open') : 'locked');
+          return `<li class="st ${st}"><button type="button" data-go="${n}" ${unlocked(n) ? '' : 'aria-disabled="true"'} ${G.stage === n ? 'aria-current="step"' : ''}>
+            <span class="n">${n < G.stage && unlocked(n) ? '✓' : n + 1}</span><span class="l"><small>${esc(t('partN', { n: n + 1 }))}</small>${esc(t('stp' + (n + 1)))}</span></button></li>`;
         }).join('');
       }
-
-      /* ---------- stage router ---------- */
       function go(n, anim = true) {
-        if (n === 1 && !complete()) { toast(t('lockHint'), 'warn'); shake(q('next1')); return; }
-        if (n === 2 && !G.revealed) { toast(t('revealFirst'), 'warn'); return; }
+        if (n > 0 && !complete()) { toast(t('lockHint'), 'warn'); shake(q('next1')); return; }
         const dir = n >= G.stage ? 1 : -1;
-        G.stage = n;
-        renderSteps();
-        renderStage(anim ? dir : 0);
-        const st = q('sdStage'); st.scrollTop = 0;
+        G.stage = n; renderSteps(); renderStage(anim ? dir : 0);
+        q('sdStage').scrollTop = 0;
       }
       function renderStage(dir) {
         const st = q('sdStage');
-        st.innerHTML = [stage1, stage2, stage3, stageDone][G.stage]();
-        st.firstElementChild.classList.remove('in-l', 'in-r');
+        st.innerHTML = [stage1, stage2, stage3, stage4][G.stage]();
         if (dir && !reduced()) st.firstElementChild.classList.add(dir > 0 ? 'in-r' : 'in-l');
-        [bind1, bind2, bind3, bindDone][G.stage]();
+        [bind1, bind2, bind3, bind4][G.stage]();
       }
 
-      /* ---------- Part 1: build ---------- */
+      /* ---------- Part 1: build (spreadsheet-style table) ---------- */
       function stage1() {
         return `<div class="sd-p1">
   <section class="sd-card">
@@ -161,12 +107,12 @@
       <button type="button" data-act="addA">${esc(t('addA'))}</button>
       <button type="button" data-act="addK">${esc(t('addK'))}</button>
       <span class="grow"></span>
-      <button type="button" class="ex${Object.keys(G.badges).length || G.done.ck1 ? '' : ' hot'}" data-act="example" title="${esc(t('exampleTip'))}">📋 ${esc(t('example'))}</button>
+      <button type="button" class="ex${G.example ? '' : ' hot'}" data-act="example" title="${esc(t('exampleTip'))}">📋 ${esc(t('example'))}</button>
       <button type="button" data-act="reset" title="${esc(t('resetTip'))}">↺ ${esc(t('reset'))}</button>
     </div>
-    <div class="sc"><table id="mx"></table></div>
+    <div class="sc"><table class="grid" id="mx"></table></div>
     <p class="warn" id="msg"></p>
-    <p class="note" id="demoNote" hidden>${t('s1n')}</p>
+    <p class="note" id="demoNote" ${G.example ? '' : 'hidden'}>${t('s1n')}</p>
   </section>
   <aside class="sd-card sd-quest">
     <h3>🎯 ${esc(t('quest'))}</h3>
@@ -178,16 +124,18 @@
 </div>`;
       }
       function renderMx() {
-        let h = '<tr><th>' + esc(t('thAlt')) + '</th>' + S.attrs.map((a, i) =>
-          `<th><span class="dot" style="background:${COL[i % 8]}"></span><input class="nm" value="${esc(a.n)}" data-an="${i}" placeholder="${esc(t('phAttr'))}" aria-label="${esc(t('phAttr'))} ${i + 1}"><button type="button" class="x" data-dk="${i}" title="${esc(t('delAttr'))}" aria-label="${esc(t('delAttr'))}">✕</button></th>`).join('') + '<th></th></tr>';
-        h += `<tr><td><b>${esc(t('rawW'))}</b></td>` + S.attrs.map((a, i) => `<td><input type="number" min="0" value="${sv(a.w)}" data-w="${i}" aria-label="${esc(t('rawW'))} ${i + 1}"></td>`).join('') + '<td></td></tr>';
-        h += `<tr class="nrm"><td>${esc(t('normW'))}</td>` + S.attrs.map((a, i) => `<td data-nw="${i}"></td>`).join('') + '<td></td></tr>';
+        const N = S.attrs.length;
+        let h = `<thead><tr><th class="corner" rowspan="2">${esc(t('tblCorner'))}</th><th class="grp" colspan="${N}">${esc(t('attrsGrp'))}</th><th class="act" rowspan="2"></th></tr><tr>` +
+          S.attrs.map((a, i) => `<th class="ah"><span class="cell"><span class="dot" style="background:${COL[i % 8]}"></span><input class="nm" value="${esc(a.n)}" data-an="${i}" placeholder="${esc(t('phAttr'))} ${i + 1}" aria-label="${esc(t('phAttr'))} ${i + 1}"><button type="button" class="x" data-dk="${i}" title="${esc(t('delAttr'))}" aria-label="${esc(t('delAttr'))}">✕</button></span></th>`).join('') + '</tr></thead><tbody>';
+        h += `<tr class="wr"><th scope="row">${esc(t('rawW'))}</th>` + S.attrs.map((a, i) => `<td><input type="number" min="0" value="${sv(a.w)}" data-w="${i}" aria-label="${esc(t('rawW'))} ${i + 1}"></td>`).join('') + '<td class="act"></td></tr>';
+        h += `<tr class="nr"><th scope="row">${esc(t('normW'))}</th>` + S.attrs.map((a, i) => `<td data-nw="${i}"></td>`).join('') + '<td class="act"></td></tr>';
+        h += `<tr class="gr"><th colspan="${N + 2}">${esc(t('rateGrp'))}</th></tr>`;
         S.alts.forEach((n, j) => {
-          h += `<tr><td><input class="nm" value="${esc(n)}" data-n="${j}" placeholder="${esc(t('phAlt'))}" aria-label="${esc(t('phAlt'))} ${j + 1}"></td>` +
+          h += `<tr><th scope="row" class="an"><input class="nm" value="${esc(n)}" data-n="${j}" placeholder="${esc(t('phAlt'))} ${j + 1}" aria-label="${esc(t('phAlt'))} ${j + 1}"></th>` +
             S.m[j].map((v, i) => `<td><input type="number" min="0" max="100" value="${sv(v)}" data-v="${j},${i}" aria-label="${esc(aName(j))} / ${esc(kName(i))}"></td>`).join('') +
-            `<td><button type="button" class="x" data-d="${j}" title="${esc(t('delAlt'))}" aria-label="${esc(t('delAlt'))}">✕</button></td></tr>`;
+            `<td class="act"><button type="button" class="x" data-d="${j}" title="${esc(t('delAlt'))}" aria-label="${esc(t('delAlt'))}">✕</button></td></tr>`;
         });
-        q('mx').innerHTML = h;
+        q('mx').innerHTML = h + '</tbody>';
         updateNorm();
       }
       function updateNorm() {
@@ -197,69 +145,50 @@
       }
       function updateChecklist() {
         if (G.stage !== 0) return;
-        const c = checks();
-        let n = 0;
+        const c = checks(); let n = 0;
         Object.keys(c).forEach(k => {
           const li = host.querySelector(`#ck [data-c="${k}"]`); if (!li) return;
           if (c[k]) n++;
           const was = li.classList.contains('ok');
           li.classList.toggle('ok', c[k]);
           if (c[k] && !was) { li.classList.remove('pop'); void li.offsetWidth; li.classList.add('pop'); }
-          if (c[k]) award(k, 10);
         });
         q('ckBar').style.width = n * 25 + '%';
-        const ok = n === 4;
-        const b = q('next1'); b.classList.toggle('ready', ok); b.setAttribute('aria-disabled', ok ? 'false' : 'true');
-        q('lockHint').style.visibility = ok ? 'hidden' : 'visible';
-        if (ok && !G.badges.builder) { badge('builder'); toast(t('ckDone'), 'lv'); }
+        const b = q('next1'); b.classList.toggle('ready', n === 4); b.setAttribute('aria-disabled', n === 4 ? 'false' : 'true');
+        q('lockHint').style.visibility = n === 4 ? 'hidden' : 'visible';
         renderSteps();
       }
       function bind1() { renderMx(); updateChecklist(); }
-      function afterStruct(focusSel) {
-        renderMx(); updateChecklist();
-        if (focusSel) { const el = host.querySelector(focusSel); if (el) el.focus(); }
-      }
-      function snapshotToast(msg, snap) {
-        toast(msg, '', () => { S = snap; q('demoNote').hidden = true; afterStruct(); });
-      }
+      function afterStruct(focusSel) { renderMx(); updateChecklist(); if (focusSel) { const el = host.querySelector(focusSel); if (el) el.focus(); } }
+      const snapshotToast = (msg, snap) => toast(msg, '', () => { S = snap; afterStruct(); });
       const ACT = {
         addA() { if (S.alts.length >= MAXN) { toast(t('maxItems'), 'warn'); return; } S.alts.push(''); S.m.push(S.attrs.map(() => NaN)); afterStruct(`[data-n="${S.alts.length - 1}"]`); },
         addK() { if (S.attrs.length >= MAXN) { toast(t('maxItems'), 'warn'); return; } S.attrs.push({ n: '', w: NaN }); S.m.forEach(r => r.push(NaN)); afterStruct(`[data-an="${S.attrs.length - 1}"]`); },
-        example() { const snap = clone(S); S = EX(); q('demoNote').hidden = false; afterStruct(); snapshotToast(t('exLoaded'), snap); badge('explorer'); },
-        reset() { const snap = clone(S); S.alts = S.alts.map(() => ''); S.attrs = S.attrs.map(() => ({ n: '', w: NaN })); S.m = S.m.map(r => r.map(() => NaN)); G.drilled = null; q('demoNote').hidden = true; afterStruct(); snapshotToast(t('cleared'), snap); },
+        example() { const snap = clone(S); S = EX(); G.example = true; q('demoNote').hidden = false; host.querySelector('.ex').classList.remove('hot'); afterStruct(); snapshotToast(t('exLoaded'), snap); },
+        reset() { const snap = clone(S); S.alts = S.alts.map(() => ''); S.attrs = S.attrs.map(() => ({ n: '', w: NaN })); S.m = S.m.map(r => r.map(() => NaN)); G.drilled = null; G.example = false; q('demoNote').hidden = true; afterStruct(); snapshotToast(t('cleared'), snap); },
         go2() { go(1); }
       };
       function delAlt(j) {
         if (S.alts.length <= 2) { toast(t('minAlts'), 'warn'); shake(host.querySelector(`[data-d="${j}"]`)); return; }
-        const snap = clone(S), nm = aName(j);
-        S.alts.splice(j, 1); S.m.splice(j, 1); afterStruct(); snapshotToast(t('removed', { n: nm }), snap);
+        const snap = clone(S), nm = aName(j); S.alts.splice(j, 1); S.m.splice(j, 1); afterStruct(); snapshotToast(t('removed', { n: nm }), snap);
       }
       function delAttr(i) {
         if (S.attrs.length <= 2) { toast(t('minAttrs'), 'warn'); shake(host.querySelector(`[data-dk="${i}"]`)); return; }
-        const snap = clone(S), nm = kName(i);
-        S.attrs.splice(i, 1); S.m.forEach(r => r.splice(i, 1)); afterStruct(); snapshotToast(t('removed', { n: nm }), snap);
+        const snap = clone(S), nm = kName(i); S.attrs.splice(i, 1); S.m.forEach(r => r.splice(i, 1)); afterStruct(); snapshotToast(t('removed', { n: nm }), snap);
       }
 
-      /* ---------- Part 2: predict and reveal ---------- */
+      /* ---------- Part 2: ranking ---------- */
       function stage2() {
-        if (!G.revealed) {
-          return `<div class="sd-p2"><section class="sd-card sd-predict">
-  <div class="sd-h"><h2>${esc(t('m2h'))}</h2><p>${esc(t('predQ'))}</p></div>
-  <div class="sd-pick">${S.alts.map((n, j) => `<button type="button" class="pk${G.pred === j ? ' sel' : ''}" data-pk="${j}" style="--c:${COL[j % 8]}"><span class="dot"></span>${esc(aName(j))}</button>`).join('')}</div>
-  <div class="sd-foot"><button type="button" data-act="back1">${esc(t('back'))}</button><span class="grow"></span><button type="button" class="sd-cta${G.pred != null ? ' ready' : ''}" id="rev" data-act="reveal" ${G.pred == null ? 'aria-disabled="true"' : ''}>🎲 ${esc(t('revealBtn'))}</button></div>
-</section></div>`;
-        }
-        const r = ranked(), top = r[0].V, TW = totalW();
-        const medal = ['🥇', '🥈', '🥉'];
+        const r = ranked(), top = r[0].V, TW = totalW(), medal = ['🥇', '🥈', '🥉'];
         return `<div class="sd-p2"><section class="sd-card sd-rank">
   <div class="sd-h"><h2>${esc(t('m2h'))}</h2><p>${esc(t('rkHint'))}</p></div>
-  <div class="sd-win" id="win"><span class="tro">🏆</span><div><small>${esc(t('winnerLbl'))}</small><b>${esc(r[0].n)}</b></div><strong data-to="${r[0].V}">0.00</strong></div>
+  <div class="sd-win"><span class="tro">🏆</span><div><small>${esc(t('winnerLbl'))}</small><b>${esc(r[0].n)}</b></div><strong data-to="${r[0].V}">0.00</strong></div>
   <div class="lgd">${S.attrs.map((a, i) => `<span><i style="background:${COL[i % 8]}"></i>${esc(kName(i))}</span>`).join('')}</div>
-  <div class="rks" id="rks">${r.map((x, k) => {
-    const tie = k > 0 && Math.abs(x.V - top) < 1e-9 || (k === 0 && r[1] && Math.abs(r[1].V - top) < 1e-9);
-    return `<button type="button" class="rk${k === 0 ? ' top' : ''}${G.drilled === x.j ? ' sel' : ''}" data-r="${x.j}" style="--d:${k * 90}ms">
+  <div class="rks">${r.map((x, k) => {
+    const tie = (k === 0 && r[1] && Math.abs(r[1].V - top) < 1e-9) || (k > 0 && Math.abs(x.V - top) < 1e-9);
+    return `<button type="button" class="rk${k === 0 ? ' top' : ''}${G.drilled === x.j ? ' sel' : ''}" data-r="${x.j}" style="--d:${k * 80}ms">
       <span class="med">${tie ? '=1' : (medal[k] || k + 1)}</span><span class="nm">${esc(x.n)}</span>
-      <span class="bw"><span class="bs">${S.attrs.map((a, i) => `<i data-w="${(a.w / TW * S.m[x.j][i])}" style="background:${COL[i % 8]}"></i>`).join('')}</span></span>
+      <span class="bw"><span class="bs">${S.attrs.map((a, i) => `<i data-w="${a.w / TW * S.m[x.j][i]}" style="background:${COL[i % 8]}"></i>`).join('')}</span></span>
       <b class="val" data-to="${x.V}">0.00</b><span class="vs">${f(x.V - top)}</span></button>`;
   }).join('')}</div>
   <div class="sd-drill" id="drill" aria-live="polite"></div>
@@ -268,37 +197,21 @@
 </section></div>`;
       }
       function drill(j) {
-        const T = totalW(), V = scores()[j].V;
-        G.drilled = j;
+        const T = totalW(), V = scores()[j].V; G.drilled = j;
         host.querySelectorAll('.rk').forEach(b => b.classList.toggle('sel', +b.dataset.r === j));
         q('drill').innerHTML = `<h4>${esc(t('breakdown', { a: aName(j) }))}</h4>` + S.attrs.map((a, i) => {
           const c = a.w / T * S.m[j][i];
           return `<div class="dr"><span class="dn"><i style="background:${COL[i % 8]}"></i>${esc(kName(i))}</span><span class="db"><i style="width:${Math.min(100, c)}%;background:${COL[i % 8]}"></i></span><code>${f(a.w / T, 4)} × ${S.m[j][i]} = ${f(c)}</code></div>`;
         }).join('') + `<div class="dr tot"><span class="dn">${esc(t('total'))}</span><span></span><code>${f(V)}</code></div>`;
       }
-      function animateRank() {
-        host.querySelectorAll('.bs i').forEach(i => { i.style.width = '0'; });
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          host.querySelectorAll('.bs i').forEach(i => { i.style.width = Math.min(100, +i.dataset.w) + '%'; });
-        }));
-        host.querySelectorAll('[data-to]').forEach(el => countUp(el, +el.dataset.to));
-      }
       function bind2() {
-        if (G.revealed) { animateRank(); if (G.drilled != null && G.drilled < S.alts.length) drill(G.drilled); }
-      }
-      function reveal() {
-        if (G.pred == null) { toast(t('revealFirst'), 'warn'); shake(q('rev')); return; }
-        const w = ranked()[0], right = w.j === G.pred;
-        G.revealed = true;
-        renderSteps();
-        renderStage(0);
-        q('sdStage').firstElementChild.classList.add('flipin');
-        award('reveal', 20);
-        if (!G.done.pred) { G.done.pred = 1; const xp = right ? 30 : 10; gain(xp); toast(right ? t('predRight', { xp }) : t('predWrong', { w: w.n, xp }), right ? 'badge' : 'warn'); if (right) badge('oracle'); }
-        confetti(right ? 120 : 70);
+        host.querySelectorAll('.bs i').forEach(i => { i.style.width = '0'; });
+        requestAnimationFrame(() => requestAnimationFrame(() => host.querySelectorAll('.bs i').forEach(i => { i.style.width = Math.min(100, +i.dataset.w) + '%'; })));
+        host.querySelectorAll('[data-to]').forEach(el => countUp(el, +el.dataset.to));
+        if (G.drilled != null && G.drilled < S.alts.length) drill(G.drilled);
       }
 
-      /* ---------- Part 3: stress-test ---------- */
+      /* ---------- Part 3: sensitivity ---------- */
       function model(k) {
         const Wt = S.attrs.map(a => a.w), n = S.alts.length;
         const Sx = Wt.reduce((a, b, i) => i == k ? a : a + b, 0);
@@ -307,10 +220,41 @@
         const win = x => { let b = 0; for (let j = 1; j < n; j++) if (V(j, x) > V(b, x) + 1e-9) b = j; return b; };
         return { Wt, n, Sx, A, vk, V, win, bx: Wt[k] };
       }
-      function flips(k, xm) { const m = model(k), b = m.win(m.bx); for (let s = 0; s <= 200; s++) if (m.win(xm * s / 200) !== b) return true; return false; }
+      function crossovers(M, xm) {
+        const cs = [];
+        for (let a = 0; a < M.n; a++) for (let b = a + 1; b < M.n; b++) { const d = M.vk[a] - M.vk[b]; if (Math.abs(d) < 1e-12) continue; const x = (M.A[b] - M.A[a]) / d; if (x >= 0 && x <= xm) cs.push({ a, b, x }); }
+        cs.forEach(c => { const eps = Math.max(1e-6, xm * 1e-6); c.lo = M.win(Math.max(0, c.x - eps)); c.hi = M.win(c.x + eps); c.sw = c.lo != c.hi; });
+        return cs.sort((a, b) => a.x - b.x);
+      }
+      const pct = (M, x) => (M.Sx + x > 0 ? 100 * x / (M.Sx + x) : 0);
+      const flips = (k, xm) => { const m = model(k), b = m.win(m.bx); for (let s = 0; s <= 200; s++) if (m.win(xm * s / 200) !== b) return true; return false; };
+
+      /* chart: mode "screen" uses theme variables, "report" uses fixed print colours */
+      function chartSVG(k, xm, norm, cx, mode) {
+        const M = model(k), { n, Sx, A, vk, V } = M, rep = mode === 'report';
+        const C = rep ? { mut: '#64748b', line: '#e2e8f0', red: '#dc2626', teal: '#0d9488', org: '#ea580c', txt: '#0f172a' } : { mut: 'var(--mut)', line: 'var(--line)', red: 'var(--red)', teal: 'var(--teal)', org: 'var(--org)', txt: 'var(--ink)' };
+        const pal = rep ? DAYC : COL;
+        const xp = x => norm ? pct(M, x) : x;
+        const X0 = xp(0), X1 = xp(xm), px = x => 56 + 614 * (xp(x) - X0) / ((X1 - X0) || 1), py = v => 300 - 270 * v / 100;
+        let g = `<line x1=56 y1=300 x2=670 y2=300 stroke="${C.mut}"/><line x1=56 y1=30 x2=56 y2=300 stroke="${C.mut}"/>`;
+        for (let v = 0; v <= 100; v += 25) g += `<text x=48 y=${py(v) + 4} text-anchor=end font-size=11 fill="${C.mut}">${v}</text><line x1=56 x2=670 y1=${py(v)} y2=${py(v)} stroke="${C.line}"/>`;
+        for (let s = 0; s <= 4; s++) { const x = xm * s / 4; g += `<text x=${px(x)} y=318 text-anchor=middle font-size=11 fill="${C.mut}">${norm ? f(xp(x), 1) + '%' : f(x, 0)}</text>`; }
+        g += `<text x=363 y=343 text-anchor=middle font-size=12 fill="${C.mut}">${esc(norm ? t('axisNorm', { a: kName(k) }) : t('axisRaw', { a: kName(k) }))}</text>`;
+        g += `<text transform="rotate(-90 14 165)" x=14 y=165 text-anchor=middle font-size=12 fill="${C.mut}">${esc(t('yAxis'))}</text>`;
+        const cs = crossovers(M, xm);
+        cs.filter(c => c.sw).forEach(c => g += `<line x1=${px(c.x)} x2=${px(c.x)} y1=30 y2=300 stroke="${C.red}" stroke-dasharray="5 4"/>`);
+        cs.filter(c => !c.sw).forEach(c => g += `<line x1=${px(c.x)} x2=${px(c.x)} y1=200 y2=300 stroke="${C.mut}" stroke-dasharray="2 4" opacity=.5 />`);
+        for (let j = 0; j < n; j++) {
+          let d = ''; for (let s = 0; s <= 160; s++) { const x = xm * s / 160; d += (s ? 'L' : 'M') + px(x) + ',' + py(V(j, x)); }
+          g += `<path d="${d}" fill="none" stroke="${pal[j % 8]}" stroke-width=2.6 /><text x=${Math.min(px(xm) - 2, 668)} y=${py(V(j, xm)) - 4} text-anchor=end font-size=10.5 fill="${pal[j % 8]}">${esc(aName(j))}</text>`;
+        }
+        if (M.bx <= xm) g += `<line x1=${px(M.bx)} x2=${px(M.bx)} y1=30 y2=300 stroke="${C.teal}" stroke-width=2 /><text x=${px(M.bx) + 4} y=42 font-size=11 fill="${C.teal}">${esc(t('base'))}</text>`;
+        if (cx != null) g += `<line x1=${px(cx)} x2=${px(cx)} y1=30 y2=300 stroke="${C.org}" stroke-width=2 />`;
+        return g;
+      }
       function stage3() {
         if (valid()) return '<div class="sd-p3"><section class="sd-card"><p class="warn">' + esc(valid()) + '</p><div class="sd-foot"><button type="button" data-act="back1">' + esc(t('back')) + '</button></div></section></div>';
-        if (G.k == null || G.k >= S.attrs.length) { const ks = S.attrs.map((a, i) => i); G.k = ks.find(i => flips(i, 200)); if (G.k == null) G.k = 0; }
+        if (G.k == null || G.k >= S.attrs.length) { const i = S.attrs.findIndex((a, i) => flips(i, 200)); G.k = i < 0 ? 0 : i; }
         const base = model(G.k).bx;
         return `<div class="sd-p3"><section class="sd-card">
   <div class="sd-h"><h2>${esc(t('m3h'))}</h2><p class="goal">${t('flipGoal', { a: esc(kName(G.k)) })}</p></div>
@@ -321,78 +265,198 @@
   </div>
   <div class="sd-slw"><input type="range" id="sl" min="0" max="200" step="1" value="${Math.min(200, Math.round(base))}" aria-label="${esc(t('lMaxX'))}"></div>
   <div class="ldr" id="ldr" aria-live="polite"></div>
-  <div class="chw"><svg id="ch" viewBox="0 0 700 330" role="img"></svg></div>
+  <h3 class="chT" id="chT"></h3>
+  <div class="chw"><svg id="ch" viewBox="0 0 700 352" role="img"></svg></div>
   <details class="sd-more"><summary>${esc(t('moreInfo'))}</summary><p class="note">${t('s3n')}</p><div class="sc"><table id="cx"></table></div><p id="sum" class="note"></p></details>
-  <div class="sd-foot"><button type="button" data-act="back2">${esc(t('back'))}</button><span class="grow"></span><button type="button" class="sd-cta ready" data-act="finish">${esc(t('finish'))}</button></div>
+  <div class="sd-foot"><button type="button" data-act="back2">${esc(t('back'))}</button><span class="grow"></span><button type="button" class="sd-cta ready" data-act="go4">${esc(t('next3'))}</button></div>
 </section></div>`;
       }
       let lastLeader = -1;
-      function sens(user) {
+      function sens() {
         if (valid() || !q('ch')) return;
-        const k = G.k, xm = Math.max(1, +q('xm').value || 200), M = model(k), { Wt, n, Sx, A, vk, V, win } = M;
-        const norm = q('ax').value === 'norm';
-        const xp = x => norm ? (Sx + x > 0 ? 100 * x / (Sx + x) : 0) : x;
-        const X0 = xp(0), X1 = xp(xm), px = x => 50 + 620 * (xp(x) - X0) / ((X1 - X0) || 1), py = v => 300 - 270 * v / 100;
-        let g = `<line x1=50 y1=300 x2=670 y2=300 stroke="var(--mut)"/><line x1=50 y1=30 x2=50 y2=300 stroke="var(--mut)"/>`;
-        for (let v = 0; v <= 100; v += 25) g += `<text x=44 y=${py(v) + 4} text-anchor=end font-size=11 fill="var(--mut)">${v}</text><line x1=50 x2=670 y1=${py(v)} y2=${py(v)} stroke="var(--line)"/>`;
-        for (let s = 0; s <= 4; s++) { const x = xm * s / 4, lbl = norm ? f(xp(x), 1) + '%' : f(x, 0); g += `<text x=${px(x)} y=318 text-anchor=middle font-size=11 fill="var(--mut)">${lbl}</text>`; }
-        g += `<text x=360 y=332 text-anchor=middle font-size=11 fill="var(--mut)">${esc(norm ? t('axisNorm', { a: kName(k) }) : t('axisRaw', { a: kName(k) }))}</text>`;
-        const cs = [];
-        for (let a = 0; a < n; a++) for (let b = a + 1; b < n; b++) { const d = vk[a] - vk[b]; if (Math.abs(d) < 1e-12) continue; const x = (A[b] - A[a]) / d; if (x >= 0 && x <= xm) cs.push({ a, b, x }); }
-        cs.forEach(c => { const eps = Math.max(1e-6, xm * 1e-6), w1 = win(Math.max(0, c.x - eps)), w2 = win(c.x + eps); c.sw = w1 != w2; c.w1 = w1; c.w2 = w2; });
-        cs.filter(c => c.sw).forEach(c => g += `<line x1=${px(c.x)} x2=${px(c.x)} y1=30 y2=300 stroke="var(--red)" stroke-dasharray="5 4"/>`);
-        cs.filter(c => !c.sw).forEach(c => g += `<line x1=${px(c.x)} x2=${px(c.x)} y1=200 y2=300 stroke="var(--mut)" stroke-dasharray="2 4" opacity=.5 />`);
-        for (let j = 0; j < n; j++) {
-          let d = ''; for (let s = 0; s <= 160; s++) { const x = xm * s / 160; d += (s ? 'L' : 'M') + px(x) + ',' + py(V(j, x)); }
-          g += `<path d="${d}" fill="none" stroke="${COL[j % 8]}" stroke-width=2.6 />`;
-          g += `<text x=${Math.min(px(xm) - 2, 668)} y=${py(V(j, xm)) - 4} text-anchor=end font-size=10.5 fill="${COL[j % 8]}">${esc(aName(j))}</text>`;
-        }
-        const bx = M.bx;
-        if (bx <= xm) g += `<line x1=${px(bx)} x2=${px(bx)} y1=30 y2=300 stroke="var(--teal)" stroke-width=2 /><text x=${px(bx) + 4} y=42 font-size=11 fill="var(--teal)">${esc(t('base'))}</text>`;
-        const cx = +q('sl').value;
-        g += `<line x1=${px(cx)} x2=${px(cx)} y1=30 y2=300 stroke="var(--org)" stroke-width=2 />`;
-        q('ch').innerHTML = g;
-        /* leader card + flip challenge */
-        const o = [...Array(n).keys()].sort((a, b) => V(b, cx) - V(a, cx)), lead = o[0], baseLead = win(bx), can = flips(k, xm);
-        const isFlip = lead !== baseLead;
+        const k = G.k, xm = Math.max(1, +q('xm').value || 200), M = model(k), { n, Sx, V, win } = M, norm = q('ax').value === 'norm', cx = +q('sl').value;
+        q('chT').textContent = t('chartTitle', { a: kName(k) });
+        q('ch').innerHTML = chartSVG(k, xm, norm, cx, 'screen');
+        const o = [...Array(n).keys()].sort((a, b) => V(b, cx) - V(a, cx)), lead = o[0], baseLead = win(M.bx), can = flips(k, xm), isFlip = lead !== baseLead;
         const ld = q('ldr');
         ld.className = 'ldr' + (isFlip ? ' flip' : '');
         ld.innerHTML = `<div class="who"><small>${esc(t('leader'))}</small><b style="color:${COL[lead % 8]}">${esc(aName(lead))}</b><span>${f(V(lead, cx))}</span></div>
-          <div class="msg"><span class="x">x = ${cx} (${f(100 * cx / (Sx + cx), 2)}%)</span><span class="st">${isFlip ? '🌀 ' + esc(t('flipped')) : esc(can ? t('flipHint') : t('noFlip'))}</span></div>`;
+          <div class="msg"><span class="x">x = ${cx} (${f(pct(M, cx), 2)}%)</span><span class="st">${isFlip ? '🌀 ' + esc(t('flipped')) : esc(can ? t('flipHint') : t('noFlip'))}</span></div>`;
         if (lead !== lastLeader) { ld.firstElementChild.classList.remove('pop'); void ld.offsetWidth; ld.firstElementChild.classList.add('pop'); lastLeader = lead; }
-        if (user) { award('slide', 15); if (isFlip && !G.flipped) { G.flipped = true; award('flip', 40); badge('flipper'); confetti(130); renderSteps(); } }
-        const rows = cs.sort((a, b) => a.x - b.x);
+        const rows = crossovers(M, xm);
         q('cx').innerHTML = '<tr><th>' + esc(t('thAlts')) + '</th><th>' + esc(t('rawX')) + '</th><th>' + esc(t('normalized')) + '</th><th>' + esc(t('score')) + '</th><th>' + esc(t('typeH')) + '</th></tr>' +
-          (rows.length ? rows.map(c => `<tr><td>${esc(aName(c.a))} × ${esc(aName(c.b))}</td><td>${f(c.x)}</td><td>${f(100 * c.x / (Sx + c.x), 2)}%</td><td>${f(V(c.a, c.x))}</td><td>${c.sw ? esc(t('winSwitch')) : esc(t('rankCross'))}</td></tr>`).join('') : `<tr><td colspan=5>${esc(t('noCross'))}</td></tr>`);
-        const sw = rows.filter(c => c.sw), w0 = win(0);
-        q('sum').textContent = sw.length ? t('sumSw', { n: sw.length, m: xm, b: bx, w: aName(win(bx)), d: f(Math.min(...sw.map(c => Math.abs(c.x - bx)))) }) : t('sumStay', { w: aName(w0) });
+          (rows.length ? rows.map(c => `<tr><td>${esc(aName(c.a))} × ${esc(aName(c.b))}</td><td>${f(c.x)}</td><td>${f(pct(M, c.x), 2)}%</td><td>${f(V(c.a, c.x))}</td><td>${c.sw ? esc(t('winSwitch')) : esc(t('rankCross'))}</td></tr>`).join('') : `<tr><td colspan=5>${esc(t('noCross'))}</td></tr>`);
+        const sw = rows.filter(c => c.sw);
+        q('sum').textContent = sw.length ? t('sumSw', { n: sw.length, m: xm, b: M.bx, w: aName(win(M.bx)), d: f(Math.min(...sw.map(c => Math.abs(c.x - M.bx)))) }) : t('sumStay', { w: aName(win(0)) });
       }
-      function bind3() {
-        if (!q('ch')) return;
-        lastLeader = -1;
-        sens(false);
+      function bind3() { if (!q('ch')) return; lastLeader = -1; sens(); }
+
+      /* ---------- Part 4: conclusion built from the user's model ---------- */
+      function analyze() {
+        const r = ranked(), T = totalW(), w = r[0], w2 = r[1], tie = Math.abs(w.V - w2.V) < 1e-9;
+        const contrib = S.attrs.map((a, i) => ({ i, c: a.w / T * S.m[w.j][i] })).sort((a, b) => b.c - a.c);
+        const attrs = S.attrs.map((a, k) => {
+          const M = model(k), xm = Math.max(200, Math.round(5 * M.bx)), baseW = M.win(M.bx), pb = pct(M, M.bx);
+          const sw = crossovers(M, xm).filter(c => c.sw && Math.abs(c.x - M.bx) > 1e-9);
+          let best = null;
+          sw.forEach(c => { if (!best || Math.abs(c.x - M.bx) < Math.abs(best.x - M.bx)) best = c; });
+          let info = { k, pb, pctBase: pb, sw: null };
+          if (best) { const to = best.x > M.bx ? best.hi : best.lo; info.sw = { x: best.x, p: pct(M, best.x), to, diff: Math.abs(pct(M, best.x) - pb) }; }
+          return info;
+        });
+        const flipping = attrs.filter(a => a.sw), most = flipping.slice().sort((a, b) => a.sw.diff - b.sw.diff)[0] || null;
+        const lvl = !most ? 'None' : most.sw.diff < 5 ? 'High' : most.sw.diff < 15 ? 'Mid' : 'Low';
+        return { r, w, w2, tie, contrib, attrs, flipping, most, lvl };
       }
-      function stageDone() {
-        const lv = level();
-        return `<div class="sd-pdone"><section class="sd-card sd-done">
-  <div class="big">🏆</div><h2>${esc(t('doneH'))}</h2><p>${esc(t('doneT'))}</p>
-  <div class="sd-hud2"><b>${esc(t('lvl', { n: lv }) + ' · ' + t('lv' + lv))}</b><span>${esc(t('doneXp', { n: G.xp }))}</span></div>
-  <div class="sd-badges big">${BADGES.map(([id, ic]) => `<span class="bdg${G.badges[id] ? ' on' : ''}" title="${esc(t('bd_' + id))}">${ic}<small>${esc(t('b_' + id))}</small></span>`).join('')}</div>
-  <div class="sd-foot c"><button type="button" data-act="back1">${esc(t('editModel'))}</button><button type="button" class="sd-cta ready" data-act="replay">${esc(t('replay'))}</button></div>
+      function conclusionParts(A) {
+        const out = [];
+        out.push(A.tie ? t('c_tie', { w: esc(A.w.n), w2: esc(A.w2.n), s: f(A.w.V) }) : t('c_win', { w: esc(A.w.n), s: f(A.w.V), d: f(A.w.V - A.w2.V), w2: esc(A.w2.n), s2: f(A.w2.V) }));
+        out.push(t('c_why', { a1: esc(kName(A.contrib[0].i)), c1: f(A.contrib[0].c), a2: esc(kName(A.contrib[1].i)), c2: f(A.contrib[1].c) }));
+        out.push(A.most ? t('c_some', { n: A.flipping.length, t: S.attrs.length, a: esc(kName(A.most.k)), b: f(A.most.pb, 1), p: f(A.most.sw.p, 1), w: esc(aName(A.most.sw.to)), l: t('sens' + A.lvl) }) : t('c_none'));
+        out.push(t('c_note'));
+        return out;
+      }
+      function sensRows(A) {
+        return A.attrs.map(a => ({ name: kName(a.k), base: f(a.pb, 1) + '%', sw: a.sw ? f(a.sw.p, 1) + '%' : '–', to: a.sw ? aName(a.sw.to) : t('noSwitch') }));
+      }
+      function stage4() {
+        if (valid()) return stage3();
+        const A = analyze(), parts = conclusionParts(A), SR = sensRows(A);
+        return `<div class="sd-p4"><section class="sd-card sd-concl">
+  <div class="sd-h"><h2>${esc(t('m4h'))}</h2></div>
+  <div class="sd-win"><span class="tro">🏆</span><div><small>${esc(t('winnerLbl'))}</small><b>${esc(A.w.n)}</b></div><strong>${f(A.w.V)}</strong></div>
+  <div class="cl">${parts.map((p, i) => `<p class="${i === 3 ? 'note' : ''}">${p}</p>`).join('')}</div>
+  <div class="cols">
+    <div><h4>${esc(t('r2'))}</h4><div class="sc"><table class="mini l2"><tr><th>${esc(t('rank'))}</th><th>${esc(t('thAlt'))}</th><th>${esc(t('score'))}</th></tr>${A.r.map((x, k) => `<tr><td>${k + 1}</td><td>${esc(x.n)}</td><td>${f(x.V)}</td></tr>`).join('')}</table></div></div>
+    <div><h4>${esc(t('r3'))}</h4><div class="sc"><table class="mini"><tr><th>${esc(t('thAttr'))}</th><th>${esc(t('thBase'))}</th><th>${esc(t('thSwitch'))}</th><th>${esc(t('thTakes'))}</th></tr>${SR.map(s => `<tr><td>${esc(s.name)}</td><td>${s.base}</td><td>${s.sw}</td><td>${esc(s.to)}</td></tr>`).join('')}</table></div></div>
+  </div>
+  <div class="sd-dl"><h4>⬇ ${esc(t('dl'))}</h4><div class="row">
+    <button type="button" data-dl="pdf">PDF</button><button type="button" data-dl="html">HTML</button><button type="button" data-dl="md">Markdown</button></div></div>
+  <div class="sd-foot"><button type="button" data-act="back3">${esc(t('back'))}</button><span class="grow"></span><button type="button" data-act="newmodel">${esc(t('newModel'))}</button></div>
 </section></div>`;
       }
-      function bindDone() { confetti(150); }
-      function replay() {
-        S = BLANK(); G.xp = 0; G.stage = 0; G.pred = null; G.revealed = false; G.done = {}; G.badges = {}; G.flipped = false; G.k = null; G.drilled = null;
-        renderHud(); go(0);
+      function bind4() {}
+
+      /* ---------- report (HTML / Markdown / PDF) ---------- */
+      const plain = s => String(s).replace(/<b>(.*?)<\/b>/g, '$1').replace(/<[^>]+>/g, '');
+      const mdb = s => String(s).replace(/<b>(.*?)<\/b>/g, '**$1**').replace(/<[^>]+>/g, '');
+      const mdc = s => String(s).replace(/\|/g, '\\|');
+      const dateStr = () => new Date().toLocaleDateString(MBALAB.i18n.get(), { year: 'numeric', month: 'long', day: 'numeric' });
+      const REPORT_CSS = `.rp{width:794px;box-sizing:border-box;padding:0 44px;background:#fff;color:#0f172a;font:13px/1.5 system-ui,-apple-system,"Segoe UI","Noto Sans","Noto Sans CJK JP","Noto Sans CJK SC",sans-serif;position:relative}
+.rp *{box-sizing:border-box}.rp .blk{padding-bottom:18px}.rp h1{font-size:24px;margin:0 0 4px;color:#1e3a8a}.rp h2{font-size:16px;margin:0 0 8px;color:#1e3a8a;border-bottom:2px solid #c7d2fe;padding-bottom:4px}
+.rp .sub{color:#64748b;margin:0}.rp table{border-collapse:collapse;width:100%;font-size:12px}.rp th,.rp td{border:1px solid #cbd5e1;padding:5px 8px;text-align:right}.rp th:first-child,.rp td:first-child{text-align:left}
+.rp th{background:#eef2ff}.rp tr.sec th{background:#f8fafc;text-align:left;color:#475569;font-weight:600}.rp p{margin:6px 0}.rp .win{background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:8px 12px;margin:8px 0}
+.rp .l2 th:nth-child(2),.rp .l2 td:nth-child(2){text-align:left}.rp .note{color:#64748b;font-size:11px}.rp svg{width:100%;height:auto;display:block;font-family:inherit}.rp h3{font-size:13px;margin:8px 0 4px}`;
+      function reportBody() {
+        const A = analyze(), parts = conclusionParts(A), SR = sensRows(A), T = totalW(), k = Math.min(G.k == null ? 0 : G.k, S.attrs.length - 1);
+        const model1 = `<table><tr><th>${esc(t('tblCorner'))}</th>${S.attrs.map((a, i) => `<th>${esc(kName(i))}</th>`).join('')}</tr>
+<tr><td><b>${esc(t('rawW'))}</b></td>${S.attrs.map(a => `<td>${a.w}</td>`).join('')}</tr>
+<tr><td>${esc(t('normW'))}</td>${S.attrs.map(a => `<td>${f(100 * a.w / T)}%</td>`).join('')}</tr>
+<tr class="sec"><th colspan="${S.attrs.length + 1}">${esc(t('rateGrp'))}</th></tr>
+${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</table>`;
+        const rank2 = `<table class="l2"><tr><th>${esc(t('rank'))}</th><th>${esc(t('thAlt'))}</th><th>${esc(t('score'))}</th><th>${esc(t('vsLeader'))}</th></tr>${A.r.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.n)}</td><td>${f(x.V)}</td><td>${f(x.V - A.r[0].V)}</td></tr>`).join('')}</table>`;
+        const sens3 = `<table><tr><th>${esc(t('thAttr'))}</th><th>${esc(t('thBase'))}</th><th>${esc(t('thSwitch'))}</th><th>${esc(t('thTakes'))}</th></tr>${SR.map(s => `<tr><td>${esc(s.name)}</td><td>${s.base}</td><td>${s.sw}</td><td>${esc(s.to)}</td></tr>`).join('')}</table>`;
+        const svg = `<h3>${esc(t('chartTitle', { a: kName(k) }))}</h3><svg viewBox="0 0 700 352" xmlns="http://www.w3.org/2000/svg">${chartSVG(k, 200, false, null, 'report')}</svg>`;
+        return `<div class="blk"><h1>${esc(t('rTitle'))}</h1><p class="sub">SMART Decision Studio · MBA Lab · ${esc(t('rGen', { d: dateStr() }))}</p></div>
+<div class="blk"><h2>${esc(t('r1'))}</h2>${model1}</div>
+<div class="blk"><h2>${esc(t('r2'))}</h2>${rank2}</div>
+<div class="blk"><h2>${esc(t('r3'))}</h2>${svg}</div>
+<div class="blk">${sens3}</div>
+<div class="blk"><h2>${esc(t('r4'))}</h2><div class="win">🏆 <b>${esc(A.w.n)}</b> · ${f(A.w.V)}</div>${parts.map((p, i) => `<p class="${i === 3 ? 'note' : ''}">${p}</p>`).join('')}</div>`;
+      }
+      function reportHTML() {
+        return `<!doctype html><html lang="${MBALAB.i18n.get()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(t('rTitle'))}</title><style>body{margin:0;background:#f1f5f9}.rp{margin:0 auto;box-shadow:0 0 0 1px #e2e8f0}@media print{body{background:#fff}.rp{box-shadow:none;width:auto}}${REPORT_CSS}</style></head><body><div class="rp">${reportBody()}</div></body></html>`;
+      }
+      function reportMD() {
+        const A = analyze(), parts = conclusionParts(A), SR = sensRows(A), T = totalW(), L = [];
+        L.push(`# ${t('rTitle')}`, '', `*SMART Decision Studio · MBA Lab · ${t('rGen', { d: dateStr() })}*`, '', `## ${t('r1')}`, '');
+        L.push('| ' + [t('tblCorner'), ...S.attrs.map((a, i) => kName(i))].map(mdc).join(' | ') + ' |', '|' + Array(S.attrs.length + 1).fill('---').join('|') + '|');
+        L.push('| ' + [`**${t('rawW')}**`, ...S.attrs.map(a => a.w)].join(' | ') + ' |', '| ' + [t('normW'), ...S.attrs.map(a => f(100 * a.w / T) + '%')].join(' | ') + ' |');
+        S.alts.forEach((n, j) => L.push('| ' + [mdc(aName(j)), ...S.m[j]].join(' | ') + ' |'));
+        L.push('', `${t('rateGrp')}.`, '', `## ${t('r2')}`, '', `| ${t('rank')} | ${t('thAlt')} | ${t('score')} | ${t('vsLeader')} |`, '|---|---|---|---|');
+        A.r.forEach((x, i) => L.push(`| ${i + 1} | ${mdc(x.n)} | ${f(x.V)} | ${f(x.V - A.r[0].V)} |`));
+        L.push('', `## ${t('r3')}`, '', `| ${t('thAttr')} | ${t('thBase')} | ${t('thSwitch')} | ${t('thTakes')} |`, '|---|---|---|---|');
+        SR.forEach(s => L.push(`| ${mdc(s.name)} | ${s.base} | ${s.sw} | ${mdc(s.to)} |`));
+        L.push('', `## ${t('r4')}`, '', ...parts.flatMap(p => [mdb(p), '']));
+        return L.join('\n');
+      }
+      async function reportPDF() {
+        const W = 794, PH = 1123, M = 44, SC = 2, box = document.createElement('div');
+        box.style.cssText = `position:fixed;left:-10000px;top:0;width:${W}px;pointer-events:none`;
+        box.innerHTML = `<style>${REPORT_CSS}</style><div class="rp">${reportBody()}</div>`;
+        document.body.appendChild(box);
+        try {
+          const rp = box.querySelector('.rp'); if (document.fonts && document.fonts.ready) await document.fonts.ready;
+          const H = Math.ceil(rp.scrollHeight), blocks = [...rp.children].filter(c => c.classList.contains('blk')).map(b => ({ t: b.offsetTop, h: b.offsetHeight }));
+          const avail = PH - 2 * M, pages = []; let cur = null;
+          blocks.forEach(b => {
+            if (b.h > avail) { if (cur) pages.push(cur), cur = null; for (let y = 0; y < b.h; y += avail) pages.push({ y0: b.t + y, y1: b.t + Math.min(b.h, y + avail) }); return; }
+            if (!cur) cur = { y0: b.t, y1: b.t + b.h }; else if (b.t + b.h - cur.y0 <= avail) cur.y1 = b.t + b.h; else { pages.push(cur); cur = { y0: b.t, y1: b.t + b.h }; }
+          });
+          if (cur) pages.push(cur);
+          const clone = box.cloneNode(true); clone.removeAttribute('style');
+          const xml = new XMLSerializer().serializeToString(clone);
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><foreignObject x="0" y="0" width="${W}" height="${H}">${xml}</foreignObject></svg>`;
+          const img = new Image();
+          await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('render')); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+          const full = document.createElement('canvas'); full.width = W * SC; full.height = H * SC;
+          const fx = full.getContext('2d'); fx.fillStyle = '#fff'; fx.fillRect(0, 0, full.width, full.height); fx.drawImage(img, 0, 0, W * SC, H * SC);
+          const jpgs = pages.map(p => {
+            const c = document.createElement('canvas'); c.width = W * SC; c.height = PH * SC;
+            const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+            x.drawImage(full, 0, p.y0 * SC, W * SC, (p.y1 - p.y0) * SC, 0, M * SC, W * SC, (p.y1 - p.y0) * SC);
+            const b64 = c.toDataURL('image/jpeg', 0.92).split(',')[1], bin = atob(b64), bytes = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+            return { bytes, w: c.width, h: c.height };
+          });
+          return buildPdf(jpgs);
+        } finally { box.remove(); }
+      }
+      function buildPdf(jpgs) {
+        const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
+        const push = d => { const b = typeof d === 'string' ? enc.encode(d) : d; parts.push(b); len += b.length; };
+        const obj = (n, fn) => { offs[n] = len; push(n + ' 0 obj\n'); fn(); push('\nendobj\n'); };
+        push('%PDF-1.4\n');
+        obj(1, () => push('<</Type/Catalog/Pages 2 0 R>>'));
+        obj(2, () => push(`<</Type/Pages/Count ${jpgs.length}/Kids[${jpgs.map((_, i) => (3 + 3 * i) + ' 0 R').join(' ')}]>>`));
+        jpgs.forEach((j, i) => {
+          const p = 3 + 3 * i, c = p + 1, im = p + 2, st = 'q 595.28 0 0 841.89 0 0 cm /Im0 Do Q';
+          obj(p, () => push(`<</Type/Page/Parent 2 0 R/MediaBox[0 0 595.28 841.89]/Resources<</XObject<</Im0 ${im} 0 R>>>>/Contents ${c} 0 R>>`));
+          obj(c, () => push(`<</Length ${st.length}>>\nstream\n${st}\nendstream`));
+          obj(im, () => { push(`<</Type/XObject/Subtype/Image/Width ${j.w}/Height ${j.h}/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${j.bytes.length}>>\nstream\n`); push(j.bytes); push('\nendstream'); });
+        });
+        const n = 3 + 3 * jpgs.length, xr = len;
+        push(`xref\n0 ${n}\n0000000000 65535 f \n` + Array.from({ length: n - 1 }, (_, i) => String(offs[i + 1]).padStart(10, '0') + ' 00000 n \n').join(''));
+        push(`trailer\n<</Size ${n}/Root 1 0 R>>\nstartxref\n${xr}\n%%EOF`);
+        const out = new Uint8Array(len); let o = 0; parts.forEach(b => { out.set(b, o); o += b.length; });
+        return out;
+      }
+      async function saveFile(name, data, mime) {
+        try {
+          const dl = window.claude && claude.use ? await claude.use('downloads') : null;
+          if (dl) { await dl.save({ filename: name, data }); toast(t('dlSaved'), 'xp'); return; }
+        } catch (e) { if (e && e.code === 'declined') return; }
+        const blob = data instanceof Blob ? data : new Blob([data], { type: mime });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+        setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); toast(t('dlSaved'), 'xp');
+      }
+      async function download(kind, btn) {
+        if (G.busy || valid()) return;
+        G.busy = true; const label = btn.textContent; btn.textContent = t('dlBusy'); btn.disabled = true;
+        const base = t('fileName');
+        try {
+          if (kind === 'html') await saveFile(base + '.html', reportHTML(), 'text/html');
+          else if (kind === 'md') await saveFile(base + '.md', reportMD(), 'text/markdown');
+          else await saveFile(base + '.pdf', new Blob([await reportPDF()], { type: 'application/pdf' }), 'application/pdf');
+        } catch (e) { console.warn('download failed', e); toast(t('dlFail'), 'warn'); }
+        G.busy = false; btn.textContent = label; btn.disabled = false;
       }
 
       /* ---------- events ---------- */
       host.addEventListener('input', e => {
         const el = e.target, d = el.dataset;
-        if (el.id === 'sl') { sens(true); return; }
-        if (el.id === 'xm') { q('sl').max = Math.max(1, +el.value || 200); sens(true); return; }
-        if (el.id === 'ax') { sens(true); return; }
+        if (el.id === 'sl' || el.id === 'ax') { sens(); return; }
+        if (el.id === 'xm') { q('sl').max = Math.max(1, +el.value || 200); sens(); return; }
         if (d.w !== undefined) S.attrs[d.w].w = parseFloat(el.value);
         else if (d.v !== undefined) { const [j, i] = d.v.split(','); S.m[j][i] = parseFloat(el.value); }
         else if (d.n !== undefined) S.alts[d.n] = el.value;
@@ -401,33 +465,29 @@
         updateNorm(); updateChecklist();
       });
       host.addEventListener('change', e => {
-        if (e.target.id === 'ks') { G.k = +e.target.value; const b = model(G.k).bx; q('sl').max = Math.max(1, +q('xm').value || 200); q('sl').value = Math.min(+q('sl').max, Math.round(b)); q('sdStage').querySelector('.goal').innerHTML = t('flipGoal', { a: esc(kName(G.k)) }); lastLeader = -1; sens(false); }
+        if (e.target.id === 'ks') { G.k = +e.target.value; q('sl').max = Math.max(1, +q('xm').value || 200); q('sl').value = Math.min(+q('sl').max, Math.round(model(G.k).bx)); host.querySelector('.goal').innerHTML = t('flipGoal', { a: esc(kName(G.k)) }); lastLeader = -1; sens(); }
       });
       host.addEventListener('click', e => {
         const b = e.target.closest('button'); if (!b || !host.contains(b)) return;
         const d = b.dataset;
         if (d.act) {
           const a = d.act;
-          if (a === 'back1') go(0); else if (a === 'back2') go(1); else if (a === 'go3') go(2);
-          else if (a === 'reveal') reveal();
-          else if (a === 'finish') { award('fin', 0); G.stage = 3; renderSteps(); renderStage(1); }
-          else if (a === 'replay') replay();
+          if (a === 'back1') go(0); else if (a === 'back2') go(1); else if (a === 'back3') go(2);
+          else if (a === 'go3') go(2); else if (a === 'go4') go(3);
+          else if (a === 'newmodel') { S = BLANK(); G.example = false; G.k = null; G.drilled = null; go(0); }
           else if (ACT[a]) ACT[a]();
           return;
         }
-        if (d.go !== undefined) { if (unlocked(+d.go)) go(+d.go); else { toast(t(+d.go === 1 ? 'lockHint' : 'revealFirst'), 'warn'); shake(b); } return; }
+        if (d.dl) { download(d.dl, b); return; }
+        if (d.go !== undefined) { if (unlocked(+d.go)) go(+d.go); else { toast(t('lockHint'), 'warn'); shake(b); } return; }
         if (d.dk !== undefined) { delAttr(+d.dk); return; }
         if (d.d !== undefined) { delAlt(+d.d); return; }
-        if (d.pk !== undefined) { G.pred = +d.pk; host.querySelectorAll('.pk').forEach(x => x.classList.toggle('sel', x === b)); const r = q('rev'); r.classList.add('ready'); r.removeAttribute('aria-disabled'); return; }
-        if (d.r !== undefined) { drill(+d.r); if (!G.done.drill) { award('drill', 15); badge('detective'); } return; }
+        if (d.r !== undefined) { drill(+d.r); }
       });
 
-      api = {
-        setTheme,
-        redraw() { renderHud(); renderSteps(); renderStage(0); }
-      };
+      api = { setTheme, redraw() { renderSteps(); renderStage(0); } };
       setTheme(MBALAB.theme && MBALAB.theme.isDay());
-      renderHud(); renderSteps(); renderStage(0);
+      renderSteps(); renderStage(0);
     },
     onShow() { api.setTheme(MBALAB.theme.isDay()); api.redraw(); },
     onLang() { api && api.redraw(); },

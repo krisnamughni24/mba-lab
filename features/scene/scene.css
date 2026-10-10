@@ -28,9 +28,10 @@ body.day .stage::after{background:linear-gradient(90deg,rgba(235,246,255,.9),rgb
 @media(max-width:900px){
   body.day .stage::after{background:rgba(235,246,255,.6)}
 }
-body.inapp .stage::after{background:rgba(5,8,22,.45)}
-body.day.inapp .stage::after{background:rgba(235,246,255,.35)}
+body.inapp .stage::after{background:rgba(3,6,20,.72)}
+body.day.inapp .stage::after{background:rgba(235,246,255,.62)}
 
 /* simulation open: the city stays visible but softly blurred */
 .stage{transition:filter .6s,transform .6s}
-body.inapp .stage{filter:blur(12px) saturate(1.15);transform:scale(1.05)}
+body.inapp .stage{filter:blur(12px) saturate(.9) brightness(.55);transform:scale(1.05)}
+body.day.inapp .stage{filter:blur(12px) saturate(.9) brightness(.9)}

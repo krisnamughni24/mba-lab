@@ -1,7 +1,7 @@
 /* SMART Decision Studio: game UI. Everything is scoped under .sd so it never touches the rest of the site. */
-.sd{--g1:#7dd3fc;--g2:#c4b5fd;--panel:rgba(255,255,255,.1);--panel-b:rgba(255,255,255,.26);--fg:#fff;--fg2:rgba(255,255,255,.72);--field:rgba(255,255,255,.12);
+.sd{--g1:#7dd3fc;--g2:#c4b5fd;--panel:rgba(8,14,38,.58);--panel-b:rgba(255,255,255,.26);--grid:rgba(255,255,255,.34);--fg:#fff;--fg2:rgba(255,255,255,.72);--field:rgba(255,255,255,.12);
   position:relative;flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;color:var(--fg);font-size:14px;line-height:1.45}
-body.day .sd{--panel:rgba(255,255,255,.58);--panel-b:rgba(255,255,255,.85);--fg:#10203f;--fg2:#3b4d6b;--field:rgba(255,255,255,.75);--g1:#2563eb;--g2:#7c3aed}
+body.day .sd{--grid:rgba(16,32,63,.35);--panel:rgba(255,255,255,.7);--panel-b:rgba(255,255,255,.85);--fg:#10203f;--fg2:#3b4d6b;--field:rgba(255,255,255,.75);--g1:#2563eb;--g2:#7c3aed}
 .sd *{box-sizing:border-box}
 .sd button{font:inherit;cursor:pointer;color:var(--fg);background:var(--panel);border:1px solid var(--panel-b);border-radius:12px;padding:8px 14px;text-transform:none;font-weight:600;box-shadow:none;backdrop-filter:blur(6px);transition:transform .15s,background .15s,box-shadow .2s,opacity .2s}
 .sd button:hover{transform:translateY(-1px);background:rgba(255,255,255,.22);color:var(--fg)}
@@ -178,3 +178,40 @@ body.day .sd-toast{background:rgba(255,255,255,.92);color:#10203f}
 @keyframes sdToast{from{opacity:0;transform:translateX(30px)}}
 @keyframes sdShake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 @media(prefers-reduced-motion:reduce){.sd *{animation:none!important;transition:none!important}.sd .rk{opacity:1}}
+
+/* spreadsheet-style model table */
+.sd table.grid{border-collapse:collapse;border:2px solid var(--grid);min-width:560px}
+.sd table.grid th,.sd table.grid td{border:1px solid var(--grid);padding:0;text-align:center;white-space:nowrap}
+.sd table.grid thead th{background:rgba(125,211,252,.16)}
+body.day .sd table.grid thead th{background:rgba(37,99,235,.12)}
+.sd table.grid .corner{text-align:left;padding:8px 10px;min-width:190px;font-size:12px;color:var(--fg2)}
+.sd table.grid .grp{padding:6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2)}
+.sd table.grid .ah .cell{display:flex;align-items:center;gap:2px;padding:2px 4px}
+.sd table.grid th[scope=row]{text-align:left;padding:7px 10px;font-weight:700;background:rgba(255,255,255,.06)}
+.sd table.grid th.an{padding:0;background:rgba(255,255,255,.06)}
+.sd table.grid td input,.sd table.grid th input{width:100%;min-width:92px;border:0;border-radius:0;background:transparent;text-align:center;padding:9px 6px;font-weight:600;box-shadow:none}
+.sd table.grid th.an input{text-align:left;padding-left:10px;min-width:170px}
+.sd table.grid input.nm{width:100%;min-width:150px;text-align:center;font-weight:700}
+.sd table.grid input:focus{background:rgba(125,211,252,.22);box-shadow:inset 0 0 0 2px var(--g1);border-radius:0}
+.sd table.grid input::placeholder{color:var(--fg2);opacity:.65;font-weight:500}
+.sd table.grid .wr td input{color:var(--g1)}
+.sd table.grid .nr td{color:var(--fg2);font-size:12px;padding:6px}
+.sd table.grid .gr th{background:rgba(255,255,255,.08);text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2);padding:5px 10px}
+.sd table.grid .act{width:38px;min-width:38px;background:transparent;border-color:transparent;border-block-start:0}
+.sd table.grid td.act,.sd table.grid th.act{border:0}
+.sd table.grid tbody tr:hover td:not(.act){background:rgba(255,255,255,.07)}
+.sd table.grid .dot{width:9px;height:9px;border-radius:50%;flex:none;margin:0 4px}
+
+/* part 3 chart title, part 4 conclusion */
+.sd .chT{font-size:15px;font-weight:700;margin:8px 2px 6px;text-align:center}
+.sd-concl .cl p{font-size:15px;margin:10px 0}
+.sd-concl .cl p.note{font-size:12px}
+.sd-concl .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:14px 0}
+.sd-concl h4{margin:0 0 6px;font-size:13px;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em}
+.sd table.mini th,.sd table.mini td{border:1px solid var(--grid);padding:6px 10px}
+.sd table.mini th{background:rgba(255,255,255,.08)}
+.sd-dl{margin-top:16px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px dashed var(--panel-b)}
+.sd-dl .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sd-dl button{min-width:110px;font-weight:700}
+.sd-dl button:disabled{opacity:.6;cursor:progress}
+.sd table.l2 th:nth-child(2),.sd table.l2 td:nth-child(2){text-align:left}
