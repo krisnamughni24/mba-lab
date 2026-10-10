@@ -56,7 +56,7 @@
         return S.alts.map((n, j) => ({ j, n: aName(j), V: S.attrs.reduce((s, a, i) => s + a.w / T * S.m[j][i], 0) }));
       }
       const ranked = () => scores().sort((a, b) => b.V - a.V);
-      const G = { stage: 0, drilled: null, k: null, example: false, busy: false };
+      const G = { focus: null, stage: 0, drilled: null, k: null, example: false, busy: false };
 
       /* ---------- small UI helpers ---------- */
       function toast(msg, kind, undo) {
@@ -87,6 +87,7 @@
       }
       function go(n, anim = true) {
         if (n > 0 && !complete()) { toast(t('lockHint'), 'warn'); shake(q('next1')); return; }
+        G.focus = null;
         const dir = n >= G.stage ? 1 : -1;
         G.stage = n; renderSteps(); renderStage(anim ? dir : 0);
         q('sdStage').scrollTop = 0;
@@ -115,7 +116,7 @@
     <p class="note" id="demoNote" ${G.example ? '' : 'hidden'}>${t('s1n')}</p>
   </section>
   <aside class="sd-card sd-quest">
-    <h3>🎯 ${esc(t('quest'))}</h3>
+    <h3>${esc(t('quest'))}</h3>
     <ul id="ck">${['ck1', 'ck2', 'ck3', 'ck4'].map(k => `<li data-c="${k}"><span class="bx">✓</span><span>${esc(t(k))}</span></li>`).join('')}</ul>
     <div class="sd-prog"><i id="ckBar"></i></div>
     <button type="button" class="sd-cta" id="next1" data-act="go2">${esc(t('next1'))}</button>
@@ -126,13 +127,13 @@
       function renderMx() {
         const N = S.attrs.length;
         let h = `<thead><tr><th class="corner" rowspan="2">${esc(t('tblCorner'))}</th><th class="grp" colspan="${N}">${esc(t('attrsGrp'))}</th><th class="act" rowspan="2"></th></tr><tr>` +
-          S.attrs.map((a, i) => `<th class="ah"><span class="cell"><span class="dot" style="background:${COL[i % 8]}"></span><input class="nm" value="${esc(a.n)}" data-an="${i}" placeholder="${esc(t('phAttr'))} ${i + 1}" aria-label="${esc(t('phAttr'))} ${i + 1}"><button type="button" class="x" data-dk="${i}" title="${esc(t('delAttr'))}" aria-label="${esc(t('delAttr'))}">✕</button></span></th>`).join('') + '</tr></thead><tbody>';
-        h += `<tr class="wr"><th scope="row">${esc(t('rawW'))}</th>` + S.attrs.map((a, i) => `<td><input type="number" min="0" value="${sv(a.w)}" data-w="${i}" aria-label="${esc(t('rawW'))} ${i + 1}"></td>`).join('') + '<td class="act"></td></tr>';
+          S.attrs.map((a, i) => `<th class="ah"><span class="cell"><span class="dot" style="background:${COL[i % 8]}"></span><input class="nm" value="${esc(a.n)}" data-an="${i}" placeholder="${esc(t('phAttrIns', { n: i + 1 }))}" aria-label="${esc(t('phAttr'))} ${i + 1}"><button type="button" class="x" data-dk="${i}" title="${esc(t('delAttr'))}" aria-label="${esc(t('delAttr'))}">✕</button></span></th>`).join('') + '</tr></thead><tbody>';
+        h += `<tr class="wr"><th scope="row">${esc(t('rawW'))}</th>` + S.attrs.map((a, i) => `<td><input type="number" min="0" value="${sv(a.w)}" placeholder="${esc(t('phNum'))}" data-w="${i}" aria-label="${esc(t('rawW'))} ${i + 1}"></td>`).join('') + '<td class="act"></td></tr>';
         h += `<tr class="nr"><th scope="row">${esc(t('normW'))}</th>` + S.attrs.map((a, i) => `<td data-nw="${i}"></td>`).join('') + '<td class="act"></td></tr>';
         h += `<tr class="gr"><th colspan="${N + 2}">${esc(t('rateGrp'))}</th></tr>`;
         S.alts.forEach((n, j) => {
-          h += `<tr><th scope="row" class="an"><input class="nm" value="${esc(n)}" data-n="${j}" placeholder="${esc(t('phAlt'))} ${j + 1}" aria-label="${esc(t('phAlt'))} ${j + 1}"></th>` +
-            S.m[j].map((v, i) => `<td><input type="number" min="0" max="100" value="${sv(v)}" data-v="${j},${i}" aria-label="${esc(aName(j))} / ${esc(kName(i))}"></td>`).join('') +
+          h += `<tr><th scope="row" class="an"><input class="nm" value="${esc(n)}" data-n="${j}" placeholder="${esc(t('phAltIns', { n: j + 1 }))}" aria-label="${esc(t('phAlt'))} ${j + 1}"></th>` +
+            S.m[j].map((v, i) => `<td><input type="number" min="0" max="100" value="${sv(v)}" placeholder="${esc(t('phNum'))}" data-v="${j},${i}" aria-label="${esc(aName(j))} / ${esc(kName(i))}"></td>`).join('') +
             `<td class="act"><button type="button" class="x" data-d="${j}" title="${esc(t('delAlt'))}" aria-label="${esc(t('delAlt'))}">✕</button></td></tr>`;
         });
         q('mx').innerHTML = h + '</tbody>';
@@ -187,28 +188,29 @@
   <div class="rks">${r.map((x, k) => {
     const tie = (k === 0 && r[1] && Math.abs(r[1].V - top) < 1e-9) || (k > 0 && Math.abs(x.V - top) < 1e-9);
     return `<button type="button" class="rk${k === 0 ? ' top' : ''}${G.drilled === x.j ? ' sel' : ''}" data-r="${x.j}" style="--d:${k * 80}ms">
-      <span class="med">${tie ? '=1' : (medal[k] || k + 1)}</span><span class="nm">${esc(x.n)}</span>
+      <span class="med">${tie ? '=1' : (medal[k] || k + 1)}</span><span class="nm">${esc(x.n)}<svg class="srch" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><title>${esc(t('srchTip'))}</title><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
       <span class="bw"><span class="bs">${S.attrs.map((a, i) => `<i data-w="${a.w / TW * S.m[x.j][i]}" style="background:${COL[i % 8]}"></i>`).join('')}</span></span>
       <b class="val" data-to="${x.V}">0.00</b><span class="vs">${f(x.V - top)}</span></button>`;
   }).join('')}</div>
-  <div class="sd-drill" id="drill" aria-live="polite"></div>
+  <p class="brk-hint">${esc(t('brkHint'))}</p><div class="sd-drill" id="drill" aria-live="polite"></div>
   <details class="sd-more"><summary>${esc(t('moreInfo'))}</summary><p class="note">${t('s2n')}</p></details>
   <div class="sd-foot"><button type="button" data-act="back1">${esc(t('back'))}</button><span class="grow"></span><button type="button" class="sd-cta ready" data-act="go3">${esc(t('next2'))}</button></div>
 </section></div>`;
       }
       function drill(j) {
-        const T = totalW(), V = scores()[j].V; G.drilled = j;
+        const T = totalW(); G.drilled = j;
         host.querySelectorAll('.rk').forEach(b => b.classList.toggle('sel', +b.dataset.r === j));
         q('drill').innerHTML = `<h4>${esc(t('breakdown', { a: aName(j) }))}</h4>` + S.attrs.map((a, i) => {
           const c = a.w / T * S.m[j][i];
           return `<div class="dr"><span class="dn"><i style="background:${COL[i % 8]}"></i>${esc(kName(i))}</span><span class="db"><i style="width:${Math.min(100, c)}%;background:${COL[i % 8]}"></i></span><code>${f(a.w / T, 4)} × ${S.m[j][i]} = ${f(c)}</code></div>`;
-        }).join('') + `<div class="dr tot"><span class="dn">${esc(t('total'))}</span><span></span><code>${f(V)}</code></div>`;
+        }).join('') ;
       }
       function bind2() {
         host.querySelectorAll('.bs i').forEach(i => { i.style.width = '0'; });
         requestAnimationFrame(() => requestAnimationFrame(() => host.querySelectorAll('.bs i').forEach(i => { i.style.width = Math.min(100, +i.dataset.w) + '%'; })));
         host.querySelectorAll('[data-to]').forEach(el => countUp(el, +el.dataset.to));
-        if (G.drilled != null && G.drilled < S.alts.length) drill(G.drilled);
+        if (G.drilled == null || G.drilled >= S.alts.length) G.drilled = ranked()[0].j;
+        drill(G.drilled);
       }
 
       /* ---------- Part 3: sensitivity ---------- */
@@ -230,7 +232,7 @@
       const flips = (k, xm) => { const m = model(k), b = m.win(m.bx); for (let s = 0; s <= 200; s++) if (m.win(xm * s / 200) !== b) return true; return false; };
 
       /* chart: mode "screen" uses theme variables, "report" uses fixed print colours */
-      function chartSVG(k, xm, norm, cx, mode) {
+      function chartSVG(k, xm, norm, cx, mode, focus) {
         const M = model(k), { n, Sx, A, vk, V } = M, rep = mode === 'report';
         const C = rep ? { mut: '#64748b', line: '#e2e8f0', red: '#dc2626', teal: '#0d9488', org: '#ea580c', txt: '#0f172a' } : { mut: 'var(--mut)', line: 'var(--line)', red: 'var(--red)', teal: 'var(--teal)', org: 'var(--org)', txt: 'var(--ink)' };
         const pal = rep ? DAYC : COL;
@@ -246,8 +248,11 @@
         cs.filter(c => !c.sw).forEach(c => g += `<line x1=${px(c.x)} x2=${px(c.x)} y1=200 y2=300 stroke="${C.mut}" stroke-dasharray="2 4" opacity=.5 />`);
         for (let j = 0; j < n; j++) {
           let d = ''; for (let s = 0; s <= 160; s++) { const x = xm * s / 160; d += (s ? 'L' : 'M') + px(x) + ',' + py(V(j, x)); }
-          g += `<path d="${d}" fill="none" stroke="${pal[j % 8]}" stroke-width=2.6 /><text x=${Math.min(px(xm) - 2, 668)} y=${py(V(j, xm)) - 4} text-anchor=end font-size=10.5 fill="${pal[j % 8]}">${esc(aName(j))}</text>`;
+          const dim = focus && focus.j !== j, on = focus && focus.j === j;
+          g += `<path d="${d}" fill="none" stroke="${pal[j % 8]}" stroke-width=${on ? 4.6 : 2.6} opacity=${dim ? .22 : 1} /><text x=${Math.min(px(xm) - 2, 668)} y=${py(V(j, xm)) - 4} text-anchor=end font-size=10.5 fill="${pal[j % 8]}" opacity=${dim ? .3 : 1}>${esc(aName(j))}</text>`;
+          if (!rep) g += `<path class="hit" data-j="${j}" d="${d}" fill="none" stroke="transparent" stroke-width="16" style="pointer-events:stroke;cursor:pointer"><title>${esc(aName(j))}</title></path>`;
         }
+        if (focus && !rep) { const fx = Math.min(xm, focus.x); g += `<circle cx=${px(fx)} cy=${py(V(focus.j, fx))} r=6.5 fill="${pal[focus.j % 8]}" stroke="#fff" stroke-width=2 style="pointer-events:none" />`; }
         if (M.bx <= xm) g += `<line x1=${px(M.bx)} x2=${px(M.bx)} y1=30 y2=300 stroke="${C.teal}" stroke-width=2 /><text x=${px(M.bx) + 4} y=42 font-size=11 fill="${C.teal}">${esc(t('base'))}</text>`;
         if (cx != null) g += `<line x1=${px(cx)} x2=${px(cx)} y1=30 y2=300 stroke="${C.org}" stroke-width=2 />`;
         return g;
@@ -266,17 +271,47 @@
   <div class="sd-slw"><input type="range" id="sl" min="0" max="200" step="1" value="${Math.min(200, Math.round(base))}" aria-label="${esc(t('lMaxX'))}"></div>
   <div class="ldr" id="ldr" aria-live="polite"></div>
   <h3 class="chT" id="chT"></h3>
-  <div class="chw"><svg id="ch" viewBox="0 0 700 352" role="img"></svg></div>
+  <p class="note chhint">${esc(t('pvHint'))}</p>
+  <div class="chw"><svg id="ch" viewBox="0 0 700 352" role="img"></svg><div class="pv" id="pv" hidden></div></div>
   <details class="sd-more"><summary>${esc(t('moreInfo'))}</summary><p class="note">${t('s3n')}</p><div class="sc"><table id="cx"></table></div><p id="sum" class="note"></p></details>
   <div class="sd-foot"><button type="button" data-act="back2">${esc(t('back'))}</button><span class="grow"></span><button type="button" class="sd-cta ready" data-act="go4">${esc(t('next3'))}</button></div>
 </section></div>`;
+      }
+      /* click a line in the chart: highlight it and show its data in a pop-up */
+      function focusLine(j, e) {
+        const k = G.k, xm = Math.max(1, +q('xm').value || 200), M = model(k), norm = q('ax').value === 'norm', svg = q('ch');
+        const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+        const p = pt.matrixTransform(svg.getScreenCTM().inverse()), u = Math.min(1, Math.max(0, (p.x - 56) / 614));
+        let x = xm * u;
+        if (norm) { const pv = pct(M, xm) * u; x = pv >= 100 ? xm : (M.Sx > 0 ? pv * M.Sx / (100 - pv) : 0); }
+        const r = svg.parentNode.getBoundingClientRect();
+        G.focus = { j, x: Math.round(x * 10) / 10, left: e.clientX - r.left + 14, top: e.clientY - r.top + 10 };
+        sens();
+      }
+      function closeFocus() { if (G.focus) { G.focus = null; sens(); } }
+      function renderPop() {
+        const el = q('pv'); if (!el) return;
+        if (!G.focus) { el.hidden = true; return; }
+        const { j, x } = G.focus, k = G.k, M = model(k), n = M.n, norm = q('ax').value === 'norm';
+        const order = [...Array(n).keys()].sort((a, b) => M.V(b, x) - M.V(a, x));
+        const row = (l, v) => `<div class="pr"><span>${l}</span><b>${v}</b></div>`;
+        el.innerHTML = `<div class="ph"><i style="background:${COL[j % 8]}"></i><b>${esc(aName(j))}</b><button type="button" class="pvx" aria-label="${esc(t('close'))}">✕</button></div>` +
+          row(esc(t('pvX', { a: kName(k) })), `${f(x, 1)} (${f(pct(M, x), 1)}%)`) +
+          row(esc(t('pvScore')), f(M.V(j, x))) + row(esc(t('pvBase')), f(M.V(j, M.bx))) +
+          row(esc(t('pvRank')), `${order.indexOf(j) + 1} / ${n}`) + row(esc(t('pvRating', { a: kName(k) })), M.vk[j]) +
+          row(esc(t('pvLeader')), esc(aName(order[0])));
+        el.hidden = false;
+        const W = el.parentNode.clientWidth, w = el.offsetWidth;
+        el.style.left = Math.max(6, Math.min(G.focus.left, W - w - 6)) + 'px';
+        el.style.top = Math.max(6, G.focus.top) + 'px';
       }
       let lastLeader = -1;
       function sens() {
         if (valid() || !q('ch')) return;
         const k = G.k, xm = Math.max(1, +q('xm').value || 200), M = model(k), { n, Sx, V, win } = M, norm = q('ax').value === 'norm', cx = +q('sl').value;
         q('chT').textContent = t('chartTitle', { a: kName(k) });
-        q('ch').innerHTML = chartSVG(k, xm, norm, cx, 'screen');
+        q('ch').innerHTML = chartSVG(k, xm, norm, cx, 'screen', G.focus);
+        renderPop();
         const o = [...Array(n).keys()].sort((a, b) => V(b, cx) - V(a, cx)), lead = o[0], baseLead = win(M.bx), can = flips(k, xm), isFlip = lead !== baseLead;
         const ld = q('ldr');
         ld.className = 'ldr' + (isFlip ? ' flip' : '');
@@ -465,9 +500,12 @@ ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}
         updateNorm(); updateChecklist();
       });
       host.addEventListener('change', e => {
-        if (e.target.id === 'ks') { G.k = +e.target.value; q('sl').max = Math.max(1, +q('xm').value || 200); q('sl').value = Math.min(+q('sl').max, Math.round(model(G.k).bx)); host.querySelector('.goal').innerHTML = t('flipGoal', { a: esc(kName(G.k)) }); lastLeader = -1; sens(); }
+        if (e.target.id === 'ks') { G.k = +e.target.value; G.focus = null; q('sl').max = Math.max(1, +q('xm').value || 200); q('sl').value = Math.min(+q('sl').max, Math.round(model(G.k).bx)); host.querySelector('.goal').innerHTML = t('flipGoal', { a: esc(kName(G.k)) }); lastLeader = -1; sens(); }
       });
       host.addEventListener('click', e => {
+        const hit = e.target.closest('path.hit');
+        if (hit) { focusLine(+hit.dataset.j, e); return; }
+        if (e.target.closest('.pvx') || (e.target.closest('#ch') && !hit)) { closeFocus(); return; }
         const b = e.target.closest('button'); if (!b || !host.contains(b)) return;
         const d = b.dataset;
         if (d.act) {
