@@ -343,3 +343,22 @@ body.day .sd button:hover{color:#06235e;background:linear-gradient(180deg,rgba(1
 body.day .sd-bot .bubble{background:#fff;color:#0c1a3a}body.day .sd-bot .bubble::after{background:#fff}body.day .sd-bot .bubble button{color:#0c1a3a}
 .sd table.grid th,.sd table.grid td{border-color:var(--grid)}
 .sd table.grid .corner,.sd table.grid thead th{text-transform:uppercase;letter-spacing:.1em;font-size:11px}
+
+/* ===== Advanced typography (SMART) ===== */
+.sd{font-size:var(--fs-md,.95rem);font-feature-settings:"kern","liga","calt"}
+.sd-top h1{font-size:var(--fs-lg,1.15rem);letter-spacing:.18em}
+.sd-card h2,.sd-card .sd-h h2,.sd-card h3{font-size:var(--fs-xl,1.4rem);line-height:1.2;letter-spacing:.05em;text-wrap:balance}
+.sd-card h2 .pt,.sd .kicker{font-family:var(--f-mono,monospace);font-size:var(--fs-xs,.75rem);letter-spacing:.2em;text-transform:uppercase;color:var(--g2)}
+.sd .note,.sd-card>p,.sd-card .sub{font-size:var(--fs-sm,.85rem);line-height:1.6;text-wrap:pretty}
+.sd-win b{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-xl,1.4rem);letter-spacing:.06em}
+.sd-win>:last-child{font-family:var(--f-mono,monospace);font-size:var(--fs-2xl,2.2rem);font-variant-numeric:tabular-nums;color:var(--am,#ffd166);text-shadow:0 0 18px rgba(255,209,102,.5)}
+.sd .rk .nm{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-sm,.85rem);letter-spacing:.05em}
+.sd .rk .sc{font-size:var(--fs-lg,1.15rem);color:var(--g1)}
+.sd-steps .l{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-xs,.75rem);letter-spacing:.1em;text-transform:uppercase}
+.sd-steps .l small{font-family:var(--f-mono,monospace);font-size:var(--fs-2xs,.65rem);letter-spacing:.2em;opacity:.8}
+.sd ul li{line-height:1.6;text-wrap:pretty}
+.sd table.grid td,.sd table.grid td input{text-align:center}
+.sd svg text{font-family:var(--f-mono,monospace);letter-spacing:.02em}
+.sd svg text.ttl,.sd svg .title{font-family:var(--f-hd,"Orbitron",sans-serif);letter-spacing:.08em}
+.sd-bot .bubble{font-size:var(--fs-sm,.85rem);line-height:1.55}
+.sd-bot .bubble .bn{font-family:var(--f-mono,monospace);letter-spacing:.2em}
