@@ -2,64 +2,31 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MBA Lab · Mini Simulations</title>
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/controls.css">
+<link rel="stylesheet" href="css/core.css">
+<link rel="stylesheet" href="css/nav.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head><body>
-<nav class="topnav" id="topnav" aria-label="MBA Lab"><a class="brand" id="brand" href="#" aria-label="MBA Lab home"><span class="logo" aria-hidden="true">&#9670;</span><span>MBA Lab</span></a><div class="navr"><button id="mo" class="pill" type="button" aria-label="Pause city animation" data-ia="title=motionTitle"><span id="moi" aria-hidden="true">⏸</span><span class="lb" id="mol">Pause</span></button><button id="mu" class="pill aud" type="button" aria-pressed="false"><svg viewBox="0 0 8 8" width="18" height="18" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor"><g><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="7" y="0" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/></g><g class="xx" fill="#ff6b81"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></g></svg><span class="lb" id="mul" data-i18n="musicLb"></span></button><button id="sf" class="pill aud" type="button" aria-pressed="false"><svg viewBox="0 0 8 8" width="18" height="18" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor"><g><rect x="3" y="0" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/></g><g class="xx" fill="#ff6b81"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></g></svg><span class="lb" id="sfl" data-i18n="sfxLb"></span></button><div class="langw"><button id="lang" class="pill" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="langMenu" data-ia="aria-label=langAria,title=langAria"><span aria-hidden="true">🌐</span><span class="lb" id="langLb">EN</span></button><div class="langmenu" id="langMenu" role="menu" hidden><button type="button" role="menuitemradio" aria-checked="true" data-lang="en"><span class="lc">EN</span>English</button><button type="button" role="menuitemradio" aria-checked="false" data-lang="id"><span class="lc">ID</span>Bahasa Indonesia</button><button type="button" role="menuitemradio" aria-checked="false" data-lang="ja"><span class="lc">JA</span>日本語</button><button type="button" role="menuitemradio" aria-checked="false" data-lang="zh"><span class="lc">ZH</span>中文</button></div></div><button id="dn" class="pill sw" type="button" role="switch" aria-checked="false" aria-label="Switch to day mode" data-ia="title=dnTitle"><span aria-hidden="true">🌙</span><span aria-hidden="true">☀️</span><i class="kn"></i></button></div></nav>
-<div class="camctl" id="camctl" role="group" aria-label="3D camera controls" data-ia="aria-label=camGroup"><button id="camIn" type="button" data-ia="aria-label=zoomIn,title=zoomIn">+</button><button id="camUp" type="button" data-ia="aria-label=rotUp,title=rotUp">↑</button><button id="camOut" type="button" data-ia="aria-label=zoomOut,title=zoomOut">−</button><button id="camLeft" type="button" data-ia="aria-label=rotLeft,title=rotLeft">←</button><button id="camDown" type="button" data-ia="aria-label=rotDown,title=rotDown">↓</button><button id="camRight" type="button" data-ia="aria-label=rotRight,title=rotRight">→</button><button id="camReset" class="wide" type="button" data-ia="aria-label=resetCamA,title=resetCamA"><span data-i18n="resetCamT">⟲ Reset</span></button></div>
-<div class="fab" id="fab" role="group" aria-label="Info"><button id="btnInfo" type="button" aria-haspopup="dialog" data-ia="aria-label=infoAria,title=infoAria"><span aria-hidden="true">ⓘ</span><span class="lb" data-i18n="infoLbl">Info</span></button><button id="btnIdea" type="button" aria-haspopup="dialog" data-ia="aria-label=ideaAria,title=ideaAria"><span aria-hidden="true">💡</span><span class="lb" data-i18n="ideaLbl">Submit an Idea</span></button></div>
-<div class="stage" id="stage"></div><div id="landing"><div class="hero"><span class="tag" data-i18n="heroTag">Interactive Business Simulations for MBA Learners</span><h1 data-i18n="heroH">Explore business. Experiment with decisions.</h1><p data-i18n="heroP">Explore interactive MBA simulations across strategy, finance, marketing, operations & supply chain, analytics, leadership, and negotiation.</p><button class="cta" id="explore" type="button" data-i18n="cta">Explore simulations →</button></div></div>
-<div id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle"><div class="mw"><div class="row" style="justify-content:space-between;margin:0"><h3 id="mtitle" data-i18n="catTitle">Choose a simulation</h3><button id="mclose" type="button" data-close data-ia="aria-label=catClose">✕</button></div><p class="note" id="mcount"></p><div class="chips" id="chips" role="group" data-ia="aria-label=filterLbl"></div><div class="sg" id="sg"></div></div></div>
-<div class="ov" id="infoDlg" role="dialog" aria-modal="true" aria-labelledby="infoT"><div class="mw dlgw wide"><div class="row" style="justify-content:space-between;margin:0"><h3 id="infoT" data-i18n="aboutT">About MBA Lab</h3><button type="button" data-close data-ia="aria-label=close">✕</button></div>
-<p data-i18n="aboutP">MBA Lab is an interactive learning platform that brings MBA frameworks to life through hands-on business simulations.</p>
-<h4 data-i18n="approachH">Learning Approach</h4><p data-i18n="approachP">Learn by doing. Test assumptions, adjust variables, compare alternatives, and explore trade-offs to understand how business decisions shape outcomes.</p>
-<h4 data-i18n="topicsH">Explore Topics</h4><ul class="tpl"><li data-i18n="t0">Strategy &amp; Finance</li><li data-i18n="t1">Marketing Management</li><li data-i18n="t2">Operations &amp; Supply Chain</li><li data-i18n="t3">Decision Making &amp; Negotiation</li><li data-i18n="t4">Business Analytics</li><li data-i18n="t5">Leadership &amp; Organizational Behavior</li></ul>
-<h4 data-i18n="devH">Developed by</h4><p class="devname">KrisnaDev</p></div></div>
-<div class="ov" id="ideaDlg" role="dialog" aria-modal="true" aria-labelledby="ideaT"><div class="mw dlgw"><div class="row" style="justify-content:space-between;margin:0"><h3 id="ideaT" data-i18n="ideaT">Share an Idea</h3><button type="button" data-close data-ia="aria-label=close">✕</button></div>
-<p data-i18n="ideaP">Help shape the future of MBA Lab. Share your ideas for new features, simulation topics, learning experiences, or potential collaborations.</p><p class="note unav" id="ideaCfg" role="status"></p>
-<form id="ideaForm" novalidate>
-<input type="text" id="fBot" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-<div class="fld"><label for="fName" data-i18n="lName">Full Name (Optional)</label><input id="fName" name="name" type="text" autocomplete="name" aria-describedby="eName"><div class="err" id="eName"></div></div>
-<div class="fld"><label for="fEmail" data-i18n="lEmail">Email Address</label><input id="fEmail" name="email" type="email" autocomplete="email" required aria-describedby="eEmail"><div class="err" id="eEmail"></div></div>
-<div class="fld"><label for="fType" data-i18n="lType">Submission Type</label><select id="fType" name="type" required aria-describedby="eType"><option value="" selected disabled data-i18n="selType">Select a category…</option><option value="Feature Idea" data-i18n="o0">Feature Idea</option><option value="New Simulation Topic" data-i18n="o1">New Simulation Topic</option><option value="Content or Learning Framework" data-i18n="o2">Content or Learning Framework</option><option value="Technical Collaboration" data-i18n="o3">Technical Collaboration</option><option value="Academic Collaboration" data-i18n="o4">Academic Collaboration</option><option value="Other" data-i18n="o5">Other</option></select><div class="err" id="eType"></div></div>
-<div class="fld"><label for="fSubject" data-i18n="lSubject">Subject</label><input id="fSubject" name="subject" type="text" required aria-describedby="eSubject"><div class="err" id="eSubject"></div></div>
-<div class="fld"><label for="fMessage" data-i18n="lMessage">Message</label><textarea id="fMessage" name="message" rows="5" required aria-describedby="eMessage"></textarea><div class="err" id="eMessage"></div></div>
-<h4 data-i18n="privH">Privacy Notice</h4><p class="note" data-i18n="privacy">Your information will only be used to review your submission and contact you about it when necessary.</p>
-<div class="row"><button id="fSubmit" class="sbm" type="submit" data-i18n="submit">Submit Idea →</button><span id="fStatus" role="status" aria-live="polite"></span></div></form></div></div>
+<nav class="topnav" id="topnav" aria-label="MBA Lab"><a class="brand" id="brand" href="#" aria-label="MBA Lab home"><span class="logo" aria-hidden="true">&#9670;</span><span>MBA Lab</span></a><div class="navr" id="navr"></div></nav>
+<div class="stage" id="stage"></div>
+<div id="landing"></div>
+<div id="app"></div>
 
-<div id="app"><header><button id="back" data-ia="title=backTitle"><span data-i18n="backT">← Home</span></button><h1>SMART Decision Studio <span class="tag">MVP</span></h1><p data-i18n="appSub">Deterministic engine · editable model · live ranking · sensitivity analysis</p></header>
-<main>
-<section><h2 data-i18n="s1h">1 · Performance matrix & weights</h2>
-<p class="note" data-i18n="s1n">Demo: BUMDes Bumi Lestari. Ratings (0–100) are <b>reconstructed demonstration ratings based on relative case information</b>, not verified facts. Raw weights are normalized automatically.</p>
-<div class="sc"><table id="mx"></table></div>
-<div class="row"><button id="addA" data-i18n="addA">+ Alternative</button><button id="addK" data-i18n="addK">+ Attribute</button><button id="reset" data-i18n="resetT">Reset</button><span id="msg" class="warn"></span></div></section>
-<section><h2 data-i18n="s2h">2 · Aggregate SMART values</h2><p class="note" data-i18n="s2n">V<sub>j</sub> = Σ w<sub>i</sub>·v<sub>ij</sub>, with w<sub>i</sub> = W<sub>i</sub>/ΣW. Ties use a tolerance of 1e-9. Select a row for the term-by-term breakdown.</p>
-<div class="sc"><table id="res"></table></div><pre id="drill"></pre></section>
-<section><h2 data-i18n="s3h">3 · Sensitivity analysis</h2>
-<p class="note" data-i18n="s3n">V<sub>j</sub>(x) = (Σ<sub>i≠k</sub> W<sub>i</sub>v<sub>ij</sub> + x·v<sub>kj</sub>) / (S + x). Crossover x* = (A<sub>b</sub> − A<sub>a</sub>)/(v<sub>ka</sub> − v<sub>kb</sub>), computed from the current model.</p>
-<div class="s3"><div class="l"><div class="row"><label><span data-i18n="lAttr">Attribute</span> <select id="ks"></select></label><label><span data-i18n="lMaxX">Max x</span> <input type="number" id="xm" value="200" min="1"></label>
-<label><span data-i18n="lAxis">Axis</span> <select id="ax"><option value="raw" data-i18n="axRaw">Raw weight x</option><option value="norm" data-i18n="axNorm">Normalized weight</option></select></label></div>
-<div class="row"><input type="range" id="sl" min="0" max="200" step="1" value="30" style="flex:1;min-width:200px"><span id="slv"></span></div>
-<div class="chw"><svg id="ch" viewBox="0 0 700 330"></svg></div></div><div class="r"><div class="sc"><table id="cx"></table></div><p id="sum" class="note"></p></div></div></section>
-</main></div>
-
-<script src="js/config.js"></script>
-<script src="js/i18n/en.js"></script>
-<script src="js/i18n/id.js"></script>
-<script src="js/i18n/ja.js"></script>
-<script src="js/i18n/zh.js"></script>
-<script src="js/i18n/i18n.js"></script>
-<script src="js/smart.js"></script>
-<script src="js/catalog.js"></script>
-<script src="js/overlays.js"></script>
-<script src="js/landing-fx.js"></script>
-<script src="js/city3d.js"></script>
-<script src="js/controls.js"></script>
-<script src="js/dialogs.js"></script>
-<script src="js/form.js"></script>
-<script src="js/language.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/main.js"></script>
+<!-- core -->
+<script src="core/namespace.js"></script>
+<script src="data/languages.js"></script>
+<script src="core/i18n.js"></script>
+<script src="core/strings.js"></script>
+<script src="core/overlay.js"></script>
+<script src="core/loader.js"></script>
+<script src="core/sims.js"></script>
+<!-- content and configuration (edit these) -->
+<script src="data/config.js"></script>
+<script src="data/landing.js"></script>
+<script src="data/about.js"></script>
+<script src="data/idea-form.js"></script>
+<script src="data/categories.js"></script>
+<script src="data/simulations.js"></script>
+<script src="data/features.js"></script>
+<!-- boot: loads the features listed in data/features.js -->
+<script src="core/main.js"></script>
 </body></html>

@@ -1,0 +1,13 @@
+/* Music / sound toggles (top bar) */
+.pill.aud svg{width:18px!important;height:18px!important;max-width:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.pill.aud .xx{display:none;stroke:#ff6b81}
+.pill.aud.off .xx{display:inline}
+.pill.aud.off svg .ic{opacity:.5}
+.pill.aud[aria-pressed=true]{background:rgba(110,190,255,.26);border-color:rgba(150,210,255,.6);box-shadow:0 0 0 1px rgba(150,210,255,.25),0 0 14px rgba(110,190,255,.35)}
+@keyframes eq{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+#mu[aria-pressed=true] .eq{transform-box:fill-box;transform-origin:center;animation:eq 1.2s ease-in-out infinite}
+#mu[aria-pressed=true] .eq:nth-child(2){animation-delay:-.3s}#mu[aria-pressed=true] .eq:nth-child(3){animation-delay:-.6s}
+#mu[aria-pressed=true] .eq:nth-child(4){animation-delay:-.9s}#mu[aria-pressed=true] .eq:nth-child(5){animation-delay:-.15s}
+@media(prefers-reduced-motion:reduce){#mu[aria-pressed=true] .eq{animation:none}}
+@media(max-width:1100px){.pill.aud .lb{display:none}.pill.aud{padding:0;width:36px;justify-content:center}}
+@media(max-width:640px){.navr{gap:4px}.pill.aud{width:34px}.pill{padding:0 9px}}

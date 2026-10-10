@@ -1,0 +1,32 @@
+/* 3D stage and CSS fallback cubes */
+.stage{position:absolute;right:2vw;top:60px;width:48vw;height:calc(100vh - 140px);z-index:0;pointer-events:none}
+.scene{position:absolute;inset:0;perspective:1100px}
+.rig{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(calc(var(--mx,0)*22deg)) rotateX(calc(var(--my,0)*-16deg));transition:transform .25s ease-out}
+.o{position:absolute;transform-style:preserve-3d;animation:bob 7s ease-in-out infinite}
+.cube{position:relative;width:var(--s);height:var(--s);--h:calc(var(--s)/2);transform-style:preserve-3d;animation:spin 16s linear infinite}
+.cube i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:calc(var(--s)/9);color:#fff;border:1px solid rgba(255,255,255,.6);background:linear-gradient(135deg,rgba(255,255,255,.38),rgba(255,255,255,.06))}
+.cube i:nth-child(1){transform:translateZ(var(--h))}
+.cube i:nth-child(2){transform:rotateY(90deg) translateZ(var(--h))}
+.cube i:nth-child(3){transform:rotateY(180deg) translateZ(var(--h))}
+.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(var(--h))}
+.cube i:nth-child(5){transform:rotateX(90deg) translateZ(var(--h))}
+.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(var(--h))}
+.card{width:176px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.55);box-shadow:0 14px 34px rgba(0,0,0,.28);font-size:12px}
+.mb{height:6px;background:rgba(255,255,255,.25);border-radius:4px;margin:3px 0 7px}
+.mb i{display:block;height:100%;background:linear-gradient(90deg,#fbbf24,#f472b6);border-radius:4px}
+@media(max-width:900px){
+  .stage{display:none}
+}
+.stage{position:fixed;inset:0;width:auto;height:auto;z-index:0;pointer-events:none}
+.stage canvas{display:block}
+.stage::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,8,22,.9),rgba(5,8,22,.4) 55%,rgba(5,8,22,.05)),linear-gradient(0deg,rgba(5,8,22,.6),transparent 30%)}
+@media(max-width:900px){
+  .stage{display:block}
+  .stage::after{background:rgba(5,8,22,.6)}
+}
+body.day .stage::after{background:linear-gradient(90deg,rgba(235,246,255,.9),rgba(235,246,255,.35) 55%,transparent),linear-gradient(0deg,rgba(235,246,255,.5),transparent 30%)}
+@media(max-width:900px){
+  body.day .stage::after{background:rgba(235,246,255,.6)}
+}
+body.inapp .stage::after{background:rgba(5,8,22,.45)}
+body.day.inapp .stage::after{background:rgba(235,246,255,.35)}

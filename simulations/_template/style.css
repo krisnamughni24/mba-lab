@@ -1,0 +1,2 @@
+/* Styles of this simulation. Scope everything under #app to avoid touching the rest of the site. */
+#app main section { padding: 20px 0; }
