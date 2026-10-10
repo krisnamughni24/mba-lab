@@ -1,4 +1,4 @@
-/* Idea form feature: the "Share an Idea" window, validation and submission.
+/* Idea form feature: the "Share an idea" window, validation and submission.
    Texts, fields and submission types come from data/idea-form.js; delivery is configured in data/config.js.
    Success is only reported after the receiving service confirms it. */
 MBALAB.feature('idea-form', () => {
@@ -130,7 +130,7 @@ MBALAB.feature('idea-form', () => {
   /* entry point */
   const button = MBALAB.ui.html(
     '<button id="btnIdea" type="button" aria-haspopup="dialog" data-action="open-idea" data-sfx="open" data-ia="aria-label=ideaAria,title=ideaAria">' +
-    '<span aria-hidden="true">💡</span><span class="lb" data-i18n="ideaLbl">Submit an Idea</span></button>');
+    '<span aria-hidden="true">💡</span><span class="lb" data-i18n="ideaLbl">Submit an idea</span></button>');
   MBALAB.ui.fab(button, 20);
   MBALAB.actions['open-idea'] = () => { refreshNotice(); MBALAB.overlay.open(dialog); };
 

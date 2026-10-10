@@ -1,7 +1,7 @@
 /* UI strings: idea-form */
 MBALAB.i18n.add({
   "en": {
-    "ideaLbl": "Submit an Idea",
+    "ideaLbl": "Submit an idea",
     "ideaAria": "Submit an idea or collaboration",
     "vEmail0": "Please enter your email address.",
     "vEmail1": "Please enter a valid email address.",
@@ -19,7 +19,7 @@ MBALAB.i18n.add({
     "vName": "Please enter your full name."
   },
   "id": {
-    "ideaLbl": "Kirim Ide",
+    "ideaLbl": "Kirim ide",
     "ideaAria": "Kirim ide atau ajakan kolaborasi",
     "vEmail0": "Silakan isi alamat email Anda.",
     "vEmail1": "Silakan isi alamat email yang valid.",

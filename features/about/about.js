@@ -19,7 +19,7 @@ MBALAB.feature('about', () => {
   bind($('aboutApproach'), () => tr(A.approach));
   bind($('aboutTopicsH'), () => tr(A.topicsTitle));
   bind($('aboutDevH'), () => tr(A.developedBy));
-  A.topics.forEach(topic => { const li = document.createElement('li'); $('aboutTopics').appendChild(li); bind(li, () => tr(topic)); });
+  MBALAB.data.categories.forEach(c => { const li = document.createElement('li'); $('aboutTopics').appendChild(li); bind(li, () => tr(c.name)); });
   dialog.querySelector('.devname').textContent = A.developer;
 
   const button = MBALAB.ui.html(

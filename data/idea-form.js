@@ -1,9 +1,9 @@
-/* "Share an Idea" form content: texts, fields (required / minimum length) and the submission types.
+/* "Share an idea" form content: texts, fields (required / minimum length) and the submission types.
    `value` of a type is what is sent to you (keep it English); `label` is what the visitor sees. */
 MBALAB.data.ideaForm = {
   "title": {
-    "en": "Share an Idea",
-    "id": "Bagikan Ide",
+    "en": "Share an idea",
+    "id": "Bagikan ide",
     "ja": "アイデアを共有",
     "zh": "分享想法"
   },
@@ -14,8 +14,8 @@ MBALAB.data.ideaForm = {
     "zh": "帮助塑造 MBA Lab 的未来。欢迎分享新功能、模拟主题、学习体验或合作的想法。"
   },
   "privacyTitle": {
-    "en": "Privacy Notice",
-    "id": "Pemberitahuan Privasi",
+    "en": "Privacy notice",
+    "id": "Pemberitahuan privasi",
     "ja": "プライバシーに関するお知らせ",
     "zh": "隐私声明"
   },
@@ -26,8 +26,8 @@ MBALAB.data.ideaForm = {
     "zh": "您的信息仅用于审核您的提交内容，并在必要时就此与您联系。"
   },
   "submit": {
-    "en": "Submit Idea →",
-    "id": "Kirim Ide →",
+    "en": "Submit idea →",
+    "id": "Kirim ide →",
     "ja": "アイデアを送信 →",
     "zh": "提交想法 →"
   },
@@ -40,8 +40,8 @@ MBALAB.data.ideaForm = {
   "fields": {
     "name": {
       "label": {
-        "en": "Full Name (Optional)",
-        "id": "Nama Lengkap (Opsional)",
+        "en": "Full name (optional)",
+        "id": "Nama lengkap (opsional)",
         "ja": "氏名（任意）",
         "zh": "姓名（选填）"
       },
@@ -49,8 +49,8 @@ MBALAB.data.ideaForm = {
     },
     "email": {
       "label": {
-        "en": "Email Address",
-        "id": "Alamat Email",
+        "en": "Email address",
+        "id": "Alamat email",
         "ja": "メールアドレス",
         "zh": "电子邮箱"
       },
@@ -58,8 +58,8 @@ MBALAB.data.ideaForm = {
     },
     "type": {
       "label": {
-        "en": "Submission Type",
-        "id": "Jenis Kiriman",
+        "en": "Submission type",
+        "id": "Jenis kiriman",
         "ja": "送信の種類",
         "zh": "提交类型"
       },
@@ -90,8 +90,8 @@ MBALAB.data.ideaForm = {
     {
       "value": "Feature Idea",
       "label": {
-        "en": "Feature Idea",
-        "id": "Ide Fitur",
+        "en": "Feature idea",
+        "id": "Ide fitur",
         "ja": "機能のアイデア",
         "zh": "功能创意"
       }
@@ -99,8 +99,8 @@ MBALAB.data.ideaForm = {
     {
       "value": "New Simulation Topic",
       "label": {
-        "en": "New Simulation Topic",
-        "id": "Topik Simulasi Baru",
+        "en": "New simulation topic",
+        "id": "Topik simulasi baru",
         "ja": "新しいシミュレーションのテーマ",
         "zh": "新的模拟主题"
       }
@@ -108,8 +108,8 @@ MBALAB.data.ideaForm = {
     {
       "value": "Content or Learning Framework",
       "label": {
-        "en": "Content or Learning Framework",
-        "id": "Konten atau Kerangka Belajar",
+        "en": "Content or learning framework",
+        "id": "Konten atau kerangka belajar",
         "ja": "コンテンツまたは学習フレームワーク",
         "zh": "内容或学习框架"
       }
@@ -117,8 +117,8 @@ MBALAB.data.ideaForm = {
     {
       "value": "Technical Collaboration",
       "label": {
-        "en": "Technical Collaboration",
-        "id": "Kolaborasi Teknis",
+        "en": "Technical collaboration",
+        "id": "Kolaborasi teknis",
         "ja": "技術面での協力",
         "zh": "技术合作"
       }
@@ -126,8 +126,8 @@ MBALAB.data.ideaForm = {
     {
       "value": "Academic Collaboration",
       "label": {
-        "en": "Academic Collaboration",
-        "id": "Kolaborasi Akademik",
+        "en": "Academic collaboration",
+        "id": "Kolaborasi akademik",
         "ja": "学術面での協力",
         "zh": "学术合作"
       }

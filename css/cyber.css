@@ -169,3 +169,15 @@ body.day textarea{background:rgba(255,255,255,.85);color:var(--txt)}
 textarea:focus{outline:none;border-color:var(--edge-hi);box-shadow:0 0 0 1px var(--edge-hi),var(--glow)}
 body.day select option{color:#0c1a3a}
 .sd th.grp,.sd th.corner,.sd th.ah{font-family:var(--f-mono);letter-spacing:var(--track-label);text-transform:uppercase;font-size:var(--fs-2xs);font-weight:400}
+
+/* ===== Casing rules (see docs/ARCHITECTURE.md) =====
+   Copy is written in sentence case. UPPERCASE is applied here, by CSS, and only to "chrome":
+   buttons, tags/badges, field labels, table headers, eyebrow labels and window titles. */
+label,.mw label,.sd label{font-family:var(--f-mono);letter-spacing:var(--track-label);text-transform:uppercase;font-size:var(--fs-2xs);font-weight:400;color:var(--txt2)}
+.sd-guide h3{font-family:var(--f-hd);letter-spacing:.1em;text-transform:uppercase;font-size:var(--fs-lg);color:var(--cy)}
+.sd-guide h3,.mw h3,.sd-top h1{text-wrap:balance}
+.chip{text-transform:uppercase;letter-spacing:.07em;font-size:11px}
+.fld input,.fld select,.fld textarea{border-radius:3px;font-family:var(--f-ui)}
+.fld textarea,.fld textarea:focus{background:rgba(2,6,24,.55);border:1px solid var(--edge);color:var(--txt)}
+.fld textarea:focus{border-color:var(--edge-hi);background:rgba(4,12,44,.8);color:#fff}
+body.day .fld textarea,body.day .fld textarea:focus{background:rgba(255,255,255,.88);border-color:var(--edge);color:#0c1a3a}

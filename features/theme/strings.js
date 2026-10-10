@@ -6,7 +6,7 @@ MBALAB.i18n.add({
     "motionTitle": "Pause / play city animation",
     "pauseAria": "Pause city animation",
     "playAria": "Resume city animation",
-    "dnTitle": "Night / Day",
+    "dnTitle": "Night / day",
     "dayAria": "Switch to day mode",
     "nightAria": "Switch to night mode"
   },
@@ -16,7 +16,7 @@ MBALAB.i18n.add({
     "motionTitle": "Jeda / putar animasi kota",
     "pauseAria": "Jeda animasi kota",
     "playAria": "Lanjutkan animasi kota",
-    "dnTitle": "Malam / Siang",
+    "dnTitle": "Malam / siang",
     "dayAria": "Beralih ke mode siang",
     "nightAria": "Beralih ke mode malam"
   },

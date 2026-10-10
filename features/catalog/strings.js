@@ -2,7 +2,7 @@
 MBALAB.i18n.add({
   "en": {
     "all": "All",
-    "live": "LIVE",
+    "live": "Live",
     "soon": "Coming soon",
     "open": "Open →",
     "count": "{l} live · {s} coming soon",
@@ -12,7 +12,7 @@ MBALAB.i18n.add({
   },
   "id": {
     "all": "Semua",
-    "live": "LIVE",
+    "live": "Live",
     "soon": "Segera hadir",
     "open": "Buka →",
     "count": "{l} aktif · {s} segera hadir",

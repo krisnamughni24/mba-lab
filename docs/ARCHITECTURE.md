@@ -50,3 +50,11 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 - Variable aliases (`--ink`, `--line`, `--teal` …) are re-declared inside `body.day`, otherwise they would keep their night value.
 - `css/cyber.css` is loaded last by `core/main.js`, so it wins over feature styles. A simulation's own `style.css` may re-skin itself under its root class (see `.sd` in SMART).
 - Motion is switched off only by the **Pause** button (`body.still`), never by the OS setting.
+
+## Copy and casing rules
+- **Write copy in sentence case**: only the first word and proper nouns/acronyms are capitalised ("Submit an idea", "Operations & supply chain", "NPV & capital budgeting"). Product names keep their form: MBA Lab, SMART Decision Studio, BUMDes Bumi Lestari.
+- **UPPERCASE is a style, not a spelling.** `css/cyber.css` uppercases buttons, tags/badges, field labels, table headers, eyebrow labels (`h4`) and window titles. Never type copy in capitals for that effect.
+- Use `&` in names and labels (categories, simulation names, topics), `and` in running sentences.
+- Category names live **only** in `data/categories.js`; the About window lists the same names automatically.
+- Indonesian addresses the visitor formally (**Anda**, the assistant says **saya**), everywhere.
+- Values sent to the owner by the idea form (`"value"` in `data/idea-form.js`) stay in English Title Case on purpose.

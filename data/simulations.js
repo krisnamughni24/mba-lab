@@ -37,8 +37,8 @@ MBALAB.data.simulations = [
     "icon": "📈",
     "category": "strategy-finance",
     "name": {
-      "en": "Break-even Analysis",
-      "id": "Analisis Titik Impas",
+      "en": "Break-even analysis",
+      "id": "Analisis titik impas",
       "ja": "損益分岐点分析",
       "zh": "盈亏平衡分析"
     },
@@ -55,8 +55,8 @@ MBALAB.data.simulations = [
     "icon": "💰",
     "category": "strategy-finance",
     "name": {
-      "en": "NPV & Capital Budgeting",
-      "id": "NPV & Penganggaran Modal",
+      "en": "NPV & capital budgeting",
+      "id": "NPV & penganggaran modal",
       "ja": "NPVと資本予算",
       "zh": "净现值与资本预算"
     },
@@ -73,8 +73,8 @@ MBALAB.data.simulations = [
     "icon": "🧭",
     "category": "strategy-finance",
     "name": {
-      "en": "Porter's Five Forces",
-      "id": "Lima Kekuatan Porter",
+      "en": "Porter's five forces",
+      "id": "Lima kekuatan Porter",
       "ja": "ポーターの5つの力",
       "zh": "波特五力"
     },
@@ -91,8 +91,8 @@ MBALAB.data.simulations = [
     "icon": "🎯",
     "category": "strategy-finance",
     "name": {
-      "en": "Portfolio Risk–Return",
-      "id": "Risiko–Imbal Hasil Portofolio",
+      "en": "Portfolio risk–return",
+      "id": "Risiko–imbal hasil portofolio",
       "ja": "ポートフォリオのリスクとリターン",
       "zh": "投资组合风险与收益"
     },
@@ -109,8 +109,8 @@ MBALAB.data.simulations = [
     "icon": "🏷️",
     "category": "marketing",
     "name": {
-      "en": "Pricing & Elasticity",
-      "id": "Penetapan Harga & Elastisitas",
+      "en": "Pricing & elasticity",
+      "id": "Penetapan harga & elastisitas",
       "ja": "価格設定と弾力性",
       "zh": "定价与弹性"
     },
@@ -127,8 +127,8 @@ MBALAB.data.simulations = [
     "icon": "👥",
     "category": "marketing",
     "name": {
-      "en": "Market Segmentation",
-      "id": "Segmentasi Pasar",
+      "en": "Market segmentation",
+      "id": "Segmentasi pasar",
       "ja": "市場セグメンテーション",
       "zh": "市场细分"
     },
@@ -163,8 +163,8 @@ MBALAB.data.simulations = [
     "icon": "🔗",
     "category": "operations",
     "name": {
-      "en": "Bullwhip Effect",
-      "id": "Efek Bullwhip",
+      "en": "Bullwhip effect",
+      "id": "Efek bullwhip",
       "ja": "ブルウィップ効果",
       "zh": "牛鞭效应"
     },
@@ -199,8 +199,8 @@ MBALAB.data.simulations = [
     "icon": "📊",
     "category": "analytics",
     "name": {
-      "en": "Demand Forecasting",
-      "id": "Peramalan Permintaan",
+      "en": "Demand forecasting",
+      "id": "Peramalan permintaan",
       "ja": "需要予測",
       "zh": "需求预测"
     },
@@ -217,8 +217,8 @@ MBALAB.data.simulations = [
     "icon": "🧭",
     "category": "leadership",
     "name": {
-      "en": "Situational Leadership",
-      "id": "Kepemimpinan Situasional",
+      "en": "Situational leadership",
+      "id": "Kepemimpinan situasional",
       "ja": "状況対応型リーダーシップ",
       "zh": "情境领导力"
     },

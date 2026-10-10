@@ -3,8 +3,8 @@ MBALAB.data.categories = [
   {
     "id": "strategy-finance",
     "name": {
-      "en": "Finance and Strategy",
-      "id": "Keuangan dan Strategi",
+      "en": "Finance & strategy",
+      "id": "Keuangan & strategi",
       "ja": "ファイナンスと戦略",
       "zh": "金融与战略"
     }
@@ -12,8 +12,8 @@ MBALAB.data.categories = [
   {
     "id": "marketing",
     "name": {
-      "en": "Marketing Management",
-      "id": "Manajemen Pemasaran",
+      "en": "Marketing management",
+      "id": "Manajemen pemasaran",
       "ja": "マーケティング管理",
       "zh": "市场营销管理"
     }
@@ -21,8 +21,8 @@ MBALAB.data.categories = [
   {
     "id": "operations",
     "name": {
-      "en": "Operations and Supply Chain",
-      "id": "Operasi dan Rantai Pasok",
+      "en": "Operations & supply chain",
+      "id": "Operasi & rantai pasok",
       "ja": "オペレーションとサプライチェーン",
       "zh": "运营与供应链"
     }
@@ -30,8 +30,8 @@ MBALAB.data.categories = [
   {
     "id": "decision-negotiation",
     "name": {
-      "en": "Decision Making and Negotiation",
-      "id": "Pengambilan Keputusan dan Negosiasi",
+      "en": "Decision making & negotiation",
+      "id": "Pengambilan keputusan & negosiasi",
       "ja": "意思決定と交渉",
       "zh": "决策与谈判"
     }
@@ -39,8 +39,8 @@ MBALAB.data.categories = [
   {
     "id": "analytics",
     "name": {
-      "en": "Business Analytics",
-      "id": "Analitik Bisnis",
+      "en": "Business analytics",
+      "id": "Analitik bisnis",
       "ja": "ビジネスアナリティクス",
       "zh": "商业分析"
     }
@@ -48,8 +48,8 @@ MBALAB.data.categories = [
   {
     "id": "leadership",
     "name": {
-      "en": "Leadership and Organizational Behavior",
-      "id": "Kepemimpinan dan Perilaku Organisasi",
+      "en": "Leadership & organizational behavior",
+      "id": "Kepemimpinan & perilaku organisasi",
       "ja": "リーダーシップと組織行動",
       "zh": "领导力与组织行为"
     }

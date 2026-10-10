@@ -1,4 +1,4 @@
-/* Site configuration: the only file you normally edit to connect the "Share an Idea" form.
+/* Site configuration: the only file you normally edit to connect the "Share an idea" form.
 
    Choose ONE way to receive ideas (see docs/FORM-SETUP-GOOGLE-DRIVE.md):
 

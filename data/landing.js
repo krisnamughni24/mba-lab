@@ -1,8 +1,8 @@
 /* Landing page copy */
 MBALAB.data.landing = {
   "tag": {
-    "en": "Interactive Business Simulations for MBA Learners",
-    "id": "Simulasi Bisnis Interaktif untuk Pembelajar MBA",
+    "en": "Interactive business simulations for MBA learners",
+    "id": "Simulasi bisnis interaktif untuk pembelajar MBA",
     "ja": "MBA学習者のためのインタラクティブ・ビジネスシミュレーション",
     "zh": "面向 MBA 学习者的互动商业模拟"
   },

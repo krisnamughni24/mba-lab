@@ -5,24 +5,24 @@
 (() => {
   const T = (en, id, ja, zh) => ({ en, id, ja, zh });
   const TIPS = {
-    as_alts: T('Start by naming your alternatives in the first column: the options you are comparing.', 'Mulai dengan menamai alternatif di kolom pertama: pilihan yang kamu bandingkan.', 'まず左の列に代替案の名前を入力しましょう。比較する選択肢です。', '先在第一列为备选方案命名，也就是你要比较的选项。'),
+    as_alts: T('Start by naming your alternatives in the first column: the options you are comparing.', 'Mulai dengan menamai alternatif di kolom pertama: pilihan yang Anda bandingkan.', 'まず左の列に代替案の名前を入力しましょう。比較する選択肢です。', '先在第一列为备选方案命名，也就是你要比较的选项。'),
     as_attrs: T('Now name the attributes (criteria) in the header row, for example price or quality.', 'Sekarang namai atribut (kriteria) di baris header, misalnya harga atau kualitas.', '次にヘッダー行に属性（評価基準）の名前を入力します。例：価格、品質。', '现在在表头行为属性（标准）命名，例如价格或质量。'),
-    as_weights: T('Give every attribute a raw weight. A bigger number means it matters more. I normalize them for you.', 'Beri tiap atribut bobot mentah. Angka lebih besar berarti lebih penting. Aku yang menormalisasinya.', '各属性に生の重みを入力します。大きいほど重要で、正規化は私がします。', '为每个属性填写原始权重。数值越大越重要，归一化由我来做。'),
+    as_weights: T('Give every attribute a raw weight. A bigger number means it matters more. I normalize them for you.', 'Beri tiap atribut bobot mentah. Angka lebih besar berarti lebih penting. Saya yang menormalisasinya.', '各属性に生の重みを入力します。大きいほど重要で、正規化は私がします。', '为每个属性填写原始权重。数值越大越重要，归一化由我来做。'),
     as_ratings: T('Fill the remaining cells with a rating from 0 to 100. Higher is better.', 'Isi sel yang tersisa dengan nilai 0 sampai 100. Makin tinggi makin baik.', '残りのセルに0〜100の評価を入力します。高いほど良いです。', '请在其余单元格填写 0 到 100 的评分，越高越好。'),
     as_ready1: T('Everything is filled in. Press “Reveal the ranking” when you are ready.', 'Semua sudah terisi. Tekan “Tampilkan peringkat” kalau sudah siap.', 'すべて入力できました。準備ができたら「ランキングを表示」を押してください。', '全部填写完毕。准备好后点击“揭晓排名”。'),
-    as_1a: T('Not sure where to start? Press Example to load a filled case.', 'Bingung mulai dari mana? Tekan Contoh untuk memuat kasus yang sudah terisi.', '迷ったら「例」を押して入力済みのケースを読み込みましょう。', '不知从何开始？点击“示例”载入已填好的案例。'),
+    as_1a: T('Not sure where to start? Press Example to load a filled case.', 'Belum tahu harus mulai dari mana? Tekan Contoh untuk memuat kasus yang sudah terisi.', '迷ったら「例」を押して入力済みのケースを読み込みましょう。', '不知从何开始？点击“示例”载入已填好的案例。'),
     as_1b: T('Use a low rating when an alternative is weak on an attribute, and 100 when it is excellent.', 'Pakai nilai rendah jika alternatif lemah pada suatu atribut, dan 100 jika sangat baik.', '属性で弱い代替案は低く、優れていれば100を付けます。', '方案在某属性上较弱就打低分，非常出色就打 100。'),
     as_1c: T('Pressed ✕ by mistake? Use Undo in the notification.', 'Salah tekan ✕? Pakai Batalkan di notifikasi.', '✕ を誤って押しても、通知の「元に戻す」で戻せます。', '误点了 ✕？可在通知里点击“撤销”。'),
     as_2a: T('Tap an alternative (the 🔍 icon) to see how its score is built.', 'Ketuk sebuah alternatif (ikon 🔍) untuk melihat cara skornya dibentuk.', '代替案（🔍）をタップすると、スコアの内訳が見られます。', '点按某个方案（🔍 图标）可查看其得分构成。'),
     as_2b: T('The coloured segments show how much each attribute adds to the score.', 'Segmen berwarna menunjukkan seberapa besar tiap atribut menambah skor.', '色付きの区間は、各属性がスコアに加える大きさを示します。', '彩色分段显示各属性为得分贡献了多少。'),
-    as_2c: T('Curious how stable the winner is? Press “Stress-test it”.', 'Penasaran seberapa kokoh pemenangnya? Tekan “Uji ketahanan”.', '勝者がどれだけ安定か気になりますか？「ストレステスト」を押しましょう。', '想知道获胜者有多稳？点击“压力测试”。'),
+    as_2c: T('Curious how stable the winner is? Press “Stress-test it”.', 'Ingin tahu seberapa kokoh pemenangnya? Tekan “Uji ketahanan”.', '勝者がどれだけ安定か気になりますか？「ストレステスト」を押しましょう。', '想知道获胜者有多稳？点击“压力测试”。'),
     as_3a: T('Click a line in the chart to see its data at that point.', 'Klik sebuah garis pada grafik untuk melihat datanya di titik itu.', 'グラフの線をクリックすると、その点のデータが見られます。', '点击图中的线条可查看该点的数据。'),
     as_3b: T('Drag the slider: does the leader change? That tells you how fragile the result is.', 'Geser slider: apakah pemimpinnya berganti? Itu menunjukkan seberapa rapuh hasilnya.', 'スライダーを動かして、首位が入れ替わるか見てみましょう。結果の脆さが分かります。', '拖动滑块，领先者会变吗？这能反映结果有多脆弱。'),
     as_3c: T('Dashed red lines mark the weights where the winner switches.', 'Garis putus-putus merah menandai bobot tempat pemenang berganti.', '赤い点線は勝者が入れ替わる重みを示します。', '红色虚线标出获胜者切换的权重。'),
     as_3d: T('Try another attribute in the dropdown. Some matter more than others.', 'Coba atribut lain di dropdown. Ada yang lebih berpengaruh dari yang lain.', 'ドロップダウンで別の属性も試しましょう。影響の大きさは属性ごとに違います。', '在下拉框中试试其他属性，有些影响更大。'),
-    as_4a: T('You can download this analysis as PDF, HTML or Markdown below.', 'Kamu bisa mengunduh analisis ini sebagai PDF, HTML, atau Markdown di bawah.', '下から、この分析を PDF・HTML・Markdown でダウンロードできます。', '你可以在下方将此分析下载为 PDF、HTML 或 Markdown。'),
+    as_4a: T('You can download this analysis as PDF, HTML or Markdown below.', 'Anda dapat mengunduh analisis ini sebagai PDF, HTML, atau Markdown di bawah.', '下から、この分析を PDF・HTML・Markdown でダウンロードできます。', '你可以在下方将此分析下载为 PDF、HTML 或 Markdown。'),
     as_4b: T('Want to change something? Press Back and this conclusion updates.', 'Ingin mengubah sesuatu? Tekan Kembali dan simpulan ini ikut berubah.', '変更したいときは「戻る」を押すと、結論も更新されます。', '想修改内容？点击“返回”，结论会随之更新。'),
-    as_4c: T('The conclusion is only as good as your weights and ratings. Double-check them.', 'Simpulan hanya sebaik bobot dan nilai yang kamu isi. Periksa lagi ya.', '結論は入力した重みと評価の質次第です。もう一度確認しましょう。', '结论的可靠性取决于你填的权重和评分，请再核对一下。'),
+    as_4c: T('The conclusion is only as good as your weights and ratings. Double-check them.', 'Simpulan hanya sebaik bobot dan nilai yang Anda isi. Mohon periksa kembali.', '結論は入力した重みと評価の質次第です。もう一度確認しましょう。', '结论的可靠性取决于你填的权重和评分，请再核对一下。'),
     as_name: T('Bit', 'Bit', 'ビット', '比特'), as_hide: T('Hide assistant', 'Sembunyikan asisten', 'アシスタントを隠す', '隐藏助手'), as_show: T('Show assistant', 'Tampilkan asisten', 'アシスタントを表示', '显示助手'), as_close: T('Close', 'Tutup', '閉じる', '关闭')
   };
   const strings = { en: {}, id: {}, ja: {}, zh: {} };
