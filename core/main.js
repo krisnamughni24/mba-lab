@@ -2,7 +2,8 @@
    then render the current language. A feature that fails to load or start does not stop the others. */
 (async () => {
   const features = MBALAB.data.features;
-  const styles = features.flatMap(f => (f.styles || []).map(s => f.path + s));
+  /* css/cyber.css goes last so the cyberpunk theme overrides every earlier layer */
+  const styles = features.flatMap(f => (f.styles || []).map(s => f.path + s)).concat('css/cyber.css');
   const scripts = features.flatMap(f => (f.scripts || []).map(s => f.path + s));
   try { await Promise.all([MBALAB.load.styles(styles), MBALAB.load.scripts(scripts)]); }
   catch (err) { console.error('[MBALAB]', err); }

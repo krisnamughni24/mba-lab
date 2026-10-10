@@ -310,3 +310,36 @@ body.day .sd-guide .gtip{background:rgba(37,99,235,.1)}
 @keyframes botBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
 @keyframes botAnt{50%{opacity:.35}}
 @media(prefers-reduced-motion:reduce){.sd-bot *{animation:none!important}}
+
+/* ===== Cyberpunk skin: same palette as the 3D city and css/cyber.css (edit the variables on .sd to recolour) ===== */
+.sd{--g1:#4dd2ff;--g2:#ff6ad5;--panel:rgba(5,9,30,.8);--panel-b:rgba(77,210,255,.4);--grid:rgba(77,210,255,.3);--field:rgba(2,6,24,.6);--fg:#e6f6ff;--fg2:rgba(200,228,255,.74);font-family:var(--f-ui,"Chakra Petch",system-ui,sans-serif)}
+body.day .sd{--g1:#0a6cff;--g2:#d6199a;--panel:rgba(255,255,255,.82);--panel-b:rgba(20,70,200,.4);--grid:rgba(20,70,200,.3);--field:rgba(255,255,255,.9);--fg:#0c1a3a;--fg2:#33496e}
+.sd button{border-radius:3px;text-transform:uppercase;letter-spacing:.06em;font-size:12.5px;background:linear-gradient(180deg,rgba(77,210,255,.15),rgba(77,210,255,.03));border-color:var(--panel-b);box-shadow:inset 0 0 12px rgba(77,210,255,.08)}
+.sd button:hover{background:linear-gradient(180deg,rgba(77,210,255,.32),rgba(255,106,213,.12));border-color:var(--g1);box-shadow:0 0 14px rgba(77,210,255,.4);transform:none;color:#fff}
+body.day .sd button:hover{color:#06235e;background:linear-gradient(180deg,rgba(10,108,255,.2),rgba(214,25,154,.1))}
+.sd input,.sd select{border-radius:3px;border-color:var(--panel-b)}
+.sd input:focus,.sd select:focus{box-shadow:0 0 0 1px var(--g1),0 0 12px rgba(77,210,255,.4)}
+.sd-top h1,.sd-h h2,.sd-h h3,.sd h2,.sd h3{font-family:var(--f-hd,"Orbitron",sans-serif);letter-spacing:.06em}
+.sd-top h1{font-size:17px;text-transform:uppercase;letter-spacing:.12em;filter:drop-shadow(0 0 10px rgba(77,210,255,.45))}
+.sd-card,.sd-win,.sd .pk,.sd .rk,.sd .ldr,.sd .chw,.sd-dl,.sd .pv,.sd-drill:not(:empty),.sd-toast,.sd-guide .gd,.sd-guide .gtip,.sd .sd-quest{border-radius:4px}
+.sd-card,.sd-guide .gd{border:1px solid var(--panel-b);box-shadow:0 0 0 1px rgba(0,0,0,.35),0 0 30px rgba(77,210,255,.14),0 20px 50px rgba(0,0,0,.45);
+  background-image:linear-gradient(var(--g1),var(--g1)),linear-gradient(var(--g1),var(--g1)),linear-gradient(var(--g2),var(--g2)),linear-gradient(var(--g2),var(--g2)),linear-gradient(var(--g1),var(--g1)),linear-gradient(var(--g1),var(--g1)),linear-gradient(var(--g2),var(--g2)),linear-gradient(var(--g2),var(--g2));
+  background-size:18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px,18px 2px,2px 18px;background-position:0 0,0 0,100% 100%,100% 100%,100% 0,100% 0,0 100%,0 100%;background-repeat:no-repeat}
+.sd-steps .st button{border-radius:3px;background:#070c2a;padding:6px 16px 6px 8px}
+.sd-steps .n{border-radius:3px;font-family:var(--f-hd,"Orbitron",sans-serif);font-size:13px;border:1px solid var(--panel-b)}
+.sd-steps .st.active .n,.sd-steps .st.open .n{box-shadow:0 0 14px var(--g1)}
+.sd-steps .st+.st::before{border-radius:0;height:2px}
+.sd-prog,.sd-prog i,.sd .rk .bw,.sd .rk .bw i,.sd .dr .db,.sd .dr .db i{border-radius:1px}
+.sd-prog i,.sd .rk .bw i,.sd .dr .db i{box-shadow:0 0 10px var(--g1)}
+.sd-quest .bx,.sd button.x,.sd-toast button,.sd-bot .bx,.sd-bot .bh,.sd .pv .pvx{border-radius:2px}
+.sd .sd-info{border-radius:3px;box-shadow:0 0 12px rgba(77,210,255,.5)}
+.sd .rk{border:1px solid var(--panel-b)}
+.sd .rk.win,.sd .rk.first{box-shadow:0 0 18px rgba(255,209,102,.35)}
+.sd-bot .bubble,.sd-bot-show{border-radius:4px}
+.sd-bot .bubble{background:rgba(5,9,30,.94);color:#e6f6ff;border:1px solid var(--g1);box-shadow:0 0 22px rgba(77,210,255,.4),0 14px 40px rgba(0,0,0,.5)}
+.sd-bot .bubble::after{background:rgba(5,9,30,.94);border-color:var(--g1)}
+.sd-bot .bubble button{color:#e6f6ff}
+.sd-bot .bubble .bn,.sd-bot .bubble b{color:var(--g2)}
+body.day .sd-bot .bubble{background:#fff;color:#0c1a3a}body.day .sd-bot .bubble::after{background:#fff}body.day .sd-bot .bubble button{color:#0c1a3a}
+.sd table.grid th,.sd table.grid td{border-color:var(--grid)}
+.sd table.grid .corner,.sd table.grid thead th{text-transform:uppercase;letter-spacing:.1em;font-size:11px}
