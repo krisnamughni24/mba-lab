@@ -1,0 +1,2 @@
+/* Entry point */
+setLang(LANG);

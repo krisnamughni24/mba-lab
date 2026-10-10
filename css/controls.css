@@ -1,0 +1,23 @@
+/* Controls: floating buttons, camera pad, language popover, About topics grid, audio buttons */
+/* swapped sides: idea/info on the left, camera controls on the right */
+.camctl{left:auto;right:14px}.fab{right:auto;left:14px}
+
+/* language popover + hero tweaks */
+.langw{position:relative}.langmenu{position:absolute;right:0;top:46px;min-width:190px;padding:6px;border-radius:16px;display:grid;gap:3px;background:rgba(8,12,34,.82);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.3);box-shadow:0 16px 40px rgba(0,0,0,.4);animation:pop .22s cubic-bezier(.2,.9,.3,1.2);z-index:60;color:#fff}
+.langmenu[hidden]{display:none}.langmenu button{display:flex;align-items:center;gap:10px;justify-content:flex-start;text-align:left;border:0;border-radius:10px;background:transparent;box-shadow:none;padding:9px 10px;font-weight:500;color:inherit;text-transform:none}
+.langmenu button:hover{background:rgba(255,255,255,.18);transform:none}.langmenu button[aria-checked=true]{background:rgba(255,255,255,.26);font-weight:700}.langmenu button[aria-checked=true]::after{content:'\2713';margin-left:auto}
+.langmenu .lc{display:inline-grid;place-items:center;width:28px;height:22px;border-radius:7px;background:rgba(255,255,255,.2);font-size:11px;font-weight:700}
+body.day .langmenu{background:rgba(255,255,255,.9);color:#10203f;border-color:rgba(16,32,63,.2)}body.day .langmenu button:hover{background:rgba(16,32,63,.08)}body.day .langmenu button[aria-checked=true]{background:rgba(16,32,63,.14)}body.day .langmenu .lc{background:rgba(16,32,63,.12)}
+#landing>.hero:last-child{padding-bottom:90px;min-height:calc(100vh - 56px)}
+@media(max-width:640px){#langLb{display:inline}.pill.sw{flex:none}.navr{gap:6px}}
+.tpl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;columns:auto;padding:0;margin:8px 0 0;list-style:none}
+.tpl li{display:flex;align-items:center;min-height:54px;padding:10px 14px;border-radius:12px;background:rgba(127,127,127,.14);border:1px solid rgba(127,127,127,.3);font-size:13px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.dlgw.wide{width:min(780px,100%)}.devname{font-size:16px;font-weight:700;margin:6px 0 0}
+.unav:empty{display:none}.unav{margin:10px 0 0;font-weight:600}
+@media(max-width:760px){.tpl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.tpl{grid-template-columns:minmax(0,1fr)}}
+#ideaForm>.row{margin-top:14px}
+.pill.aud svg{image-rendering:pixelated;flex:none;width:18px!important;height:18px!important;max-width:18px}.pill.aud .xx{display:none}.pill.aud.off .xx{display:inline}.pill.aud.off svg g:first-child{opacity:.55}
+.pill.aud[aria-pressed=true]{background:rgba(110,190,255,.26);border-color:rgba(150,210,255,.6);box-shadow:0 0 0 1px rgba(150,210,255,.25),0 0 14px rgba(110,190,255,.35)}
+@media(max-width:1100px){.pill.aud .lb{display:none}.pill.aud{padding:0;width:36px;justify-content:center}}
+@media(max-width:640px){.navr{gap:4px}.pill.aud{width:34px}.pill{padding:0 9px}}

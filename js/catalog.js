@@ -1,0 +1,8 @@
+/* Simulation catalog */
+const SIMS=[{"ic": "⚖️", "c": 3, "live": 1}, {"ic": "📈", "c": 0, "live": 0}, {"ic": "💰", "c": 0, "live": 0}, {"ic": "🧭", "c": 0, "live": 0}, {"ic": "🎯", "c": 0, "live": 0}, {"ic": "🏷️", "c": 1, "live": 0}, {"ic": "👥", "c": 1, "live": 0}, {"ic": "📦", "c": 2, "live": 0}, {"ic": "🔗", "c": 2, "live": 0}, {"ic": "🤝", "c": 3, "live": 0}, {"ic": "📊", "c": 4, "live": 0}, {"ic": "🧭", "c": 5, "live": 0}];
+let fcat=-1;
+const renderCat=()=>{const nl=SIMS.filter(s=>s.live).length;$('mcount').textContent=t('count',{l:nl,s:SIMS.length-nl});
+$('chips').innerHTML=[-1,0,1,2,3,4,5].map(c=>`<button type="button" class="chip" data-cat="${c}" aria-pressed="${c===fcat}">${c<0?t('all'):t('cat'+c)}</button>`).join('');
+$('sg').innerHTML=SIMS.map((s,i)=>({s,i})).filter(o=>fcat<0||o.s.c===fcat).map(o=>{const s=o.s,n=t('s'+o.i+'n'),d=t('s'+o.i+'d');return s.live?`<div class="sim live"><span class="bd">${t('live')}</span><b><span aria-hidden="true">${s.ic}</span> ${n}</b><span class="cat">${t('cat'+s.c)}</span><span class="note">${d}</span><button type="button" data-open="smart">${t('open')}</button></div>`:`<div class="sim soon" aria-disabled="true"><span class="bd">${t('soon')}</span><b><span aria-hidden="true">${s.ic}</span> ${n}</b><span class="cat">${t('cat'+s.c)}</span><span class="note">${d}</span></div>`}).join('')};
+$('chips').onclick=e=>{const b=e.target.closest('[data-cat]');if(b){fcat=+b.dataset.cat;renderCat();const a=$('chips').querySelector('[aria-pressed="true"]');a&&a.focus()}};
+$('sg').onclick=e=>{if(e.target.closest('[data-open="smart"]'))openSmart()};renderCat();
