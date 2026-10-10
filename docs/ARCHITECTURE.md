@@ -53,7 +53,7 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 
 ## Copy and casing rules
 - **Write copy in sentence case**: only the first word and proper nouns/acronyms are capitalised ("Submit an idea", "Operations & supply chain", "NPV & capital budgeting"). Product names keep their form: MBA Lab, SMART Decision Studio, BUMDes Bumi Lestari.
-- **UPPERCASE is a style, not a spelling.** `css/cyber.css` uppercases buttons, tags/badges, field labels, table headers, eyebrow labels (`h4`) and window titles. Never type copy in capitals for that effect.
+- **UPPERCASE is a style, not a spelling.** `css/cyber.css` uppercases tags/badges, field labels, table headers, eyebrow labels (`h4`) and window titles. Never type copy in capitals for that effect. Buttons are never uppercased: they show the text exactly as written in the strings files, in night and day.
 - Use `&` in names and labels (categories, simulation names, topics), `and` in running sentences.
 - Category names live **only** in `data/categories.js`; the About window lists the same names automatically.
 - Indonesian addresses the visitor formally (**Anda**, the assistant says **saya**), everywhere.
