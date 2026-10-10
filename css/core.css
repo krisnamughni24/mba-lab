@@ -21,34 +21,6 @@ button{padding:2px 8px}
 @media(max-width:900px){
   body{overflow:auto}
 }
-:root{--pg:#ffe14d;--bg:#fff;--card:#fff;--ink:#000;--mut:#222;--line:#000;--navy:#000;--teal:#00c9a0;--org:#ff5a1f;--red:#ff2e63;--bd:#000}
-@media(prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--pg:#111;--bg:#000;--card:#1a1a1a;--ink:#fff;--mut:#ddd;--line:#fff;--navy:#fff;--bd:#fff;--teal:#2de2b3;--org:#ff7a45;--red:#ff5c85}
-}
-body{background:var(--pg);font-family:"Space Mono","Courier New",ui-monospace,monospace}
-.tag{background:var(--org);color:#000;border:2px solid #000;border-radius:0;font-weight:900;padding:0 6px}
-.note{color:var(--mut)}
-input,select{font-family:inherit;font-weight:700;border:2px solid var(--bd);border-radius:0;background:var(--bg);color:var(--ink)}
-input:focus,select:focus{outline:none;background:#fff7a8;color:#000;box-shadow:3px 3px 0 var(--bd)}
-input[type=range]{accent-color:var(--org);border:0;background:none;box-shadow:none}
-button{font-family:inherit;font-weight:900;text-transform:uppercase;border:2px solid var(--bd);border-radius:0;background:var(--card);color:var(--ink);box-shadow:3px 3px 0 var(--bd)}
-button:hover{background:var(--org);color:#000}
-button:active{transform:translate(3px,3px);box-shadow:none}
-:root,:root:not([data-theme="light"]){--bg:rgba(255,255,255,.15);--card:rgba(255,255,255,.15);--ink:#fff;--mut:rgba(255,255,255,.78);--line:rgba(255,255,255,.28);--navy:#fff;--bd:rgba(255,255,255,.4);--teal:#6ee7b7;--org:#fbbf24;--red:#fb7185}
-body{background:radial-gradient(circle at 15% 20%,rgba(244,114,182,.75),transparent 42%),radial-gradient(circle at 85% 85%,rgba(34,211,238,.65),transparent 42%),linear-gradient(135deg,#4f46e5,#7c3aed 55%,#0ea5e9);background-attachment:fixed;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-@media(prefers-color-scheme:dark){
-  body{background:radial-gradient(circle at 15% 20%,rgba(190,60,130,.5),transparent 42%),radial-gradient(circle at 85% 85%,rgba(14,116,144,.5),transparent 42%),linear-gradient(135deg,#1e1b4b,#312e81 55%,#0c4a6e);background-attachment:fixed}
-}
-.tag{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:10px;font-weight:600}
-input,select{font-family:inherit;font-weight:500;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);border-radius:8px;color:#fff}
-input:focus,select:focus{outline:none;background:rgba(255,255,255,.28);color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
-select option{color:#111}
-input[type=range]{accent-color:#fff;border:0;background:none;box-shadow:none}
-button{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:10px;box-shadow:none;text-transform:none;font-weight:600;backdrop-filter:blur(6px)}
-button:hover{background:rgba(255,255,255,.36);color:#fff}
-button:active{transform:scale(.96);box-shadow:none}
-.cta{font-size:16px;padding:12px 30px;border-radius:999px;background:rgba(255,255,255,.92);color:#4f46e5;font-weight:700;border:0;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.cta:hover{background:#fff;color:#4f46e5}
 .mw{width:min(980px,100%);max-height:90vh;overflow:auto;background:rgba(255,255,255,.2);backdrop-filter:blur(22px) saturate(160%);border:1px solid rgba(255,255,255,.45);border-radius:22px;padding:18px 20px;box-shadow:0 16px 48px rgba(0,0,0,.35)}
 .mw h3{margin:0;font-size:20px}
 @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}

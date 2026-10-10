@@ -11,8 +11,9 @@
 body.day{
   --void:#e9f4ff;--panel:rgba(255,255,255,.8);--panel2:rgba(255,255,255,.66);
   --edge:rgba(20,70,200,.38);--edge-hi:rgba(20,70,200,.9);--glow:0 0 12px rgba(20,90,255,.25);
-  --txt:#0c1a3a;--txt2:#33496e;--cy:#0a6cff;--mg:#d6199a;--am:#b87400;--gn:#0a8a63;--vi:#6a3fe0;--rd:#d01445;
-  --ink:#0c1a3a;--mut:#33496e}
+  --txt:#0c1a3a;--txt2:#33496e;--cy:#0a5fe0;--mg:#c4128a;--am:#8f5a00;--gn:#07765a;--vi:#5b34d1;--rd:#c2123f;
+  /* aliases must be re-declared here: a var() alias set on :root keeps its NIGHT value for everything below it */
+  --ink:var(--txt);--mut:var(--txt2);--line:var(--edge);--bd:var(--edge);--card:var(--panel);--bg:var(--panel);--teal:var(--gn);--org:var(--am);--red:var(--rd);--navy:var(--txt)}
 html{scrollbar-color:var(--cy) transparent;scrollbar-width:thin}
 ::selection{background:var(--mg);color:#fff}
 body,body.day{font-family:var(--f-ui);color:var(--txt);letter-spacing:.01em}
@@ -124,7 +125,7 @@ h1,h2,h3,h4,.brand,.sl-name,.cta{text-wrap:balance}
 .sl-pct,.sd table td,.sd input[type=number],.sd .rk .val,.sd .rk .vs,.sd-win strong,.sd .bar b,code,.mw code,kbd,.sd table.grid th small,.sd .pv *[class*=val],.sd .lgd b{font-family:var(--f-mono);font-variant-numeric:tabular-nums slashed-zero;letter-spacing:.02em}
 .sd input[type=number],.sd table td{font-size:1.02em}
 /* eyebrow / label voice */
-.tag,.bd,.mw h4,.sd-steps .l small,.sd-win small,.sd th,.sd .note b:first-child,.sl-title,.sl-dev,.sd label,.sd .row label{font-family:var(--f-mono);letter-spacing:var(--track-label);text-transform:uppercase;font-size:var(--fs-2xs);font-weight:400}
+.tag,.bd,.mw h4,.sd-steps .l small,.sd-win small,.sd thead th,.sl-title,.sl-dev,.sd label,.sd .row label{font-family:var(--f-mono);letter-spacing:var(--track-label);text-transform:uppercase;font-size:var(--fs-2xs);font-weight:400}
 .mw h4{font-size:var(--fs-xs);color:var(--mg)}
 .mw h4::before{content:"// ";color:var(--cy);opacity:.8}
 .cat{font-family:var(--f-mono);letter-spacing:.1em;text-transform:uppercase;font-size:var(--fs-2xs);opacity:.8}
@@ -155,3 +156,16 @@ body.still .hero h1,body.still .hero .tag::after,body.still .fx-hit{animation:no
 @keyframes cyHit{0%{filter:drop-shadow(-2px 0 rgba(255,106,213,.9)) drop-shadow(2px 0 rgba(77,210,255,.9));transform:translateX(1px)}35%{filter:drop-shadow(3px 0 rgba(255,106,213,.8)) drop-shadow(-3px 0 rgba(77,210,255,.8));transform:translateX(-2px)}70%{filter:drop-shadow(-1px 0 rgba(255,106,213,.6)) drop-shadow(1px 0 rgba(77,210,255,.6));transform:none}100%{filter:none;transform:none}}
 span.fx-hit,.sd-steps .l.fx-hit,.cat.fx-hit,.bn.fx-hit{display:inline-block}
 body.nomo .fx-hit{animation:none}
+
+/* ===== Day / night parity ===== */
+body.day .ov,body.day #modal{background:rgba(214,232,255,.55)}
+body.day .mw{box-shadow:0 0 0 1px rgba(20,60,140,.15),0 0 28px rgba(20,90,255,.12),0 24px 60px rgba(20,60,140,.28)}
+body.day .tag{color:var(--mg)}
+body.day .sim.live .bd{color:var(--gn)}
+body.day .camctl{background:var(--panel);border-color:var(--edge)}
+body.day .camctl button,body.day .fab button{color:var(--txt)}
+textarea{font-family:var(--f-ui);font-size:inherit;background:rgba(2,6,24,.55);color:var(--txt);border:1px solid var(--edge);border-radius:3px;padding:6px 8px}
+body.day textarea{background:rgba(255,255,255,.85);color:var(--txt)}
+textarea:focus{outline:none;border-color:var(--edge-hi);box-shadow:0 0 0 1px var(--edge-hi),var(--glow)}
+body.day select option{color:#0c1a3a}
+.sd th.grp,.sd th.corner,.sd th.ah{font-family:var(--f-mono);letter-spacing:var(--track-label);text-transform:uppercase;font-size:var(--fs-2xs);font-weight:400}

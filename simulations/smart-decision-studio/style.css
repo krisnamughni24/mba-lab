@@ -20,15 +20,6 @@ body.day .sd .warn{color:#be123c}
 /* top bar */
 .sd-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px clamp(12px,3vw,28px) 4px}
 .sd-top h1{font-size:19px;font-weight:800;letter-spacing:.01em;flex:1;min-width:170px;background:linear-gradient(90deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sd-hud{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.sd-lvl{display:flex;align-items:center;gap:8px;font-size:12px;padding:5px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--panel-b)}
-.sd-lvl b{white-space:nowrap}
-.sd-xpbar{width:90px;height:8px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
-.sd-xpbar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--g1),var(--g2));transition:width .7s cubic-bezier(.2,.8,.2,1)}
-.sd-lvl.pulse{animation:sdGlow .8s}
-.sd-badges{display:flex;gap:6px}
-.sd-badges .bdg{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:var(--panel);border:1px solid var(--panel-b);filter:grayscale(1);opacity:.45;font-size:15px;transition:.4s}
-.sd-badges .bdg.on{filter:none;opacity:1;box-shadow:0 0 14px var(--g1);animation:sdPop .5s}
 
 /* stepper */
 .sd-steps{list-style:none;margin:6px 0 0;padding:0 clamp(12px,3vw,28px);display:flex;gap:0;align-items:center}
@@ -50,7 +41,6 @@ body.day .sd .warn{color:#be123c}
 .sd-stage>div{max-width:1280px;margin:0 auto}
 .sd-stage>.in-r{animation:sdInR .45s cubic-bezier(.2,.8,.2,1)}
 .sd-stage>.in-l{animation:sdInL .45s cubic-bezier(.2,.8,.2,1)}
-.sd-stage>.flipin{animation:sdFlip .6s cubic-bezier(.2,.8,.2,1)}
 .sd-card{background:var(--panel);border:1px solid var(--panel-b);border-radius:22px;padding:20px;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:0 10px 40px rgba(0,0,0,.18)}
 .sd-h h2{font-size:20px;font-weight:800}
 .sd-h p{margin:4px 0 14px;color:var(--fg2)}
@@ -62,7 +52,7 @@ body.day .sd .warn{color:#be123c}
 .sd-tools .ex.hot{animation:sdPulse 1.6s infinite;border-color:var(--g1)}
 .sd .sc{overflow-x:auto;padding-bottom:4px}
 .sd table{border-collapse:separate;border-spacing:0;width:100%}
-.sd th,.sd td{padding:6px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--panel-b)}
+.sd thead th,.sd td{padding:6px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--panel-b)}
 .sd th:first-child,.sd td:first-child{text-align:left}
 .sd th{font-weight:600;font-size:12px;color:var(--fg2)}
 .sd th .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
@@ -89,7 +79,7 @@ body.day .sd button.sd-cta{color:#fff}
 .sd-quest .note{margin-top:10px}
 
 /* part 2 */
-.sd-pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:6px 0 20px}
+
 .sd .pk{padding:18px 14px;border-radius:16px;font-size:15px;display:flex;gap:10px;align-items:center;justify-content:center;border:2px solid var(--panel-b)}
 .sd .pk .dot{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
 .sd .pk.sel{border-color:var(--c);box-shadow:0 0 22px color-mix(in srgb,var(--c) 55%,transparent);transform:translateY(-3px) scale(1.03)}
@@ -147,23 +137,15 @@ body.day .sd .chw{background:rgba(255,255,255,.45)}
 .sd .chw svg{width:100%;height:auto;max-height:42vh;display:block}
 
 /* finish */
-.sd-done{text-align:center;max-width:620px;margin:20px auto 0}
-.sd-done .big{font-size:64px;animation:sdBob 2s ease-in-out infinite}
-.sd-done h2{font-size:26px;margin:6px 0}
-.sd-done p{color:var(--fg2)}
-.sd-hud2{display:flex;gap:16px;justify-content:center;margin:14px 0;font-size:15px}
-.sd-badges.big{justify-content:center;gap:14px;flex-wrap:wrap}
-.sd-badges.big .bdg{width:auto;height:auto;border-radius:16px;padding:10px 14px;display:grid;gap:4px;font-size:26px}
-.sd-badges.big small{font-size:11px}
+
 
 /* toasts + confetti */
 .sd-toasts{position:absolute;right:16px;bottom:16px;display:grid;gap:8px;z-index:5;pointer-events:none;justify-items:end}
 .sd-toast{pointer-events:auto;display:flex;gap:12px;align-items:center;padding:9px 14px;border-radius:14px;font-weight:600;font-size:13px;background:rgba(10,16,40,.86);color:#fff;border:1px solid rgba(255,255,255,.3);animation:sdToast .35s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(10px)}
 body.day .sd-toast{background:rgba(255,255,255,.92);color:#10203f}
-.sd-toast.xp{border-color:var(--g1)}.sd-toast.badge,.sd-toast.lv{border-color:#fbbf24}.sd-toast.warn{border-color:#fb7185}
+.sd-toast.xp{border-color:var(--g1)}.sd-toast.lv{border-color:#fbbf24}.sd-toast.warn{border-color:#fb7185}
 .sd-toast.out{opacity:0;transform:translateY(8px);transition:.3s}
 .sd-toast button{padding:3px 10px;border-radius:8px;color:inherit}
-.sd-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
 .sd .shake{animation:sdShake .4s}
 
 @keyframes sdInR{from{opacity:0;transform:translateX(40px)}}
@@ -347,7 +329,7 @@ body.day .sd-bot .bubble{background:#fff;color:#0c1a3a}body.day .sd-bot .bubble:
 /* ===== Advanced typography (SMART) ===== */
 .sd{font-size:var(--fs-md,.95rem);font-feature-settings:"kern","liga","calt"}
 .sd-top h1{font-size:var(--fs-lg,1.15rem);letter-spacing:.18em}
-.sd-card h2,.sd-card .sd-h h2,.sd-card h3{font-size:var(--fs-xl,1.4rem);line-height:1.2;letter-spacing:.05em;text-wrap:balance}
+.sd-card h2,.sd-card .sd-h h2{font-size:var(--fs-xl,1.4rem);line-height:1.2;letter-spacing:.05em;text-wrap:balance}
 .sd-card h2 .pt,.sd .kicker{font-family:var(--f-mono,monospace);font-size:var(--fs-xs,.75rem);letter-spacing:.2em;text-transform:uppercase;color:var(--g2)}
 .sd .note,.sd-card>p,.sd-card .sub{font-size:var(--fs-sm,.85rem);line-height:1.6;text-wrap:pretty}
 .sd-win b{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-xl,1.4rem);letter-spacing:.06em}
@@ -362,3 +344,7 @@ body.day .sd-bot .bubble{background:#fff;color:#0c1a3a}body.day .sd-bot .bubble:
 .sd svg text.ttl,.sd svg .title{font-family:var(--f-hd,"Orbitron",sans-serif);letter-spacing:.08em}
 .sd-bot .bubble{font-size:var(--fs-sm,.85rem);line-height:1.55}
 .sd-bot .bubble .bn{font-family:var(--f-mono,monospace);letter-spacing:.2em}
+
+/* side panel headings stay smaller than the main part title; row headers keep their case (w and W are different symbols) */
+.sd-card h3,.sd-quest h3,.sd-quest .qt{font-size:var(--fs-lg,1.1rem);letter-spacing:.08em;line-height:1.25}
+.sd table th[scope=row]{text-transform:none;letter-spacing:.02em;font-family:inherit;font-size:inherit}
