@@ -550,6 +550,16 @@ ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}
         if (d.r !== undefined) { drill(+d.r); }
       });
 
+      /* tips for the assistant: state-based first, then general ones for the current part */
+      function hints() {
+        const c = checks(), st = [];
+        if (G.stage === 0) {
+          st.push(!c.ck1 ? 'as_alts' : !c.ck2 ? 'as_attrs' : !c.ck3 ? 'as_weights' : !c.ck4 ? 'as_ratings' : 'as_ready1');
+          return { state: st, generic: ['as_1a', 'as_1b', 'as_1c'] };
+        }
+        return { state: [], generic: [['as_2a', 'as_2b', 'as_2c'], ['as_3a', 'as_3b', 'as_3c', 'as_3d'], ['as_4a', 'as_4b', 'as_4c']][G.stage - 1] || [] };
+      }
+      if (window.SmartAssistant) SmartAssistant.create(host, { hints });
       api = { setTheme, redraw() { renderSteps(); renderStage(0); } };
       setTheme(MBALAB.theme && MBALAB.theme.isDay());
       renderSteps(); renderStage(0);

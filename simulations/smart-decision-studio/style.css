@@ -277,3 +277,36 @@ body.day .sd-guide .gtip{background:rgba(37,99,235,.1)}
 .sd-guide .gx{position:absolute;top:12px;right:12px;padding:2px 9px;border-radius:9px;background:transparent;color:inherit}
 .sd-guide .sd-cta{width:100%;opacity:1}
 @keyframes sdFade{from{opacity:0}}
+
+/* assistant "Bit" */
+.sd-stage{padding-bottom:96px}
+.sd-bot{position:absolute;bottom:6px;left:24px;width:64px;height:80px;z-index:4;pointer-events:none}
+.sd-bot[hidden]{display:none}
+.sd-bot .body{pointer-events:auto;position:absolute;inset:0;padding:0;border:0;background:transparent;border-radius:0;backdrop-filter:none;cursor:pointer;box-shadow:none}
+.sd-bot .body:hover{background:transparent;transform:none}
+.sd-bot .flip{display:block;width:64px;height:80px;transition:transform .2s}
+.sd-bot .bot-art,.sd-bot-show .bot-art{width:64px!important;height:80px!important;max-width:none;display:block;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35));animation:botBob 2.8s ease-in-out infinite}
+.sd-bot .eyes{transform-origin:32px 27px;animation:botBlink 4.2s infinite}
+.sd-bot .ant{animation:botAnt 1.6s ease-in-out infinite}
+.sd-bot .legL,.sd-bot .legR,.sd-bot .armL,.sd-bot .armR{transform-box:fill-box;transform-origin:50% 0}
+.sd-bot.walk .bot-art{animation:botStep .5s ease-in-out infinite}
+.sd-bot.walk .legL{animation:botLeg .5s ease-in-out infinite}.sd-bot.walk .legR{animation:botLeg .5s ease-in-out infinite reverse}
+.sd-bot.walk .armL{animation:botLeg .5s ease-in-out infinite reverse}.sd-bot.walk .armR{animation:botLeg .5s ease-in-out infinite}
+.sd-bot.talk .armR{animation:botWave .6s ease-in-out infinite}
+.sd-bot .bubble{pointer-events:auto;position:absolute;bottom:88px;padding:12px 14px 10px;border-radius:16px;background:#fff;color:#10203f;border:1px solid rgba(16,32,63,.18);box-shadow:0 14px 40px rgba(0,0,0,.4);font-size:13px;line-height:1.45;animation:sdPop .3s}
+.sd-bot .bubble::after{content:"";position:absolute;bottom:-8px;left:calc(var(--tail,30px) - 8px);width:16px;height:16px;background:#fff;border-right:1px solid rgba(16,32,63,.18);border-bottom:1px solid rgba(16,32,63,.18);transform:rotate(45deg)}
+.sd-bot .bn{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#4f6fd8;font-weight:800;margin-bottom:3px}
+.sd-bot .bt{margin:0 14px 6px 0}
+.sd-bot .bx{position:absolute;top:6px;right:6px;padding:0 6px;font-size:11px;border-radius:8px;background:transparent;color:#51607a;border-color:transparent}
+.sd-bot .bh{padding:2px 8px;font-size:11px;border-radius:8px;background:transparent;color:#51607a;border-color:rgba(16,32,63,.2)}
+.sd-bot .bubble button:hover{background:#eef2ff;color:#10203f}
+.sd-bot-show{position:absolute;left:12px;bottom:10px;z-index:4;width:44px;height:52px;padding:0;overflow:hidden;border-radius:14px}
+.sd-bot-show[hidden]{display:none}
+.sd-bot-show .flip{display:block;width:64px;height:80px;margin:-6px -10px;transform:scale(.7);transform-origin:top left}
+@keyframes botBob{50%{transform:translateY(-3px)}}
+@keyframes botStep{50%{transform:translateY(-5px)}}
+@keyframes botLeg{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}}
+@keyframes botWave{0%,100%{transform:rotate(0)}50%{transform:rotate(-70deg)}}
+@keyframes botBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+@keyframes botAnt{50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.sd-bot *{animation:none!important}}

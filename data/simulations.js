@@ -24,6 +24,7 @@ MBALAB.data.simulations = [
     "scripts": [
       "strings.js",
       "template.js",
+      "assistant.js",
       "app.js"
     ],
     "styles": [

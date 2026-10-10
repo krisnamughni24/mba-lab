@@ -5,7 +5,7 @@
        MBALAB.sims.define('<id>', { strings, template, mount(host), onShow(host), onHide(), onLang(), onTheme(day) })
    Parts from several files are merged. See docs/ADDING-A-SIMULATION.md. */
 (() => {
-  const LOAD_MS = 10000;  // fixed duration of the loading screen (milliseconds)
+  const LOAD_MS = 6000;   // fixed duration of the loading screen (milliseconds)
   const impl = {};        // id -> merged implementation
   const loading = {};     // id -> load promise
   const stash = {};       // id -> DocumentFragment holding a simulation's DOM while another one is shown
