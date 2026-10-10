@@ -83,6 +83,7 @@
         $b('.bt').textContent = t(k); label(); bubble.hidden = false; bot.classList.add('talk');
         const bw = Math.min(290, W() - 24), cx = x + BW / 2;
         bubble.style.width = bw + 'px';
+        { const bt = $b('.bt'); bt.style.minHeight = bt.offsetHeight + 'px'; if (window.MBALAB && MBALAB.fx) MBALAB.fx.type(bt, { cps: 60 }); }
         const left = Math.max(8, Math.min(cx - bw / 2, W() - bw - 8)) - x;
         bubble.style.left = left + 'px';
         bubble.style.setProperty('--tail', Math.max(14, Math.min(bw - 14, cx - (x + left) - 0)) + 'px');

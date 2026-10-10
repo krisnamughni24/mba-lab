@@ -353,7 +353,7 @@ body.day .sd-bot .bubble{background:#fff;color:#0c1a3a}body.day .sd-bot .bubble:
 .sd-win b{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-xl,1.4rem);letter-spacing:.06em}
 .sd-win>:last-child{font-family:var(--f-mono,monospace);font-size:var(--fs-2xl,2.2rem);font-variant-numeric:tabular-nums;color:var(--am,#ffd166);text-shadow:0 0 18px rgba(255,209,102,.5)}
 .sd .rk .nm{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-sm,.85rem);letter-spacing:.05em}
-.sd .rk .sc{font-size:var(--fs-lg,1.15rem);color:var(--g1)}
+.sd .rk .val{font-size:var(--fs-lg,1.15rem);color:var(--g1)}
 .sd-steps .l{font-family:var(--f-hd,"Orbitron",sans-serif);font-size:var(--fs-xs,.75rem);letter-spacing:.1em;text-transform:uppercase}
 .sd-steps .l small{font-family:var(--f-mono,monospace);font-size:var(--fs-2xs,.65rem);letter-spacing:.2em;opacity:.8}
 .sd ul li{line-height:1.6;text-wrap:pretty}

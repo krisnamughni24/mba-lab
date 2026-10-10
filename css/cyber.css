@@ -121,7 +121,7 @@ p,li,.note,.sim,.feat div,.step{text-wrap:pretty;hyphens:manual;line-height:1.55
 .sim p,.feat div,.step p{max-width:none}
 h1,h2,h3,h4,.brand,.sl-name,.cta{text-wrap:balance}
 /* numbers: tabular mono so columns line up and values do not jitter while animating */
-.sl-pct,.sd table td,.sd input[type=number],.sd .sc,.sd .rk .sc,.sd-win b+*,.sd-win .sc,.sd .bar b,code,.mw code,kbd,.sd table.grid th small,.sd .pv *[class*=val],.sd .lgd b{font-family:var(--f-mono);font-variant-numeric:tabular-nums slashed-zero;letter-spacing:.02em}
+.sl-pct,.sd table td,.sd input[type=number],.sd .rk .val,.sd .rk .vs,.sd-win strong,.sd .bar b,code,.mw code,kbd,.sd table.grid th small,.sd .pv *[class*=val],.sd .lgd b{font-family:var(--f-mono);font-variant-numeric:tabular-nums slashed-zero;letter-spacing:.02em}
 .sd input[type=number],.sd table td{font-size:1.02em}
 /* eyebrow / label voice */
 .tag,.bd,.mw h4,.sd-steps .l small,.sd-win small,.sd th,.sd .note b:first-child,.sl-title,.sl-dev,.sd label,.sd .row label{font-family:var(--f-mono);letter-spacing:var(--track-label);text-transform:uppercase;font-size:var(--fs-2xs);font-weight:400}
@@ -149,3 +149,4 @@ h1,h2,h3,h4,.brand,.sl-name,.cta{text-wrap:balance}
 body.day .mw h3,body.day .how h3{text-shadow:none}
 body.nomo .hero h1,body.nomo .hero .tag::after{animation:none}
 @media(prefers-reduced-motion:reduce){.hero h1,.hero .tag::after{animation:none!important}}
+.fx-typing::after{content:"\258C";margin-left:2px;color:var(--cy);animation:cyCaret .6s steps(1) infinite}
