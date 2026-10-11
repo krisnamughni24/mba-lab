@@ -23,7 +23,7 @@ MBALAB.sims.define('bumn-explorer', {
       const cos = filter ? E.LIST.filter(b => b.sec === filter).map(opt).join('')
         : E.SECTORS.map(x => `<optgroup label="${t('bm_sec_' + x)}">${E.LIST.filter(b => b.sec === x).map(opt).join('')}</optgroup>`).join('');
       $('#bmChips').innerHTML = `<label class="bm-dd" style="--c:${filter ? E.COLORS[filter] : 'var(--cy)'}"><select id="bmCat" aria-label="${T('catLbl')}">${cats}</select></label>` +
-        `<label class="bm-dd"><select id="bmCo" aria-label="${T('coLbl')}"><option value=""${sel ? '' : ' selected'}>${T('pickCo', { n: visited.size, m: M })}</option>${cos}</select></label>`;
+        `<label class="bm-dd"><select id="bmCo" aria-label="${T('coLbl')}"><option value=""${sel ? '' : ' selected'}>${T('coLbl')} (${filter ? E.LIST.filter(b => b.sec === filter).length : M})</option>${cos}</select></label>`;
       if (f) { const el = $('#' + f); el && el.focus({ preventScroll: true }); }
     }
     function list() {
@@ -47,7 +47,7 @@ MBALAB.sims.define('bumn-explorer', {
       c.innerHTML = `<button type="button" class="bm-x" data-x aria-label="${T('close')}">✕</button>
         <div class="bm-sec" style="--c:${col(sel)}"><i></i>${secName(sel)}</div>
         <h3><span>${b.icon}</span> ${b.n}</h3>${meta}<p>${t('bm_d_' + sel)}</p>${facts}
-        <div class="bm-vis">✓ ${T('visited')}</div><div class="bm-foot">${T('foot')}</div>`;
+        <div class="bm-vis">✓ ${T('visited')}</div>`;
       c.hidden = false;
       $('#bmSr').textContent = b.n + '. ' + t('bm_d_' + sel);
     }

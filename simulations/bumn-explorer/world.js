@@ -105,15 +105,84 @@
     const rlm = new T.MeshBasicMaterial({ color: 0x66ccff }); inst(new T.BoxGeometry(1, 1, 1), rlm, rl); anims.push(tm => { rlm.color.setHex(Math.sin(tm * 3) > -.2 ? 0x66ccff : 0x2a5a80); });
     strips([].concat(line([[rx + 8, -40], [-150, -40]]), line([[rx + 8, 14], [-125, 14]])), 7, mbt(0x161c33, 0x3a3f4c), .13);
 
-    /* ---------- forest, houses, rice paddies ---------- */
-    const trees = []; let tries = 0; while (trees.length < 380 && tries++ < 4000) { const x = rnd(-340, 340), z = rnd(-126, 205); if (!free(x, z, 3)) continue; const h = rnd(4.5, 8.5); trees.push({ x, y: h / 2, z, sx: rnd(1.5, 2.6), sy: h, sz: rnd(1.5, 2.6) }); }
-    const treeM = dc(std(0x0e3b3a, 0x3e7c3b, { flatShading: true })); inst(new T.ConeGeometry(1, 1, 6), treeM, trees);
-    const hs2 = []; tries = 0; while (hs2.length < 150 && tries++ < 5000) { const a = R0() * TAU, r = rnd(84, 135), x = Math.cos(a) * r * 1.25, z = Math.sin(a) * r; if (!free(x, z, 1) || z < -100) continue; const s = rnd(3, 5.5); hs2.push({ x, y: s * .4, z, sx: s, sy: s * .8, sz: s * rnd(.9, 1.4), ry: R0() * 1.5, c: pick([0xffd9a8, 0xf4b6a0, 0xcfd8ff, 0xffe9a8, 0xb8e6c8]) }); }
-    inst(new T.BoxGeometry(1, 1, 1), dc(std(0x8892b8, 0xb0a090, { roughness: .8 })), hs2);
-    const rm = [std(0x0f3b2a, 0x86c24a), std(0x14472f, 0xa7d35f), std(0x0c2f2a, 0x6fae45)].map(dc), rice = [[], [], []];
-    const patch = (x0, x1, z0, z1) => { for (let x = x0; x < x1; x += 17) for (let z = z0; z < z1; z += 17) if (free(x, z, 4)) rice[Math.floor(R0() * 3)].push({ x, y: .16, z, sx: 14.5, sz: 14.5 }); };
-    patch(228, 292, 58, 122); patch(122, 280, 160, 214); patch(-340, -150, 150, 214); patch(-130, -20, 190, 214);
-    const pg = new T.PlaneGeometry(1, 1); pg.rotateX(-Math.PI / 2); rice.forEach((a, i) => { if (a.length) inst(pg, rm[i], a); });
+    /* ---------- living landscape: villages, towns, plantations, fields, quarries, yards, airport city, fishing coast ---------- */
+    const occ = [];
+    const put = (x, z, r, pad, hill) => {
+      if (!free(x, hill ? Math.min(z, 204) : z, pad == null ? 1 : pad)) return false;
+      for (let i = 0; i < occ.length; i++) { const o = occ[i]; if (Math.hypot(x - o[0], z - o[1]) < r + o[2]) return false; }
+      occ.push([x, z, r]); return true;
+    };
+    const L = n => Array.from({ length: n }, () => []);
+    const [hw, hr, ap, apr, wh, whr, cont, lots] = L(8), [tk, gcr, pk, pcr, rocks, piles, solar, boats, domes, minas] = L(10), fieldL = L(4), riceL = L(3);
+    const HW = [0xffd9a8, 0xf4b6a0, 0xcfd8ff, 0xffe9a8, 0xb8e6c8, 0xffffff, 0xe8c9ff], RF = [0xc0583a, 0xb04a3a, 0x3a5a9a, 0x7a8a9a, 0xc9733a, 0x8a4a3a];
+    const APC = [0xcfd8ff, 0xe8c9ff, 0xffd9a8, 0xb8e6c8, 0xf4f7ff, 0xa8c4ff], GRN = [0x2f7d3a, 0x3f9a46, 0x58b04a, 0x2a6e3a];
+    const house = (x, z, s, ry) => {
+      const w = rnd(3.2, 5) * s, d = rnd(3, 4.4) * s, h = rnd(2.2, 3.2) * s, rh = rnd(1.4, 2.2) * s;
+      hw.push({ x, y: h / 2, z, sx: w, sy: h, sz: d, ry, c: pick(HW) }); hr.push({ x, y: h + rh / 2, z, sx: w * 1.18, sy: rh, sz: d * 1.18, ry, c: pick(RF) });
+    };
+    const garden = (x, z) => { if (!put(x, z, 1.6, 0)) return; const h = rnd(3.5, 5.5); tk.push({ x, y: h * .3, z, sx: .45, sy: h * .6, sz: .45 }); const r = rnd(1.5, 2.5); gcr.push({ x, y: h * .75, z, sx: r, sy: r * .85, sz: r, c: pick(GRN) }); };
+    const palm = (x, z, h) => { tk.push({ x, y: h / 2, z, sx: .3, sy: h, sz: .3 }); pcr.push({ x, y: h, z, sx: 3.4, sy: .8, sz: 3.4, ry: R0() * 3 }); };
+    const mosque = (x, z) => { hw.push({ x, y: 2.2, z, sx: 7, sy: 4.4, sz: 7, ry: 0, c: 0xffffff }); domes.push({ x, y: 4.4, z, sx: 2.8, sy: 2.8, sz: 2.8 }); minas.push({ x: x + 4.6, y: 4.5, z: z + 4.6, sx: .8, sy: 9, sz: .8 }); };
+    const village = (cx, cz, rad, n, mq, hill) => {
+      let k = 0, tr = 0;
+      if (mq) while (tr++ < 60) { const x = cx + rnd(-rad, rad) * .4, z = cz + rnd(-rad, rad) * .4; if (put(x, z, 7, 1, hill)) { mosque(x, z); break; } }
+      tr = 0; while (k < n && tr++ < n * 50) {
+        const a = R0() * TAU, r = rad * Math.sqrt(R0()), x = cx + Math.cos(a) * r * 1.25, z = cz + Math.sin(a) * r;
+        if (!put(x, z, 4.4, 1, hill)) continue; house(x, z, 1, Math.round(R0() * 4) * 1.5708 + rnd(-.12, .12)); k++;
+        if (R0() < .55) garden(x + rnd(-5, 5), z + rnd(-5, 5));
+      }
+    };
+    const town = (cx, cz, nx, nz, dx, dz, hmax) => {
+      for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) {
+        const x = cx + (i - (nx - 1) / 2) * dx, z = cz + (j - (nz - 1) / 2) * dz; if (R0() < .12 || !put(x, z, dx * .56, 2)) continue;
+        const w = rnd(.6, .82) * dx, d = rnd(.6, .82) * dz, h = rnd(7, hmax) * (R0() < .3 ? .55 : 1);
+        ap.push({ x, y: h / 2, z, sx: w, sy: h, sz: d, c: pick(APC) }); apr.push({ x, y: h + .3, z, sx: w * 1.05, sy: .6, sz: d * 1.05, c: 0xaab2d0 });
+      }
+    };
+    const scatter = (x0, x1, z0, z1, n, fn) => { let k = 0, tr = 0; while (k < n && tr++ < n * 40) if (fn(rnd(x0, x1), rnd(z0, z1))) k++; };
+
+    /* towns and villages: dense where people live, one mosque in many of them */
+    [[-112, 72, 4, 3, 13, 12, 26], [124, 8, 3, 3, 13, 12, 22], [-60, 112, 4, 2, 13, 13, 24], [44, 116, 3, 2, 13, 12, 20], [250, 8, 3, 3, 13, 13, 22], [-272, 36, 3, 3, 13, 13, 20], [-60, -108, 4, 1, 13, 12, 16]].forEach(a => town.apply(null, a));
+    [[-125, -102, 26, 34, 1], [128, -78, 24, 30, 0], [-132, 40, 24, 30, 1], [178, 98, 22, 28, 0], [-62, 150, 26, 28, 1], [48, 150, 22, 26, 0], [-232, 98, 30, 40, 1], [-262, 166, 28, 34, 0], [262, 92, 28, 38, 1], [296, 160, 24, 30, 0],
+      [-196, -104, 26, 30, 0], [235, -66, 22, 26, 1], [-30, -112, 14, 14, 0], [40, 196, 18, 20, 0, 1], [-40, 198, 16, 18, 1, 1], [-175, 190, 20, 22, 0, 1], [180, 192, 20, 22, 1, 1]].forEach(a => village.apply(null, a));
+
+    /* cities have corners: airport city (hotels, cargo sheds, car parks), Bio Farma campus, port yard, steel park */
+    scatter(-200, -112, -78, 46, 30, (x, z) => { if (!put(x, z, 7.5, 2)) return false; if (R0() < .4) { const h = rnd(12, 22); ap.push({ x, y: h / 2, z, sx: rnd(8, 11), sy: h, sz: rnd(8, 10), c: pick([0xa8c4ff, 0xcfd8ff, 0xf4f7ff]) }); apr.push({ x, y: h + .3, z, sx: 11.4, sy: .6, sz: 10.4, c: 0xaab2d0 }); } else if (R0() < .6) wh.push({ x, y: 2.6, z, sx: rnd(10, 15), sy: 5.2, sz: rnd(8, 11), ry: 0, c: 0xb7c0d8 }); else lots.push({ x, y: .14, z, sx: 12, sz: 12 }); return true; });
+    scatter(-140, -58, -80, -2, 9, (x, z) => { if (Math.hypot(x + 98, z + 34) < 22 || !put(x, z, 7, 2)) return false; wh.push({ x, y: 3.6, z, sx: rnd(8, 12), sy: rnd(6, 9), sz: rnd(7, 10), ry: 0, c: 0xf4f8ff }); return true; });
+    scatter(10, 118, -118, -92, 150, (x, z) => { if (!put(x, z, 4.4, 0)) return false; if (R0() < .1) { wh.push({ x, y: 3, z, sx: rnd(11, 16), sy: 6, sz: 9, ry: 0, c: pick([0xc9d1e6, 0xe0a070, 0x9aa7c7]) }); return true; } const st = 1 + Math.floor(R0() * 3), c = pick([0xff6b6b, 0xffd166, 0x4dd2ff, 0x6ee7b7, 0xa78bfa, 0xff9a3d]); for (let k = 0; k < st; k++) cont.push({ x, y: 1.3 + k * 2.5, z, sx: 6.4, sy: 2.4, sz: 2.5, c }); return true; });
+    scatter(104, 250, -122, -62, 26, (x, z) => { if (!put(x, z, 9, 2)) return false; wh.push({ x, y: 4, z, sx: rnd(12, 20), sy: rnd(6, 10), sz: rnd(9, 12), ry: 0, c: pick([0x9aa7c7, 0xc9d1e6, 0xb7c0d8, 0xe0a070]) }); return true; });
+
+    /* quarry, solar farm, mine spoil heaps and worker camps */
+    scatter(222, 330, -6, 70, 34, (x, z) => { if (!put(x, z, 6, 2)) return false; const r = rnd(5, 13); rocks.push({ x, y: r * .3, z, sx: r, sy: r * rnd(.5, .9), sz: r, ry: R0() * 3, c: pick([0xd8d4c8, 0xc2bdb0, 0xe6e2d6]) }); return true; });
+    for (let x = 206; x < 272; x += 7) for (let z = -88; z < -22; z += 6.4) if (put(x, z, 3.2, 1)) solar.push({ x, y: 1.1, z, sx: 5, sy: .25, sz: 3, rx: -.5 });
+    [[0, 152], [-85, 175], [88, 168]].forEach(m => scatter(m[0] - 80, m[0] + 80, m[1] - 60, m[1] + 50, 14, (x, z) => { if (Math.hypot(x - m[0], z - m[1]) < 36 || !put(x, z, 8, 1)) return false; if (R0() < .72) { const r = rnd(6, 14); piles.push({ x, y: r * .3, z, sx: r, sy: r * rnd(.5, .8), sz: r, ry: R0() * 3, c: pick([0xb08a62, 0x9a7a58, 0xc29a70]) }); } else for (let k = 0; k < 3; k++) cont.push({ x: x + (k - 1) * 3, y: 1.3, z, sx: 2.5, sy: 2.4, sz: 6.4, c: pick([0xeaf0ff, 0x6fa8ff, 0xffd166]) }); return true; }));
+
+    /* fields: rice, crops, oil-palm plantation, coconut palms */
+    const patch = (x0, x1, z0, z1, lst, step) => { for (let x = x0; x < x1; x += step || 17) for (let z = z0; z < z1; z += step || 17) if (put(x, z, 8.3, 3)) lst[Math.floor(R0() * lst.length)].push({ x, y: .16, z, sx: 14.5, sz: 14.5 }); };
+    for (let x = 190; x < 335; x += 7.2) for (let z = 98; z < 160; z += 7.2) { const xx = x + (Math.floor(z / 7.2) % 2) * 3.6; if (put(xx, z, 2.4, 2)) palm(xx, z, rnd(7, 10)); }
+    patch(112, 205, 98, 166, riceL); patch(228, 330, 8, 140, riceL); patch(118, 232, -2, 82, fieldL);
+    patch(228, 292, 58, 122, riceL); patch(122, 280, 160, 214, riceL); patch(-340, -150, 150, 214, riceL); patch(-130, -20, 190, 214, riceL); patch(-335, -190, 20, 140, riceL); patch(-330, -240, -110, 10, riceL);
+    for (let x = -330; x < 330; x += 14) if (R0() < .85) { const z = rnd(-124, -116); if (put(x, z, 2.6, 0)) { palm(x, z, rnd(6, 9)); } }
+    for (let x = -300; x < 300; x += 24) { const z = rnd(-124, -118); if (R0() < .6 && put(x, z, 4.4, 0)) house(x, z, .85, rnd(-.2, .2)); }
+    for (let i = 0; i < 30; i++) boats.push({ x: rnd(-300, 300), y: .1, z: rnd(-175, -145), sx: 5.5, sy: 1.1, sz: 1.9, ry: rnd(-.4, .4), c: pick([0xffd166, 0xff6b6b, 0x4dd2ff, 0xeaf0ff]) });
+
+    /* trees: lowland forest filling the gaps, plus foothill forest under the mountains */
+    const trees = []; let tr = 0; while (trees.length < 420 && tr++ < 6000) { const x = rnd(-340, 340), z = rnd(-126, 205); if (!put(x, z, 2, 1)) continue; const h = rnd(4.5, 8.5); trees.push({ x, y: h / 2, z, sx: rnd(1.5, 2.6), sy: h, sz: rnd(1.5, 2.6) }); }
+    tr = 0; let nh = 0; while (nh < 320 && tr++ < 5000) { const x = rnd(-340, 340), z = rnd(205, 258); if (!put(x, z, 2, 1, 1)) continue; const h = rnd(5, 10); trees.push({ x, y: h / 2, z, sx: rnd(1.8, 3), sy: h, sz: rnd(1.8, 3) }); nh++; }
+
+    const bx = new T.BoxGeometry(1, 1, 1), pyr = new T.ConeGeometry(.7071, 1, 4); pyr.rotateY(Math.PI / 4);
+    const sp = new T.SphereGeometry(1, 7, 5), cy = new T.CylinderGeometry(1, 1, 1, 6), cn = new T.ConeGeometry(1, 1, 7), pl = new T.PlaneGeometry(1, 1); pl.rotateX(-Math.PI / 2);
+    const M = (g, m, a) => { if (a.length) inst(g, dc(m), a); };
+    M(new T.ConeGeometry(1, 1, 6), std(0x0e3b3a, 0x3e7c3b, { flatShading: true }), trees);
+    M(bx, std(0x8892b8, 0xffffff, { roughness: .8 }), hw); M(pyr, std(0x8a5a5a, 0xffffff, { flatShading: true }), hr);
+    M(bx, std(0x7b86b8, 0xffffff), ap); M(bx, std(0x4a5578, 0xaab2d0), apr); M(bx, std(0x59648c, 0xffffff), wh);
+    M(bx, std(0x8a94b8, 0xffffff), cont); M(pl, std(0x232a44, 0x7a7f8c), lots);
+    M(cy, std(0x4a3a2a, 0x8a6a42), tk); M(sp, std(0x1d5a3a, 0xffffff), gcr); M(sp, std(0x0e4a3a, 0x2f9a4a, { flatShading: true }), pcr);
+    M(cn, std(0x4a5266, 0xffffff, { flatShading: true }), rocks); M(cn, std(0x3a2e28, 0xffffff, { flatShading: true }), piles);
+    M(bx, std(0x1b3a6e, 0x3a6ec0, { roughness: .35, metalness: .5 }), solar); M(bx, std(0x59648c, 0xffffff), boats);
+    M(sp, std(0x2fae6b, 0x2fae6b), domes); M(cy, std(0xdde6ff, 0xffffff), minas);
+    const rm = [std(0x0f3b2a, 0x86c24a), std(0x14472f, 0xa7d35f), std(0x0c2f2a, 0x6fae45)], cm = [std(0x4a5a1a, 0xd9c25a), std(0x3a4a22, 0xb5d35a), std(0x4a3a22, 0xb88a5a), std(0x2a5a3a, 0x5fb04a)];
+    riceL.forEach((a, i) => M(pl, rm[i], a)); fieldL.forEach((a, i) => M(pl, cm[i], a));
 
     /* ---------- lighthouse and ships at sea ---------- */
     const lh = new T.Group(); lh.position.set(-150, 0, -132); sc.add(lh);
