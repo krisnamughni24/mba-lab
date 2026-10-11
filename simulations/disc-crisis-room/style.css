@@ -88,7 +88,7 @@
 .dc-start{padding:8px clamp(12px,3vw,28px) 0;max-width:1040px;margin:0 auto}
 .dc-hero{padding:22px 22px 18px;border-radius:20px;background:var(--panel);border:1px solid var(--edge);box-shadow:var(--glow);text-align:left}
 .dc-hero h2{font-size:24px;margin-bottom:6px;background:linear-gradient(90deg,var(--cy),var(--mg));-webkit-background-clip:text;background-clip:text;color:transparent}
-.dc-hero p{margin:0 0 14px;color:var(--txt2);max-width:62ch}
+.dc-hero p{margin:0 0 14px;color:var(--txt2)}
 .dc-last{display:inline-block;margin-left:12px;color:var(--am);font-weight:700}
 .dc-meters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .dc-meter{flex:1 1 130px;min-width:120px;padding:5px 10px;border-radius:12px;border:1px solid var(--edge);background:var(--panel);font-size:12px;font-weight:700}

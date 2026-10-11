@@ -141,7 +141,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:22px;border-radius:2px;bac
 html[lang=ja] body,html[lang=zh] body,html[lang=ja],html[lang=zh]{--f-ui:"Chakra Petch",var(--f-cjk);--f-hd:"Orbitron",var(--f-cjk)}
 html[lang=ja] .hero h1,html[lang=zh] .hero h1,html[lang=ja] .mw h3,html[lang=zh] .mw h3{letter-spacing:0;font-weight:700}
 body{font-kerning:normal;font-optical-sizing:auto;font-variant-ligatures:common-ligatures contextual;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;hanging-punctuation:first allow-end}
-p,li,.note,.sim,.feat div,.step{text-wrap:pretty;hyphens:manual;line-height:1.55;max-width:75ch}
+p,li,.note,.sim,.feat div,.step{text-wrap:pretty;hyphens:manual;line-height:1.55}   /* no artificial max-width: text fills its container; reading width is limited by the container itself (.hero p keeps its own measure) */
 .sim p,.feat div,.step p{max-width:none}
 .mw p,.mw li,.mw .note{max-width:none;text-wrap:wrap}
 h1,h2,h3,h4,.brand,.sl-name,.cta{text-wrap:balance}

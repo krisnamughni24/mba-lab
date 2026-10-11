@@ -2,7 +2,7 @@
 /* "About MBA Lab" window content.
    Edit the text here; the window itself is js/features/about/. */
 MBALAB.data.about = {
-  "developer": "KrisnaDev (Fullcycle)",
+  "developer": "KrisnaDev (FullCycle)",
 
   "title": {
     "en": "About MBA Lab",

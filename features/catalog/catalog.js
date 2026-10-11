@@ -23,7 +23,7 @@ MBALAB.feature('catalog', () => {
     const by = dev ? '<span class="by">' + dev + '</span>' : '';
     return live
       ? '<div class="sim live">' + head + '<div class="ft"><button type="button" data-action="open-sim" data-sim="' + s.id + '" data-sfx="open">' + t('open') + '</button>' + by + '</div></div>'
-      : '<div class="sim soon" aria-disabled="true">' + head + '<div class="ft">' + by + '</div></div>';
+      : '<div class="sim soon" aria-disabled="true">' + head + '</div>';   // coming soon: no developer line yet
   };
 
   const render = () => {
