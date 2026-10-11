@@ -123,7 +123,7 @@
       const ent = { b, g: new T.Group(), mats: [], a: 1, aT: 1, X: b.x, Z: b.z, H: b.h, vis: false }; ent.g.position.set(b.x, 0, b.z); sc.add(ent.g); B[b.id] = ent;
       const t = tools(ent); lotRing(ent, b);
       const f = E.builders[b.id]; if (f) f(t, b);
-      const big = b.id === 'danantara', TOP = { pelindo: 24, pelni: 17, pal: 28, kai: 11, garuda: 15, injourney: 22, bulog: 17, ptpn: 15, jasamarga: 22, biofarma: 19, bukitasam: 20, antam: 40, pertamina: 32 }, top = TOP[b.id] != null ? TOP[b.id] : b.h + (big ? 14 : 9);
+      const big = b.id === 'danantara', TOP = { pelindo: 24, pelni: 17, pal: 28, kai: 11, garuda: 15, injourney: 22, bulog: 17, ptpn: 15, jasamarga: 22, biofarma: 19, bukitasam: 20, antam: 40, pertamina: 32, pos: 44 }, top = TOP[b.id] != null ? TOP[b.id] : b.h + (big ? 14 : 9);
       const sp = new T.Sprite(new T.SpriteMaterial({ map: emojiTex(b.icon, false), transparent: true, depthWrite: false, fog: false })); const sz = 8 + b.r * .22; sp.scale.set(sz, sz, 1); sp.position.set(0, top, 0); ent.g.add(sp); reg(ent, sp.material, 'k'); ent.icon = sp; ent.top = top;
       anims.push(tm => { sp.position.y = top + Math.sin(tm * 2 + b.x * .1) * .9; });
       const hb = new T.Mesh(new T.BoxGeometry(b.r * 2, top + 4, b.r * 2), new T.MeshBasicMaterial({ visible: false })); hb.position.y = (top + 4) / 2; hb.userData.id = b.id; ent.g.add(hb); hits.push(hb);

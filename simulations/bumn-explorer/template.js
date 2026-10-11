@@ -4,7 +4,6 @@ MBALAB.sims.define('bumn-explorer', {
   <header class="bm-top">
     <button class="bm-back" data-sim-back><span data-i18n="bm_backT">← Home</span></button>
     <h1 data-i18n="bm_gTitle">BUMN Explorer</h1>
-    <button type="button" class="bm-lsbtn" id="bmLs" aria-expanded="false"><span data-i18n="bm_listBtn">Companies</span></button>
     <div class="bm-modes" role="group"><button type="button" id="bmExp" class="on"><span data-i18n="bm_modeExp"></span></button><button type="button" id="bmQz"><span data-i18n="bm_modeQz"></span></button></div>
   </header>
   <div class="bm-scroll" id="bmScroll">

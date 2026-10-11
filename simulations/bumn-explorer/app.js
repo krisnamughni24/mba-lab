@@ -17,14 +17,20 @@ MBALAB.sims.define('bumn-explorer', {
 
     /* ---------- chips + list + progress ---------- */
     function chips() {
-      $('#bmChips').innerHTML = `<button type="button" class="bm-chip${filter ? '' : ' on'}" data-f="">${T('all')}</button>` +
-        E.SECTORS.map(s => `<button type="button" class="bm-chip${filter === s ? ' on' : ''}" data-f="${s}" style="--c:${E.COLORS[s]}"><i></i>${t('bm_sec_' + s)}</button>`).join('');
+      const f = host.contains(document.activeElement) && document.activeElement.closest('#bmChips') ? document.activeElement.id : '';
+      const opt = b => `<option value="${b.id}"${sel === b.id ? ' selected' : ''}>${b.icon} ${b.n}${visited.has(b.id) ? ' ✓' : ''}</option>`;
+      const cats = `<option value="">${T('allCat')}</option>` + E.SECTORS.map(x => `<option value="${x}"${filter === x ? ' selected' : ''}>${t('bm_sec_' + x)} (${E.LIST.filter(b => b.sec === x).length})</option>`).join('');
+      const cos = filter ? E.LIST.filter(b => b.sec === filter).map(opt).join('')
+        : E.SECTORS.map(x => `<optgroup label="${t('bm_sec_' + x)}">${E.LIST.filter(b => b.sec === x).map(opt).join('')}</optgroup>`).join('');
+      $('#bmChips').innerHTML = `<label class="bm-dd" style="--c:${filter ? E.COLORS[filter] : 'var(--cy)'}"><select id="bmCat" aria-label="${T('catLbl')}">${cats}</select></label>` +
+        `<label class="bm-dd"><select id="bmCo" aria-label="${T('coLbl')}"><option value=""${sel ? '' : ' selected'}>${T('pickCo', { n: visited.size, m: M })}</option>${cos}</select></label>`;
+      if (f) { const el = $('#' + f); el && el.focus({ preventScroll: true }); }
     }
     function list() {
       const L = $('#bmList');
-      if (mode !== 'explore' && gl) { L.innerHTML = ''; return; }
+      if (mode !== 'explore' || gl) { L.innerHTML = ''; return; }
       L.innerHTML = `<h3>${T('listT')}</h3><div class="bm-lg">` + E.LIST.filter(b => !filter || b.sec === filter).map(b =>
-        `<button type="button" class="bm-li${sel === b.id ? ' on' : ''}" data-id="${b.id}" style="--c:${E.COLORS[b.sec]}"><span>${b.icon}</span><b>${b.n}</b>${mode === 'explore' && visited.has(b.id) ? '<em aria-label="' + T('visited') + '">✓</em>' : ''}</button>`).join('') + '</div>';
+        `<button type="button" class="bm-li${sel === b.id ? ' on' : ''}" data-id="${b.id}" style="--c:${E.COLORS[b.sec]}"><span>${b.icon}</span><b>${b.n}</b>${visited.has(b.id) ? '<em aria-label="' + T('visited') + '">✓</em>' : ''}</button>`).join('') + '</div>';
     }
     function prog() {
       $('#bmProg').textContent = mode === 'explore' ? T('prog', { n: visited.size, m: M }) : '';
@@ -48,40 +54,67 @@ MBALAB.sims.define('bumn-explorer', {
     function select(id) {
       sel = id;
       if (id) { if (!visited.has(id)) { visited.add(id); save(); } sfx('click'); }
-      gl && (gl.set({ visited }), gl.focus(id)); card(); list(); prog();
+      gl && (gl.set({ visited }), gl.focus(id)); chips(); card(); list(); prog();
     }
     function deselect() { sel = null; gl && gl.focus(null); sync(); }
 
-    /* ---------- quiz ---------- */
+    /* ---------- quiz: fact questions in three levels ---------- */
+    const LVN = { easy: 'lvlEasy', medium: 'lvlMed', hard: 'lvlHard' }, LVD = { easy: 'lvlEasyD', medium: 'lvlMedD', hard: 'lvlHardD' }, LVC = { easy: 'var(--gn)', medium: 'var(--am)', hard: 'var(--rd)' };
+    const li = () => Math.max(0, ['en', 'id', 'ja', 'zh'].indexOf(MBALAB.i18n.get()));
+    const info = id => E.INFO && E.INFO[id];
+    const bestAll = () => { try { return JSON.parse(localStorage.getItem(KEY + '-best') || '{}'); } catch (e) { return {}; } };
+    const saveBest = (lv, sc) => { try { const b = bestAll(); if (!(b[lv] >= sc)) { b[lv] = sc; localStorage.setItem(KEY + '-best', JSON.stringify(b)); } } catch (e) {} };
+    function qText(c) {
+      const nm = () => name(c.id);
+      switch (c.k) {
+        case 'sector': return { title: T('qSector', { name: nm() }), body: '', lab: c.o.map(x => t('bm_sec_' + x)) };
+        case 'hq': return { title: T('qHq', { name: nm() }), body: '', lab: c.o.map(String) };
+        case 'member': return { title: T('qMember', { sec: t('bm_sec_' + c.sec) }), body: '', lab: c.o.map(name) };
+        case 'fact': return { title: T('qFact'), body: '“' + Q.mask(info(c.id).f[c.fi][li()], c.id) + '”', lab: c.o.map(name) };
+        case 'year': return { title: T('qYear', { name: nm() }), body: '', lab: c.o.map(String) };
+        case 'oldest': return { title: T('qOldest'), body: '', lab: c.o.map(name) };
+        default: return { title: T('qTitle'), body: clue(c.id), lab: c.o.map(name) };
+      }
+    }
     function renderBox() {
       const b = $('#bmBox');
       if (mode === 'explore') { b.innerHTML = `<p class="bm-hint">💡 ${T('hint')}</p>` + (gl ? `<p class="bm-hint bm-h2">🖱️ ${T('hint3d')}</p>` : ''); return; }
-      if (!q) { b.innerHTML = ''; return; }
-      if (q.done) {
-        const m = Q.ROUNDS, s = q.score, tier = s >= 7 ? 0 : s >= 4 ? 1 : 2;
-        b.innerHTML = `<div class="bm-rc"><h2>${T('rsTitle')}</h2><p class="bm-big"><b>${T('rsScore', { s, m })}</b></p><p>${T('rs' + tier)}</p>` +
-          (q.missed.length ? `<h4>${T('rsMiss')}</h4><ul class="bm-miss">${q.missed.map(id => `<li style="--c:${col(id)}"><span>${E.byId[id].icon}</span><b>${name(id)}</b> <small>${secName(id)}</small></li>`).join('')}</ul>` : '') +
-          `<div class="bm-end"><button type="button" class="bm-main" data-act="again">${T('again')}</button><button type="button" data-act="explore">${T('backExp')}</button></div></div>`;
+      if (!q) {
+        const bs = bestAll();
+        b.innerHTML = `<div class="bm-qc bm-lv"><h3>${T('lvlT')}</h3><div class="bm-lvs">` + Q.LEVELS.map(l => `<button type="button" class="bm-lvb" data-lv="${l}" style="--c:${LVC[l]}"><b>${T(LVN[l])}</b><span>${T(LVD[l])}</span>${bs[l] != null ? `<em>${T('best', { s: bs[l], m: Q.ROUNDS })}</em>` : ''}</button>`).join('') + '</div></div>';
         return;
       }
-      const id = Q.target(q), last = q.i === Q.ROUNDS - 1;
-      b.innerHTML = `<div class="bm-qc"><div class="bm-hud"><span class="bm-pill">${T('qN', { n: q.i + 1, m: Q.ROUNDS })}</span><span class="bm-pill bm-pill-b">${T('qScore', { s: q.score })}</span></div>
-        <h3>${T('qTitle')}</h3><p class="bm-clue">${clue(id)}</p>` +
-        (fb ? `<p class="bm-fb ${fb.ok ? 'ok' : 'bad'}">${fb.ok ? T('ok', { name: name(id) }) : T('bad', { name: name(fb.picked), ans: name(id) })}</p><div class="bm-end"><button type="button" class="bm-main" data-act="next">${last ? T('seeRes') : T('next')}</button></div>` : `<p class="bm-hint">${T('qHint')}</p>`) + '</div>';
-      $('#bmSr').textContent = T('qN', { n: q.i + 1, m: Q.ROUNDS }) + '. ' + clue(id);
+      if (q.done) {
+        const m = Q.ROUNDS, s = q.score, tier = s >= 7 ? 0 : s >= 4 ? 1 : 2;
+        b.innerHTML = `<div class="bm-rc"><div class="bm-hud"><span class="bm-pill" style="border-color:${LVC[q.level]};color:${LVC[q.level]}">${T(LVN[q.level])}</span></div><h2>${T('rsTitle')}</h2><p class="bm-big"><b>${T('rsScore', { s, m })}</b></p><p>${T('rs' + tier)}</p>` +
+          (q.missed.length ? `<h4>${T('rsMiss')}</h4><ul class="bm-miss">${q.missed.map(id => `<li style="--c:${col(id)}"><span>${E.byId[id].icon}</span><b>${name(id)}</b> <small>${secName(id)}</small></li>`).join('')}</ul>` : '') +
+          `<div class="bm-end"><button type="button" class="bm-main" data-act="again">${T('again')}</button><button type="button" data-act="lvl">${T('change')}</button><button type="button" data-act="explore">${T('backExp')}</button></div></div>`;
+        return;
+      }
+      const c = Q.cur(q), x = qText(c), last = q.i === Q.ROUNDS - 1, I = info(c.id);
+      const why = I ? I.f[c.k === 'fact' ? (c.fi + 1) % 3 : 2][li()] : '';
+      b.innerHTML = `<div class="bm-qc"><div class="bm-hud"><span class="bm-pill">${T('qN', { n: q.i + 1, m: Q.ROUNDS })}</span><span class="bm-pill" style="border-color:${LVC[q.level]};color:${LVC[q.level]}">${T(LVN[q.level])}</span><span class="bm-pill bm-pill-b">${T('qScore', { s: q.score })}</span></div>
+        <h3>${x.title}</h3>${x.body ? `<p class="bm-clue">${x.body}</p>` : ''}<div class="bm-opts">` +
+        x.lab.map((l, i) => `<button type="button" class="bm-opt${fb ? (i === c.ci ? ' ok' : i === fb.picked ? ' bad' : '') : ''}" data-o="${i}"${fb ? ' disabled' : ''}><i>${'ABCD'[i]}</i><span>${l}</span></button>`).join('') + '</div>' +
+        (fb ? `<p class="bm-fb ${fb.ok ? 'ok' : 'bad'}">${fb.ok ? T('ok') + ' <b>' + x.lab[c.ci] + '</b>' : T('bad', { ans: x.lab[c.ci] })}</p>${why ? `<p class="bm-why">💡 <b>${T('why')}</b> ${why}</p>` : ''}<div class="bm-end"><button type="button" class="bm-main" data-act="next">${last ? T('seeRes') : T('next')}</button></div>` : `<p class="bm-hint">${T('qHint')}</p>`) + '</div>';
+      $('#bmSr').textContent = T('qN', { n: q.i + 1, m: Q.ROUNDS }) + '. ' + x.title + ' ' + x.body;
     }
-    function startQuiz() {
-      q = Q.create(Math.floor(Math.random() * 1e9) + 1); fb = null; sel = null; filter = null;
+    function showLevels() {
+      q = null; fb = null; sel = null; filter = null;
       if (gl) { gl.reveal(null); gl.focus(null); gl.set({ filter: null }); } sync();
     }
-    function pickQuiz(id) {
+    function beginQuiz(level) {
+      q = Q.create(level, Math.floor(Math.random() * 1e9) + 1); fb = null; sfx('click');
+      if (gl) { gl.reveal(null); gl.focus(null); } renderBox(); sync();
+    }
+    function pickQuiz(i) {
       if (!q || q.done || q.answered) return;
-      const r = Q.answer(q, id); if (!r) return;
+      const r = Q.answer(q, i); if (!r) return;
       fb = r; sfx(r.ok ? 'ok' : 'click');
       if (gl) { gl.reveal(Q.target(q)); gl.focus(Q.target(q)); } renderBox();
     }
     function nextQuiz() {
-      Q.next(q); fb = null; if (gl) { gl.reveal(null); gl.focus(null); } renderBox(); if (q.done) sfx('ok');
+      Q.next(q); fb = null; if (gl) { gl.reveal(null); gl.focus(null); } if (q.done) { saveBest(q.level, q.score); sfx('ok'); } renderBox();
       $('#bmScroll').scrollTop = 0;
     }
 
@@ -90,28 +123,28 @@ MBALAB.sims.define('bumn-explorer', {
       $('#bmExp').classList.toggle('on', mode === 'explore'); $('#bmQz').classList.toggle('on', mode === 'quiz');
       $('#bmExp').setAttribute('aria-pressed', mode === 'explore'); $('#bmQz').setAttribute('aria-pressed', mode === 'quiz');
       chips(); list(); prog(); card(); renderBox();
-      $('#bmLs').hidden = !(gl && mode === 'explore'); if (mode !== 'explore') $('#bm').classList.remove('ls-open');
       if (gl) { gl.set({ filter, visited: mode === 'explore' ? visited : new Set() }); if (mode === 'explore' && sel) gl.focus(sel); else if (!(q && fb)) gl.focus(null); }
     }
     function setMode(m) {
       if (m === mode) return; mode = m; sfx('click');
-      if (m === 'quiz') startQuiz(); else { q = null; fb = null; if (gl) gl.reveal(null); sync(); }
+      if (m === 'quiz') showLevels(); else { q = null; fb = null; if (gl) gl.reveal(null); sync(); }
     }
     $('#bmExp').addEventListener('click', () => setMode('explore'));
-    $('#bmQz').addEventListener('click', () => { if (mode === 'quiz') { sfx('click'); startQuiz(); } else setMode('quiz'); });
+    $('#bmQz').addEventListener('click', () => { if (mode === 'quiz') { sfx('click'); showLevels(); } else setMode('quiz'); });
 
     /* ---------- events ---------- */
-    $('#bmChips').addEventListener('click', e => {
-      const b = e.target.closest('.bm-chip'); if (!b) return; filter = b.dataset.f || null; sfx('click');
-      if (sel && filter && E.byId[sel].sec !== filter) sel = null;
-      sync();
+    $('#bmChips').addEventListener('change', e => {
+      const el = e.target; sfx('click');
+      if (el.id === 'bmCat') { filter = el.value || null; if (sel && filter && E.byId[sel].sec !== filter) sel = null; sync(); }
+      else if (el.id === 'bmCo') { if (el.value) select(el.value); else deselect(); }
     });
-    $('#bmList').addEventListener('click', e => { const b = e.target.closest('.bm-li'); if (!b) return; if (mode === 'quiz') pickQuiz(b.dataset.id); else select(b.dataset.id); $('#bm').classList.remove('ls-open'); $('#bmLs').setAttribute('aria-expanded', 'false'); });
-    $('#bmLs').addEventListener('click', () => { const o = $('#bm').classList.toggle('ls-open'); $('#bmLs').setAttribute('aria-expanded', o); sfx('click'); });
+    $('#bmList').addEventListener('click', e => { const b = e.target.closest('.bm-li'); if (b) select(b.dataset.id); });
     $('#bmCard').addEventListener('click', e => { if (e.target.closest('[data-x]')) deselect(); });
     $('#bmBox').addEventListener('click', e => {
+      const lv = e.target.closest('[data-lv]'); if (lv) { beginQuiz(lv.dataset.lv); return; }
+      const o = e.target.closest('[data-o]'); if (o) { pickQuiz(+o.dataset.o); return; }
       const a = e.target.closest('[data-act]'); if (!a) return;
-      if (a.dataset.act === 'next') nextQuiz(); else if (a.dataset.act === 'again') { sfx('click'); startQuiz(); } else if (a.dataset.act === 'explore') { setMode('explore'); }
+      if (a.dataset.act === 'next') nextQuiz(); else if (a.dataset.act === 'again') beginQuiz(q.level); else if (a.dataset.act === 'lvl') { sfx('click'); showLevels(); } else if (a.dataset.act === 'explore') { setMode('explore'); }
     });
     $('#bmReset').addEventListener('click', () => { if (!gl) return; sel = null; gl.cam.reset(); sync(); });
 
@@ -146,7 +179,7 @@ MBALAB.sims.define('bumn-explorer', {
 
     /* ---------- 3D scene (falls back to the company list when Three.js / WebGL is missing) ---------- */
     gl = E.Scene(stage, {
-      onPick: id => { if (mode === 'explore') { if (id) select(id); else if (sel) deselect(); } else if (id) pickQuiz(id); },
+      onPick: id => { if (mode === 'explore') { if (id) select(id); else if (sel) deselect(); } },
       onHover: id => { if (mode === 'explore') gl.hoverRing(id); },
       canHover: () => mode === 'explore'
     });

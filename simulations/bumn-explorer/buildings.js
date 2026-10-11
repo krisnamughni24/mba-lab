@@ -47,11 +47,60 @@
     for (let k = 0; k < 3; k++) { const r = t.ring(1, ty - 1, 0x2bd4ff, null, true); t.anim(tm => { const u = (tm * .5 + k / 3) % 1; r.scale.setScalar(2 + u * 15); r.material.opacity = (1 - u) * .9 * t.ent.a; }); }
   };
 
-  /* ============ POS: post office with a red roof and delivery vans ============ */
+  /* ============ POS: grand colonial post palace with portico, clock tower, forecourt fountain and vans ============ */
   B.pos = (t, b) => {
-    t.box(15, b.h * .7, 8, 0, 0, 0, 0x4a5a99); t.bbox(15.6, .9, 8.6, 0, b.h * .7, 0, 0xff6b3d); t.box(3.2, b.h * 1.5, 3.2, 6.5, 0, 4.5, 0x39467a); t.bbox(2.2, 2.2, .2, 6.5, b.h * 1.1, 2.8, 0xffe9a8); t.bbox(3.6, .8, 3.6, 6.5, b.h * 1.5, 4.5, 0xff6b3d);
-    t.bbox(4, 1.6, .2, -4, 3, -4.1, 0xffffff);
-    for (let i = 0; i < 2; i++) { const v = truck(t, 0xff6b3d); loop(t, v, 9.4, .45, 0, i * PI, 0, .1); }
+    const T = t.T, stone = 0xe6dbc0, cream = 0xf3ead2, white = 0xfaf3e0, orange = 0xff7a1a, navy = 0x1d3f7a, copper = 0x3fb8a0, gold = 0xffd166, lit = 0xffe39a;
+    const roof = (w, d, h, x, y, z, c, par) => { const r = t.add(new T.ConeGeometry(Math.max(w, d) * .7071, h, 4), t.std(c, { flatShading: true }), x, y + h / 2, z, par); r.rotation.y = PI / 4; r.scale.set(w / Math.max(w, d), 1, d / Math.max(w, d)); return r; };
+    /* forecourt, lawns and podium */
+    t.box(46, .3, 40, 0, 0, 4, 0x4a5578);
+    t.box(15, .4, 9, -14, .3, 12, 0x2f7d57); t.box(15, .4, 9, 14, .3, 12, 0x2f7d57);
+    t.box(42, 1, 19, 0, .3, -1, stone); t.box(38, 1, 16, 0, 1.3, -1.5, 0xf0e6cb);
+    for (let i = 0; i < 5; i++) t.box(12, 2 - i * .4 - .0, .9, 0, .3, 6.5 + i * .9 + .45, i % 2 ? 0xf0e6cb : stone);
+    /* main hall */
+    const hall = t.box(22, 10, 11, 0, 2.3, -3, cream); t.edges(hall, 0xffb066);
+    t.box(22.8, .6, 11.8, 0, 12.3, -3, navy); t.bbox(22.9, .35, 11.9, 0, 12.1, -3, orange);
+    for (let i = 0; i < 7; i++) { if (i === 3) continue; const x = -9 + i * 3; t.bbox(1.6, 5, .2, x, 4.4, 2.6, lit); t.bbox(2, .5, .3, x, 9.6, 2.62, stone); t.bbox(1.8, 2.2, .2, x, 7.8 + .2, 2.6, lit); }
+    t.bbox(3.6, 5.4, .3, 0, 2.3, 2.62, 0x8a5a1a); t.bbox(2.6, 4.2, .3, 0, 2.5, 2.8, lit); t.bbox(4.4, .6, .4, 0, 7.8, 2.6, gold);
+    /* portico: eight columns, entablature, orange frieze, pediment with emblem */
+    for (let i = 0; i < 8; i++) { const x = -9.6 + i * (19.2 / 7); t.cyl(.62, .66, 9, x, 2.3, 4.6, white, 16); t.box(1.7, .5, 1.7, x, 2.3, 4.6, stone); t.box(1.7, .55, 1.7, x, 10.75, 4.6, stone); }
+    t.box(22.6, 1.4, 5.4, 0, 11.3, 3.6, white); t.bbox(22.9, .55, 5.6, 0, 12.7, 3.6, orange); t.box(22.6, .5, 5.4, 0, 2.3 + 9, 3.6, stone);
+    const ped = t.add(new T.CylinderGeometry(13.05, 13.05, 5.4, 3), t.std(0xf7efd9), 0, 13.25 + .5 * 13.05 * .26, 3.6); ped.rotation.x = -PI / 2; ped.scale.set(1, 1, .26);
+    const em = t.add(new T.CylinderGeometry(1.9, 1.9, .3, 24), t.bas(orange), 0, 15.1, 6.45); em.rotation.x = PI / 2;
+    const em2 = t.add(new T.CylinderGeometry(1.2, 1.2, .34, 24), t.bas(0xffffff), 0, 15.1, 6.5); em2.rotation.x = PI / 2;
+    t.bbox(.4, 1.5, .1, 0, 14.4, 6.7, orange);
+    /* wings with hip roofs */
+    [-1, 1].forEach(s => {
+      const w = t.box(10, 8, 9, s * 16, 2.3, -3.5, cream); t.edges(w, 0xffb066); t.bbox(10.4, .45, 9.4, s * 16, 10.1, -3.5, orange);
+      roof(10.6, 9.6, 4.2, s * 16, 10.5, -3.5, navy);
+      [-2.4, 2.4].forEach(dx => { t.bbox(1.4, 3.4, .2, s * 16 + dx, 4.4, 1.05, lit); t.bbox(1.4, 2.2, .2, s * 16 + dx, 7.4, 1.05, lit); });
+    });
+    /* clock tower with belfry and copper spire */
+    const sh = t.box(7, 12, 7, 0, 12.6, -4.5, cream); t.edges(sh, 0xffb066); t.bbox(8, .7, 8, 0, 24.6, -4.5, orange);
+    [[0, 3.7, 0], [0, -3.7, 0], [3.7, 0, 1], [-3.7, 0, 1]].forEach(f => {
+      const x = f[0], z = -4.5 + f[1], side = f[2];
+      const face = t.add(new T.CylinderGeometry(2.2, 2.2, .3, 28), t.bas(0xffffff), x, 20.5, z); if (side) face.rotation.z = PI / 2; else face.rotation.x = PI / 2;
+      const out = f[1] > 0 || f[0] > 0 ? 1 : -1;
+      const g = t.grp(x + (side ? out * .2 : 0), 20.5, z + (side ? 0 : out * .2));
+      if (side) g.rotation.y = PI / 2 * out; else if (out < 0) g.rotation.y = PI;
+      t.bbox(.2, 1.7, .12, 0, 0, .12, 0x1d3f7a, g); const mh = t.grp(0, 0, .2, g); t.bbox(.14, 1.9, .1, 0, 0, 0, 0xff3b3b, mh);
+      t.anim(tm => { mh.rotation.z = -tm * .4; });
+    });
+    t.box(7.6, .5, 7.6, 0, 25.3, -4.5, stone);
+    [[-2.5, -2.5], [2.5, -2.5], [-2.5, 2.5], [2.5, 2.5]].forEach(q => t.cyl(.4, .4, 3.4, q[0], 25.8, -4.5 + q[1], white, 12));
+    t.sph(.9, 0, 27.4, -4.5, gold); t.box(8, .6, 8, 0, 29.2, -4.5, navy); t.bbox(8.2, .3, 8.2, 0, 29, -4.5, orange);
+    roof(8, 8, 7.5, 0, 29.8, -4.5, copper); t.cyl(.12, .2, 3.2, 0, 37.3, -4.5, gold, 8); t.sph(.4, 0, 40.7, -4.5, gold); t.blink(0, 41.6, -4.5, 'rgba(255,170,60,1)');
+    /* forecourt: fountain, lamps, flag, orange post boxes */
+    t.cyl(3.6, 3.8, .8, 0, .3, 18, stone, 28); t.add(new T.CylinderGeometry(3.1, 3.1, .12, 28), t.bas(0x35b6ff), 0, 1.15, 18);
+    t.cyl(.3, .55, 2.4, 0, 1.1, 18, white, 10); t.glow('rgba(120,210,255,.9)', 7, 0, 3.8, 18, 2.5);
+    [[-14, 6], [-8, 6], [8, 6], [14, 6], [-18, 14], [18, 14], [-18, 20], [18, 20]].forEach(p => { t.cyl(.12, .16, 5, p[0], .3, p[1], 0x2b3350, 8); t.glow('rgba(255,225,150,.95)', 5, p[0], 5.7, p[1], 0); });
+    t.cyl(.15, .2, 15, -9, .3, 14, 0xdde6ff, 8); t.bbox(3.4, .9, .1, -7.3, 14.2, 14, 0xe03a3a); t.bbox(3.4, .9, .1, -7.3, 13.3, 14, 0xffffff);
+    [[-12, 15], [-15, 11], [12, 15], [15, 11], [-20, 7], [20, 7]].forEach(p => { t.cyl(.62, .62, 2, p[0], .35, p[1], orange, 12); t.sph(.62, p[0], 2.35, p[1], orange); t.bbox(.9, .14, .12, p[0], 1.5, p[1] + .6, 0x1d3f7a); });
+    [[-11, 11], [-17, 12], [11, 11], [17, 12]].forEach(p => { t.sph(1.15, p[0], 1.1, p[1], 0x2f9e5f); });
+    /* loading dock behind, parked vans and two delivery vans circling the fountain */
+    t.box(24, 3.4, 4.5, 0, .3, -15.2, 0x4a5a99); [-8, 0, 8].forEach(x => t.bbox(4.2, 2.8, .2, x, .3, -12.9, 0x2b3350)); t.bbox(24.4, .4, 4.9, 0, 3.7, -15.2, orange);
+    [-9, -1.5, 6].forEach((x, i) => { const v = truck(t, i === 1 ? navy : orange); v.position.set(x, .3, -19); v.rotation.y = PI / 2; });
+    for (let i = 0; i < 3; i++) { const v = truck(t, i === 1 ? navy : orange); const ph = i * 2.09; t.anim(tm => { const a = tm * .5 + ph; v.position.set(Math.cos(a) * 6.6, .35, 18 + Math.sin(a) * 6.6); v.rotation.y = -a - PI / 2; }); }
+    t.glow('rgba(255,150,40,.55)', 56, 0, 12, 6, 1.2);
   };
 
   /* ============ PERTAMINA: offshore refinery platform in the sea ============ */
