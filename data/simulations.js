@@ -211,7 +211,7 @@ MBALAB.data.simulations = [
   },
   {
     "id": "bullwhip-effect",
-    "status": "soon",
+    "status": "live",
     "icon": "🔗",
     "category": "operations",
     "name": {
@@ -221,11 +221,14 @@ MBALAB.data.simulations = [
       "zh": "牛鞭效应"
     },
     "description": {
-      "en": "See how demand swings amplify along a supply chain.",
-      "id": "Lihat bagaimana fluktuasi permintaan membesar sepanjang rantai pasok.",
-      "ja": "需要の変動がサプライチェーンで増幅する様子を確認。",
-      "zh": "观察需求波动如何沿供应链逐级放大。"
-    }
+      "en": "Run one company in a state-owned supply chain and watch small demand swings grow upstream.",
+      "id": "Jalankan satu perusahaan di rantai pasok BUMN dan lihat fluktuasi kecil permintaan membesar ke hulu.",
+      "ja": "国有企業のサプライチェーンの1社を運営し、小さな需要変動が上流で膨らむ様子を体験。",
+      "zh": "运营国企供应链中的一家公司，亲眼看小幅需求波动如何向上游放大。"
+    },
+    "path": "simulations/bullwhip-effect/",
+    "scripts": ["strings.js", "template.js", "engine.js", "app.js"],
+    "styles": ["../smart-decision-studio/style.css", "style.css"]
   },
   {
     "id": "negotiation-batna",
