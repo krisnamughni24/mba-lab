@@ -1,6 +1,11 @@
 /* Negotiation & BATNA: texts. Each key lists [en, id, ja, zh]; they are turned into per-language dictionaries below. */
 (() => {
   const K = {
+    howT: ['How to play', 'Cara bermain', '遊び方', '玩法'],
+    how1: ['You are the buyer. Your BATNA is the highest price you would still pay, because you have another supplier.', 'Anda pembeli. BATNA Anda adalah harga tertinggi yang masih mau dibayar, karena Anda punya pemasok lain.', 'あなたは買い手。BATNAは、他の仕入先があるため払ってもよい最高価格です。', '你是买方。BATNA 是你还愿意支付的最高价，因为你还有别的供应商。'],
+    how2: ['Each round, make an offer. The seller answers with a lower ask. Offers that are too low or repeated burn their patience.', 'Tiap ronde, ajukan tawaran. Penjual membalas dengan harga lebih rendah. Tawaran terlalu rendah atau berulang menguras kesabarannya.', '毎ラウンド提示します。売り手は下げた価格で返答。低すぎる提示や繰り返しは忍耐を削ります。', '每轮出价，卖家会回一个更低的要价。出价过低或重复会消耗其耐心。'],
+    how3: ['You can accept the ask, ask about their alternatives once (they may bluff), or walk away.', 'Anda bisa menerima harga penjual, menanyakan alternatif mereka sekali (bisa saja gertakan), atau pergi.', '売り手の提示を受ける、代替案を1回だけ探る（ブラフの可能性あり）、または席を立てます。', '你可以接受要价、打听一次对方的备选（可能是虚张声势），或直接离场。'],
+    how4: ['Closer to the seller\'s hidden minimum earns more stars. If no deal can beat your BATNA, walking away is the win.', 'Semakin dekat ke batas tersembunyi penjual, semakin banyak bintang. Jika tidak ada kesepakatan yang mengalahkan BATNA, pergi adalah kemenangan.', '売り手の隠れた下限に近いほど星が増えます。BATNAを上回る合意がなければ、離席が正解です。', '越接近卖家的隐藏底价，星星越多。若没有优于 BATNA 的成交，离场就是赢。'],
     nbBack: ['← Home', '← Beranda', '← ホーム', '← 首页'],
     nbTitle: ['Negotiation & BATNA', 'Negosiasi & BATNA', '交渉とBATNA', '谈判与 BATNA'],
     nbPick: ['Choose a negotiation', 'Pilih negosiasi', '交渉を選ぶ', '选择一场谈判'],

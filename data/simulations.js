@@ -187,10 +187,10 @@ MBALAB.data.simulations = [
       "zh": "谈判与 BATNA"
     },
     "description": {
-      "en": "Find the zone of possible agreement.",
-      "id": "Temukan zona kesepakatan yang mungkin.",
-      "ja": "合意可能領域を見つける。",
-      "zh": "寻找可能达成协议的区间。"
+      "en": "Play the buyer against four sellers. Haggle, read their moves, and know when to walk away.",
+      "id": "Jadi pembeli melawan empat penjual. Tawar-menawar, baca gerak mereka, dan tahu kapan harus pergi.",
+      "ja": "買い手として4人の売り手と交渉。駆け引きを読み、席を立つ判断も身につけよう。",
+      "zh": "扮演买方对战四位卖家。讨价还价、读懂对方，并懂得何时离场。"
     },
     "path": "simulations/negotiation-batna/",
     "scripts": [

@@ -9,6 +9,7 @@ MBALAB.sims.define('negotiation-batna', {
     <h2 data-i18n="nbPick">Choose a negotiation</h2>
     <p class="nb-sub" data-i18n="nbPickSub"></p>
     <div class="nb-cards" id="nbCards"></div>
+    <div class="nb-how"><h3 data-i18n="howT"></h3><ol><li data-i18n="how1"></li><li data-i18n="how2"></li><li data-i18n="how3"></li><li data-i18n="how4"></li></ol></div>
   </section>
   <section class="nb-play" id="nbPlay" hidden>
     <div class="nb-hud">
