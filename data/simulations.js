@@ -177,7 +177,7 @@ MBALAB.data.simulations = [
   },
   {
     "id": "negotiation-batna",
-    "status": "soon",
+    "status": "live",
     "icon": "🤝",
     "category": "decision-negotiation",
     "name": {
@@ -191,7 +191,18 @@ MBALAB.data.simulations = [
       "id": "Temukan zona kesepakatan yang mungkin.",
       "ja": "合意可能領域を見つける。",
       "zh": "寻找可能达成协议的区间。"
-    }
+    },
+    "path": "simulations/negotiation-batna/",
+    "scripts": [
+      "strings.js",
+      "template.js",
+      "engine.js",
+      "scene.js",
+      "app.js"
+    ],
+    "styles": [
+      "style.css"
+    ]
   },
   {
     "id": "demand-forecasting",

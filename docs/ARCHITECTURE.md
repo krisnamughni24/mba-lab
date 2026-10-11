@@ -33,6 +33,9 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | Text animation (decode, glitch every 2 s) | `core/kinetic.js` (selector lists + timings at the top) |
 | Music, sounds, typing + loading sounds, volume mix | `features/audio/audio.js` (`MUSIC_LEVEL`, `SFX_LEVEL`) |
 | SMART tips from the robot (Bit) | `simulations/smart-decision-studio/assistant.js` |
+| Negotiation & BATNA: levels, NPC rules, scoring | `simulations/negotiation-batna/engine.js` (`LEVELS`; pure logic, testable in node) |
+| Negotiation & BATNA: isometric neon scene | `simulations/negotiation-batna/scene.js` (canvas; palette `PAL.night` / `PAL.day`) |
+| Negotiation & BATNA: dialogue and lessons | `simulations/negotiation-batna/strings.js` |
 | 3D city | `features/scene/scene.js` |
 | Remove a feature | delete its line in `data/features.js` |
 
