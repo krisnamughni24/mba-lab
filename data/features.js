@@ -3,7 +3,7 @@
    Order matters for stacking and CSS cascade: landing/scene first, then controls, then windows. */
 MBALAB.data.features = [
   { id: 'landing',   scripts: ['landing.js'],                  styles: ['landing.css'] },
-  { id: 'scene',     scripts: ['strings.js', 'scene.js'],                  styles: ['scene.css'] },
+  { id: 'scene',     scripts: ['scene.js'],                    styles: ['scene.css'] },
   { id: 'theme',     scripts: ['strings.js', 'theme.js'] },
   { id: 'camera',    scripts: ['strings.js', 'camera.js'],     styles: ['camera.css'] },
   { id: 'language',  scripts: ['strings.js', 'language.js'],   styles: ['language.css'] },
