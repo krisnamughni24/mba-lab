@@ -40,7 +40,7 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | DISC Crisis Room: scoring rules | `simulations/disc-crisis-room/engine.js` (testable in node) |
 | BUMN Explorer: companies, grid positions, sectors, quiz logic | `simulations/bumn-explorer/engine.js` (testable in node) |
 | BUMN Explorer: company descriptions and UI texts (4 languages) | `simulations/bumn-explorer/strings.js` |
-| BUMN Explorer: isometric canvas map | `simulations/bumn-explorer/scene.js` |
+| BUMN Explorer: 3D city (Three.js, camera orbit/zoom, fade, picking) | `simulations/bumn-explorer/scene.js` |
 | 3D city | `features/scene/scene.js` |
 | Remove a feature | delete its line in `data/features.js` |
 

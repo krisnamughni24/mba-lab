@@ -87,12 +87,14 @@
       '国家主粮物流机构，管理政府大米储备并帮助稳定价格。']
   };
   const U = {
+    noGl: ['3D view is not available on this device. Use the company list below.', 'Tampilan 3D tidak tersedia di perangkat ini. Gunakan daftar perusahaan di bawah.', 'この端末では3D表示を利用できません。下の企業リストをご利用ください。', '此设备无法显示 3D 视图，请使用下方的企业列表。'],
+    hint3d: ['Drag to rotate, scroll or +/− to zoom. Tap a building to focus on it.', 'Geser untuk memutar, gulir atau +/− untuk zoom. Ketuk bangunan untuk memfokuskannya.', 'ドラッグで回転、スクロールまたは＋／−でズーム。建物をタップするとフォーカスします。', '拖动旋转，滚轮或 +/− 缩放。点击建筑可聚焦。'],
     gTitle: ['BUMN Explorer', 'Jelajah BUMN', 'BUMNエクスプローラー', '印尼国企探索 BUMN'],
     backT: ['← Home', '← Beranda', '← ホーム', '← 首页'],
     modeExp: ['Explore', 'Jelajah', '探索', '探索'], modeQz: ['Quiz', 'Kuis', 'クイズ', '测验'],
     prog: ['Explored {n}/{m}', 'Dijelajahi {n}/{m}', '探索済み {n}/{m}', '已探索 {n}/{m}'],
     all: ['All', 'Semua', 'すべて', '全部'],
-    hint: ['Tap a building to read about the company. Use the sector chips to highlight one industry.', 'Ketuk bangunan untuk membaca profil perusahaan. Pakai chip sektor untuk menyorot satu industri.', '建物をタップして会社の紹介を読みましょう。業種チップで特定の業界を強調できます。', '点击建筑查看公司介绍。用行业标签可高亮某个行业。'],
+    hint: ['Tap a building to read about the company: the camera circles it and the rest of the city fades. Use the sector chips to highlight one industry.', 'Ketuk bangunan untuk membaca profil perusahaan: kamera memutarinya dan kota lain memudar. Pakai chip sektor untuk menyorot satu industri.', '建物をタップすると会社紹介が開き、カメラがその周りを回って他の街は薄くなります。業種チップで特定の業界を強調できます。', '点击建筑查看公司介绍：镜头会环绕它，其余城市变淡。用行业标签可高亮某个行业。'],
     listT: ['All companies', 'Semua perusahaan', '全企業', '全部企业'],
     visited: ['Visited', 'Sudah dilihat', '閲覧済み', '已查看'],
     infoTip: ['How it works', 'Cara kerja', '遊び方', '玩法'],

@@ -1,12 +1,13 @@
-/* BUMN Explorer: UI wiring. Data and quiz in engine.js, drawing in scene.js, texts in strings.js. */
+/* BUMN Explorer: UI wiring. Data and quiz in engine.js, 3D city in scene.js (Three.js), texts in strings.js. */
 MBALAB.sims.define('bumn-explorer', {
   mount(host) {
     const E = MBALAB.bumn, Q = E.quiz, $ = s => host.querySelector(s), T = (k, p) => t('bm_' + k, p);
     const still = () => document.body.classList.contains('still');
     const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
     const KEY = 'mbalab-bumn', M = E.LIST.length;
-    const cv = $('#bmCv'), scene = E.Scene(cv), name = id => E.byId[id].n;
-    let mode = 'explore', sel = null, filter = null, q = null, fb = null, visible = false, timer = 0;
+    const stage = $('#bmStage'), name = id => E.byId[id].n;
+    let gl = null;
+    let mode = 'explore', sel = null, filter = null, q = null, fb = null, visible = false;
     let visited = new Set();
     try { visited = new Set(JSON.parse(localStorage.getItem(KEY) || '[]').filter(id => E.byId[id])); } catch (e) {}
     const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...visited])); } catch (e) {} };
@@ -21,9 +22,9 @@ MBALAB.sims.define('bumn-explorer', {
     }
     function list() {
       const L = $('#bmList');
-      if (mode !== 'explore') { L.innerHTML = ''; return; }
+      if (mode !== 'explore' && gl) { L.innerHTML = ''; return; }
       L.innerHTML = `<h3>${T('listT')}</h3><div class="bm-lg">` + E.LIST.filter(b => !filter || b.sec === filter).map(b =>
-        `<button type="button" class="bm-li${sel === b.id ? ' on' : ''}" data-id="${b.id}" style="--c:${E.COLORS[b.sec]}"><span>${b.icon}</span><b>${b.n}</b>${visited.has(b.id) ? '<em aria-label="' + T('visited') + '">✓</em>' : ''}</button>`).join('') + '</div>';
+        `<button type="button" class="bm-li${sel === b.id ? ' on' : ''}" data-id="${b.id}" style="--c:${E.COLORS[b.sec]}"><span>${b.icon}</span><b>${b.n}</b>${mode === 'explore' && visited.has(b.id) ? '<em aria-label="' + T('visited') + '">✓</em>' : ''}</button>`).join('') + '</div>';
     }
     function prog() {
       $('#bmProg').textContent = mode === 'explore' ? T('prog', { n: visited.size, m: M }) : '';
@@ -39,20 +40,20 @@ MBALAB.sims.define('bumn-explorer', {
         <div class="bm-sec" style="--c:${col(sel)}"><i></i>${secName(sel)}</div>
         <h3><span>${b.icon}</span> ${b.n}</h3><p>${t('bm_d_' + sel)}</p>
         <div class="bm-vis">✓ ${T('visited')}</div><div class="bm-foot">${T('foot')}</div>`;
-      const p = scene.pos(sel); c.classList.toggle('r', !!p && p[0] < 480);
       c.hidden = false;
       $('#bmSr').textContent = b.n + '. ' + t('bm_d_' + sel);
     }
     function select(id) {
       sel = id;
       if (id) { if (!visited.has(id)) { visited.add(id); save(); } sfx('click'); }
-      scene.set({ sel, visited }); card(); list(); prog();
+      gl && (gl.set({ visited }), gl.focus(id)); card(); list(); prog();
     }
+    function deselect() { sel = null; gl && gl.focus(null); sync(); }
 
     /* ---------- quiz ---------- */
     function renderBox() {
       const b = $('#bmBox');
-      if (mode === 'explore') { b.innerHTML = `<p class="bm-hint">💡 ${T('hint')}</p>`; return; }
+      if (mode === 'explore') { b.innerHTML = `<p class="bm-hint">💡 ${T('hint')}</p>` + (gl ? `<p class="bm-hint bm-h2">🖱️ ${T('hint3d')}</p>` : ''); return; }
       if (!q) { b.innerHTML = ''; return; }
       if (q.done) {
         const m = Q.ROUNDS, s = q.score, tier = s >= 7 ? 0 : s >= 4 ? 1 : 2;
@@ -69,16 +70,16 @@ MBALAB.sims.define('bumn-explorer', {
     }
     function startQuiz() {
       q = Q.create(Math.floor(Math.random() * 1e9) + 1); fb = null; sel = null; filter = null;
-      scene.set({ sel: null, hover: null, filter: null, target: null }); scene.flash(null); sync();
+      if (gl) { gl.reveal(null); gl.focus(null); gl.set({ filter: null }); } sync();
     }
     function pickQuiz(id) {
       if (!q || q.done || q.answered) return;
       const r = Q.answer(q, id); if (!r) return;
-      fb = r; scene.flash(Q.target(q), true); sfx(r.ok ? 'ok' : 'click');
-      scene.set({ target: Q.target(q) }); renderBox();
+      fb = r; sfx(r.ok ? 'ok' : 'click');
+      if (gl) { gl.reveal(Q.target(q)); gl.focus(Q.target(q)); } renderBox();
     }
     function nextQuiz() {
-      Q.next(q); fb = null; scene.flash(null); scene.set({ target: q.done ? null : Q.target(q) }); renderBox(); if (q.done) sfx('ok');
+      Q.next(q); fb = null; if (gl) { gl.reveal(null); gl.focus(null); } renderBox(); if (q.done) sfx('ok');
       $('#bmScroll').scrollTop = 0;
     }
 
@@ -87,11 +88,11 @@ MBALAB.sims.define('bumn-explorer', {
       $('#bmExp').classList.toggle('on', mode === 'explore'); $('#bmQz').classList.toggle('on', mode === 'quiz');
       $('#bmExp').setAttribute('aria-pressed', mode === 'explore'); $('#bmQz').setAttribute('aria-pressed', mode === 'quiz');
       chips(); list(); prog(); card(); renderBox();
-      scene.set({ filter, visited: mode === 'explore' ? visited : new Set(), sel: mode === 'explore' ? sel : null, target: mode === 'quiz' && q && !q.done ? Q.target(q) : null });
+      if (gl) { gl.set({ filter, visited: mode === 'explore' ? visited : new Set() }); if (mode === 'explore' && sel) gl.focus(sel); else if (!(q && fb)) gl.focus(null); }
     }
     function setMode(m) {
       if (m === mode) return; mode = m; sfx('click');
-      if (m === 'quiz') startQuiz(); else { q = null; fb = null; scene.flash(null); sync(); }
+      if (m === 'quiz') startQuiz(); else { q = null; fb = null; if (gl) gl.reveal(null); sync(); }
     }
     $('#bmExp').addEventListener('click', () => setMode('explore'));
     $('#bmQz').addEventListener('click', () => { if (mode === 'quiz') { sfx('click'); startQuiz(); } else setMode('quiz'); });
@@ -102,22 +103,24 @@ MBALAB.sims.define('bumn-explorer', {
       if (sel && filter && E.byId[sel].sec !== filter) sel = null;
       sync();
     });
-    $('#bmList').addEventListener('click', e => { const b = e.target.closest('.bm-li'); if (b) select(b.dataset.id); });
-    $('#bmCard').addEventListener('click', e => { if (e.target.closest('[data-x]')) { sel = null; sync(); } });
+    $('#bmList').addEventListener('click', e => { const b = e.target.closest('.bm-li'); if (!b) return; if (mode === 'quiz') pickQuiz(b.dataset.id); else select(b.dataset.id); });
+    $('#bmCard').addEventListener('click', e => { if (e.target.closest('[data-x]')) deselect(); });
     $('#bmBox').addEventListener('click', e => {
       const a = e.target.closest('[data-act]'); if (!a) return;
       if (a.dataset.act === 'next') nextQuiz(); else if (a.dataset.act === 'again') { sfx('click'); startQuiz(); } else if (a.dataset.act === 'explore') { setMode('explore'); }
     });
-    const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 960, (e.clientY - r.top) / r.height * 540]; };
-    cv.addEventListener('pointermove', e => {
-      const id = scene.hit.apply(null, pos(e)); cv.style.cursor = id ? 'pointer' : 'default';
-      if (mode === 'explore' && id !== (scene._h || null)) { scene._h = id; scene.set({ hover: id }); }
-    });
-    cv.addEventListener('pointerleave', () => { scene._h = null; scene.set({ hover: null }); });
-    cv.addEventListener('click', e => {
-      const id = scene.hit.apply(null, pos(e));
-      if (mode === 'explore') { if (id) select(id); else if (sel) { sel = null; sync(); } } else if (id) pickQuiz(id);
-    });
+    /* camera pad: press and hold to repeat (same as the landing page) */
+    const hold = (id, fn) => {
+      const b = $(id); let tm = null; const stop = () => { clearInterval(tm); tm = null; };
+      b.addEventListener('pointerdown', () => { fn(); clearInterval(tm); tm = setInterval(fn, 110); });
+      ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach(ev => b.addEventListener(ev, stop));
+      b.addEventListener('click', e => { if (e.detail === 0) fn(); });
+    };
+    const cm = fn => () => { gl && fn(gl.cam); };
+    hold('#bmIn', cm(c => c.zoom(.9))); hold('#bmOut', cm(c => c.zoom(1.12)));
+    hold('#bmUp', cm(c => c.tilt(.05))); hold('#bmDown', cm(c => c.tilt(-.05)));
+    hold('#bmLeft', cm(c => c.rot(.06))); hold('#bmRight', cm(c => c.rot(-.06)));
+    $('#bmReset').addEventListener('click', () => { if (!gl) return; sel = null; gl.cam.reset(); sync(); });
 
     /* ---------- info dialog (inside the stage) ---------- */
     const guide = $('#bmGuide');
@@ -131,7 +134,7 @@ MBALAB.sims.define('bumn-explorer', {
     guide.addEventListener('click', e => { if (e.target === guide || e.target.closest('[data-gclose]')) closeGuide(); });
     host.addEventListener('keydown', e => {
       if (e.key !== 'Escape') return;
-      if (!guide.hidden) { closeGuide(); e.stopPropagation(); } else if (sel) { sel = null; sync(); e.stopPropagation(); }
+      if (!guide.hidden) { closeGuide(); e.stopPropagation(); } else if (sel) { deselect(); e.stopPropagation(); }
     });
     $('#bmInfo').addEventListener('click', () => { guide.hidden ? showGuide() : closeGuide(); });
 
@@ -143,13 +146,21 @@ MBALAB.sims.define('bumn-explorer', {
     if (window.SmartAssistant) SmartAssistant.create(host, { root: $('#bm'), hints, busy: () => !guide.hidden });
 
     /* ---------- loop + sizing ---------- */
-    function loop() { if (visible && !still() && !document.hidden) scene.start(); else if (scene.running) scene.stop(); else scene.draw(); }
+    function loop() { if (!gl) return; if (visible && !still() && !document.hidden) gl.start(); else gl.stop(); }
     document.addEventListener('visibilitychange', loop);
-    function fit() { const w = cv.clientWidth || 960, d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(w * 9 / 16 * d); scene.draw(); }
-    if (window.ResizeObserver) new ResizeObserver(fit).observe($('#bmStage')); else window.addEventListener('resize', fit);
+    function fit() { gl && gl.resize(); }
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(stage); else window.addEventListener('resize', fit);
+
+    /* ---------- 3D scene (falls back to the company list when Three.js / WebGL is missing) ---------- */
+    gl = E.Scene(stage, {
+      onPick: id => { if (mode === 'explore') { if (id) select(id); else if (sel) deselect(); } else if (id) pickQuiz(id); },
+      onHover: id => { if (mode === 'explore') gl.hoverRing(id); },
+      canHover: () => mode === 'explore'
+    });
+    if (!gl) { $('#bmNoGl').hidden = false; $('#bmPad').hidden = true; }
 
     sync();
-    this._bm = { fit, loop, setVisible(v) { visible = v; loop(); }, relabel() { sync(); if (!guide.hidden) showGuide(); }, theme(d) { scene.setTheme(d); } };
+    this._bm = { fit, loop, setVisible(v) { visible = v; loop(); }, relabel() { sync(); if (!guide.hidden) showGuide(); }, theme(d) { gl && gl.setTheme(d); } };
   },
   onShow() { const m = this._bm; if (!m) return; m.theme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
   onHide() { const m = this._bm; if (m) m.setVisible(false); },
