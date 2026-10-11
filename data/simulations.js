@@ -74,7 +74,7 @@ MBALAB.data.simulations = [
       "zh": "印尼国企探索 BUMN"
     },
     "description": {
-      "en": "Explore Indonesia's state-owned companies in a 3D world with ports, mines and power plants, then take the quiz.",
+      "en": "Explore Indonesia's state-owned companies in 3D, then take the quiz.",
       "id": "Jelajahi BUMN Indonesia di dunia 3D lengkap dengan pelabuhan, tambang, dan pembangkit, lalu uji lewat kuis.",
       "ja": "港・鉱山・発電所のある3Dの世界でインドネシアの国有企業を探索し、クイズに挑戦。",
       "zh": "在有港口、矿山和电厂的3D世界中探索印尼国有企业，再来一场测验。"
