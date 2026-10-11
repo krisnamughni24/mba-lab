@@ -128,7 +128,7 @@
     noGl: ['3D view is not available on this device. Use the company list below.', 'Tampilan 3D tidak tersedia di perangkat ini. Gunakan daftar perusahaan di bawah.', 'この端末では3D表示を利用できません。下の企業リストをご利用ください。', '此设备无法显示 3D 视图，请使用下方的企业列表。'],
     hint3d: ['Drag to rotate, scroll or +/− to zoom. Tap a building to focus on it.', 'Geser untuk memutar, gulir atau +/− untuk zoom. Ketuk bangunan untuk memfokuskannya.', 'ドラッグで回転、スクロールまたは＋／−でズーム。建物をタップするとフォーカスします。', '拖动旋转，滚轮或 +/− 缩放。点击建筑可聚焦。'],
     gTitle: ['BUMN Explorer', 'Jelajah BUMN', 'BUMNエクスプローラー', '印尼国企探索 BUMN'],
-    backT: ['← Home', '← Beranda', '← ホーム', '← 首页'],
+    backT: ['← Home', '← Beranda', '← ホーム', '← 首页'], listBtn: ['Companies', 'Daftar', '企業一覧', '公司列表'],
     modeExp: ['Explore', 'Jelajah', '探索', '探索'], modeQz: ['Quiz', 'Kuis', 'クイズ', '测验'],
     prog: ['Explored {n}/{m}', 'Dijelajahi {n}/{m}', '探索済み {n}/{m}', '已探索 {n}/{m}'],
     all: ['All', 'Semua', 'すべて', '全部'],

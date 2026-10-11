@@ -187,7 +187,7 @@
     };
 
     /* ---------- loop ---------- */
-    const vo = { x: 0, y: 0, on: false };
+    const vo = { x: 0, y: 0, on: false }; let fitK = 1;
     let T0 = 0, last = 0, raf = 0, running = false, W = 0, Hh = 0;
     function frame(dt) {
       T0 += dt; anims.forEach(f => f(T0, dt)); applyFade(dt);
@@ -195,14 +195,14 @@
       if (focusId) goal.az += dt * .22; else if (idle > 4) goal.az += dt * .03;
       const k = 1 - Math.exp(-dt * 3.4);
       ['az', 'el', 'dist', 'tx', 'ty', 'tz'].forEach(n => { view[n] += (goal[n] - view[n]) * k; });
-      cam.position.set(view.tx + view.dist * Math.cos(view.el) * Math.cos(view.az), Math.max(4, view.ty + view.dist * Math.sin(view.el)), view.tz + view.dist * Math.cos(view.el) * Math.sin(view.az)); cam.lookAt(view.tx, view.ty, view.tz);
-      const wx = focusId && W >= 620 ? W * .15 : 0, wy = focusId && W >= 620 ? Hh * .12 : 0; vo.x += (wx - vo.x) * k; vo.y += (wy - vo.y) * k;
+      cam.position.set(view.tx + view.dist * fitK * Math.cos(view.el) * Math.cos(view.az), Math.max(4, view.ty + view.dist * fitK * Math.sin(view.el)), view.tz + view.dist * fitK * Math.cos(view.el) * Math.sin(view.az)); cam.lookAt(view.tx, view.ty, view.tz);
+      const sd = W >= 760, wx = focusId && sd ? -W * .13 : 0, wy = focusId ? (sd ? Hh * .04 : Hh * .17) : 0; vo.x += (wx - vo.x) * k; vo.y += (wy - vo.y) * k;
       if (Math.abs(vo.x) > .4 || Math.abs(vo.y) > .4) { cam.setViewOffset(W, Hh, vo.x, vo.y, W, Hh); vo.on = true; } else if (vo.on) { cam.clearViewOffset(); vo.on = false; }
       const pu = .6 + .4 * Math.sin(T0 * 6); if (ringSel.visible) ringSel.material.opacity = pu; if (ringRev.visible) ringRev.material.opacity = pu; ringHov.material.opacity = .7;
       R.render(sc, cam); place();
     }
     function step(now) { if (!running) return; const dt = last ? Math.min(.05, (now - last) / 1000) : .016; last = now; frame(dt); raf = requestAnimationFrame(step); }
-    function resize() { const w = host.clientWidth || 960, h = host.clientHeight || 540; if (w === W && h === Hh) return; W = w; Hh = h; R.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); if (!running) frame(0); }
+    function resize() { const w = host.clientWidth || 960, h = host.clientHeight || 540; if (w === W && h === Hh) return; W = w; Hh = h; R.setSize(w, h, false); cam.aspect = w / h; fitK = cam.aspect < 1.4 ? Math.min(2.1, 1.4 / cam.aspect) : 1; cam.updateProjectionMatrix(); if (!running) frame(0); }
 
     const api = {
       get running() { return running; }, cam: camApi,

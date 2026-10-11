@@ -88,6 +88,7 @@ MBALAB.sims.define('bumn-explorer', {
       $('#bmExp').classList.toggle('on', mode === 'explore'); $('#bmQz').classList.toggle('on', mode === 'quiz');
       $('#bmExp').setAttribute('aria-pressed', mode === 'explore'); $('#bmQz').setAttribute('aria-pressed', mode === 'quiz');
       chips(); list(); prog(); card(); renderBox();
+      $('#bmLs').hidden = !(gl && mode === 'explore'); if (mode !== 'explore') $('#bm').classList.remove('ls-open');
       if (gl) { gl.set({ filter, visited: mode === 'explore' ? visited : new Set() }); if (mode === 'explore' && sel) gl.focus(sel); else if (!(q && fb)) gl.focus(null); }
     }
     function setMode(m) {
@@ -103,7 +104,8 @@ MBALAB.sims.define('bumn-explorer', {
       if (sel && filter && E.byId[sel].sec !== filter) sel = null;
       sync();
     });
-    $('#bmList').addEventListener('click', e => { const b = e.target.closest('.bm-li'); if (!b) return; if (mode === 'quiz') pickQuiz(b.dataset.id); else select(b.dataset.id); });
+    $('#bmList').addEventListener('click', e => { const b = e.target.closest('.bm-li'); if (!b) return; if (mode === 'quiz') pickQuiz(b.dataset.id); else select(b.dataset.id); $('#bm').classList.remove('ls-open'); $('#bmLs').setAttribute('aria-expanded', 'false'); });
+    $('#bmLs').addEventListener('click', () => { const o = $('#bm').classList.toggle('ls-open'); $('#bmLs').setAttribute('aria-expanded', o); sfx('click'); });
     $('#bmCard').addEventListener('click', e => { if (e.target.closest('[data-x]')) deselect(); });
     $('#bmBox').addEventListener('click', e => {
       const a = e.target.closest('[data-act]'); if (!a) return;
@@ -157,13 +159,13 @@ MBALAB.sims.define('bumn-explorer', {
       onHover: id => { if (mode === 'explore') gl.hoverRing(id); },
       canHover: () => mode === 'explore'
     });
-    if (!gl) { $('#bmNoGl').hidden = false; $('#bmPad').hidden = true; }
+    if (!gl) { $('#bmNoGl').hidden = false; $('#bmPad').hidden = true; } else $('#bm').classList.add('full');
 
     sync();
-    this._bm = { fit, loop, setVisible(v) { visible = v; loop(); }, relabel() { sync(); if (!guide.hidden) showGuide(); }, theme(d) { gl && gl.setTheme(d); } };
+    this._bm = { full: !!gl, fit, loop, setVisible(v) { visible = v; loop(); }, relabel() { sync(); if (!guide.hidden) showGuide(); }, theme(d) { gl && gl.setTheme(d); } };
   },
-  onShow() { const m = this._bm; if (!m) return; m.theme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
-  onHide() { const m = this._bm; if (m) m.setVisible(false); },
+  onShow() { const m = this._bm; if (!m) return; if (m.full) { document.body.classList.add('mapfull'); window.cityHold && window.cityHold(true); } m.theme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
+  onHide() { const m = this._bm; if (m) m.setVisible(false); document.body.classList.remove('mapfull'); window.cityHold && window.cityHold(false); },
   onLang() { const m = this._bm; if (m) m.relabel(); },
   onTheme(day) { const m = this._bm; if (m) m.theme(day); }
 });

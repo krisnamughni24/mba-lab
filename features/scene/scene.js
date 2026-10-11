@@ -1,5 +1,5 @@
 /* Scene feature: the animated 3D Jakarta-style city on the landing page (Three.js r128 from the CDN).
-   Exposes window.cityMode(day), window.cityPause(paused) and window.cityCam (zoom / tilt / pan / reset).
+   Exposes window.cityMode(day), window.cityPause(paused), window.cityHold(held: stop rendering while a full-screen page covers the city) and window.cityCam (zoom / tilt / pan / reset).
    If WebGL or Three.js is unavailable, the CSS cube scene below stays as a fallback. */
 MBALAB.feature('scene', () => {
 /* CSS fallback scene */
@@ -9,7 +9,7 @@ $("stage").innerHTML=`<div class="scene"><div class="rig">`+cube(190,["SMART","N
 /* 3D city: scene, traffic, aircraft, day/night, camera and render loop */
 const L=$('landing');
 const build=()=>{try{(function(){
-const T=THREE,st=$('stage');st.innerHTML='';let RM=false,t=0;window.cityPause=v=>{RM=v};
+const T=THREE,st=$('stage');st.innerHTML='';let RM=false,t=0,HOLD=false;window.cityPause=v=>{RM=v};window.cityHold=v=>{HOLD=!!v};
 const R=new T.WebGLRenderer({antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio||1,1.5));st.appendChild(R.domElement);
 const sc=new T.Scene();sc.fog=new T.FogExp2(0x0a0f2c,.0022);const cam=new T.PerspectiveCamera(48,1,1,1400);
 const amb=new T.AmbientLight(0x8899cc,.8);sc.add(amb);const dl=new T.DirectionalLight(0xbbd4ff,.9);dl.position.set(80,90,-60);sc.add(dl);
@@ -289,7 +289,7 @@ let CAMZ=1,CAMZt=1,CAME=0,CAMEt=0,CAMA=0,CAMAt=0;
 window.cityCam={zoom:k=>{CAMZt=cl(CAMZt*k,.4,2.4)},tilt:d=>{CAMEt=cl(CAMEt+d,-.6,.9)},pan:d=>{CAMAt+=d},reset:()=>{CAMZt=1;CAMEt=0;CAMAt=0}};
 let mx=0,my=0;addEventListener('mousemove',e=>{if(document.body.classList.contains('modal-open'))return;mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5});
 const rs=()=>{R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()};rs();addEventListener('resize',rs);
-let last=performance.now();let fk=0;const lp=now=>{requestAnimationFrame(lp);if(document.hidden)return;if(L.classList.contains('off')&&(fk^=1))return;const dt=Math.min((now-last)/1000,.05);last=now;
+let last=performance.now();let fk=0;const lp=now=>{requestAnimationFrame(lp);if(document.hidden||HOLD)return;if(L.classList.contains('off')&&(fk^=1))return;const dt=Math.min((now-last)/1000,.05);last=now;
 if(!RM){t+=dt;rkStep(t,dt);trains.forEach(o=>trStep(o,dt));rbStep(dt);stadStep(t,dt);parkStep(t);clouds.forEach(c=>{c.position.x+=3*dt;if(c.position.x>450)c.position.x=-450});
 for(let i=0;i<sp.count;i++)sp.setZ(i,Math.sin(sp.getX(i)*.04+t*.9)*.5+Math.cos(sp.getY(i)*.05+t*.7)*.4);sp.needsUpdate=true;
 stepTraffic(dt);
