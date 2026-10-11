@@ -111,24 +111,13 @@ MBALAB.sims.define('bumn-explorer', {
       const a = e.target.closest('[data-act]'); if (!a) return;
       if (a.dataset.act === 'next') nextQuiz(); else if (a.dataset.act === 'again') { sfx('click'); startQuiz(); } else if (a.dataset.act === 'explore') { setMode('explore'); }
     });
-    /* camera pad: press and hold to repeat (same as the landing page) */
-    const hold = (id, fn) => {
-      const b = $(id); let tm = null; const stop = () => { clearInterval(tm); tm = null; };
-      b.addEventListener('pointerdown', () => { fn(); clearInterval(tm); tm = setInterval(fn, 110); });
-      ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach(ev => b.addEventListener(ev, stop));
-      b.addEventListener('click', e => { if (e.detail === 0) fn(); });
-    };
-    const cm = fn => () => { gl && fn(gl.cam); };
-    hold('#bmIn', cm(c => c.zoom(.9))); hold('#bmOut', cm(c => c.zoom(1.12)));
-    hold('#bmUp', cm(c => c.tilt(.05))); hold('#bmDown', cm(c => c.tilt(-.05)));
-    hold('#bmLeft', cm(c => c.rot(.06))); hold('#bmRight', cm(c => c.rot(-.06)));
     $('#bmReset').addEventListener('click', () => { if (!gl) return; sel = null; gl.cam.reset(); sync(); });
 
     /* ---------- info dialog (inside the stage) ---------- */
     const guide = $('#bmGuide');
     function showGuide() {
       guide.innerHTML = `<div class="gd" role="dialog" aria-modal="true" aria-labelledby="bmGdT"><button type="button" class="gx" data-gclose aria-label="${T('close')}">✕</button>
-        <h3 id="bmGdT">${T('howT')}</h3><ol><li>${T('how1')}</li><li>${T('how2')}</li><li>${T('how3')}</li></ol>
+        <h3 id="bmGdT">${T('howT')}</h3><ol><li>${T('howNav')}</li><li>${T('how1')}</li><li>${T('how2')}</li><li>${T('how3')}</li></ol>
         <p class="gtip"><b>💡 ${T('tipLbl')}:</b> ${T('gdTip')}</p><button type="button" class="bm-main" data-gclose>${T('gotIt')}</button></div>`;
       guide.hidden = false; sfx('open'); const b = guide.querySelector('.bm-main'); b && b.focus({ preventScroll: true });
     }
@@ -159,7 +148,7 @@ MBALAB.sims.define('bumn-explorer', {
       onHover: id => { if (mode === 'explore') gl.hoverRing(id); },
       canHover: () => mode === 'explore'
     });
-    if (!gl) { $('#bmNoGl').hidden = false; $('#bmPad').hidden = true; } else $('#bm').classList.add('full');
+    if (!gl) { $('#bmNoGl').hidden = false; $('#bmReset').hidden = true; } else $('#bm').classList.add('full');
 
     sync();
     this._bm = { full: !!gl, fit, loop, setVisible(v) { visible = v; loop(); }, relabel() { sync(); if (!guide.hidden) showGuide(); }, theme(d) { gl && gl.setTheme(d); } };

@@ -126,7 +126,7 @@
   };
   const U = {
     noGl: ['3D view is not available on this device. Use the company list below.', 'Tampilan 3D tidak tersedia di perangkat ini. Gunakan daftar perusahaan di bawah.', 'この端末では3D表示を利用できません。下の企業リストをご利用ください。', '此设备无法显示 3D 视图，请使用下方的企业列表。'],
-    hint3d: ['Drag to rotate, scroll or +/− to zoom. Tap a building to focus on it.', 'Geser untuk memutar, gulir atau +/− untuk zoom. Ketuk bangunan untuk memfokuskannya.', 'ドラッグで回転、スクロールまたは＋／−でズーム。建物をタップするとフォーカスします。', '拖动旋转，滚轮或 +/− 缩放。点击建筑可聚焦。'],
+    hint3d: ['Drag to move, scroll or pinch to zoom, right-drag or two fingers to rotate. Tap a building to focus on it.', 'Geser untuk bergerak, gulir atau cubit untuk zoom, seret klik kanan atau dua jari untuk memutar. Ketuk bangunan untuk memfokuskannya.', 'ドラッグで移動、スクロールまたはピンチでズーム、右ドラッグか2本指で回転。建物をタップするとフォーカスします。', '拖动移动，滚轮或双指捏合缩放，右键拖动或双指旋转。点击建筑可聚焦。'],
     gTitle: ['BUMN Explorer', 'Jelajah BUMN', 'BUMNエクスプローラー', '印尼国企探索 BUMN'],
     backT: ['← Home', '← Beranda', '← ホーム', '← 首页'], listBtn: ['Companies', 'Daftar', '企業一覧', '公司列表'],
     modeExp: ['Explore', 'Jelajah', '探索', '探索'], modeQz: ['Quiz', 'Kuis', 'クイズ', '测验'],
@@ -138,6 +138,7 @@
     infoTip: ['How it works', 'Cara kerja', '遊び方', '玩法'],
     close: ['Close', 'Tutup', '閉じる', '关闭'], gotIt: ['Got it', 'Mengerti', 'わかりました', '明白了'], tipLbl: ['Tip', 'Tips', 'ヒント', '提示'],
     howT: ['How it works', 'Cara kerja', '遊び方', '玩法'],
+    howNav: ['Move like a map: drag to pan, scroll or pinch to zoom. Right-drag (mouse) or two fingers (touch) rotates and tilts.', 'Bergerak seperti peta: geser untuk menggeser, gulir atau cubit untuk zoom. Seret klik kanan (mouse) atau dua jari (layar sentuh) untuk memutar dan memiringkan.', '地図のように操作：ドラッグで移動、スクロールまたはピンチでズーム。右ドラッグ（マウス）または2本指（タッチ）で回転・傾き。', '像地图一样操作：拖动平移，滚轮或双指捏合缩放；鼠标右键拖动或双指触控可旋转与倾斜。'],
     how1: ['Explore: tap any building on the map to open the company profile.', 'Jelajah: ketuk bangunan mana pun di peta untuk membuka profil perusahaan.', '探索：マップ上の建物をタップすると会社紹介が開きます。', '探索：点击地图上的任意建筑，打开公司介绍。'],
     how2: ['Use the sector chips to highlight one industry at a time.', 'Gunakan chip sektor untuk menyorot satu industri sekali waktu.', '業種チップで業界を1つずつ強調表示できます。', '用行业标签一次高亮一个行业。'],
     how3: ['Quiz: read the clue and tap the building it describes. Eight questions per round.', 'Kuis: baca petunjuk lalu ketuk bangunan yang dimaksud. Delapan soal per ronde.', 'クイズ：ヒントを読み、当てはまる建物をタップ。1ラウンド8問です。', '测验：阅读线索并点击对应的建筑。每轮 8 题。'],

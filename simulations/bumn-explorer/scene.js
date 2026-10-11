@@ -164,18 +164,60 @@
       tag.hidden = false; const r = host.getBoundingClientRect(); tag.style.transform = 'translate(' + ((pv.x * .5 + .5) * r.width) + 'px,' + ((-pv.y * .5 + .5) * r.height + 14) + 'px) translate(-50%,0)';
     };
 
-    /* ---------- input: drag to orbit, wheel to zoom, click to pick ---------- */
-    const rc = new T.Raycaster(), nd = new T.Vector2();
-    const pickAt = (cx, cy) => { const r = cv.getBoundingClientRect(); nd.set((cx - r.left) / r.width * 2 - 1, -((cy - r.top) / r.height) * 2 + 1); rc.setFromCamera(nd, cam); const h = rc.intersectObjects(hits, false); return h.length ? h[0].object.userData.id : null; };
-    let down = null, moved = 0;
-    cv.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; moved = 0; try { cv.setPointerCapture(e.pointerId); } catch (x) {} });
-    cv.addEventListener('pointermove', e => {
-      if (down) { const dx = e.clientX - down.x, dy = e.clientY - down.y; moved += Math.abs(dx) + Math.abs(dy); down.x = e.clientX; down.y = e.clientY; goal.az -= dx * .006; goal.el = cl(goal.el + dy * .005, .08, 1.4); idle = 0; cv.style.cursor = 'grabbing'; return; }
-      const id = pickAt(e.clientX, e.clientY); cv.style.cursor = id ? 'pointer' : 'grab'; if (id !== hover) { hover = id; cb.onHover && cb.onHover(id); }
+    /* ---------- input: map-style gestures ----------
+       mouse : drag = pan, right-drag (or Ctrl/Shift + drag) = rotate and tilt, wheel = zoom to cursor, double-click = zoom in
+       touch : one finger = pan, two fingers = pinch zoom + twist rotate + vertical drag tilt, tap = pick
+       keys  : arrows pan, Shift + arrows rotate/tilt, + / - zoom
+       While a company is focused, a single drag orbits it instead of panning. */
+    const rc = new T.Raycaster(), nd = new T.Vector2(), gp = new T.Plane(new T.Vector3(0, 1, 0), 0), gv = new T.Vector3();
+    const ndc = (cx, cy) => { const r = cv.getBoundingClientRect(); nd.set((cx - r.left) / r.width * 2 - 1, -((cy - r.top) / r.height) * 2 + 1); return r; };
+    const pickAt = (cx, cy) => { ndc(cx, cy); rc.setFromCamera(nd, cam); const h = rc.intersectObjects(hits, false); return h.length ? h[0].object.userData.id : null; };
+    const groundAt = (cx, cy) => { ndc(cx, cy); rc.setFromCamera(nd, cam); return rc.ray.intersectPlane(gp, gv) ? gv : null; };
+    const LIM = { x: 330, z: 300 };
+    const clampT = () => { goal.tx = cl(goal.tx, -LIM.x, LIM.x); goal.tz = cl(goal.tz, -LIM.z, LIM.z); };
+    const panBy = (dx, dy) => {
+      const h = cv.clientHeight || 1, u = .85 * goal.dist * fitK / h, s = Math.sin(goal.az), c = Math.cos(goal.az), fz = u / Math.max(.35, Math.sin(goal.el));
+      goal.tx += -s * dx * u + (-c) * dy * fz; goal.tz += c * dx * u + (-s) * dy * fz; clampT(); idle = 0;
+    };
+    const zoomAt = (k, cx, cy) => {
+      const d0 = goal.dist; camApi.zoom(k); const real = goal.dist / d0;
+      if (!focusId && cx != null && real !== 1) { const p = groundAt(cx, cy); if (p) { goal.tx += (p.x - goal.tx) * (1 - real); goal.tz += (p.z - goal.tz) * (1 - real); clampT(); } }
+    };
+    const ptr = new Map(); let moved = 0, gest = null, dragging = false;
+    const two = () => { const a = [...ptr.values()]; return { x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2, d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) || 1, a: Math.atan2(a[1].y - a[0].y, a[1].x - a[0].x) }; };
+    cv.addEventListener('contextmenu', e => e.preventDefault());
+    cv.addEventListener('pointerdown', e => {
+      ptr.set(e.pointerId, { x: e.clientX, y: e.clientY, t: e.pointerType, b: e.button, mod: e.ctrlKey || e.shiftKey || e.button === 2 });
+      try { cv.setPointerCapture(e.pointerId); } catch (x) {}
+      if (ptr.size === 1) moved = 0; else { moved = 99; gest = two(); } dragging = true; cv.focus && cv.focus({ preventScroll: true });
     });
-    cv.addEventListener('pointerup', e => { const was = down; down = null; cv.style.cursor = 'grab'; if (was && moved < 6) cb.onPick && cb.onPick(pickAt(e.clientX, e.clientY)); });
-    cv.addEventListener('pointerleave', () => { if (hover) { hover = null; cb.onHover && cb.onHover(null); } });
-    cv.addEventListener('wheel', e => { e.preventDefault(); camApi.zoom(e.deltaY > 0 ? 1.08 : .93); }, { passive: false });
+    cv.addEventListener('pointermove', e => {
+      const p = ptr.get(e.pointerId);
+      if (!p) { if (e.pointerType === 'mouse') { const id = pickAt(e.clientX, e.clientY); cv.style.cursor = id ? 'pointer' : 'grab'; if (id !== hover) { hover = id; cb.onHover && cb.onHover(id); } } return; }
+      const dx = e.clientX - p.x, dy = e.clientY - p.y; p.x = e.clientX; p.y = e.clientY; moved += Math.abs(dx) + Math.abs(dy); idle = 0;
+      if (ptr.size >= 2) {
+        const g = two(); if (gest) { zoomAt(gest.d / g.d, g.x, g.y); let da = g.a - gest.a; if (da > Math.PI) da -= TAU; if (da < -Math.PI) da += TAU; goal.az -= da; goal.el = cl(goal.el - (g.y - gest.y) * .005, .08, 1.4); } gest = g; return;
+      }
+      if (moved < 4) return; cv.style.cursor = 'grabbing';
+      if (focusId || p.mod) { goal.az -= dx * .006; goal.el = cl(goal.el + dy * .005, .08, 1.4); } else panBy(dx, dy);
+    });
+    const up = e => {
+      const p = ptr.get(e.pointerId); if (!p) return; ptr.delete(e.pointerId); gest = null; if (ptr.size === 1) { moved = 99; } dragging = ptr.size > 0; cv.style.cursor = 'grab';
+      if (e.type === 'pointerup' && moved < 6 && p.b !== 2 && !p.mod) cb.onPick && cb.onPick(pickAt(e.clientX, e.clientY));
+    };
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    cv.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && hover) { hover = null; cb.onHover && cb.onHover(null); } });
+    cv.addEventListener('wheel', e => { e.preventDefault(); const k = Math.exp(Math.sign(e.deltaY) * Math.min(Math.abs(e.deltaY), 120) * (e.ctrlKey ? .012 : .0016)); zoomAt(k, e.clientX, e.clientY); }, { passive: false });
+    cv.addEventListener('dblclick', e => { if (!pickAt(e.clientX, e.clientY)) zoomAt(.55, e.clientX, e.clientY); });
+    cv.tabIndex = 0; cv.style.outline = 'none';
+    cv.addEventListener('keydown', e => {
+      const st = 40 * goal.dist / 360; let h = true;
+      if (e.key === '+' || e.key === '=') zoomAt(.85); else if (e.key === '-' || e.key === '_') zoomAt(1.18);
+      else if (e.shiftKey && e.key === 'ArrowLeft') camApi.rot(.12); else if (e.shiftKey && e.key === 'ArrowRight') camApi.rot(-.12); else if (e.shiftKey && e.key === 'ArrowUp') camApi.tilt(.08); else if (e.shiftKey && e.key === 'ArrowDown') camApi.tilt(-.08);
+      else if (e.key === 'ArrowLeft') panBy(st / (.85 * goal.dist * fitK / (cv.clientHeight || 1)) * -1, 0); else if (e.key === 'ArrowRight') panBy(st / (.85 * goal.dist * fitK / (cv.clientHeight || 1)), 0);
+      else if (e.key === 'ArrowUp') panBy(0, st / (.85 * goal.dist * fitK / (cv.clientHeight || 1))); else if (e.key === 'ArrowDown') panBy(0, -st / (.85 * goal.dist * fitK / (cv.clientHeight || 1)));
+      else h = false; if (h) e.preventDefault();
+    });
     cv.style.cursor = 'grab'; cv.style.touchAction = 'none';
 
     /* ---------- theme ---------- */
@@ -193,7 +235,7 @@
       T0 += dt; anims.forEach(f => f(T0, dt)); applyFade(dt);
       idle += dt;
       if (focusId) goal.az += dt * .22; else if (idle > 4) goal.az += dt * .03;
-      const k = 1 - Math.exp(-dt * 3.4);
+      const k = 1 - Math.exp(-dt * (dragging ? 14 : 3.4));
       ['az', 'el', 'dist', 'tx', 'ty', 'tz'].forEach(n => { view[n] += (goal[n] - view[n]) * k; });
       cam.position.set(view.tx + view.dist * fitK * Math.cos(view.el) * Math.cos(view.az), Math.max(4, view.ty + view.dist * fitK * Math.sin(view.el)), view.tz + view.dist * fitK * Math.cos(view.el) * Math.sin(view.az)); cam.lookAt(view.tx, view.ty, view.tz);
       const sd = W >= 760, wx = focusId && sd ? -W * .13 : 0, wy = focusId ? (sd ? Hh * .04 : Hh * .17) : 0; vo.x += (wx - vo.x) * k; vo.y += (wy - vo.y) * k;
@@ -209,8 +251,8 @@
       set(o) { Object.assign(st, o); if (o.visited) refreshIcons(); if (o.filter !== undefined || o.visited) placeRing(ringHov, null); if (!running) frame(.016); },
       focus(id) {
         if (id === focusId) return;
-        if (id) { if (!focusId) saved = { az: goal.az, el: goal.el, dist: goal.dist }; focusId = id; const e = B[id]; goal.tx = e.X; goal.tz = e.Z; goal.ty = e.H * .35 + 2; goal.el = .5; goal.dist = Math.max(70, e.H * 1.5 + e.b.r * 2.4 + 30); placeRing(ringSel, id, 1.08); }
-        else { focusId = null; ringSel.visible = false; Object.assign(goal, saved || {}, { tx: OV.tx, ty: OV.ty, tz: OV.tz }); saved = null; }
+        if (id) { if (!focusId) saved = { az: goal.az, el: goal.el, dist: goal.dist, tx: goal.tx, ty: goal.ty, tz: goal.tz }; focusId = id; const e = B[id]; goal.tx = e.X; goal.tz = e.Z; goal.ty = e.H * .35 + 2; goal.el = .5; goal.dist = Math.max(70, e.H * 1.5 + e.b.r * 2.4 + 30); placeRing(ringSel, id, 1.08); }
+        else { focusId = null; ringSel.visible = false; Object.assign(goal, saved || { tx: OV.tx, ty: OV.ty, tz: OV.tz }); saved = null; }
         if (!running) frame(.016);
       },
       reveal(id) { placeRing(ringRev, id, 1.15); if (!running) frame(.016); },

@@ -145,3 +145,10 @@ body.mapfull #app{padding-top:0}
   .bm.full.ls-open .bm-list{left:8px;right:8px;width:auto;top:156px}
 }
 .bm .bm-prog:empty{display:none!important}
+
+.bm .bm-reset{width:44px;height:44px;padding:0;display:grid;place-items:center;border-radius:50%}
+.bm .bm-reset svg{width:22px;height:22px}
+.bm.full .bm-pad{display:grid;grid-template-columns:none;padding:0;background:var(--panel);border:1px solid var(--edge)}
+.bm.full .bm-reset{right:12px;bottom:16px}
+.bm.full .bm-box{width:min(580px,calc(100% - 160px))}
+@media(max-width:760px){.bm.full .bm-reset{top:156px;bottom:auto;right:8px}.bm.full .bm-tools{top:208px}.bm.full .bm-box{width:calc(100% - 16px)}}
