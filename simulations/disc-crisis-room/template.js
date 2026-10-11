@@ -3,7 +3,7 @@ MBALAB.sims.define('disc-crisis-room', {
   template: `<div class="dc" id="dc">
   <header class="dc-top">
     <button class="dc-back" data-sim-back><span data-i18n="dc_backT">← Home</span></button>
-    <h1 data-i18n="dc_gTitle">DISC Crisis Room</h1>
+    <h1 data-i18n="dc_gTitle">DISC Crisis Room Test</h1>
   </header>
   <div class="dc-scroll" id="dcScroll">
   <section class="dc-start" id="dcStart">

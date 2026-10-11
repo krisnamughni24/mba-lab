@@ -99,7 +99,7 @@
   };
   /* ---------- interface ---------- */
   const U = {
-    gTitle: ['DISC Crisis Room', 'DISC Crisis Room', 'DISC Crisis Room', 'DISC Crisis Room'],
+    gTitle: ['DISC Crisis Room Test', 'DISC Crisis Room Test', 'DISC Crisis Room Test', 'DISC Crisis Room Test'],
     backT: ['← Home', '← Beranda', '← ホーム', '← 首页'],
     startT: ['Lead the team through six crises', 'Pimpin tim melewati enam krisis', '6つの危機でチームを率いよう', '带领团队度过六场危机'],
     startSub: ['Choose how you would really act. There are no right or wrong answers, and your choices reveal your DISC style.', 'Pilih tindakan yang benar-benar Anda lakukan. Tidak ada jawaban benar atau salah, dan pilihan Anda menunjukkan gaya DISC Anda.', '実際にとる行動を選んでください。正解も不正解もなく、選択からあなたのDISCスタイルが見えてきます。', '请选择你真实会采取的行动。没有对错之分，你的选择会揭示你的 DISC 风格。'],

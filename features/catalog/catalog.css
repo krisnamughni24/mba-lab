@@ -28,3 +28,8 @@
 .cat{font-size:11px;opacity:.75}
 .sim.soon{cursor:default}
 }
+
+/* footer row pinned to the bottom of every square, so the Open buttons line up across a row */
+.sim .ft{margin-top:auto;padding-top:8px;display:flex;align-items:center;gap:10px;width:100%;min-height:34px}
+.sim .by{font-size:11px;line-height:1.25;color:var(--txt2);opacity:.9;min-width:0;overflow-wrap:anywhere}
+.sim .ft button{flex:none;white-space:nowrap}

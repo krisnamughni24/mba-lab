@@ -37,10 +37,10 @@ MBALAB.data.simulations = [
     "icon": "🎭",
     "category": "leadership",
     "name": {
-      "en": "DISC Crisis Room",
-      "id": "DISC Crisis Room",
-      "ja": "DISC Crisis Room",
-      "zh": "DISC Crisis Room"
+      "en": "DISC Crisis Room Test",
+      "id": "DISC Crisis Room Test",
+      "ja": "DISC Crisis Room Test",
+      "zh": "DISC Crisis Room Test"
     },
     "description": {
       "en": "Lead a team through six crises. Your choices reveal your DISC style.",

@@ -17,9 +17,13 @@ MBALAB.feature('catalog', () => {
     const live = s.status === 'live';
     const head = '<span class="bd">' + t(live ? 'live' : 'soon') + '</span><b><span aria-hidden="true">' + s.icon + '</span> ' + tr(s.name) + '</b>' +
       '<span class="cat">' + catName(s.category) + '</span><span class="note">' + tr(s.description) + '</span>';
+    /* footer row: the Open button is always pinned bottom-left of the square; the developer text sits beside it */
+    const A = MBALAB.data.about || {};
+    const dev = s.developer ? tr(s.developer) : ((A.developedBy ? tr(A.developedBy) + ' ' : '') + (A.developer || ''));
+    const by = dev ? '<span class="by">' + dev + '</span>' : '';
     return live
-      ? '<div class="sim live">' + head + '<button type="button" data-action="open-sim" data-sim="' + s.id + '" data-sfx="open">' + t('open') + '</button></div>'
-      : '<div class="sim soon" aria-disabled="true">' + head + '</div>';
+      ? '<div class="sim live">' + head + '<div class="ft"><button type="button" data-action="open-sim" data-sim="' + s.id + '" data-sfx="open">' + t('open') + '</button>' + by + '</div></div>'
+      : '<div class="sim soon" aria-disabled="true">' + head + '<div class="ft">' + by + '</div></div>';
   };
 
   const render = () => {
