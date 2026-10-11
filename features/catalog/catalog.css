@@ -33,3 +33,23 @@
 .sim .ft{margin-top:auto;padding-top:8px;display:flex;align-items:center;gap:10px;width:100%;min-height:34px}
 .sim .by{font-size:11px;line-height:1.25;color:var(--txt2);opacity:.9;min-width:0;overflow-wrap:anywhere}
 .sim .ft button{flex:none;white-space:nowrap}
+
+/* wider window, always four squares per row on desktop, each with a small picture of what the simulation is about */
+#modal .mw{width:min(1260px,100%)}
+#modal .sg{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media(max-width:1020px){#modal .sg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){#modal .sg{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+@media(max-width:460px){#modal .sg{grid-template-columns:minmax(0,1fr)}}
+.sim .tb{align-self:stretch;aspect-ratio:2/1;border-radius:12px;overflow:hidden;margin:-2px 0 4px;border:1px solid var(--edge);background:radial-gradient(120% 140% at 50% 0,rgba(77,210,255,.16),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.18))}
+.sim .tb svg{width:100%;height:100%;display:block;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s}
+.sim.live:hover .tb svg{transform:scale(1.06)}
+.sim.soon .tb{filter:saturate(.55)}
+.tb .a{stroke:var(--cy)}.tb .b{stroke:var(--mg)}.tb .c{stroke:var(--am)}.tb .d{stroke:var(--gn)}.tb .g{stroke:var(--txt2);opacity:.6}
+.tb .fa{fill:var(--cy);stroke:none}.tb .fb{fill:var(--mg);stroke:none}.tb .fc{fill:var(--am);stroke:none}.tb .fd{fill:var(--gn);stroke:none}.tb .fg{fill:var(--txt2);stroke:none;opacity:.22}
+.tb .o{opacity:.3}.tb .o2{opacity:.6}
+.tb .tk{fill:#06041a;stroke:none;font:800 15px var(--f-mono,monospace)}
+.tb .em{fill:var(--txt);stroke:none;font-size:46px}
+.tb [stroke-dasharray]{animation:tbflow 2.4s linear infinite}
+@keyframes tbflow{to{stroke-dashoffset:-18}}
+@media(prefers-reduced-motion:reduce){.tb *{animation:none!important}}
+body.still .tb *{animation:none!important}
