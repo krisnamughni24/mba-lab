@@ -181,10 +181,10 @@ MBALAB.data.simulations = [
     "icon": "🤝",
     "category": "decision-negotiation",
     "name": {
-      "en": "Negotiation & BATNA",
-      "id": "Negosiasi & BATNA",
-      "ja": "交渉とBATNA",
-      "zh": "谈判与 BATNA"
+      "en": "BATNA: Price of Patience",
+      "id": "BATNA: Price of Patience",
+      "ja": "BATNA: Price of Patience",
+      "zh": "BATNA: Price of Patience"
     },
     "description": {
       "en": "Play the buyer against four sellers. Haggle, read their moves, and know when to walk away.",
@@ -198,9 +198,11 @@ MBALAB.data.simulations = [
       "template.js",
       "engine.js",
       "scene.js",
+      "../smart-decision-studio/assistant.js",
       "app.js"
     ],
     "styles": [
+      "../smart-decision-studio/style.css",
       "style.css"
     ]
   },

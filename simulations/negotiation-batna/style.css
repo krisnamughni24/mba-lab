@@ -1,5 +1,6 @@
 /* Negotiation & BATNA: UI. Scoped under .nb. Colours come only from the global theme tokens (no body.day rules). */
-.nb{position:relative;flex:1;min-height:0;overflow:auto;color:var(--txt);font-size:14px;line-height:1.45;padding-bottom:28px}
+.nb{--g1:var(--cy);--g2:var(--mg);position:relative;flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;color:var(--txt);font-size:14px;line-height:1.45}
+.nb-scroll{flex:1;min-height:0;overflow:auto;padding-bottom:96px}
 .nb *{box-sizing:border-box}
 .nb button{font:inherit;cursor:pointer;color:var(--txt);background:var(--btn-bg);border:1px solid var(--edge);border-radius:12px;padding:9px 14px;text-transform:none;font-weight:600;transition:transform .15s,background .15s,box-shadow .2s,opacity .2s}
 .nb button:hover:not(:disabled){transform:translateY(-1px);background:var(--btn-hover-bg);color:var(--btn-hover-fg);box-shadow:var(--glow)}
@@ -59,5 +60,16 @@
 .nb-end{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .nb-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(max-width:620px){.nb-bub{width:48%;top:2%;padding:4px 7px;font-size:10.5px}.nb-bub-n{right:1.5%}.nb-bub-y{left:1.5%}.nb-scn{display:none}.nb-acts button{flex:1 1 44%}}
-.nb-how{margin-top:16px;padding:12px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--edge)}
-.nb-how h3{font-size:14px;color:var(--mg);margin-bottom:6px}.nb-how ol{margin:0;padding-left:20px;color:var(--txt2)}.nb-how li{margin:4px 0}
+
+.nb .nb-info{width:36px;height:36px;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--cy);border-color:var(--cy)}
+.nb .nb-info svg{width:20px;height:20px}
+.nb .nb-missions[hidden]{display:none}
+.nb-guide{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:16px;background:var(--t-guide);backdrop-filter:blur(5px)}
+.nb-guide[hidden]{display:none}
+.nb-guide .gd{position:relative;width:min(560px,100%);max-height:100%;overflow:auto;padding:22px 22px 18px;border-radius:20px;background:var(--t-gd-bg);color:var(--t-gd-fg);border:1px solid var(--t-gd-bd);box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.nb-guide .gk{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.nb-guide h3{font-size:20px;margin:4px 0 10px;font-weight:800}
+.nb-guide ol,.nb-guide ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px;line-height:1.5}
+.nb-guide .gtip{margin:0 0 14px;padding:10px 12px;border-radius:12px;background:var(--t-gtip);font-size:13px}
+.nb-guide .gx{position:absolute;top:12px;right:12px;padding:2px 9px;border-radius:9px;background:transparent;color:inherit}
+.nb-guide .nb-main{width:100%}

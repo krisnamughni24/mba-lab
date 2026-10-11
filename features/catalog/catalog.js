@@ -27,7 +27,11 @@ MBALAB.feature('catalog', () => {
     $('mcount').textContent = t('count', { l: live, s: simulations.length - live });
     $('chips').innerHTML = [{ id: 'all' }, ...categories].map(c =>
       '<button type="button" class="chip" data-cat="' + c.id + '" aria-pressed="' + (c.id === filter) + '">' + (c.id === 'all' ? t('all') : tr(c.name)) + '</button>').join('');
-    $('sg').innerHTML = simulations.filter(s => filter === 'all' || s.category === filter).map(card).join('');
+    /* live simulations first, then A to Z by the name in the current language */
+    const byName = (a, b) => tr(a.name).localeCompare(tr(b.name), MBALAB.i18n.get(), { sensitivity: 'base' });
+    const ordered = simulations.filter(s => filter === 'all' || s.category === filter)
+      .sort((a, b) => ((b.status === 'live') - (a.status === 'live')) || byName(a, b));
+    $('sg').innerHTML = ordered.map(card).join('');
   };
 
   $('chips').onclick = e => {

@@ -42,7 +42,7 @@
 
   window.SmartAssistant = {
     create(host, ctx) {
-      const root = host.querySelector('#sd'); if (!root || root.querySelector('.sd-bot')) return;
+      const root = ctx.root || host.querySelector('#sd'); if (!root || root.querySelector('.sd-bot')) return;
       const reduced = () => document.body.classList.contains('still');
       const bot = document.createElement('div');
       bot.className = 'sd-bot';
@@ -104,7 +104,7 @@
 
       setInterval(() => {
         if (hidden || speaking || !root.isConnected || root.offsetParent === null) return;
-        if (document.querySelector('#simload:not([hidden])') || (host.querySelector('#sdGuide') && !host.querySelector('#sdGuide').hidden)) { lastAct = performance.now(); return; }
+        if (document.querySelector('#simload:not([hidden])') || (ctx.busy ? ctx.busy() : (host.querySelector('#sdGuide') && !host.querySelector('#sdGuide').hidden))) { lastAct = performance.now(); return; }
         const n = performance.now();
         if (n - lastAct >= 3000 && n - lastTipEnd >= 8000) say2(pickTip());
       }, 400);

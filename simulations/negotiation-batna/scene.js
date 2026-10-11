@@ -76,6 +76,56 @@
       ctx.globalAlpha = 1;
     }
 
+
+    /* ---- isometric goods on the table top (one set per mission) ---- */
+    const Z0 = 40;
+    const box = (gx, gy, w, d, z0, h, top, l, r, edge) => {
+      poly([iso(gx, gy + d, z0), iso(gx + w, gy + d, z0), iso(gx + w, gy + d, z0 + h), iso(gx, gy + d, z0 + h)], l);
+      poly([iso(gx + w, gy, z0), iso(gx + w, gy + d, z0), iso(gx + w, gy + d, z0 + h), iso(gx + w, gy, z0 + h)], r);
+      poly([iso(gx, gy, z0 + h), iso(gx + w, gy, z0 + h), iso(gx + w, gy + d, z0 + h), iso(gx, gy + d, z0 + h)], top, edge, 1.5);
+    };
+    const cyl = (gx, gy, z0, rad, h, col, edge) => {
+      const p = iso(gx, gy, z0), x = p[0], y = p[1], ry = rad / 2;
+      ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x - rad, y - h); ctx.lineTo(x - rad, y); ctx.ellipse(x, y, rad, ry, 0, Math.PI, 0, true); ctx.lineTo(x + rad, y - h); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.moveTo(x + rad * .2, y - h); ctx.lineTo(x + rad * .2, y + ry * .98); ctx.lineTo(x + rad, y); ctx.lineTo(x + rad, y - h); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(x, y - h, rad, ry, 0, 0, TAU); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,.3)'; ctx.fill();
+      ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.beginPath(); ctx.ellipse(x, y - h, rad * .35, ry * .35, 0, 0, TAU); ctx.fill();
+      ctx.strokeStyle = edge; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.ellipse(x, y - h, rad, ry, 0, 0, TAU); ctx.stroke();
+    };
+    function goods() {
+      const k = lvl % 4, e = pal.glow;
+      const c = iso(0, 0, Z0); glow(pal.pink, 24, () => { ctx.fillStyle = 'rgba(255,79,216,.18)'; ctx.beginPath(); ctx.ellipse(c[0], c[1] + 4, 120, 34, 0, 0, TAU); ctx.fill(); });
+      if (k === 0) {                                          // batik fabric rolls
+        const cols = ['#b5368f', '#1c9bc4', '#d98f1e', '#2f9e6a', '#7a3fd0'];
+        [[-0.9, -0.1, 13, 30, 0], [-0.2, -0.95, 12, 26, 1], [0.15, 0.2, 14, 34, 2], [0.95, -0.5, 12, 28, 3], [-0.25, 0.85, 12, 24, 4]].sort((a, b) => (a[0] + a[1]) - (b[0] + b[1])).forEach(o => cyl(o[0], o[1], Z0, o[2], o[3], cols[o[4]], e));
+      } else if (k === 1) {                                   // steel brackets
+        const T = '#9fb3d6', Lf = '#6f84ad', Rt = '#52648a';
+        [[-1, -0.5], [-0.2, -0.5], [0.6, -0.5]].forEach(o => box(o[0], o[1], .7, .75, Z0, 18, T, Lf, Rt, e));
+        [[-0.6, -0.5], [0.2, -0.5]].forEach(o => { box(o[0], o[1], .7, .75, Z0 + 18, 18, T, Lf, Rt, e); const q = iso(o[0] + .35, o[1] + .37, Z0 + 36); ctx.fillStyle = '#26324f'; ctx.beginPath(); ctx.ellipse(q[0], q[1], 5, 2.5, 0, 0, TAU); ctx.fill(); });
+        const q2 = iso(-0.4, 0.5, Z0 + 12); box(-0.7, 0.3, .6, .6, Z0, 12, T, Lf, Rt, e);
+      } else if (k === 2) {                                   // LED panels (screens glow and shift)
+        [[-1, -0.1], [-0.25, -0.1], [0.5, -0.1]].forEach((o, i) => {
+          box(o[0], o[1], .62, .12, Z0, 46, '#1a2350', '#0b1230', '#0b1230', e);
+          const hue = (T * .05 + i * 70) % 360, g = ctx.createLinearGradient(0, 0, 0, 1);
+          const a = iso(o[0] + .04, o[1] + .12, Z0 + 42), b = iso(o[0] + .58, o[1] + .12, Z0 + 4);
+          const gr = ctx.createLinearGradient(a[0], a[1], b[0], b[1]); gr.addColorStop(0, 'hsl(' + hue + ',95%,62%)'); gr.addColorStop(1, 'hsl(' + (hue + 80) + ',95%,55%)');
+          glow('hsl(' + hue + ',95%,60%)', 14, () => poly([iso(o[0] + .04, o[1] + .12, Z0 + 4), iso(o[0] + .58, o[1] + .12, Z0 + 4), iso(o[0] + .58, o[1] + .12, Z0 + 42), iso(o[0] + .04, o[1] + .12, Z0 + 42)], gr));
+          void g;
+        });
+      } else {                                                // premium packaging with gold ribbon
+        const gold = '#ffd36e', T = '#5b3bb8', Lf = '#3d2788', Rt = '#2c1c66';
+        const gift = (gx, gy, w, d, z0, h) => {
+          box(gx, gy, w, d, z0, h, T, Lf, Rt, gold); const zt = z0 + h;
+          poly([iso(gx + w * .4, gy + d, z0), iso(gx + w * .6, gy + d, z0), iso(gx + w * .6, gy + d, zt), iso(gx + w * .4, gy + d, zt)], gold);
+          poly([iso(gx + w, gy + d * .4, z0), iso(gx + w, gy + d * .6, z0), iso(gx + w, gy + d * .6, zt), iso(gx + w, gy + d * .4, zt)], gold);
+          poly([iso(gx, gy + d * .4, zt), iso(gx + w, gy + d * .4, zt), iso(gx + w, gy + d * .6, zt), iso(gx, gy + d * .6, zt)], gold);
+          poly([iso(gx + w * .4, gy, zt), iso(gx + w * .6, gy, zt), iso(gx + w * .6, gy + d, zt), iso(gx + w * .4, gy + d, zt)], gold);
+        };
+        gift(-0.95, -0.5, .95, .95, Z0, 26); gift(0.2, -0.2, .75, .75, Z0, 20); gift(-0.8, -0.35, .62, .62, Z0 + 26, 16);
+        const sp = iso(0.55, 0.15, Z0 + 20 + 16 + Math.sin(T * .004) * 3); glow(gold, 12, () => { ctx.fillStyle = gold; ctx.beginPath(); for (let i = 0; i < 8; i++) { const r = i % 2 ? 3 : 8, a = i * Math.PI / 4 - Math.PI / 2; ctx.lineTo(sp[0] + Math.cos(a) * r, sp[1] + Math.sin(a) * r); } ctx.closePath(); ctx.fill(); });
+      }
+    }
+
     /* character: frontal chibi bust standing on an isometric pad */
     function pad(x, y, c) { const p = [[x, y - 17], [x + 54, y], [x, y + 17], [x - 54, y]]; glow(c, 18, () => poly(p, 'rgba(0,0,0,.25)', c, 2)); }
     function person(x, y, look, mood, talk, flip, lvlIdx, isYou, alpha) {
@@ -174,7 +224,7 @@
       ctx.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0);
       ctx.save();
       if (shake > 0) ctx.translate((Math.random() - .5) * shake, (Math.random() - .5) * shake);
-      background(); floor(); table();
+      background(); floor(); table(); goods();
       const npc = LOOKS[lvl % 4], youP = [330, 372], npcP = [630, 372];
       pad(youP[0], youP[1] + 8, pal.glow); pad(npcP[0] + cur.npcX, npcP[1] + 8, pal.pink);
       const na = v.ended === 'npcwalk' ? Math.max(0, 1 - cur.npcX / 160) : 1, ya = v.ended === 'walk' ? Math.max(0, 1 - Math.abs(cur.youX) / 160) : 1;

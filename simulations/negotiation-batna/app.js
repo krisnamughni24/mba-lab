@@ -69,7 +69,7 @@ MBALAB.sims.define('negotiation-batna', {
     function openLevel(i) {
       clearTimers(); hideBubbles();
       idx = i; gs = N.create(i); busy = false;
-      $('#nbSelect').hidden = true; $('#nbPlay').hidden = false; $('#nbRes').hidden = true; $('#nbCtl').hidden = false;
+      $('#nbSelect').hidden = true; $('#nbPlay').hidden = false; $('#nbMissions').hidden = false; $('#nbRes').hidden = true; $('#nbCtl').hidden = false;
       const r = $('#nbRange'); r.max = gs.L.open; r.value = Math.round(gs.L.batna * .72);
       scene.setLevel(i);
       scene.set({ ask: gs.ask, you: +r.value, pat: 1, maxPat: gs.L.pat, mood: 'neutral', hist: [], batna: gs.L.batna, r: null, zone: null, ended: null, snap: true });
@@ -149,7 +149,7 @@ MBALAB.sims.define('negotiation-batna', {
       const b = e.target.closest('button[data-a]'); if (!b) return; sfx('click');
       if (b.dataset.a === 'again') openLevel(idx); else if (b.dataset.a === 'next') openLevel(idx + 1); else toSelect();
     });
-    function toSelect() { clearTimers(); hideBubbles(); gs = null; $('#nbPlay').hidden = true; $('#nbSelect').hidden = false; cards(); scene.stop(); }
+    function toSelect() { clearTimers(); $('#nbMissions').hidden = true; hideBubbles(); gs = null; $('#nbPlay').hidden = true; $('#nbSelect').hidden = false; cards(); scene.stop(); }
 
     /* ---------- loop control ---------- */
     function loop() { if (visible && gs && !still() && !document.hidden) scene.start(); else if (scene.running) scene.stop(); else scene.draw(); }
@@ -158,10 +158,41 @@ MBALAB.sims.define('negotiation-batna', {
     function fit() { const w = cv.clientWidth || 960, d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(w * 9 / 16 * d); scene.draw(); }
     if (window.ResizeObserver) new ResizeObserver(fit).observe($('#nbStage')); else window.addEventListener('resize', fit);
 
+    /* ---------- info dialog (mission + how to play), always reachable ---------- */
+    const guide = $('#nbGuide'); let guideSeen = false;
+    function showGuide() {
+      const cur = gs ? `<p class="gtip"><b>🎯 ${t('gdNow')}: ${t('n' + idx + 'name')}</b><br>${t('scn' + idx)}<br>${t('brBatna', { n: gs.L.batna })}<br>${t('brRounds', { n: gs.L.rounds })}</p>` : '';
+      guide.innerHTML = `<div class="gd" role="dialog" aria-modal="true" aria-labelledby="nbGdT"><button type="button" class="gx" data-gclose aria-label="${t('close')}">✕</button>
+        <div class="gk">${t('gdMission')}</div><h3 id="nbGdT">${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>${cur}
+        <p class="gtip"><b>💡 ${t('tipLbl')}:</b> ${t('gdTip')}</p><button type="button" class="nb-main" data-gclose>${t('gotIt')}</button></div>`;
+      guide.hidden = false; guideSeen = true; sfx('open');
+      const b = guide.querySelector('.nb-main'); b && b.focus({ preventScroll: true });
+    }
+    const closeGuide = () => { if (guide.hidden) return; guide.hidden = true; sfx('close'); };
+    guide.addEventListener('click', e => { if (e.target === guide || e.target.closest('[data-gclose]')) closeGuide(); });
+    host.addEventListener('keydown', e => { if (e.key === 'Escape' && !guide.hidden) { closeGuide(); e.stopPropagation(); } });
+    $('#nbInfo').addEventListener('click', () => { guide.hidden ? showGuide() : closeGuide(); });
+    $('#nbMissions').addEventListener('click', () => { sfx('click'); toSelect(); });
+
+    /* ---------- assistant Bit (always present, like in SMART Decision Studio) ---------- */
+    function hints() {
+      if (!gs) return { state: [], generic: ['nbt_s1', 'nbt_s2'] };
+      if (!$('#nbBrief').hidden) return { state: ['nbt_brief'], generic: ['nbt_p1'] };
+      if (gs.over) return { state: ['nbt_end'], generic: ['nbt_end'] };
+      const st = [];
+      if (!gs.hist.length) st.push('nbt_first');
+      if (gs.pat / gs.L.pat <= .4) st.push('nbt_lowpat');
+      if (idx === 3 && gs.round >= 3) st.push('nbt_nozopa');
+      st.push(gs.ask > gs.L.batna ? 'nbt_over' : 'nbt_in');
+      if (!gs.probed) st.push('nbt_probe');
+      return { state: st, generic: ['nbt_p1', 'nbt_p2', 'nbt_p3'] };
+    }
+    if (window.SmartAssistant) SmartAssistant.create(host, { root: $('#nb'), hints, busy: () => !guide.hidden });
+
     cards();
-    this._nb = { fit, loop, cards, hud, scene, setVisible(v) { visible = v; loop(); }, relabel() { cards(); if (gs) { hud(); } } };
+    this._nb = { first() { if (!guideSeen) showGuide(); }, fit, loop, cards, hud, scene, setVisible(v) { visible = v; loop(); }, relabel() { cards(); if (gs) hud(); if (!guide.hidden) showGuide(); } };
   },
-  onShow() { const m = this._nb; if (!m) return; m.scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
+  onShow() { const m = this._nb; if (!m) return; m.scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); m.first(); },
   onHide() { const m = this._nb; if (m) m.setVisible(false); },
   onLang() { const m = this._nb; if (m) m.relabel(); },
   onTheme(day) { const m = this._nb; if (m) m.scene.setTheme(day); }
