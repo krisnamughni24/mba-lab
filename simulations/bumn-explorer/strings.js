@@ -5,7 +5,7 @@
   const SEC = {
     energy: ['Energy & utilities', 'Energi & utilitas', 'エネルギー・公益', '能源与公用事业'],
     telecom: ['Telecom & digital', 'Telekomunikasi & digital', '通信・デジタル', '电信与数字'],
-    banking: ['Banking', 'Perbankan', '銀行', '银行'],
+    banking: ['Banking & finance', 'Perbankan & keuangan', '銀行・金融', '银行与金融'],
     transport: ['Transport & logistics', 'Transportasi & logistik', '運輸・物流', '交通与物流'],
     industry: ['Heavy industry', 'Industri berat', '重工業', '重工业'],
     resources: ['Mining', 'Pertambangan', '鉱業', '矿业'],
