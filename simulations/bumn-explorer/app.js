@@ -35,10 +35,12 @@ MBALAB.sims.define('bumn-explorer', {
     function card() {
       const c = $('#bmCard');
       if (mode !== 'explore' || !sel) { c.hidden = true; return; }
-      const b = E.byId[sel];
+      const b = E.byId[sel], I = E.INFO && E.INFO[sel], li = ['en', 'id', 'ja', 'zh'].indexOf(MBALAB.i18n.get());
+      const meta = I ? `<div class="bm-meta"><span>🗓 ${T('since', { y: I.since })}</span><span>📍 ${I.hq}</span></div>` : '';
+      const facts = I ? `<h4>${T('factT')}</h4><ul class="bm-facts">` + I.f.map((f, i) => `<li><span>${['📜', '📊', '💡'][i]}</span><div>${f[li < 0 ? 0 : li]}</div></li>`).join('') + '</ul>' : '';
       c.innerHTML = `<button type="button" class="bm-x" data-x aria-label="${T('close')}">✕</button>
         <div class="bm-sec" style="--c:${col(sel)}"><i></i>${secName(sel)}</div>
-        <h3><span>${b.icon}</span> ${b.n}</h3><p>${t('bm_d_' + sel)}</p>
+        <h3><span>${b.icon}</span> ${b.n}</h3>${meta}<p>${t('bm_d_' + sel)}</p>${facts}
         <div class="bm-vis">✓ ${T('visited')}</div><div class="bm-foot">${T('foot')}</div>`;
       c.hidden = false;
       $('#bmSr').textContent = b.n + '. ' + t('bm_d_' + sel);

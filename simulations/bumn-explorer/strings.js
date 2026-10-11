@@ -129,6 +129,7 @@
     hint3d: ['Drag to move, scroll or pinch to zoom, right-drag or two fingers to rotate. Tap a building to focus on it.', 'Geser untuk bergerak, gulir atau cubit untuk zoom, seret klik kanan atau dua jari untuk memutar. Ketuk bangunan untuk memfokuskannya.', 'ドラッグで移動、スクロールまたはピンチでズーム、右ドラッグか2本指で回転。建物をタップするとフォーカスします。', '拖动移动，滚轮或双指捏合缩放，右键拖动或双指旋转。点击建筑可聚焦。'],
     gTitle: ['BUMN Explorer', 'Jelajah BUMN', 'BUMNエクスプローラー', '印尼国企探索 BUMN'],
     backT: ['← Home', '← Beranda', '← ホーム', '← 首页'], listBtn: ['Companies', 'Daftar', '企業一覧', '公司列表'],
+    since: ['Since {y}', 'Sejak {y}', '{y}年〜', '始于 {y}'], factT: ['Key facts', 'Fakta penting', '注目ポイント', '关键事实'],
     modeExp: ['Explore', 'Jelajah', '探索', '探索'], modeQz: ['Quiz', 'Kuis', 'クイズ', '测验'],
     prog: ['Explored {n}/{m}', 'Dijelajahi {n}/{m}', '探索済み {n}/{m}', '已探索 {n}/{m}'],
     all: ['All', 'Semua', 'すべて', '全部'],

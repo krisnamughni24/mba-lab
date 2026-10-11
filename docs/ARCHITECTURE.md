@@ -41,6 +41,7 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | BUMN Explorer: companies, world positions (x/z/radius), sectors, quiz logic | `simulations/bumn-explorer/engine.js` (testable in node) |
 | BUMN Explorer: company descriptions and UI texts (4 languages) | `simulations/bumn-explorer/strings.js` |
 | BUMN Explorer: 3D engine (shared kit, camera orbit/zoom, fade, picking, theme) | `simulations/bumn-explorer/scene.js` |
+| BUMN Explorer: per-company facts (founding year, HQ, history, scale, insight; 4 languages) | `simulations/bumn-explorer/facts.js` |
 | BUMN Explorer: terrain and infrastructure (sea, mountains, city, highway, rail, river, runway, forest) | `simulations/bumn-explorer/world.js` |
 | BUMN Explorer: one 3D builder per company (port, offshore platform, power plant, mine, ...) | `simulations/bumn-explorer/buildings.js` |
 | 3D city | `features/scene/scene.js` |

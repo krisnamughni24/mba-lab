@@ -152,3 +152,13 @@ body.mapfull #app{padding-top:0}
 .bm.full .bm-reset{right:12px;bottom:16px}
 .bm.full .bm-box{width:min(580px,calc(100% - 160px))}
 @media(max-width:760px){.bm.full .bm-reset{top:156px;bottom:auto;right:8px}.bm.full .bm-tools{top:208px}.bm.full .bm-box{width:calc(100% - 16px)}}
+
+.bm-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.bm-meta span{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;border:1px solid var(--edge);background:var(--btn-bg);color:var(--txt2)}
+.bm-card h4{margin:10px 0 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--cy)}
+.bm-facts{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:7px}
+.bm-facts li{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.45;padding:8px 10px;border-radius:10px;border:1px solid var(--edge);background:var(--btn-bg)}
+.bm-facts li:nth-child(3){border-color:var(--am)}
+.bm-facts li>span{font-size:15px;line-height:1.2}
+.bm.full .bm-card{width:min(380px,calc(100% - 24px))}
+@media(max-width:760px){.bm.full .bm-card{width:auto;max-height:46%}}
