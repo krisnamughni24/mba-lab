@@ -24,6 +24,10 @@ MBALAB.sims.define('negotiation-batna', {
         <span class="nb-av" aria-hidden="true">${AV[i]}</span>
         <span class="nb-ct"><b>${t('lvN', { n: i + 1 })} · ${t('n' + i + 'name')}</b><i>${t('tag' + i)}</i><small>${t('scn' + i)}</small></span>
         <span class="nb-cs" aria-label="${t('stars', { n: best[i] })}">${starsTxt(best[i])}</span></button>`).join('');
+      how();
+    }
+    function how() {
+      $('#nbHow').innerHTML = `<h3>${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol><p class="nb-hn">💡 ${t('gdTip2')}</p>`;
     }
     $('#nbCards').addEventListener('click', e => { const b = e.target.closest('.nb-card'); if (b) { sfx('open'); openLevel(+b.dataset.i); } });
 
@@ -159,13 +163,13 @@ MBALAB.sims.define('negotiation-batna', {
     if (window.ResizeObserver) new ResizeObserver(fit).observe($('#nbStage')); else window.addEventListener('resize', fit);
 
     /* ---------- info dialog (mission + how to play), always reachable ---------- */
-    const guide = $('#nbGuide'); let guideSeen = false;
+    const guide = $('#nbGuide'); 
     function showGuide() {
       const cur = gs ? `<p class="gtip"><b>🎯 ${t('gdNow')}: ${t('n' + idx + 'name')}</b><br>${t('scn' + idx)}<br>${t('brBatna', { n: gs.L.batna })}<br>${t('brRounds', { n: gs.L.rounds })}</p>` : '';
       guide.innerHTML = `<div class="gd" role="dialog" aria-modal="true" aria-labelledby="nbGdT"><button type="button" class="gx" data-gclose aria-label="${t('close')}">✕</button>
-        <div class="gk">${t('gdMission')}</div><h3 id="nbGdT">${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>${cur}
+        <h3 id="nbGdT">${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>${cur}
         <p class="gtip"><b>💡 ${t('tipLbl')}:</b> ${t('gdTip')}</p><button type="button" class="nb-main" data-gclose>${t('gotIt')}</button></div>`;
-      guide.hidden = false; guideSeen = true; sfx('open');
+      guide.hidden = false; sfx('open');
       const b = guide.querySelector('.nb-main'); b && b.focus({ preventScroll: true });
     }
     const closeGuide = () => { if (guide.hidden) return; guide.hidden = true; sfx('close'); };
@@ -190,9 +194,9 @@ MBALAB.sims.define('negotiation-batna', {
     if (window.SmartAssistant) SmartAssistant.create(host, { root: $('#nb'), hints, busy: () => !guide.hidden });
 
     cards();
-    this._nb = { first() { if (!guideSeen) showGuide(); }, fit, loop, cards, hud, scene, setVisible(v) { visible = v; loop(); }, relabel() { cards(); if (gs) hud(); if (!guide.hidden) showGuide(); } };
+    this._nb = { fit, loop, cards, hud, scene, setVisible(v) { visible = v; loop(); }, relabel() { cards(); if (gs) hud(); if (!guide.hidden) showGuide(); } };
   },
-  onShow() { const m = this._nb; if (!m) return; m.scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); m.first(); },
+  onShow() { const m = this._nb; if (!m) return; m.scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
   onHide() { const m = this._nb; if (m) m.setVisible(false); },
   onLang() { const m = this._nb; if (m) m.relabel(); },
   onTheme(day) { const m = this._nb; if (m) m.scene.setTheme(day); }
