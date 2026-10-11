@@ -38,6 +38,9 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | Negotiation & BATNA: dialogue and lessons | `simulations/negotiation-batna/strings.js` |
 | DISC Crisis Room: crises, options and style texts (4 languages) | `simulations/disc-crisis-room/strings.js` |
 | DISC Crisis Room: scoring rules | `simulations/disc-crisis-room/engine.js` (testable in node) |
+| BUMN Explorer: companies, grid positions, sectors, quiz logic | `simulations/bumn-explorer/engine.js` (testable in node) |
+| BUMN Explorer: company descriptions and UI texts (4 languages) | `simulations/bumn-explorer/strings.js` |
+| BUMN Explorer: isometric canvas map | `simulations/bumn-explorer/scene.js` |
 | 3D city | `features/scene/scene.js` |
 | Remove a feature | delete its line in `data/features.js` |
 

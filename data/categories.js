@@ -46,6 +46,15 @@ MBALAB.data.categories = [
     }
   },
   {
+    "id": "indonesia-business",
+    "name": {
+      "en": "Indonesian business landscape",
+      "id": "Lanskap bisnis Indonesia",
+      "ja": "インドネシアのビジネス環境",
+      "zh": "印尼商业格局"
+    }
+  },
+  {
     "id": "leadership",
     "name": {
       "en": "Leadership & organizational behavior",

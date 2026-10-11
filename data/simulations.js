@@ -63,6 +63,27 @@ MBALAB.data.simulations = [
     ]
   },
   {
+    "id": "bumn-explorer",
+    "status": "live",
+    "icon": "🏙️",
+    "category": "indonesia-business",
+    "name": {
+      "en": "BUMN Explorer",
+      "id": "Jelajah BUMN",
+      "ja": "BUMNエクスプローラー",
+      "zh": "印尼国企探索 BUMN"
+    },
+    "description": {
+      "en": "Explore Indonesia's state-owned companies on an isometric map, then take the quiz.",
+      "id": "Jelajahi BUMN Indonesia di peta isometrik, lalu uji lewat kuis.",
+      "ja": "インドネシアの国有企業をアイソメトリックマップで探索し、クイズに挑戦。",
+      "zh": "在等距地图上探索印尼国有企业，再来一场测验。"
+    },
+    "path": "simulations/bumn-explorer/",
+    "scripts": ["strings.js", "template.js", "engine.js", "scene.js", "../smart-decision-studio/assistant.js", "app.js"],
+    "styles": ["../smart-decision-studio/style.css", "style.css"]
+  },
+  {
     "id": "break-even-analysis",
     "status": "soon",
     "icon": "📈",
