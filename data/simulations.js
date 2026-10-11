@@ -32,6 +32,37 @@ MBALAB.data.simulations = [
     ]
   },
   {
+    "id": "disc-crisis-room",
+    "status": "live",
+    "icon": "🎭",
+    "category": "leadership",
+    "name": {
+      "en": "DISC Crisis Room",
+      "id": "DISC Crisis Room",
+      "ja": "DISC Crisis Room",
+      "zh": "DISC Crisis Room"
+    },
+    "description": {
+      "en": "Lead a team through six crises. Your choices reveal your DISC style.",
+      "id": "Pimpin tim melewati enam krisis. Pilihan Anda mengungkap gaya DISC Anda.",
+      "ja": "6つの危機でチームを率いる。選択からあなたのDISCスタイルが見えてくる。",
+      "zh": "带领团队度过六场危机，你的选择将揭示你的 DISC 风格。"
+    },
+    "path": "simulations/disc-crisis-room/",
+    "scripts": [
+      "strings.js",
+      "template.js",
+      "engine.js",
+      "scene.js",
+      "../smart-decision-studio/assistant.js",
+      "app.js"
+    ],
+    "styles": [
+      "../smart-decision-studio/style.css",
+      "style.css"
+    ]
+  },
+  {
     "id": "break-even-analysis",
     "status": "soon",
     "icon": "📈",

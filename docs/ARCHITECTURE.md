@@ -36,6 +36,8 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | Negotiation & BATNA: levels, NPC rules, scoring | `simulations/negotiation-batna/engine.js` (`LEVELS`; pure logic, testable in node) |
 | Negotiation & BATNA: isometric neon scene | `simulations/negotiation-batna/scene.js` (canvas; palette `PAL.night` / `PAL.day`) |
 | Negotiation & BATNA: dialogue and lessons | `simulations/negotiation-batna/strings.js` |
+| DISC Crisis Room: crises, options and style texts (4 languages) | `simulations/disc-crisis-room/strings.js` |
+| DISC Crisis Room: scoring rules | `simulations/disc-crisis-room/engine.js` (testable in node) |
 | 3D city | `features/scene/scene.js` |
 | Remove a feature | delete its line in `data/features.js` |
 
