@@ -1,7 +1,7 @@
 /* Life 40: UI wiring. Rules live in engine.js, events in events.js. */
 MBALAB.sims.define('life-40', {
   mount(host) {
-    const L = MBALAB.life, EV = MBALAB.lifeEvents, $ = s => host.querySelector(s), root = $('#lf');
+    const L = MBALAB.life, EV = MBALAB.lifeEvents, Sc = MBALAB.lifeScene, $ = s => host.querySelector(s), root = $('#lf');
     const KEY = 'mbalab-lf-best', BGS = ['rich', 'normal', 'poor'], LVS = ['easy', 'medium', 'hard'], ICON = { rich: '👑', normal: '🏠', poor: '🌱' };
     let best = {};
     try { const b = JSON.parse(localStorage.getItem(KEY) || '{}'); if (b && typeof b === 'object') best = b; } catch (e) {}
@@ -38,7 +38,7 @@ MBALAB.sims.define('life-40', {
     function selectScreen() {
       $('#lfLives').innerHTML = BGS.map(b => {
         const B = L.BG[b], sav = B.assets.cash + B.assets.dep + B.assets.fund + B.assets.gold, d = B.debts.reduce((a, x) => a + x.bal, 0);
-        return `<div class="lf-life" data-bg="${b}"><div class="lf-lh"><span class="lf-ic" aria-hidden="true">${ICON[b]}</span><div><b>${esc(t('bg_' + b))}</b><small>${esc(t('bgd_' + b))}</small></div></div>
+        return `<div class="lf-life" data-bg="${b}"><div class="lf-prev">${Sc.svg(L.create(b, 'medium', 1), { aria: t('bg_' + b) })}</div><div class="lf-lh"><span class="lf-ic" aria-hidden="true">${ICON[b]}</span><div><b>${esc(t('bg_' + b))}</b><small>${esc(t('bgd_' + b))}</small></div></div>
           <p class="lf-st">${esc(t('bgStart', { sal: fmt(B.salary), sav: fmt(sav) }))}${d ? ' · ' + esc(t('bgDebt', { debt: fmt(d) })) : ''}</p>
           <div class="lf-lvs">${LVS.map(l => `<button type="button" class="lf-lv ${l}" data-bg="${b}" data-lv="${l}"><b>${esc(t('lv_' + l))}</b><span class="s" aria-label="${esc(t('stars', { n: best[b + '-' + l] || 0 }))}">${stars(best[b + '-' + l] || 0)}</span><small>${esc(t('lvd_' + l))}</small></button>`).join('')}</div></div>`;
       }).join('');
@@ -73,7 +73,7 @@ MBALAB.sims.define('life-40', {
       return '<div class="lf-fx">' + mergeFx(fx).map(([k, v]) => {
         const good = (k === 'debt' || k === 'house' && false) ? v < 0 : v > 0;
         const txt = k === 'salary' ? (v > 0 ? '+' : '−') + Math.round(Math.abs(v) * 100) + '%' : k === 'joy' ? (v > 0 ? '+' : '−') + Math.abs(v).toFixed(1) : (v > 0 ? '+' : '') + fmt(v);
-        return `<span class="fx ${good ? 'up' : 'dn'}">${esc(t('fx_' + k))} ${esc(txt)}</span>`;
+        return `<span class="fx ${good ? 'lf-up' : 'lf-dn'}">${esc(t('fx_' + k))} ${esc(txt)}</span>`;
       }).join('') + '</div>';
     }
     const I18NK = () => ({ ev_promo_r_win: 1, ev_promo_r_lose: 1, ev_offer_r_win: 1, ev_offer_r_lose: 1, ev_study_r_win: 1, ev_house_r_win: 1 });
@@ -98,26 +98,42 @@ MBALAB.sims.define('life-40', {
           <label class="lf-chk"><input type="checkbox" id="lfExtra"${G.extra ? ' checked' : ''}> ${esc(t('pl_extra'))}</label>
           <p class="lf-sub sm">${esc(t('pl_note'))}</p></div>`;
     }
+    const WX = { bull: '☀️', normal: '🌤️', bear: '☁️', crisis: '⛈️' };
+    function scene() {
+      const S = G, w = S.y > 0 ? S.W[S.y - 1] : null, st = S.age < 30 ? 0 : S.age < 40 ? 1 : S.age < 50 ? 2 : S.age < 58 ? 3 : 4;
+      $('#lfScene').innerHTML = `<div class="lf-sov"><b>${esc(t('ageLbl', { age: Math.min(S.age, L.END) }))}</b><span>${esc(t('st_' + st))}</span></div>${w ? `<div class="lf-wx">${WX[w.reg]} ${esc(t('reg_' + w.reg))}</div>` : ''}` +
+        Sc.svg(S, { aria: t('sceneAria', { age: Math.min(S.age, L.END) }), debt: d => '💳 −' + fmt(d) }) + Sc.timeline(log, S, x => t('ev_' + x.id));
+    }
+    function bars(r) {
+      const it = [['fx_fund', r.fund], ['fx_gold', r.gold], ['a_dep', r.dep], ['infLbl', -r.infl]];
+      return '<div class="lf-rb">' + it.map(([k, v]) => { const w = Math.min(50, Math.abs(v) / 0.4 * 50).toFixed(0), neg = v < 0; return `<div class="rb"><span>${esc(t(k))}</span><div class="bar"><i class="${neg ? 'lf-dn' : 'lf-up'}" style="${neg ? 'right:50%' : 'left:50%'};width:${w}%"></i></div><b class="${neg ? 'lf-dn' : 'lf-up'}">${k === 'infLbl' ? '+' + pct(-v) : (v > 0 ? '+' : '') + pct(v)}%</b></div>`; }).join('') + '</div>';
+    }
+    function burst(fx) {
+      const m = {}; (fx || []).forEach(([k, v]) => { m[k] = (m[k] || 0) + v; });
+      const up = (m.cash > 0.5) || (m.salary > 0) || (m.joy > 0), dn = (m.cash < -0.5) || (m.salary < 0) || (m.joy < 0) || (m.debt > 0.5);
+      const e = up && !dn ? '🪙' : dn && !up ? '💸' : '✨';
+      return '<div class="lf-burst" aria-hidden="true">' + [0, 1, 2, 3, 4, 5].map(i => `<span style="left:${8 + i * 16}%;animation-delay:${i * 0.09}s">${e}</span>`).join('') + '</div>';
+    }
     function stage() {
       let h = '';
       if (phase === 'ready') {
         h = `<div class="lf-card"><h3>${esc(t('ageLbl', { age: G.age }))}</h3><p class="lf-sub">${esc(t('quiet'))}</p><button type="button" class="lf-main" id="lfBegin">${esc(t('btnBegin', { age: G.age }))}</button></div>`;
       } else if (phase === 'cards' && cur) {
         if (cur.kind === 'later') {
-          h = `<div class="lf-card later"><span class="lf-k">${esc(t('later'))}</span><h3>${esc(t('lt_' + cur.l.key))}</h3>${fxChips(cur.l.fx)}${cur.l.tag ? `<p class="lf-res ${cur.l.tag}">${esc(t('res_' + cur.l.tag))}</p>` : ''}<button type="button" class="lf-main" id="lfNext">${esc(t('btnNext'))}</button></div>`;
+          h = `<div class="lf-card later">${Sc.banner(cur.l.key)}${burst(cur.l.fx)}<span class="lf-k">${esc(t('later'))}</span><h3>${esc(t('lt_' + cur.l.key))}</h3>${fxChips(cur.l.fx)}${cur.l.tag ? `<p class="lf-res ${cur.l.tag}">${esc(t('res_' + cur.l.tag))}</p>` : ''}<button type="button" class="lf-main" id="lfNext">${esc(t('btnNext'))}</button></div>`;
         } else {
           const e = cur.e, p = e.p(G);
           if (!shown) {
-            h = `<div class="lf-card ev"><span class="lf-k">${esc(t('evT'))}</span><h3>${esc(evT(e, '', p))}</h3><p>${esc(evT(e, 'd', p))}</p>${G.D.hint ? `<p class="lf-hint">💡 <b>${esc(t('hintLbl'))}:</b> ${esc(evT(e, 'h', p))}</p>` : ''}
+            h = `<div class="lf-card ev">${Sc.banner(e.id)}<span class="lf-k">${esc(t('evT'))}</span><h3>${esc(evT(e, '', p))}</h3><p>${esc(evT(e, 'd', p))}</p>${G.D.hint ? `<p class="lf-hint">💡 <b>${esc(t('hintLbl'))}:</b> ${esc(evT(e, 'h', p))}</p>` : ''}
               <div class="lf-opts">${e.opts.map((o, i) => { const ok = L.can(G, e, i); return `<button type="button" class="lf-opt" data-o="${i}"${ok ? '' : ' disabled'}>${esc(evT(e, o.id, p))}${ok ? '' : `<small>${esc(t('disabled'))}</small>`}</button>`; }).join('')}</div></div>`;
           } else {
             const tagk = shown.tag ? (('ev_' + e.id + '_r_' + shown.tag) in I18NK() ? 'ev_' + e.id + '_r_' + shown.tag : 'res_' + shown.tag) : null;
-            h = `<div class="lf-card ev done"><span class="lf-k">${esc(t('evT'))}</span><h3>${esc(evT(e, '', p0(e)))}</h3><p class="lf-pick">▶ ${esc(shownLabel(e))}</p>${fxChips(shown.fx)}${tagk ? `<p class="lf-res ${shown.tag}">${esc(t(tagk))}</p>` : ''}<button type="button" class="lf-main" id="lfNext">${esc(t('btnNext'))}</button></div>`;
+            h = `<div class="lf-card ev done">${Sc.banner(e.id)}${burst(shown.fx)}<span class="lf-k">${esc(t('evT'))}</span><h3>${esc(evT(e, '', p0(e)))}</h3><p class="lf-pick">▶ ${esc(shownLabel(e))}</p>${fxChips(shown.fx)}${tagk ? `<p class="lf-res ${shown.tag}">${esc(t(tagk))}</p>` : ''}<button type="button" class="lf-main" id="lfNext">${esc(t('btnNext'))}</button></div>`;
           }
         }
       } else if (phase === 'summary' && row) {
-        h = `<div class="lf-card sum"><span class="lf-k">${esc(t('ysT'))} · ${esc(t('ageLbl', { age: row.age }))}</span><h3 class="reg ${row.reg}">${esc(t('reg_' + row.reg))}</h3>
-          <p>${esc(t('ysMarket', { f: pct(row.fund), g: pct(row.gold), d: pct(row.dep), i: pct(row.infl) }))}</p>
+        h = `<div class="lf-card sum"><span class="lf-k">${esc(t('ysT'))} · ${esc(t('ageLbl', { age: row.age }))}</span><div class="lf-ban wx" aria-hidden="true"><span>${WX[row.reg]}</span></div><h3 class="reg ${row.reg}">${esc(t('reg_' + row.reg))}</h3>
+          ${bars(row)}
           <p>${esc(t('ysFlow', { inc: fmt(row.income), sp: fmt(row.spend), fr: fmt(row.free) }))}</p>
           ${row.short ? `<p class="lf-bad">${esc(t('ysShort', { n: fmt(row.short) }))}</p>` : `<p>${esc(t('ysSaved', { sv: fmt(row.saved || 0), lk: fmt(row.leak || 0) }))}</p>`}
           <p class="lf-strong">${esc(t('ysReal', { a: fmt(row.nwAfter), b: fmt(row.nwBefore) }))}</p>
@@ -130,7 +146,7 @@ MBALAB.sims.define('life-40', {
 
     function render() {
       if (phase === 'result') return results();
-      hud(); side(); stage();
+      hud(); scene(); side(); stage();
       $('#lfChart').innerHTML = `<h3>${esc(t('chartT'))}</h3>${chart([{ d: G.hist.map(h => h.nw), c: 'c-n' }, { d: G.hist.map(h => h.real), c: 'c-r' }], t('chartT'))}${legend([{ c: 'c-n', t: t('lgNom') }, { c: 'c-r', t: t('lgReal') }])}`;
     }
 
@@ -139,7 +155,7 @@ MBALAB.sims.define('life-40', {
       res = res || L.result(G);
       if (!wise) wise = L.wisePlay(bg, lv, seed);
       const r = res, k = bg + '-' + lv; if ((best[k] || 0) < r.stars) { best[k] = r.stars; saveBest(); }
-      hud(); side();
+      hud(); scene(); side();
       const has = (id, o) => log.some(x => x.id === id && x.opt === o), I = [];
       if (G.flags.pinjol || log.some(x => x.id === 'bill' && x.opt === 'b')) I.push('rd_pinjol');
       if (has('crash', 'a')) I.push('rd_panic');

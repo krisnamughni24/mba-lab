@@ -101,7 +101,7 @@ MBALAB.data.simulations = [
       "zh": "以富裕、普通或贫寒的出身，从 22 岁活到 62 岁。在裁员、暴跌和骗局中储蓄、借贷、投资，看货币时间价值如何起作用。"
     },
     "path": "simulations/life-40/",
-    "scripts": ["strings.js", "template.js", "engine.js", "events.js", "app.js"],
+    "scripts": ["strings.js", "template.js", "engine.js", "events.js", "scene.js", "app.js"],
     "styles": ["../smart-decision-studio/style.css", "style.css"]
   },
   {

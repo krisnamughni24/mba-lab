@@ -15,6 +15,7 @@ MBALAB.sims.define('life-40', {
     </section>
     <section class="lf-play" id="lfPlay" hidden>
       <div class="lf-hud" id="lfHud"></div>
+      <div class="lf-scene" id="lfScene"></div>
       <div class="lf-grid">
         <div class="lf-stage" id="lfStage"></div>
         <aside class="lf-side" id="lfSide"></aside>

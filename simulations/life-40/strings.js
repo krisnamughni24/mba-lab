@@ -1,6 +1,8 @@
 /* Life 40: texts. Each key lists [en, id, ja, zh]. Event keys: ev_<id> (title), ev_<id>_d (story), ev_<id>_h (hint), ev_<id>_<option>. */
 (() => {
   const K = {
+    st_0: ['Fresh start', 'Awal karier', 'キャリアの出発点', '职场起步'], st_1: ['Building', 'Membangun', '土台づくり', '打基础'], st_2: ['Prime years', 'Masa produktif', '働き盛り', '黄金年华'], st_3: ['Peak and prepare', 'Puncak dan persiapan', 'ピークと備え', '巅峰与准备'], st_4: ['Nearing retirement', 'Menjelang pensiun', '退職間近', '临近退休'],
+    infLbl: ['Inflation', 'Inflasi', 'インフレ', '通胀'], sceneAria: ['Your life at age {age}', 'Kehidupan Anda di usia {age}', '{age}歳のあなたの暮らし', '你 {age} 岁时的生活'],
     lfBack: ['← Home', '← Beranda', '← ホーム', '← 首页'],
     lfTitle: ['Life 40: Money Over Time', 'Hidup 40 Tahun: Uang dan Waktu', 'ライフ40：お金と時間', '人生40年：金钱与时间'],
     lfPick: ['Choose your life', 'Pilih kehidupan Anda', '人生を選ぶ', '选择你的人生'],
