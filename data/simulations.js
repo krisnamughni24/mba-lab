@@ -84,6 +84,27 @@ MBALAB.data.simulations = [
     "styles": ["../smart-decision-studio/style.css", "style.css"]
   },
   {
+    "id": "life-40",
+    "status": "live",
+    "icon": "⏳",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Life 40: Money Over Time",
+      "id": "Hidup 40 Tahun: Uang dan Waktu",
+      "ja": "ライフ40：お金と時間",
+      "zh": "人生40年：金钱与时间"
+    },
+    "description": {
+      "en": "Live from 22 to 62 as rich, middle or poor. Save, borrow and invest through layoffs, crashes and scams, and see how time value of money plays out.",
+      "id": "Jalani usia 22 sampai 62 sebagai orang kaya, biasa, atau miskin. Menabung, berutang, dan berinvestasi melewati PHK, krisis, dan penipuan, lalu lihat nilai waktu uang bekerja.",
+      "ja": "22歳から62歳まで、裕福・普通・貧しい家庭で生きる。解雇・暴落・詐欺の中で貯蓄・借入・投資をし、お金の時間価値を体感。",
+      "zh": "以富裕、普通或贫寒的出身，从 22 岁活到 62 岁。在裁员、暴跌和骗局中储蓄、借贷、投资，看货币时间价值如何起作用。"
+    },
+    "path": "simulations/life-40/",
+    "scripts": ["strings.js", "template.js", "engine.js", "events.js", "app.js"],
+    "styles": ["../smart-decision-studio/style.css", "style.css"]
+  },
+  {
     "id": "break-even-analysis",
     "status": "soon",
     "icon": "📈",

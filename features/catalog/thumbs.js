@@ -1,5 +1,10 @@
 /* Catalog thumbnails: one small inline SVG per simulation that pictures what it is about.
-   MBALAB.thumbs[simulationId] = SVG markup. Classes (styled in catalog.css): a b c d = cyan / magenta / amber / green strokes,
+   T['life-40'] = S(
+    axes + [8, 11, 15, 21, 29, 40, 56].map((h, i) => '<rect class="fa" x="' + (30 + i * 21) + '" y="' + (86 - h) + '" width="14" height="' + h + '" rx="3" opacity=".55"/>').join('') +
+    '<path class="c" d="M34 76Q90 74 120 58T178 14"/><circle class="fc" cx="178" cy="14" r="6"/><circle class="fc" cx="120" cy="58" r="4"/>' +
+    '<circle class="b" cx="34" cy="20" r="9"/><path class="b" d="M34 14v6l4 3"/>');
+
+  MBALAB.thumbs[simulationId] = SVG markup. Classes (styled in catalog.css): a b c d = cyan / magenta / amber / green strokes,
    fa fb fc fd = the same colours as fills, g / fg = muted stroke / fill, tk = dark text on a coloured fill.
    A simulation without an entry falls back to its emoji icon. To give a new simulation a picture, add a line here (or set "thumb" in data/simulations.js). */
 (function () {
