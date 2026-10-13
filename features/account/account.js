@@ -48,7 +48,7 @@ MBALAB.feature('account', () => {
     const who = '<div class="acct-who">' + (u.avatar ? '<img alt="" referrerpolicy="no-referrer" src="' + esc(u.avatar) + '">' : '<div class="acct-ph">👤</div>') +
       '<div><small>' + esc(t('acctSignedAs')) + '</small><b>' + esc(u.name) + '</b><small>' + esc(u.email) + '</small></div></div>';
     if (allowed === null) { body.innerHTML = who + '<p class="acct-st">' + esc(t('acctCheck')) + '</p>'; return; }
-    if (allowed === false) { body.innerHTML = who + '<p class="acct-st err">' + esc(t('acctDenied')) + '</p><div class="acct-act"><button type="button" data-acct="out">' + esc(t('acctOut')) + '</button></div>'; return; }
+    if (allowed === false) { body.innerHTML = who + '<p class="acct-st err">' + esc(t(setupErr ? 'acctSetup' : 'acctDenied')) + '</p><div class="acct-act"><button type="button" data-acct="out">' + esc(t('acctOut')) + '</button></div>'; return; }
     const stTxt = sync === 'busy' ? t('acctSyncing') : sync === 'err' ? t('acctSyncErr') : t('acctSynced') + (syncedAt ? ' · ' + fmt(syncedAt) : '');
     const tabs = '<div class="acct-tabs" role="tablist">' + ['me', 'board'].map(k => '<button type="button" role="tab" aria-selected="' + (tab === k) + '" data-acct="tab" data-tab="' + k + '">' + esc(t(k === 'me' ? 'acctTabMe' : 'acctTabBoard')) + '</button>').join('') + '<button type="button" class="acct-tabout" data-acct="out" data-sfx="click">' + esc(t('acctOut')) + '</button></div>';
     if (tab === 'board') {
@@ -83,13 +83,13 @@ MBALAB.feature('account', () => {
   /* ---------- session ---------- */
   async function setSession(s) {
     const prev = ready() ? me().id : null;
-    session = s; allowed = null; hist = null; msg = '';
+    session = s; allowed = null; setupErr = false; hist = null; msg = '';
     if (!s) { paint(); if (prev) MBALAB.emit('auth', null); return; }
     paint();
     checking = true;
     try {
       const r = await sb.rpc('is_allowed');
-      allowed = r.error ? false : r.data === true;
+      allowed = r.error ? false : r.data === true; setupErr = !!r.error;
       if (r.error) console.error('[account] is_allowed failed (did you run supabase/schema.sql?)', r.error.message);
     } catch (e) { allowed = false; }
     checking = false;
@@ -142,7 +142,7 @@ MBALAB.feature('account', () => {
   };
 
   /* ---------- leaderboard + board profile ---------- */
-  let tab = 'me', board = null, boardErr = false, boardSim = '', prof = null;
+  let setupErr = false, tab = 'me', board = null, boardErr = false, boardSim = '', prof = null;
   async function loadBoard() {
     if (!ready()) return;
     board = null; boardErr = false; paintDialog();
