@@ -138,7 +138,21 @@ MBALAB.sims.define('tryout-mba', {
       $('#toModal').innerHTML = `<div class="to-dlg" role="dialog" aria-modal="true" aria-labelledby="toDt"><h3 id="toDt">${esc(t('toConfT'))}</h3><p>${esc(t('toConfB', { a, n, u: n - a, f }))}</p><div class="to-act"><button type="button" id="toKeep">${esc(t('toKeep'))}</button><button type="button" class="to-primary" id="toSubmit">${esc(t('toSubmit'))}</button></div></div>`;
       $('#toModal').hidden = false; keepFocus('#toKeep');
     }
-    function commit() { stats = E.record(clone(base), X, S, meta); store(KEY, stats); }
+    /* cloud sync (only when signed in; guests are unaffected). Local storage stays the source on this device. */
+    const SIM = 'tryout-mba', cloud = () => MBALAB.account && MBALAB.account.user();
+    const cloudPush = () => { if (cloud()) MBALAB.account.push(SIM, stats); };
+    const cloudAttempts = list => { if (cloud()) MBALAB.account.attempt(SIM, list.map(h => ({ at: h.at, score: h.p, detail: h }))); };
+    async function cloudSync() {
+      if (!cloud()) return;
+      try {
+        const remote = await MBALAB.account.pull(SIM);
+        stats = E.merge(stats, remote && remote.cell ? remote : null); store(KEY, stats);
+        cloudPush(); cloudAttempts(stats.hist);
+        if (phase === 'setup') setup();
+      } catch (e) { }
+    }
+    MBALAB.on('auth', u => { if (u) cloudSync(); });
+    function commit() { stats = E.record(clone(base), X, S, meta); store(KEY, stats); cloudPush(); cloudAttempts(stats.hist.slice(0, 1)); }
     function finish() {
       stopTimer(); $('#toModal').hidden = true; S = E.score(X); commit(); phase = 'result'; show('toResult'); renderResult(); $('#toScroll').scrollTop = 0; sfx('win');
     }
@@ -186,7 +200,7 @@ MBALAB.sims.define('tryout-mba', {
         if (b.dataset.mode) { cfg.mode = b.dataset.mode; return resetup('[data-mode="' + cfg.mode + '"]'); }
         if (b.id === 'toStart') return startExam(fromCfg());
         if (b.id === 'toRetry') return startExam({ mode: 'practice', cells: CELLS, levels: [0, 1, 2], n: Math.min(stats.wrong.length, 50), essN: 50, only: stats.wrong, preferNew: false, sec: 60 });
-        if (b.id === 'toClear') { if (confirm(t('toClearAsk'))) { stats = E.fresh(); store(KEY, stats); setup(); } return; }
+        if (b.id === 'toClear') { if (confirm(t('toClearAsk'))) { stats = E.fresh(); store(KEY, stats); cloudPush(); setup(); } return; }
       } else if (phase === 'exam') {
         if (b.dataset.o !== undefined) return choose(+b.dataset.o);
         if (b.dataset.go !== undefined) return go(+b.dataset.go);
@@ -234,7 +248,7 @@ MBALAB.sims.define('tryout-mba', {
     self.pause = () => { if (timer && !paused) { tick(); paused = true; } };
     self.resume = () => { if (paused) { last = Date.now(); paused = false; } };
     self.refresh = () => { if (phase === 'setup') setup(); else if (phase === 'exam') renderExam(); else if (phase === 'result') keepScroll(renderResult); };
-    show('toSetup'); setup();
+    show('toSetup'); setup(); cloudSync();
   },
   onShow() { if (this.resume) this.resume(); },
   onHide() { if (this.pause) this.pause(); },

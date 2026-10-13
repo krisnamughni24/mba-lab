@@ -7,6 +7,7 @@ MBALAB.data.features = [
   { id: 'theme',     scripts: ['strings.js', 'theme.js'] },
   { id: 'camera',    scripts: ['strings.js', 'camera.js'],     styles: ['camera.css'] },
   { id: 'language',  scripts: ['strings.js', 'language.js'],   styles: ['language.css'] },
+  { id: 'account',   scripts: ['strings.js', 'account.js'],    styles: ['account.css'] },
   { id: 'audio',     scripts: ['strings.js', 'audio.js'],      styles: ['audio.css'] },
   { id: 'catalog',   scripts: ['strings.js', 'thumbs.js', 'catalog.js'],    styles: ['catalog.css'] },
   { id: 'about',     scripts: ['strings.js', 'about.js'],      styles: ['about.css'] },

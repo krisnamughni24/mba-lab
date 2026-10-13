@@ -1,0 +1,22 @@
+/* Account window and nav button. Plain class names (.acct-*), colours only through theme tokens. */
+.acct-av{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;overflow:hidden;font-size:13px;line-height:1}
+.acct-av img{width:20px;height:20px;border-radius:50%;object-fit:cover;display:block}
+.acct-dlg{width:min(520px,100%)}
+.acct-dlg h3{margin:0}
+.acct-dlg p{margin:10px 0 0;line-height:1.5}
+.acct-who{display:flex;align-items:center;gap:14px;margin-top:14px}
+.acct-who img,.acct-who .acct-ph{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--edge);display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--panel2)}
+.acct-who b{display:block;font-size:17px;overflow-wrap:anywhere}
+.acct-who small{display:block;color:var(--txt2);overflow-wrap:anywhere}
+.acct-st{font-size:12.5px;color:var(--txt2);margin-top:10px}
+.acct-st.ok{color:var(--ok)} .acct-st.err{color:var(--err)}
+.acct-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.acct-act button{min-height:40px;padding:0 16px}
+.acct-act .acct-go{font-weight:700}
+.acct-dlg h4{margin:20px 0 6px}
+.acct-hist{list-style:none;margin:0;padding:0;max-height:240px;overflow:auto;border:1px solid var(--edge);border-radius:6px}
+.acct-hist li{display:flex;justify-content:space-between;gap:12px;padding:8px 12px;font-size:13px;border-top:1px solid rgba(var(--tint-rgb),.12)}
+.acct-hist li:first-child{border-top:0}
+.acct-hist span:last-child{font-weight:700;white-space:nowrap}
+.acct-note{font-size:12px;color:var(--txt2)}
+.acct-del{background:none!important;border-color:var(--rd)!important;color:var(--err)!important}

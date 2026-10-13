@@ -1,0 +1,47 @@
+/* UI strings: account (Google sign-in, profile, history) */
+MBALAB.i18n.add({
+  "en": {
+    "acctIn": "Sign in", "acctAria": "Account", "acctTitle": "Account",
+    "acctIntro": "Sign in with Google to keep your progress and history on every device. Without signing in everything still works; progress is then saved only on this device.",
+    "acctGoogle": "Continue with Google", "acctOut": "Sign out", "acctHist": "History", "acctNoHist": "No attempts yet. Finish a Try Out and it will show up here.",
+    "acctSynced": "Progress synced", "acctSyncing": "Syncing…", "acctSyncErr": "Could not sync, will retry on the next save.",
+    "acctDel": "Delete my account and data", "acctDelAsk": "Permanently delete your account and all synced progress and history? Progress stored on this device is not removed.",
+    "acctDenied": "This Google account is not allowed on this site. Ask the owner to add your email.",
+    "acctLoadErr": "Could not load history.", "acctSignErr": "Sign-in failed. Please try again.",
+    "acctPriv": "Stored: your name, email and photo from Google, plus your progress and history. Other users cannot see them.",
+    "acctCheck": "Checking your account…", "acctSignedAs": "Signed in as"
+  },
+  "id": {
+    "acctIn": "Masuk", "acctAria": "Akun", "acctTitle": "Akun",
+    "acctIntro": "Masuk dengan Google agar progres dan riwayatmu tersimpan di semua perangkat. Tanpa masuk semuanya tetap berfungsi; progres hanya tersimpan di perangkat ini.",
+    "acctGoogle": "Lanjutkan dengan Google", "acctOut": "Keluar", "acctHist": "Riwayat", "acctNoHist": "Belum ada percobaan. Selesaikan satu Try Out dan hasilnya muncul di sini.",
+    "acctSynced": "Progres tersinkron", "acctSyncing": "Menyinkronkan…", "acctSyncErr": "Gagal menyinkronkan, akan dicoba lagi saat penyimpanan berikutnya.",
+    "acctDel": "Hapus akun dan data saya", "acctDelAsk": "Hapus akun beserta semua progres dan riwayat yang tersinkron secara permanen? Progres yang tersimpan di perangkat ini tidak ikut terhapus.",
+    "acctDenied": "Akun Google ini belum diizinkan di situs ini. Minta pemilik situs menambahkan emailmu.",
+    "acctLoadErr": "Riwayat gagal dimuat.", "acctSignErr": "Gagal masuk. Silakan coba lagi.",
+    "acctPriv": "Yang disimpan: nama, email, dan foto dari Google, serta progres dan riwayatmu. Pengguna lain tidak dapat melihatnya.",
+    "acctCheck": "Memeriksa akunmu…", "acctSignedAs": "Masuk sebagai"
+  },
+  "ja": {
+    "acctIn": "ログイン", "acctAria": "アカウント", "acctTitle": "アカウント",
+    "acctIntro": "Googleでログインすると、進捗と履歴をすべてのデバイスで引き継げます。ログインしなくてもすべて使えますが、その場合の進捗はこのデバイスにのみ保存されます。",
+    "acctGoogle": "Googleで続行", "acctOut": "ログアウト", "acctHist": "履歴", "acctNoHist": "まだ受験履歴がありません。模擬試験を終えるとここに表示されます。",
+    "acctSynced": "進捗を同期しました", "acctSyncing": "同期中…", "acctSyncErr": "同期できませんでした。次の保存時に再試行します。",
+    "acctDel": "アカウントとデータを削除", "acctDelAsk": "アカウントと同期済みの進捗・履歴をすべて完全に削除しますか?このデバイスに保存された進捗は削除されません。",
+    "acctDenied": "このGoogleアカウントはこのサイトでは許可されていません。管理者にメールアドレスの追加を依頼してください。",
+    "acctLoadErr": "履歴を読み込めませんでした。", "acctSignErr": "ログインに失敗しました。もう一度お試しください。",
+    "acctPriv": "保存される情報:Googleの名前・メール・写真、および進捗と履歴。他のユーザーには表示されません。",
+    "acctCheck": "アカウントを確認中…", "acctSignedAs": "ログイン中"
+  },
+  "zh": {
+    "acctIn": "登录", "acctAria": "账户", "acctTitle": "账户",
+    "acctIntro": "使用 Google 登录,即可在所有设备上保留你的进度和历史记录。不登录一切功能照常可用,只是进度仅保存在本设备上。",
+    "acctGoogle": "使用 Google 继续", "acctOut": "退出登录", "acctHist": "历史记录", "acctNoHist": "还没有答题记录。完成一次模拟考试后会显示在这里。",
+    "acctSynced": "进度已同步", "acctSyncing": "同步中…", "acctSyncErr": "同步失败,下次保存时会重试。",
+    "acctDel": "删除我的账户和数据", "acctDelAsk": "确定永久删除你的账户以及所有已同步的进度和历史记录吗?本设备上保存的进度不会被删除。",
+    "acctDenied": "此 Google 账户未被允许使用本站。请联系站点所有者添加你的邮箱。",
+    "acctLoadErr": "无法加载历史记录。", "acctSignErr": "登录失败,请重试。",
+    "acctPriv": "会保存:来自 Google 的姓名、邮箱和头像,以及你的进度和历史记录。其他用户无法看到。",
+    "acctCheck": "正在检查你的账户…", "acctSignedAs": "已登录为"
+  }
+});

@@ -88,7 +88,20 @@
     stats.hist = stats.hist.slice(0, 20);
     return stats;
   }
+  /* merge two stat sets (this device + the cloud copy): per cell keep the larger tally, union the seen / wrong ids, history by time */
+  function merge(a, b) {
+    const out = fresh();
+    [a, b].forEach(s => {
+      if (!s) return;
+      Object.keys(s.cell || {}).forEach(k => { const c = s.cell[k], o = out.cell[k]; if (!o || c[1] > o[1]) out.cell[k] = [c[0], c[1]]; });
+    });
+    out.seen = Array.from(new Set([].concat((a && a.seen) || [], (b && b.seen) || [])));
+    out.wrong = Array.from(new Set([].concat((a && a.wrong) || [], (b && b.wrong) || [])));
+    const byAt = {}; [a, b].forEach(s => ((s && s.hist) || []).forEach(h => { byAt[h.at] = h; }));
+    out.hist = Object.keys(byAt).map(k => byAt[k]).sort((x, y) => y.at - x.at).slice(0, 20);
+    return out;
+  }
   const mastery = (stats, k) => { const c = stats.cell[k]; return c && c[1] > 0 ? c[0] / c[1] : null; };
 
-  root.tryout = { rng, shuffle, key, fixedOrder, count, build, score, weakCells, fresh, record, mastery };
+  root.tryout = { rng, shuffle, key, fixedOrder, count, build, score, weakCells, fresh, record, merge, mastery };
 })();
