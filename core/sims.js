@@ -49,7 +49,7 @@
     const m = manifest(id), A = (MBALAB.data && MBALAB.data.about) || {};
     $('slTitle').textContent = t('loadingT');
     $('slName').textContent = m ? tr(m.name) : '';
-    $('slDev').textContent = (A.developedBy ? tr(A.developedBy) + ' ' : '') + (A.developer || '');
+    $('slDev').textContent = (A.developedBy ? tr(A.developedBy) + ' ' : '') + ((m && m.developer ? tr(m.developer) : '') || A.developer || '');
     const fill = $('slFill'), pct = $('slPct'), bar = screen.querySelector('.sl-bar');
     let total = m ? ((m.scripts || []).length + (m.styles || []).length) || 1 : 1, got = 0, ready = false, failed = null;
     const shown = { v: 0 }, t0 = performance.now();

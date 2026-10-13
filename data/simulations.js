@@ -88,6 +88,7 @@ MBALAB.data.simulations = [
     "status": "live",
     "icon": "📝",
     "category": "exam-prep",
+    "developer": "FauzanIkromi (Fullcycle)",
     "name": {
       "en": "Try Out MBA",
       "id": "Try Out MBA",
@@ -101,7 +102,7 @@ MBALAB.data.simulations = [
       "zh": "来自 6 门课程 1,074 道题库的模拟考试。选择周次与难度，进行限时考试或即时反馈练习，找出薄弱环节。"
     },
     "path": "simulations/tryout-mba/",
-    "scripts": ["data.js", "strings.js", "template.js", "engine.js", "app.js"],
+    "scripts": ["data.js", "lang-en.js", "lang-id.js", "lang-ja.js", "lang-zh.js", "strings.js", "template.js", "engine.js", "app.js"],
     "styles": ["../smart-decision-studio/style.css", "style.css"]
   },
   {

@@ -23,7 +23,7 @@
     const q = Q()[i], base = { i, mk: q[0], wk: q[1], lvl: q[2], ty: q[3], text: q[4], exp: q[7], ref: q[8] };
     if (q[3] === 1) return Object.assign(base, { opts: null, key: -1 });
     const perm = fixedOrder(q) ? [0, 1, 2, 3] : shuffle([0, 1, 2, 3], r);
-    return Object.assign(base, { opts: perm.map(j => q[5][j]), key: perm.indexOf(q[6]) });
+    return Object.assign(base, { opts: perm.map(j => q[5][j]), key: perm.indexOf(q[6]), perm });
   }
 
   /* o: { cells:['1-1',...], levels:[0,1,2], n, essay:boolean, preferNew:boolean, seen:Set|Array, only:Array|null, seed } */
