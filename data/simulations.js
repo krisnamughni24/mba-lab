@@ -84,6 +84,27 @@ MBALAB.data.simulations = [
     "styles": ["../smart-decision-studio/style.css", "style.css"]
   },
   {
+    "id": "tryout-mba",
+    "status": "live",
+    "icon": "📝",
+    "category": "exam-prep",
+    "name": {
+      "en": "Try Out MBA",
+      "id": "Try Out MBA",
+      "ja": "MBA 模擬試験",
+      "zh": "MBA 模拟考试"
+    },
+    "description": {
+      "en": "Practice exams from a bank of 1,074 questions across 6 courses. Pick weeks and difficulty, sit a timed exam or practise with instant feedback, then see your weak spots.",
+      "id": "Latihan ujian dari bank 1.074 soal untuk 6 mata kuliah. Pilih minggu dan tingkat kesulitan, ikut ujian berwaktu atau latihan dengan umpan balik langsung, lalu lihat bagian yang lemah.",
+      "ja": "6科目・1,074問の問題バンクから模擬試験。週と難易度を選び、時間制限つき試験または即時フィードバック練習で弱点を把握。",
+      "zh": "来自 6 门课程 1,074 道题库的模拟考试。选择周次与难度，进行限时考试或即时反馈练习，找出薄弱环节。"
+    },
+    "path": "simulations/tryout-mba/",
+    "scripts": ["data.js", "strings.js", "template.js", "engine.js", "app.js"],
+    "styles": ["../smart-decision-studio/style.css", "style.css"]
+  },
+  {
     "id": "life-40",
     "status": "live",
     "icon": "⏳",

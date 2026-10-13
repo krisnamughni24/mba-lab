@@ -10,6 +10,15 @@ MBALAB.data.categories = [
     }
   },
   {
+    "id": "exam-prep",
+    "name": {
+      "en": "Exam practice",
+      "id": "Latihan ujian",
+      "ja": "試験対策",
+      "zh": "考试练习"
+    }
+  },
+  {
     "id": "marketing",
     "name": {
       "en": "Marketing management",
