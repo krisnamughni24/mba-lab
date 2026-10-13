@@ -21,7 +21,7 @@
 .acct-note{font-size:12px;color:var(--txt2)}
 .acct-del{background:none!important;border-color:var(--rd)!important;color:var(--err)!important}
 .acct-tabs{display:flex;gap:8px;margin-top:14px}
-.acct-tabs button{flex:1;min-height:38px}
+.acct-tabs button[data-tab]{flex:1;min-height:38px}
 .acct-tabs button[aria-selected=true]{border-color:var(--edge-hi);box-shadow:var(--glow);color:var(--cy)}
 .acct-sel{display:flex;align-items:center;gap:10px;margin:14px 0 8px;font-size:13px}
 .acct-sel select{flex:1;min-height:36px}
@@ -35,3 +35,5 @@
 .acct-row{display:flex;gap:8px;margin-top:8px}
 .acct-row input{flex:1;min-height:38px}
 .acct-row button{min-height:38px;padding:0 16px}
+
+.acct-tabs{align-items:center}.acct-tabout{margin-left:auto;font:inherit;font-size:.8rem;padding:6px 12px;border-radius:999px;border:1px solid var(--rd);background:transparent;color:var(--rd);cursor:pointer}.acct-tabout:hover{background:var(--rd);color:#fff}

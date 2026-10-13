@@ -34,7 +34,7 @@ MBALAB.feature('account', () => {
 
   function paintButton() {
     const u = me(), av = $('acctAv');
-    $('acctLb').textContent = u && allowed === true ? u.name.split(' ')[0] : t('acctIn');
+    $('acctLb').textContent = u && allowed === true ? t('acctProf') : t('acctIn');
     av.innerHTML = u && allowed === true && u.avatar ? '<img alt="" referrerpolicy="no-referrer" src="' + esc(u.avatar) + '">' : '👤';
   }
   function paintDialog() {
@@ -50,7 +50,7 @@ MBALAB.feature('account', () => {
     if (allowed === null) { body.innerHTML = who + '<p class="acct-st">' + esc(t('acctCheck')) + '</p>'; return; }
     if (allowed === false) { body.innerHTML = who + '<p class="acct-st err">' + esc(t('acctDenied')) + '</p><div class="acct-act"><button type="button" data-acct="out">' + esc(t('acctOut')) + '</button></div>'; return; }
     const stTxt = sync === 'busy' ? t('acctSyncing') : sync === 'err' ? t('acctSyncErr') : t('acctSynced') + (syncedAt ? ' · ' + fmt(syncedAt) : '');
-    const tabs = '<div class="acct-tabs" role="tablist">' + ['me', 'board'].map(k => '<button type="button" role="tab" aria-selected="' + (tab === k) + '" data-acct="tab" data-tab="' + k + '">' + esc(t(k === 'me' ? 'acctTabMe' : 'acctTabBoard')) + '</button>').join('') + '</div>';
+    const tabs = '<div class="acct-tabs" role="tablist">' + ['me', 'board'].map(k => '<button type="button" role="tab" aria-selected="' + (tab === k) + '" data-acct="tab" data-tab="' + k + '">' + esc(t(k === 'me' ? 'acctTabMe' : 'acctTabBoard')) + '</button>').join('') + '<button type="button" class="acct-tabout" data-acct="out" data-sfx="click">' + esc(t('acctOut')) + '</button></div>';
     if (tab === 'board') {
       const sims = (MBALAB.data.simulations || []).filter(x => x.status === 'live' && x.id !== 'smart-decision-studio' && x.id !== 'disc-crisis-room');
       const sel = '<label class="acct-sel">' + esc(t('acctBoardFor')) + ' <select data-acct="bsim"><option value="">' + esc(t('acctAllSims')) + '</option>' +
@@ -68,7 +68,7 @@ MBALAB.feature('account', () => {
       '<div class="acct-row"><input type="text" maxlength="24" data-acct="dname" placeholder="' + esc(t('acctDname')) + '" value="' + esc(prof.display_name || '') + '" aria-label="' + esc(t('acctDname')) + '"><button type="button" data-acct="savep">' + esc(t('acctSave')) + '</button></div>' : '';
     body.innerHTML = tabs + who + '<p class="acct-st ' + (sync === 'err' ? 'err' : 'ok') + '">' + esc(stTxt) + '</p>' +
       bp + '<h4>' + esc(t('acctHist')) + '</h4>' + list + '<p class="acct-note">' + esc(t('acctPriv')) + '</p>' +
-      '<div class="acct-act"><button type="button" data-acct="out">' + esc(t('acctOut')) + '</button><button type="button" class="acct-del" data-acct="del">' + esc(t('acctDel')) + '</button></div>';
+      '<div class="acct-act"><button type="button" class="acct-del" data-acct="del">' + esc(t('acctDel')) + '</button></div>';
   }
   const paint = () => { paintButton(); paintDialog(); };
 
