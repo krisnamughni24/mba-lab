@@ -78,6 +78,62 @@ drop policy if exists "attempts own" on public.attempts;
 create policy "attempts own" on public.attempts for all to authenticated
   using (user_id = auth.uid() and public.is_allowed()) with check (user_id = auth.uid() and public.is_allowed());
 
+-- ---------- leaderboard ----------
+-- Profile fields for the board: nobody appears unless they switch it on and choose a display name.
+alter table public.profiles add column if not exists display_name  text check (char_length(display_name) <= 24);
+alter table public.profiles add column if not exists show_on_board boolean not null default false;
+
+-- Attempts carry a 0-100 score, a variant (scenario / level / background) and whether they count for the board.
+alter table public.attempts add column if not exists variant text    not null default '';
+alter table public.attempts add column if not exists ranked  boolean not null default true;
+do $$ begin
+  alter table public.attempts add constraint attempts_score_range check (score is null or (score >= 0 and score <= 100));
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter table public.user_state add constraint user_state_size check (pg_column_size(data) < 200000);
+exception when duplicate_object then null; end $$;
+
+-- Basic anti-abuse (the browser reports scores, so this is a guard rail, not proof): sane timestamps and a rate limit.
+create or replace function public.attempts_guard() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if new.at < now() - interval '7 days' or new.at > now() + interval '10 minutes' then
+    new.ranked := false;                        -- old imported history is kept but does not count for the board
+  end if;
+  if (select count(*) from public.attempts where user_id = new.user_id and created_at > now() - interval '1 hour') >= 120 then
+    raise exception 'too many attempts, slow down';
+  end if;
+  return new;
+end $$;
+alter table public.attempts add column if not exists created_at timestamptz not null default now();
+drop trigger if exists attempts_guard_t on public.attempts;
+create trigger attempts_guard_t before insert on public.attempts for each row execute function public.attempts_guard();
+
+-- Points = sum over (simulation, variant) of the user's best score. p_sim = null means all simulations.
+create or replace function public.leaderboard(p_sim text default null, p_limit int default 20)
+returns table (rank bigint, name text, points numeric, plays bigint, is_me boolean)
+language sql stable security definer set search_path = public as $$
+  with best as (
+    select user_id, sim, variant, max(score) as s, count(*) as n
+    from public.attempts
+    where ranked and score is not null and (p_sim is null or sim = p_sim)
+    group by user_id, sim, variant
+  ), tot as (
+    select b.user_id, sum(b.s) as pts, sum(b.n) as plays
+    from best b join public.profiles p on p.id = b.user_id
+    where p.show_on_board or b.user_id = auth.uid()
+    group by b.user_id
+  )
+  select rank() over (order by t.pts desc)::bigint,
+         coalesce(nullif(p.display_name, ''), split_part(coalesce(p.name, 'Player'), ' ', 1)),
+         round(t.pts, 1), t.plays, t.user_id = auth.uid()
+  from tot t join public.profiles p on p.id = t.user_id
+  where public.is_allowed()
+  order by 1, 2
+  limit least(greatest(p_limit, 1), 100);
+$$;
+grant execute on function public.leaderboard(text, int) to authenticated;
+
 -- ---------- "delete my account and data" button ----------
 create or replace function public.delete_my_account() returns void
 language plpgsql security definer set search_path = public, auth as $$

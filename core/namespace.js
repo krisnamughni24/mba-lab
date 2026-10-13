@@ -3,7 +3,10 @@
 window.MBALAB = window.MBALAB || {};
 MBALAB.data = MBALAB.data || {};       // content registries, see data/*.js
 MBALAB.features = {};                  // feature id -> init function (registered by js/features/*)
-MBALAB.actions = {};                   // data-action name -> handler(element, event)
+MBALAB.actions = {};
+/* cloud(simId, {read, write, merge, refresh}) links a simulation's saved progress to the signed-in account (see features/account).
+   Without the account feature this is a no-op, so simulations can always call it. Returns {changed(), attempt(row)}. */
+MBALAB.cloud = () => ({ changed() {}, attempt() {} });                   // data-action name -> handler(element, event)
 
 const $ = id => document.getElementById(id);
 

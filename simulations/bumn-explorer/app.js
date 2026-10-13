@@ -10,7 +10,8 @@ MBALAB.sims.define('bumn-explorer', {
     let mode = 'explore', sel = null, filter = null, q = null, fb = null, visible = false;
     let visited = new Set();
     try { visited = new Set(JSON.parse(localStorage.getItem(KEY) || '[]').filter(id => E.byId[id])); } catch (e) {}
-    const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...visited])); } catch (e) {} };
+    let cloud = { changed() {}, attempt() {} };
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...visited])); } catch (e) {} cloud.changed(); };
     const col = id => E.COLORS[E.byId[id].sec];
     const secName = id => t('bm_sec_' + E.byId[id].sec);
     const clue = id => t('bm_d_' + id).split(name(id)).join('___');
@@ -63,7 +64,14 @@ MBALAB.sims.define('bumn-explorer', {
     const li = () => Math.max(0, ['en', 'id', 'ja', 'zh'].indexOf(MBALAB.i18n.get()));
     const info = id => E.INFO && E.INFO[id];
     const bestAll = () => { try { return JSON.parse(localStorage.getItem(KEY + '-best') || '{}'); } catch (e) { return {}; } };
-    const saveBest = (lv, sc) => { try { const b = bestAll(); if (!(b[lv] >= sc)) { b[lv] = sc; localStorage.setItem(KEY + '-best', JSON.stringify(b)); } } catch (e) {} };
+    const saveBest = (lv, sc) => { try { const b = bestAll(); if (!(b[lv] >= sc)) { b[lv] = sc; localStorage.setItem(KEY + '-best', JSON.stringify(b)); } } catch (e) {} cloud.changed(); };
+    const maxMap = (a, b) => { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (!(o[k] >= b[k])) o[k] = b[k]; }); return o; };
+    cloud = MBALAB.cloud('bumn-explorer', {
+      read: () => ({ visited: [...visited], best: bestAll() }),
+      write: o => { visited = new Set(((o && o.visited) || []).filter(id => E.byId[id])); try { localStorage.setItem(KEY, JSON.stringify([...visited])); localStorage.setItem(KEY + '-best', JSON.stringify((o && o.best) || {})); } catch (e) {} },
+      merge: (a, b) => ({ visited: Array.from(new Set([].concat((a && a.visited) || [], (b && b.visited) || []))), best: maxMap(a && a.best, b && b.best) }),
+      refresh: () => { if (typeof sync === 'function') sync(); }
+    });
     function qText(c) {
       const nm = () => name(c.id);
       switch (c.k) {
@@ -114,7 +122,7 @@ MBALAB.sims.define('bumn-explorer', {
       if (gl) { gl.reveal(Q.target(q)); gl.focus(Q.target(q)); } renderBox();
     }
     function nextQuiz() {
-      Q.next(q); fb = null; if (gl) { gl.reveal(null); gl.focus(null); } if (q.done) { saveBest(q.level, q.score); sfx('ok'); } renderBox();
+      Q.next(q); fb = null; if (gl) { gl.reveal(null); gl.focus(null); } if (q.done) { saveBest(q.level, q.score); cloud.attempt({ at: Date.now(), score: q.score / Q.ROUNDS * 100, variant: q.level, detail: { c: q.score, t: Q.ROUNDS } }); sfx('ok'); } renderBox();
       $('#bmScroll').scrollTop = 0;
     }
 

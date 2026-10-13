@@ -6,6 +6,8 @@ MBALAB.sims.define('life-40', {
     let best = {};
     try { const b = JSON.parse(localStorage.getItem(KEY) || '{}'); if (b && typeof b === 'object') best = b; } catch (e) {}
     const saveBest = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} };
+    const maxMap = (a, b) => { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (!(o[k] >= b[k])) o[k] = b[k]; }); return o; };
+    const cloud = MBALAB.cloud('life-40', { read: () => best, write: o => { best = o; saveBest(); }, merge: maxMap, refresh: () => selectScreen() });
     const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
     const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
@@ -235,9 +237,11 @@ MBALAB.sims.define('life-40', {
 
     /* ---------- results ---------- */
     function results() {
+      const firstTime = !res;
       res = res || L.result(G);
       if (!wise) wise = L.wisePlay(bg, lv, seed);
-      const r = res, k = bg + '-' + lv; if ((best[k] || 0) < r.stars) { best[k] = r.stars; saveBest(); }
+      const r = res, k = bg + '-' + lv; if ((best[k] || 0) < r.stars) { best[k] = r.stars; saveBest(); cloud.changed(); }
+      if (firstTime) cloud.attempt({ at: Date.now(), score: Math.round(r.stars / 3 * 60 + Math.max(0, Math.min(100, r.joy)) * 0.4), variant: k, detail: { stars: r.stars, joy: r.joy, years: r.years } });
       hud(); scene(); side();
       const has = (id, o) => log.some(x => x.id === id && x.opt === o), I = [];
       if (G.flags.pinjol || log.some(x => x.id === 'bill' && x.opt === 'b')) I.push('rd_pinjol');

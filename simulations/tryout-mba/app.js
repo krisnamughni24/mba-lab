@@ -141,7 +141,7 @@ MBALAB.sims.define('tryout-mba', {
     /* cloud sync (only when signed in; guests are unaffected). Local storage stays the source on this device. */
     const SIM = 'tryout-mba', cloud = () => MBALAB.account && MBALAB.account.user();
     const cloudPush = () => { if (cloud()) MBALAB.account.push(SIM, stats); };
-    const cloudAttempts = list => { if (cloud()) MBALAB.account.attempt(SIM, list.map(h => ({ at: h.at, score: h.p, detail: h }))); };
+    const cloudAttempts = list => { if (cloud()) MBALAB.account.attempt(SIM, list.map(h => ({ at: h.at, score: h.p, variant: '', ranked: h.t >= 20, detail: h }))); };
     async function cloudSync() {
       if (!cloud()) return;
       try {

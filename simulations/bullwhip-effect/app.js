@@ -7,6 +7,8 @@ MBALAB.sims.define('bullwhip-effect', {
     let best = {};
     try { const b = JSON.parse(localStorage.getItem(KEY) || '{}'); if (b && typeof b === 'object') best = b; } catch (e) {}
     const saveBest = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} };
+    const maxMap = (a, b) => { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (!(o[k] >= b[k])) o[k] = b[k]; }); return o; };
+    const cloud = MBALAB.cloud('bullwhip-effect', { read: () => best, write: o => { best = o; saveBest(); }, merge: maxMap, refresh: () => cards() });
     const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
 
     let sc = null, g = null, role = null, order = 4, showBench = false, res = null;
@@ -133,9 +135,11 @@ MBALAB.sims.define('bullwhip-effect', {
 
     /* ---------- results ---------- */
     function results() {
+      const firstTime = !res;
       res = res || B.results(g);
       const r = res, v = role;
-      if (!best[sc.id] || r.stars > best[sc.id]) { best[sc.id] = r.stars; saveBest(); }
+      if (!best[sc.id] || r.stars > best[sc.id]) { best[sc.id] = r.stars; saveBest(); cloud.changed(); }
+      if (firstTime) cloud.attempt({ at: Date.now(), score: Math.min(100, Math.round(r.bench / Math.max(1, r.total) * 100)), variant: sc.id, detail: { stars: r.stars, role: v } });
       hud();
       $('#bwChain').innerHTML = chainHtml();
       const extra = Math.round((r.total / r.bench - 1) * 100);

@@ -24,3 +24,11 @@ Try Out MBA is wired in `simulations/tryout-mba/app.js` (cloudSync / cloudPush);
 ## Notes
 - Guests keep working; progress stays in localStorage. On first sign-in the device progress is merged into the account.
 - Do not put the `service_role` key or the Google client secret anywhere in this repository.
+
+## Sinkron simulasi & leaderboard
+
+- Setiap simulasi memakai `MBALAB.cloud(simId, {read, write, merge, refresh})`. Progress lokal digabung dengan data akun (nilai terbesar / gabungan), lalu disimpan ke `user_state`. `cloud.changed()` dipanggil saat progress berubah; `cloud.attempt({at, score 0-100, variant, detail})` mencatat satu percobaan.
+- Tersinkron: Try Out MBA, Bullwhip Effect, Life 40, BATNA, BUMN Explorer. DISC Crisis Room dan Smart Decision Studio tidak (tidak punya skor).
+- Leaderboard: opt-in (nama tampilan di dialog Akun). Poin = jumlah skor terbaik (0-100) per level/skenario. Skor dilaporkan klien, jadi hanya "friendly competition" (ada batas skor, cek waktu, dan rate limit di `attempts_guard`).
+- **Setelah update, jalankan ulang `supabase/schema.sql` di SQL Editor** (idempotent).
+- Error Google `redirect_uri_mismatch`: tambahkan `https://<project>.supabase.co/auth/v1/callback` ke Authorized redirect URIs di Google Cloud.

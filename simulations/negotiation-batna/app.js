@@ -8,6 +8,7 @@ MBALAB.sims.define('negotiation-batna', {
     let best = [0, 0, 0, 0];
     try { const b = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(b)) best = [0, 1, 2, 3].map(i => +b[i] || 0); } catch (e) {}
     const saveBest = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} };
+    const cloud = MBALAB.cloud('negotiation-batna', { read: () => best, write: o => { best = [0, 1, 2, 3].map(i => +(o && o[i]) || 0); saveBest(); }, merge: (a, b) => [0, 1, 2, 3].map(i => Math.max(+(a && a[i]) || 0, +(b && b[i]) || 0)), refresh: () => { if (typeof cards === 'function') cards(); } });
 
     const cv = $('#nbCv'), scene = N.Scene(cv);
     scene.label(k => t(k));
@@ -131,7 +132,8 @@ MBALAB.sims.define('negotiation-batna', {
     /* ---------- result ---------- */
     function finish() {
       const res = N.result(gs), o = res.outcome, L = gs.L;
-      if (res.stars > best[idx]) { best[idx] = res.stars; saveBest(); }
+      if (res.stars > best[idx]) { best[idx] = res.stars; saveBest(); cloud.changed(); }
+      cloud.attempt({ at: Date.now(), score: res.score, variant: String(idx), detail: { stars: res.stars, outcome: o.type } });
       scene.set({ r: L.r, zone: res.zone ? [res.zone.lo, res.zone.hi] : null });
       const head = { deal: 'rsDeal', walk: 'rsWalk', npcwalk: 'rsNpcWalk', timeout: 'rsTimeout' }[o.type];
       const rows = gs.hist.map(h => `<tr><td>${h.round}</td><td>${h.you}k</td><td>${h.ask}k</td></tr>`).join('');
