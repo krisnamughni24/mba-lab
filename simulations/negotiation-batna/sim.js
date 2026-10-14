@@ -2,6 +2,7 @@
 MBALAB.sims.files('negotiation-batna', {
   scripts: [
     "i18n/strings.js",
+    "i18n/strings2.js",
     "ui/template.js",
     "engine/engine.js",
     "scene/scene.js",

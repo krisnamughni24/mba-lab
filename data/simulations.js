@@ -252,10 +252,10 @@ MBALAB.data.simulations = [
       "zh": "BATNA: Price of Patience"
     },
     "description": {
-      "en": "Play the buyer against four sellers. Haggle, read, win or walk.",
-      "id": "Jadi pembeli melawan empat penjual. Tawar, baca lawan, menang atau pergi.",
-      "ja": "買い手として4人の売り手と対決。駆け引きし、読み、勝つか去るか。",
-      "zh": "扮演买方对战四位卖家。砍价、读人，赢下或离场。"
+      "en": "12 negotiation missions: solo, with teammates, or against two sellers. Haggle, read, win or walk.",
+      "id": "12 misi negosiasi: sendiri, bersama teman, atau melawan dua penjual. Tawar, baca lawan, menang atau pergi.",
+      "ja": "12の交渉ミッション：単独、仲間と、売り手2人と。駆け引きし、読み、勝つか去るか。",
+      "zh": "12 个谈判任务：单人、携队友或对战两位卖家。砍价、读人，赢下或离场。"
     }
   },
   {

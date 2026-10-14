@@ -1,18 +1,18 @@
 /* Negotiation & BATNA: UI wiring. Rules live in engine.js, drawing in scene.js. */
 MBALAB.sims.define('negotiation-batna', {
   mount(host) {
-    const N = MBALAB.nego, $ = s => host.querySelector(s), AV = ['👩‍💼', '🧔', '🕶️', '🎩'];
+    const N = MBALAB.nego, $ = s => host.querySelector(s), AV = ['👩‍💼', '🧔', '🕶️', '🎩', '👳', '👩‍🏫', '🧑‍💼', '😎'], AB = { intel: '💡', rapport: '💞', pressure: '⚡' }, NL = N.LEVELS.length, IDX = Array.from({ length: NL }, (_, i) => i);
     const still = () => document.body.classList.contains('still');
     const sfx = MBALAB.util.sfx;
     const KEY = 'mbalab-nb-best';
-    let best = [0, 0, 0, 0];
-    try { const b = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(b)) best = [0, 1, 2, 3].map(i => +b[i] || 0); } catch (e) {}
+    let best = IDX.map(() => 0);
+    try { const b = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(b)) best = IDX.map(i => +b[i] || 0); } catch (e) {}
     const saveBest = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} };
-    const cloud = MBALAB.cloud('negotiation-batna', { read: () => best, write: o => { best = [0, 1, 2, 3].map(i => +(o && o[i]) || 0); saveBest(); }, merge: (a, b) => [0, 1, 2, 3].map(i => Math.max(+(a && a[i]) || 0, +(b && b[i]) || 0)), refresh: () => { if (typeof cards === 'function') cards(); } });
+    const cloud = MBALAB.cloud('negotiation-batna', { read: () => best, write: o => { best = IDX.map(i => +(o && o[i]) || 0); saveBest(); }, merge: (a, b) => IDX.map(i => Math.max(+(a && a[i]) || 0, +(b && b[i]) || 0)), refresh: () => { if (typeof cards === 'function') cards(); } });
 
     const cv = $('#nbCv'), scene = N.Scene(cv);
     scene.label(k => t(k));
-    let gs = null, idx = 0, busy = false, timers = [], visible = false;
+    let gs = null, idx = 0, busy = false, timers = [], visible = false, addr = 0;
     const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
     const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
 
@@ -21,21 +21,24 @@ MBALAB.sims.define('negotiation-batna', {
 
     /* ---------- level cards ---------- */
     function cards() {
-      $('#nbCards').innerHTML = N.LEVELS.map((L, i) => `<button type="button" class="nb-card" data-i="${i}">
-        <span class="nb-av" aria-hidden="true">${AV[i]}</span>
-        <span class="nb-ct"><b>${t('lvN', { n: i + 1 })} · ${t('n' + i + 'name')}</b><i>${t('tag' + i)}</i><small>${t('scn' + i)}</small></span>
-        <span class="nb-cs" aria-label="${t('stars', { n: best[i] })}">${starsTxt(best[i])}</span></button>`).join('');
+      $('#nbCards').innerHTML = N.LEVELS.map((L, i) => {
+        const av = L.opps.map(q => AV[q.p]).join(''), team = L.allies.map(a => AB[a.id]).join('');
+        return `<button type="button" class="nb-card" data-i="${i}">
+        <span class="nb-av ${L.opps.length > 1 ? 'two' : ''}" aria-hidden="true">${av}</span>
+        <span class="nb-ct"><b>${t('lvN', { n: i + 1 })} · ${t('m' + i + 't')}</b><i>${t('m' + i + 'tag')} ${team}</i><small>${t('m' + i + 'd')}</small></span>
+        <span class="nb-cs" aria-label="${t('stars', { n: best[i] })}">${starsTxt(best[i])}</span></button>`;
+      }).join('');
       how();
     }
     function how() {
-      $('#nbHow').innerHTML = `<h3>${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol><p class="nb-hn">💡 ${t('gdTip2')}</p>`;
+      $('#nbHow').innerHTML = `<h3>${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li><li>${t('how5')}</li></ol><p class="nb-hn">💡 ${t('gdTip2')}</p>`;
     }
     $('#nbCards').addEventListener('click', e => { const b = e.target.closest('.nb-card'); if (b) { sfx('open'); openLevel(+b.dataset.i); } });
 
     /* ---------- speech ---------- */
     function say(who, text, fast) {
       const el = who === 'n' ? $('#nbBubN') : $('#nbBubY'), tok = (el._tok = (el._tok || 0) + 1);
-      el.classList.add('on'); $('#nbSr').textContent = (who === 'n' ? t('n' + idx + 'name') + ': ' : t('youLbl') + ': ') + text;
+      el.classList.add('on'); $('#nbSr').textContent = (who === 'n' ? (gs ? t('n' + gs.opps[gs.speaker || 0].p + 'name') : '') + ': ' : t('youLbl') + ': ') + text;
       if (who === 'n') scene.set({ talkN: Math.min(2200, 300 + text.length * 45) }); else scene.set({ talkY: Math.min(1500, 300 + text.length * 40) });
       if (fast || still()) { el.textContent = text; return; }
       let i = 0; el.textContent = '';
@@ -50,7 +53,7 @@ MBALAB.sims.define('negotiation-batna', {
       const L = gs.L;
       $('#nbRound').textContent = t('round', { n: Math.min(gs.round, L.rounds), m: L.rounds });
       $('#nbBatna').textContent = t('batnaChip', { n: L.batna });
-      $('#nbScn').textContent = t('n' + idx + 'name') + ' · ' + t('scn' + idx);
+      $('#nbScn').textContent = t('m' + idx + 't');
       const x = +$('#nbRange').value;
       $('#nbVal').textContent = x + 'k';
       $('#nbOffer').textContent = t('btnOffer', { n: x });
@@ -59,10 +62,12 @@ MBALAB.sims.define('negotiation-batna', {
       $('#nbProbe').disabled = gs.probed || busy || gs.over;
       const off = busy || gs.over || !$('#nbBrief').hidden;
       ['#nbOffer', '#nbAccept', '#nbWalk', '#nbMinus', '#nbPlus', '#nbRange'].forEach(s => { $(s).disabled = off; });
+      host.querySelectorAll('.nb-pick').forEach(b => { b.disabled = off; });
       if (off) $('#nbProbe').disabled = true;
+      team();
     }
     function sync(extra) {
-      scene.set(Object.assign({ ask: gs.ask, pat: gs.pat / gs.L.pat, maxPat: gs.L.pat, mood: gs.mood, hist: gs.hist, batna: gs.L.batna }, extra || {}));
+      scene.set(Object.assign({ ask: gs.ask, opps: gs.opps.map(q => ({ p: q.p, pat: Math.max(0, q.pat / q.max), max: q.max, mood: q.mood })), speaker: gs.speaker, turn: gs.turn, addr, mood: gs.mood, hist: gs.hist, batna: gs.L.batna, intel: gs.intel }, extra || {}));
       hud();
     }
     $('#nbRange').addEventListener('input', () => { hud(); scene.set({ you: +$('#nbRange').value }); });
@@ -71,31 +76,44 @@ MBALAB.sims.define('negotiation-batna', {
     $('#nbRange').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doOffer(); } });
 
     /* ---------- flow ---------- */
+    const oppName = k => t('n' + gs.opps[k].p + 'name');
+    function team() {
+      if (!gs) return;
+      const two = gs.opps.length > 1, al = gs.allies.length;
+      $('#nbTeam').hidden = !two && !al; $('#nbAddr').hidden = !two; $('#nbAllies').hidden = !al;
+      if (two) $('#nbAddrBtns').innerHTML = gs.opps.map((q, k) => `<button type="button" class="nb-pick ${addr === k ? 'on' : ''}" data-k="${k}" aria-pressed="${addr === k}">${AV[q.p]} ${oppName(k)}</button>`).join('');
+      if (al) $('#nbAllyBtns').innerHTML = gs.allies.map((a, i) => `<button type="button" class="nb-ally" data-i="${i}" title="${t('abd_' + a.id)}" ${a.uses <= 0 || busy || gs.over || !$('#nbBrief').hidden ? 'disabled' : ''}>${AB[a.id]} <b>${t('alName_' + a.id)}</b> · ${t('ab_' + a.id)} <small>${t('usesLeft', { n: a.uses })}</small></button>`).join('');
+    }
+    $('#nbAddrBtns').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || busy) return; addr = +b.dataset.k; sfx('click'); scene.set({ addr }); team(); });
+    $('#nbAllyBtns').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (!b || b.disabled) return; sfx('click'); doAlly(+b.dataset.i); });
     function openLevel(i) {
       clearTimers(); hideBubbles();
-      idx = i; gs = N.create(i); busy = false;
+      idx = i; gs = N.create(i); busy = false; addr = 0;
       $('#nbSelect').hidden = true; $('#nbPlay').hidden = false; $('#nbMissions').hidden = false; $('#nbRes').hidden = true; $('#nbCtl').hidden = false;
       const r = $('#nbRange'); r.max = gs.L.open; r.value = Math.round(gs.L.batna * .72);
-      scene.setLevel(i);
-      scene.set({ ask: gs.ask, you: +r.value, pat: 1, maxPat: gs.L.pat, mood: 'neutral', hist: [], batna: gs.L.batna, r: null, zone: null, ended: null, snap: true });
+      scene.setLevel(i, { goods: gs.L.goods, opps: gs.L.opps.map(q => ({ p: q.p, max: q.pat })), allies: gs.L.allies.map(a => a.id) });
+      scene.set({ ask: gs.ask, you: +r.value, opps: gs.opps.map(q => ({ p: q.p, pat: 1, max: q.max, mood: 'neutral' })), mood: 'neutral', hist: [], batna: gs.L.batna, r: null, zone: null, ended: null, intel: null, speaker: 0, turn: 0, addr: 0, snap: true });
       $('#nbBrief').hidden = false;
-      $('#nbBrief').innerHTML = `<div class="nb-bc"><h3>${t('brTitle')} · ${t('lvN', { n: i + 1 })}</h3><p><b>${t('n' + i + 'name')}</b> — ${t('scn' + i)}</p>
-        <ul><li>${t('brGoal')}</li><li>${t('brBatna', { n: gs.L.batna })}</li><li>${t('brRounds', { n: gs.L.rounds })}</li></ul>
+      const two = gs.opps.length > 1, al = gs.allies.length;
+      $('#nbBrief').innerHTML = `<div class="nb-bc"><h3>${t('brTitle')} · ${t('lvN', { n: i + 1 })}</h3><p><b>${t('m' + i + 't')}</b> — ${t('m' + i + 'd')}</p>
+        <ul><li>${t('brGoal')}</li><li>${t('brBatna', { n: gs.L.batna })}</li><li>${t('brRounds', { n: gs.L.rounds })}</li>
+        ${two ? `<li>${t('brOpps', { a: oppName(0), b: oppName(1) })}</li>` : ''}
+        ${al ? `<li>${t('brAllies', { list: gs.allies.map(a => AB[a.id] + ' ' + t('alName_' + a.id) + ' (' + t('alRole_' + a.id) + ')').join(', ') })}</li>` + gs.allies.map(a => `<li class="nb-abl">${AB[a.id]} ${t('abd_' + a.id)}</li>`).join('') : ''}</ul>
         <button type="button" class="nb-main" id="nbGo">${t('brStart')}</button></div>`;
-      hud(); loop();
-      $('#nbGo').addEventListener('click', () => { sfx('click'); $('#nbBrief').hidden = true; hud(); say('n', t('n' + idx + 'greet', { n: gs.ask })); $('#nbRange').focus({ preventScroll: true }); });
+      team(); hud(); loop();
+      $('#nbGo').addEventListener('click', () => { sfx('click'); $('#nbBrief').hidden = true; team(); hud(); say('n', speakLine('greet', { n: gs.ask })); $('#nbRange').focus({ preventScroll: true }); });
       $('#nbGo').focus({ preventScroll: true });
     }
+    const speakLine = (key, p) => { const q = gs.opps[gs.speaker || 0]; return (gs.opps.length > 1 ? oppName(gs.speaker || 0) + ': ' : '') + t('n' + q.p + key, p); };
     function npcLine(reply) {
-      const i = idx;
       switch (reply) {
-        case 'counter': return t('n' + i + (gs.round % 2 ? 'c1' : 'c2'), { n: gs.ask });
-        case 'stall': return t('stall');
-        case 'offended': return t('n' + i + 'off');
-        case 'accept': return t('n' + i + 'acc');
-        case 'walk': return t('n' + i + 'walk');
-        case 'timeout': return t('n' + i + 'time');
-        case 'probe': return t('probe', { n: gs.hint });
+        case 'counter': return speakLine(gs.round % 2 ? 'c1' : 'c2', { n: gs.ask });
+        case 'stall': return (gs.opps.length > 1 ? oppName(gs.speaker) + ': ' : '') + t('stall');
+        case 'offended': return speakLine('off');
+        case 'accept': return speakLine('acc');
+        case 'walk': return speakLine('walk');
+        case 'timeout': return speakLine('time');
+        case 'probe': return (gs.opps.length > 1 ? oppName(gs.speaker) + ': ' : '') + t('probe', { n: gs.hint });
         default: return '';
       }
     }
@@ -110,24 +128,45 @@ MBALAB.sims.define('negotiation-batna', {
         const o = gs.outcome, extra = {};
         if (gs.over) {
           extra.ended = o.type;
-          if (o.type === 'npcwalk') extra.npcX = 220;
+          if (o.type === 'npcwalk') { extra.npcX = 220; extra.walker = gs.walker == null ? 0 : gs.walker; }
           if (o.type === 'walk') extra.youX = -220;
         }
         sync(extra);
         say('n', npcLine(gs.reply));
         if (gs.reply === 'offended') { scene.fx('offended'); sfx('err'); }
         else if (gs.reply === 'accept') { scene.fx('deal'); sfx('ok'); }
-        else if (gs.reply === 'counter' || gs.reply === 'stall') { scene.fx('counter'); sfx('on'); }
+        else if (gs.reply === 'counter' || gs.reply === 'stall') { scene.fx('counter'); scene.fx(gs.reply === 'stall' ? 'bad' : 'think'); sfx('on'); }
         else if (gs.pat < before) scene.fx('bad');
         busy = false;
         if (gs.over) { later(finish, o.type === 'deal' ? 2200 : 1700); hud(); } else { hud(); }
       }, still() ? 80 : 650);
     }
-    const doOffer = () => { const x = +$('#nbRange').value; act(t('youOffer', { n: x }), () => N.offer(gs, x), 'offer'); };
+    const doOffer = () => { const x = +$('#nbRange').value; scene.set({ addr }); act(t('youOffer', { n: x }), () => { N.offer(gs, x, gs.opps.length > 1 ? addr : undefined); addr = gs.turn; }, 'offer'); };
     $('#nbOffer').addEventListener('click', () => { sfx('click'); doOffer(); });
     $('#nbAccept').addEventListener('click', () => { sfx('click'); act(t('youAccept', { n: gs.ask }), () => N.accept(gs)); });
     $('#nbProbe').addEventListener('click', () => { sfx('click'); act(t('youProbe'), () => N.probe(gs)); });
     $('#nbWalk').addEventListener('click', () => { sfx('click'); act(t('youWalk'), () => N.walk(gs)); });
+    /* a teammate steps in: free action, limited uses */
+    function doAlly(i) {
+      if (busy || !gs || gs.over) return;
+      const a = gs.allies[i]; if (!a || a.uses <= 0) return;
+      busy = true; hud(); team(); $('#nbBubN').classList.remove('on');
+      const nm = t('alName_' + a.id);
+      say('y', nm + ': ' + t('say_' + a.id));
+      scene.fx('ally', { i });
+      later(() => {
+        N.ally(gs, i);
+        const res = gs.allyRes || {}, extra = {};
+        if (gs.over) { extra.ended = gs.outcome.type; extra.npcX = 220; extra.walker = gs.walker == null ? 0 : gs.walker; }
+        sync(extra);
+        if (res.hint != null) { say('y', nm + ': ' + t('res_intel', { n: res.hint }), true); sfx('ok'); }
+        else if (gs.over) say('n', speakLine('walk'));
+        else if (res.backfire) { say('n', (gs.opps.length > 1 ? oppName(gs.speaker) + ': ' : '') + t('nBackfire')); scene.fx('ally', { i, backfire: true }); sfx('err'); }
+        else { say('n', (gs.opps.length > 1 ? oppName(gs.speaker) + ': ' : '') + t(a.id === 'rapport' ? 'nRapport' : 'nPressure')); scene.fx(a.id === 'rapport' ? 'happy' : 'think'); sfx('on'); }
+        busy = false; hud(); team();
+        if (gs.over) later(finish, 1700);
+      }, still() ? 80 : 900);
+    }
 
     /* ---------- result ---------- */
     function finish() {
@@ -147,7 +186,7 @@ MBALAB.sims.define('negotiation-batna', {
           ${res.share != null && o.price <= L.batna ? `<li>${t('rsShare', { n: Math.round(res.share * 100) })}</li>` : ''}</ul></div>
         <div class="nb-less"><h3>${t('rsLessons')}</h3><ul>${res.lessons.map(k => `<li>${t(k)}</li>`).join('')}</ul></div>
         ${rows ? `<details class="nb-hist"><summary>${t('rsHist')}</summary><table><thead><tr><th>${t('rsRound')}</th><th>${t('youLbl')}</th><th>${t('askLbl')}</th></tr></thead><tbody>${rows}</tbody></table></details>` : ''}
-        <div class="nb-end"><button type="button" class="nb-main" data-a="again">${t('rsAgain')}</button>${idx < 3 ? `<button type="button" data-a="next">${t('rsNext')}</button>` : ''}<button type="button" data-a="levels">${t('rsLevels')}</button></div></div>`;
+        <div class="nb-end"><button type="button" class="nb-main" data-a="again">${t('rsAgain')}</button>${idx < NL - 1 ? `<button type="button" data-a="next">${t('rsNext')}</button>` : ''}<button type="button" data-a="levels">${t('rsLevels')}</button></div></div>`;
       $('#nbSr').textContent = t(head) + '. ' + t('rsScore') + ' ' + res.score;
       el.scrollIntoView && el.scrollIntoView({ block: 'nearest', behavior: still() ? 'auto' : 'smooth' });
     }
@@ -167,9 +206,9 @@ MBALAB.sims.define('negotiation-batna', {
     /* ---------- info dialog (mission + how to play), always reachable ---------- */
     const guide = $('#nbGuide'); 
     function showGuide() {
-      const cur = gs ? `<p class="gtip"><b>🎯 ${t('gdNow')}: ${t('n' + idx + 'name')}</b><br>${t('scn' + idx)}<br>${t('brBatna', { n: gs.L.batna })}<br>${t('brRounds', { n: gs.L.rounds })}</p>` : '';
+      const cur = gs ? `<p class="gtip"><b>🎯 ${t('gdNow')}: ${t('m' + idx + 't')}</b><br>${t('m' + idx + 'd')}<br>${t('brBatna', { n: gs.L.batna })}<br>${t('brRounds', { n: gs.L.rounds })}</p>` : '';
       guide.innerHTML = `<div class="gd" role="dialog" aria-modal="true" aria-labelledby="nbGdT"><button type="button" class="gx" data-gclose aria-label="${t('close')}">✕</button>
-        <h3 id="nbGdT">${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>${cur}
+        <h3 id="nbGdT">${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li><li>${t('how5')}</li></ol>${cur}
         <p class="gtip"><b>💡 ${t('tipLbl')}:</b> ${t('gdTip')}</p><button type="button" class="nb-main" data-gclose>${t('gotIt')}</button></div>`;
       guide.hidden = false; sfx('open');
       const b = guide.querySelector('.nb-main'); b && b.focus({ preventScroll: true });
@@ -188,7 +227,10 @@ MBALAB.sims.define('negotiation-batna', {
       const st = [];
       if (!gs.hist.length) st.push('nbt_first');
       if (gs.pat / gs.L.pat <= .4) st.push('nbt_lowpat');
-      if (idx === 3 && gs.round >= 3) st.push('nbt_nozopa');
+      if (!gs.L.zopa && gs.round >= 3) st.push('nbt_nozopa');
+      if (gs.intel != null) st.push('nbt_intel');
+      if (gs.allies.some(a => a.uses > 0)) st.push('nbt_ally');
+      if (gs.opps.length > 1) st.push('nbt_two');
       st.push(gs.ask > gs.L.batna ? 'nbt_over' : 'nbt_in');
       if (!gs.probed) st.push('nbt_probe');
       return { state: st, generic: ['nbt_p1', 'nbt_p2', 'nbt_p3'] };

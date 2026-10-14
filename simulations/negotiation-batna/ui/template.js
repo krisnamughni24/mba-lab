@@ -8,7 +8,7 @@ MBALAB.sims.define('negotiation-batna', {
   <div class="nb-scroll" id="nbScroll">
   <section class="nb-select" id="nbSelect">
     <h2 data-i18n="nbPick">Choose a negotiation</h2>
-    <p class="nb-sub" data-i18n="nbPickSub"></p>
+    <p class="nb-sub" data-i18n="mPickSub"></p>
     <div class="nb-cards" id="nbCards"></div>
     <div class="nb-how" id="nbHow"></div>
   </section>
@@ -39,6 +39,10 @@ MBALAB.sims.define('negotiation-batna', {
           <output id="nbVal" class="nb-val"></output>
         </div>
         <small class="nb-kb" data-i18n="kbHint"></small>
+      </div>
+      <div class="nb-team" id="nbTeam" hidden>
+        <div class="nb-addr" id="nbAddr" hidden><span class="nb-tl" data-i18n="addrLbl"></span><div class="nb-tb" id="nbAddrBtns"></div></div>
+        <div class="nb-allies" id="nbAllies" hidden><span class="nb-tl" data-i18n="teamLbl"></span><div class="nb-tb" id="nbAllyBtns"></div></div>
       </div>
       <div class="nb-acts">
         <button type="button" id="nbOffer" class="nb-main"></button>
