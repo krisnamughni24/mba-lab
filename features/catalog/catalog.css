@@ -51,7 +51,6 @@
 .tb .em{fill:var(--txt);stroke:none;font-size:46px}
 .tb [stroke-dasharray]{animation:tbflow 2.4s linear infinite}
 @keyframes tbflow{to{stroke-dashoffset:-18}}
-@media(prefers-reduced-motion:reduce){.tb *{animation:none!important}}
 body.still .tb *{animation:none!important}
 /* short looping animations on the thumbnails; transform/stroke only, so the static opacity classes (.o .o2) keep working */
 .tb .k-up,.tb .k-gx,.tb .k-pulse,.tb .k-bob,.tb .k-sx,.tb .k-sxr,.tb .k-blink,.tb .k-draw,.tb .k-spin{animation-delay:var(--d,0s);animation-iteration-count:infinite;animation-timing-function:ease-in-out}
