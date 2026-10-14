@@ -101,3 +101,12 @@
 .nb .nb-card{transition:transform .15s,box-shadow .2s,background .15s}
 .nb .nb-card:hover{box-shadow:var(--glow)}
 @media(max-width:620px){.nb-ally{flex:1 1 100%}}
+
+/* mission menu: how-to-play sits on the right on wide screens */
+@media(min-width:980px){
+  .nb-select{max-width:1280px;display:grid;grid-template-columns:minmax(0,1fr) 320px;grid-template-areas:"h h" "s s" "c how";column-gap:20px;align-items:start}
+  .nb-select>h2{grid-area:h}.nb-select>.nb-sub{grid-area:s;grid-column:1/-1}
+  .nb-select>.nb-cards{grid-area:c;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .nb-select>.nb-how{grid-area:how;margin-top:0;position:sticky;top:8px}
+  .nb-select[hidden]{display:none}
+}
