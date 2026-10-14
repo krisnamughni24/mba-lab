@@ -84,27 +84,44 @@
       const x = 330, y = 290, w = 230, h = 112;
       /* warehouse (when built) */
       if (v.storage) { ctx.fillStyle = pal.shopS; ctx.fillRect(x - 100, y + 40, 90, 72); ctx.fillStyle = pal.roof; ctx.beginPath(); ctx.moveTo(x - 108, y + 42); ctx.lineTo(x - 55, y + 10); ctx.lineTo(x - 2, y + 42); ctx.fill(); const n = Math.min(8, Math.round(cur.rice / 5)); for (let i = 0; i < n; i++) { ctx.fillStyle = '#f4e4b8'; rr(x - 94 + (i % 4) * 20, y + 98 - Math.floor(i / 4) * 16, 18, 14, 4); ctx.fill(); } }
+      ctx.fillStyle = day ? '#d9b46e' : '#a98a54'; ctx.beginPath(); ctx.moveTo(x + w, y); ctx.lineTo(x + w + 24, y - 12); ctx.lineTo(x + w + 24, y + h - 12); ctx.lineTo(x + w, y + h); ctx.fill();
+      ctx.fillStyle = day ? '#a8402e' : '#8a2e2a'; ctx.beginPath(); ctx.moveTo(x + w / 2, y - 40); ctx.lineTo(x + w + 14, y + 2); ctx.lineTo(x + w + 38, y - 10); ctx.lineTo(x + w / 2 + 24, y - 52); ctx.fill();
+      win(x + w + 6, y + 30, 12, 34, true);
       ctx.fillStyle = pal.shopW; ctx.fillRect(x, y, w, h); ctx.fillStyle = pal.shopS; ctx.fillRect(x, y + h - 10, w, 10);
       ctx.fillStyle = pal.roof; ctx.beginPath(); ctx.moveTo(x - 14, y + 2); ctx.lineTo(x + w / 2, y - 40); ctx.lineTo(x + w + 14, y + 2); ctx.closePath(); ctx.fill();
       ctx.fillStyle = '#fff'; ctx.font = '700 15px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('KOPERASI', x + w / 2, y - 8);
       for (let i = 0; i < 9; i++) { ctx.fillStyle = i % 2 ? pal.awnB : pal.awnA; ctx.beginPath(); ctx.moveTo(x - 6 + i * 26, y + 16); ctx.lineTo(x - 6 + (i + 1) * 26, y + 16); ctx.lineTo(x - 6 + (i + 1) * 26, y + 30 + Math.sin(T * 2 + i) * 1.2); ctx.lineTo(x - 6 + i * 26, y + 30); ctx.fill(); }
-      ctx.fillStyle = 'rgba(40,30,20,.9)'; rr(x + 16, y + 38, 120, 62, 4); ctx.fill();
+      ctx.fillStyle = day ? '#9cc6e8' : 'rgba(40,30,20,.9)'; rr(x + 16, y + 38, 120, 62, 4); ctx.fill(); ctx.strokeStyle = day ? '#fff8e8' : '#3a2a20'; ctx.lineWidth = 3; ctx.stroke(); if (day) { ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.beginPath(); ctx.moveTo(x + 30, y + 99); ctx.lineTo(x + 62, y + 39); ctx.lineTo(x + 78, y + 39); ctx.lineTo(x + 46, y + 99); ctx.fill(); }
       const fill = Math.max(0, Math.min(1, cur.goods / 200));
       for (let r = 0; r < 3; r++) for (let c = 0; c < 8; c++) { if ((c + r * 8) / 24 > fill) continue; ctx.fillStyle = ['#ff8a4e', '#7df3ff', '#ffd36e', '#6dffb0'][(c + r) % 4]; ctx.fillRect(x + 22 + c * 14, y + 44 + r * 19, 10, 14); }
-      ctx.fillStyle = '#6a4a2a'; rr(x + 150, y + 44, 56, 66, 4); ctx.fill();
+      ctx.fillStyle = '#6a4a2a'; rr(x + 150, y + 44, 56, 66, 4); ctx.fill(); if (!v.digital) win(x + 164, y + 52, 28, 22, true);
       if (v.digital) { ctx.fillStyle = pal.glass; ctx.shadowColor = pal.glass; ctx.shadowBlur = 12 + 6 * Math.sin(T * 4); rr(x + 160, y + 54, 36, 22, 3); ctx.fill(); ctx.shadowBlur = 0; ctx.fillStyle = '#0a1a40'; ctx.font = '700 11px system-ui'; ctx.fillText('QR', x + 178, y + 70); }
       ctx.fillStyle = pal.lamp; ctx.shadowColor = pal.lamp; ctx.shadowBlur = day ? 0 : 16; ctx.beginPath(); ctx.arc(x + w / 2, y + 6, 4, 0, TAU); ctx.fill(); ctx.shadowBlur = 0;
     }
+    /* window: lit and warm at night, reflective glass with a glare by day */
+    function win(x, y, w, h, lit) {
+      if (day) { const g = ctx.createLinearGradient(x, y, x + w, y + h); g.addColorStop(0, '#a8dcff'); g.addColorStop(1, '#4f9be0'); ctx.fillStyle = g; ctx.fillRect(x, y, w, h); ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.beginPath(); ctx.moveTo(x + w * .15, y + h); ctx.lineTo(x + w * .5, y); ctx.lineTo(x + w * .72, y); ctx.lineTo(x + w * .37, y + h); ctx.fill(); }
+      else { ctx.fillStyle = lit ? '#ffd98a' : '#243a6a'; ctx.shadowColor = '#ffd36e'; ctx.shadowBlur = lit ? 14 : 0; ctx.fillRect(x, y, w, h); ctx.shadowBlur = 0; }
+      ctx.strokeStyle = day ? '#f4f8ff' : '#0b0720'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h); ctx.beginPath(); ctx.moveTo(x + w / 2, y); ctx.lineTo(x + w / 2, y + h); ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2); ctx.stroke();
+      ctx.fillStyle = day ? '#cfd8ea' : '#3a2f66'; ctx.fillRect(x - 2, y + h, w + 4, 3);
+    }
     function mart() {
       const k = cur.comp; if (k < .02) return;
-      const slide = (1 - Math.min(1, k)) * 260, big = cur.comp > 1.5 ? 1.18 : 1, x = 680 + slide, y = 300, w = 190 * big, h = 102 * big;
+      const slide = (1 - Math.min(1, k)) * 260, big = cur.comp > 1.5 ? 1.18 : 1, x = 680 + slide, w = 190 * big, h = 102 * big, top = 402 - h, d = 30 * big;
       ctx.save(); ctx.globalAlpha = Math.min(1, k * 1.5);
-      ctx.fillStyle = pal.mart; ctx.fillRect(x, y + 102 - h, w, h); ctx.fillStyle = pal.martS; ctx.fillRect(x, y + 94, w, 8);
-      ctx.fillStyle = pal.martR; ctx.fillRect(x - 6, y + 102 - h - 12, w + 12, 24);
-      ctx.fillStyle = '#fff'; ctx.font = '700 14px system-ui'; ctx.textAlign = 'center'; ctx.fillText('NUSA MART', x + w / 2, y + 102 - h + 5);
-      ctx.fillStyle = pal.glass; ctx.shadowColor = pal.glass; ctx.shadowBlur = day ? 0 : 14; ctx.fillRect(x + 12, y + 102 - h + 26, w - 24, 44); ctx.shadowBlur = 0;
-      ctx.fillStyle = 'rgba(255,255,255,.5)'; for (let i = 0; i < 5; i++) ctx.fillRect(x + 16 + i * (w - 32) / 5, y + 102 - h + 30, 3, 36);
-      ctx.fillStyle = '#ff3b4a'; ctx.font = '800 11px system-ui'; ctx.fillText('PROMO', x + w - 30, y + 102 - h + 20);
+      /* side face and roof for depth */
+      ctx.fillStyle = day ? '#aebfe6' : '#6a7fb8'; ctx.beginPath(); ctx.moveTo(x + w, top); ctx.lineTo(x + w + d, top - 16); ctx.lineTo(x + w + d, 386); ctx.lineTo(x + w, 402); ctx.fill();
+      ctx.fillStyle = day ? '#8da4d8' : '#4a5c94'; for (let i = 0; i < 2; i++) { ctx.beginPath(); ctx.moveTo(x + w + 6, top + 20 + i * 36); ctx.lineTo(x + w + d - 6, top + 10 + i * 36 - 3); ctx.lineTo(x + w + d - 6, top + 28 + i * 36 - 3); ctx.lineTo(x + w + 6, top + 38 + i * 36); ctx.fill(); }
+      ctx.fillStyle = day ? '#d9e3f7' : '#8fa0cc'; ctx.beginPath(); ctx.moveTo(x - 6, top - 12); ctx.lineTo(x + d - 6, top - 28); ctx.lineTo(x + w + d + 6, top - 28); ctx.lineTo(x + w + 6, top - 12); ctx.fill();
+      ctx.fillStyle = day ? '#9fb2dc' : '#56689f'; ctx.fillRect(x + w * .62, top - 26, 26, 12); ctx.fillRect(x + w * .8, top - 24, 22, 10);
+      /* front */
+      ctx.fillStyle = pal.mart; ctx.fillRect(x, top, w, h); ctx.fillStyle = pal.martS; ctx.fillRect(x, 394, w, 8);
+      ctx.fillStyle = pal.martR; ctx.fillRect(x - 6, top - 12, w + 12, 24);
+      ctx.fillStyle = '#fff'; ctx.font = '700 14px system-ui'; ctx.textAlign = 'center'; ctx.fillText('NUSA MART', x + w / 2, top + 5);
+      const n = 4, ww = (w - 30) / n - 8; for (let i = 0; i < n; i++) win(x + 15 + i * (ww + 8), top + 18, ww, 20, (i + Math.floor(T / 3)) % 3 !== 0);
+      const gy = top + 46, gh = 394 - gy; win(x + 12, gy, w * .5, gh, true); win(x + 20 + w * .5, gy, w * .5 - 32, gh, true);
+      ctx.fillStyle = day ? '#e9f2ff' : '#2a3a70'; ctx.fillRect(x + w * .5 + 6, gy, 8, gh);
+      ctx.fillStyle = '#ff3b4a'; ctx.font = '800 11px system-ui'; ctx.fillText('PROMO', x + w - 32, top + 54);
       ctx.restore();
     }
     function bubble(x, y, s) { const hap = s >= 62, sad = s < 40; ctx.fillStyle = hap ? '#ff6bd5' : sad ? '#ff5d7a' : '#ffd36e'; ctx.beginPath(); if (hap) { ctx.moveTo(x, y + 3); ctx.bezierCurveTo(x - 7, y - 3, x - 3, y - 8, x, y - 4); ctx.bezierCurveTo(x + 3, y - 8, x + 7, y - 3, x, y + 3); } else ctx.arc(x, y - 2, 3.2, 0, TAU); ctx.fill(); if (sad) { ctx.fillStyle = '#fff'; ctx.fillRect(x - 1, y - 5, 2, 4); } }
