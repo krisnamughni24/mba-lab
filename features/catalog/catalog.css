@@ -53,3 +53,24 @@
 @keyframes tbflow{to{stroke-dashoffset:-18}}
 @media(prefers-reduced-motion:reduce){.tb *{animation:none!important}}
 body.still .tb *{animation:none!important}
+/* short looping animations on the thumbnails; transform/stroke only, so the static opacity classes (.o .o2) keep working */
+.tb .k-up,.tb .k-gx,.tb .k-pulse,.tb .k-bob,.tb .k-sx,.tb .k-sxr,.tb .k-blink,.tb .k-draw,.tb .k-spin{animation-delay:var(--d,0s);animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.tb .k-up,.tb .k-gx,.tb .k-pulse,.tb .k-bob,.tb .k-sx,.tb .k-sxr{transform-box:fill-box}
+.tb .k-up{transform-origin:50% 100%;animation-name:kup;animation-duration:3.2s}
+.tb .k-gx{transform-origin:0 50%;animation-name:kgx;animation-duration:3.2s}
+.tb .k-pulse{transform-origin:50% 50%;animation-name:kpulse;animation-duration:2.4s}
+.tb .k-bob{animation-name:kbob;animation-duration:2.6s}
+.tb .k-sx{animation-name:ksx;animation-duration:3s}
+.tb .k-sxr{animation-name:ksxr;animation-duration:3s}
+.tb .k-blink{animation-name:kblink;animation-duration:1.2s}
+.tb .k-spin{animation-name:kspin;animation-duration:6s;animation-timing-function:linear}
+.tb .k-draw{stroke-dasharray:1;animation-name:kdraw;animation-duration:3.6s}
+@keyframes kup{0%{transform:scaleY(.15)}45%,85%{transform:scaleY(1)}100%{transform:scaleY(.15)}}
+@keyframes kgx{0%{transform:scaleX(.1)}45%,85%{transform:scaleX(1)}100%{transform:scaleX(.1)}}
+@keyframes kpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.28)}}
+@keyframes kbob{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
+@keyframes ksx{0%,100%{transform:translateX(-7px)}50%{transform:translateX(7px)}}
+@keyframes ksxr{0%,100%{transform:translateX(7px)}50%{transform:translateX(-7px)}}
+@keyframes kblink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes kspin{to{transform:rotate(360deg)}}
+@keyframes kdraw{0%{stroke-dashoffset:1}50%,88%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
