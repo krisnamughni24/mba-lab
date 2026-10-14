@@ -9,7 +9,7 @@ MBALAB.feature('about', () => {
     '<p id="aboutIntro"></p>' +
     '<h4 id="aboutApproachH"></h4><p id="aboutApproach"></p>' +
     '<h4 id="aboutTopicsH"></h4><ul class="about-topics" id="aboutTopics"></ul>' +
-    '<h4 id="aboutDevH"></h4><p class="devname"></p></div></div>');
+    '<h4 id="aboutDevH"></h4><ul class="devlist" id="aboutDevs"></ul></div></div>');
   MBALAB.ui.dialog(dialog);
   MBALAB.overlay.register(dialog);
 
@@ -20,7 +20,23 @@ MBALAB.feature('about', () => {
   bind($('aboutTopicsH'), () => tr(A.topicsTitle));
   bind($('aboutDevH'), () => tr(A.developedBy));
   MBALAB.data.categories.forEach(c => { const li = document.createElement('li'); $('aboutTopics').appendChild(li); bind(li, () => tr(c.name)); });
-  dialog.querySelector('.devname').textContent = A.developer;
+  /* Credits are built from the catalog: every distinct "developer" in data/simulations.js appears here with the simulations it built.
+     Simulations without their own "developer" belong to the main developer (data/about.js). A new name added to a simulation shows up automatically. */
+  const credits = () => {
+    const by = new Map(), add = (name, sim) => { if (!by.has(name)) by.set(name, []); if (sim) by.get(name).push(sim); };
+    add(A.developer);
+    (MBALAB.data.simulations || []).filter(s => s.status === 'live').forEach(s => add(s.developer ? tr(s.developer) : A.developer, s));
+    return [...by].map(([name, sims]) => ({ name, sims: sims.map(s => tr(s.name)) }));
+  };
+  const paintCredits = () => {
+    const ul = $('aboutDevs'); ul.textContent = '';
+    credits().forEach(c => {
+      const li = document.createElement('li'), b = document.createElement('b'), sp = document.createElement('span');
+      b.textContent = c.name; sp.textContent = c.sims.join(' · ');
+      li.append(b, sp); ul.appendChild(li);
+    });
+  };
+  paintCredits(); MBALAB.on('lang', paintCredits);
 
   const button = MBALAB.ui.html(
     '<button id="btnInfo" type="button" aria-haspopup="dialog" data-action="open-about" data-sfx="open" data-ia="aria-label=infoAria,title=infoAria">' +

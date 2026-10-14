@@ -1,6 +1,8 @@
 /* Simulation registry: one entry per simulation, shown in the catalog.
-   status "live"  -> opens a microsite from simulations/<id>/ (loaded on demand: scripts + styles listed below)
+   status "live"  -> opens a microsite from simulations/<id>/ (its file list is simulations/<id>/sim.js; loaded on demand)
    status "soon"  -> shown as "Coming soon", no files needed yet.
+   developer (optional) -> the credit on the card, the loading screen and the Info window. Without it the main developer
+                           from data/about.js is used. A new name appears in Info automatically, listed with its simulations.
    To add a simulation see docs/ADDING-A-SIMULATION.md */
 MBALAB.data.simulations = [
   {
@@ -62,7 +64,7 @@ MBALAB.data.simulations = [
     "status": "live",
     "icon": "📝",
     "category": "exam-prep",
-    "developer": "FauzanIkromi (Fullcycle)",
+    "developer": "FauzanIkromi (FullCycle)",
     "name": {
       "en": "Try Out MBA",
       "id": "Try Out MBA",

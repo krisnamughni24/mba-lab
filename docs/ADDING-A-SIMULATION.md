@@ -32,7 +32,7 @@ Use only the subfolders you need. A small simulation is just `sim.js` + `i18n/` 
      description: { en: '…', id: '…', ja: '…', zh: '…' }
    }
    ```
-   `category` must be an id from `data/categories.js`. Add a thumbnail in `features/catalog/thumbs.js` (optional).
+   `category` must be an id from `data/categories.js`. Optional `developer: 'Name (Team)'` credits someone other than the main developer; the name appears on the card, the loading screen and, with the simulations it built, in the Info window automatically. Add a thumbnail in `features/catalog/thumbs.js` (optional).
 4. Run the smoke test (below). Open `index.html` – the catalog card becomes clickable.
 
 ## Rules of thumb

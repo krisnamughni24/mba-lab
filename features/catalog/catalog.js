@@ -20,7 +20,7 @@ MBALAB.feature('catalog', () => {
       '<span class="cat">' + catName(s.category) + '</span><span class="note">' + tr(s.description) + '</span>';
     /* footer row: the Open button is always pinned bottom-left of the square; the developer text sits beside it */
     const A = MBALAB.data.about || {};
-    const dev = s.developer ? tr(s.developer) : ((A.developedBy ? tr(A.developedBy) + ' ' : '') + (A.developer || ''));
+    const dev = s.developer ? tr(s.developer) : (A.developer || '');   // just the name; the Info window explains who built what
     const by = dev ? '<span class="by">' + dev + '</span>' : '';
     return live
       ? '<div class="sim live">' + head + '<div class="ft"><button type="button" data-action="open-sim" data-sim="' + s.id + '" data-sfx="open">' + t('open') + '</button>' + by + '</div></div>'
