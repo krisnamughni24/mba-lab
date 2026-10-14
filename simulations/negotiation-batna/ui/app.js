@@ -3,7 +3,7 @@ MBALAB.sims.define('negotiation-batna', {
   mount(host) {
     const N = MBALAB.nego, $ = s => host.querySelector(s), AV = ['👩‍💼', '🧔', '🕶️', '🎩'];
     const still = () => document.body.classList.contains('still');
-    const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
+    const sfx = MBALAB.util.sfx;
     const KEY = 'mbalab-nb-best';
     let best = [0, 0, 0, 0];
     try { const b = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(b)) best = [0, 1, 2, 3].map(i => +b[i] || 0); } catch (e) {}

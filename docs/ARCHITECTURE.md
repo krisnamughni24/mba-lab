@@ -16,7 +16,10 @@ data/                 CONTENT & CONFIG – the files you edit most
 core/                 small engine: namespace/event bus, i18n, overlays, loader, simulation host, kinetic text effects, boot
 features/<name>/      one folder per site feature (scripts, styles, strings)
   landing scene theme camera language audio catalog about idea-form
-simulations/<id>/     one microsite per simulation, lazy-loaded (see ADDING-A-SIMULATION.md)
+simulations/<id>/     one microsite per simulation, lazy-loaded: sim.js (file list) + i18n/ ui/ and optionally engine/ data/ scene/
+                        (see ADDING-A-SIMULATION.md)
+shared/               code shared by several simulations: assistant.js (Bit robot), studio.css (base game UI theme)
+tests/                smoke.js: opens every live simulation and checks for errors
 css/                  core.css (layout, dialogs, loader) · nav.css (top bar) · cyber.css (THE THEME: colours, fonts, type scale)
 apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 ```
@@ -28,25 +31,26 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | Share-an-Idea form wording / types | `data/idea-form.js` |
 | Where ideas go | `data/config.js`, `apps-script/Code.gs` |
 | Landing headline | `data/landing.js` |
-| Add / rename a simulation | `data/simulations.js` |
+| Add / rename a simulation | `data/simulations.js` (catalog entry) and `simulations/<id>/sim.js` (its files) |
+| Small helpers shared by simulations (esc, clamp, sound) | `core/namespace.js` → `MBALAB.util` |
 | Colours, fonts, night/day look | `css/cyber.css` (variables at the top; `body.day` block = day palette) |
 | Text animation (decode, glitch every 2 s) | `core/kinetic.js` (selector lists + timings at the top) |
 | Music, sounds, typing + loading sounds, volume mix | `features/audio/audio.js` (`MUSIC_LEVEL`, `SFX_LEVEL`) |
-| SMART tips from the robot (Bit) | `simulations/smart-decision-studio/assistant.js` |
-| Negotiation & BATNA: levels, NPC rules, scoring | `simulations/negotiation-batna/engine.js` (`LEVELS`; pure logic, testable in node) |
-| Negotiation & BATNA: isometric neon scene | `simulations/negotiation-batna/scene.js` (canvas; palette `PAL.night` / `PAL.day`) |
-| Negotiation & BATNA: dialogue and lessons | `simulations/negotiation-batna/strings.js` |
-| DISC Crisis Room: crises, options and style texts (4 languages) | `simulations/disc-crisis-room/strings.js` |
-| DISC Crisis Room: scoring rules | `simulations/disc-crisis-room/engine.js` (testable in node) |
-| BUMN Explorer: companies, world positions (x/z/radius), sectors, quiz logic | `simulations/bumn-explorer/engine.js` (testable in node) |
-| BUMN Explorer: company descriptions and UI texts (4 languages) | `simulations/bumn-explorer/strings.js` |
-| BUMN Explorer: 3D engine (shared kit, camera orbit/zoom, fade, picking, theme) | `simulations/bumn-explorer/scene.js` |
-| BUMN Explorer: per-company facts (founding year, HQ, history, scale, insight; 4 languages) | `simulations/bumn-explorer/facts.js` |
+| SMART tips from the robot (Bit) | `shared/assistant.js` |
+| Negotiation & BATNA: levels, NPC rules, scoring | `simulations/negotiation-batna/engine/engine.js` (`LEVELS`; pure logic, testable in node) |
+| Negotiation & BATNA: isometric neon scene | `simulations/negotiation-batna/scene/scene.js` (canvas; palette `PAL.night` / `PAL.day`) |
+| Negotiation & BATNA: dialogue and lessons | `simulations/negotiation-batna/i18n/strings.js` |
+| DISC Crisis Room: crises, options and style texts (4 languages) | `simulations/disc-crisis-room/i18n/strings.js` |
+| DISC Crisis Room: scoring rules | `simulations/disc-crisis-room/engine/engine.js` (testable in node) |
+| BUMN Explorer: companies, world positions (x/z/radius), sectors, quiz logic | `simulations/bumn-explorer/engine/engine.js` (testable in node) |
+| BUMN Explorer: company descriptions and UI texts (4 languages) | `simulations/bumn-explorer/i18n/strings.js` |
+| BUMN Explorer: 3D engine (shared kit, camera orbit/zoom, fade, picking, theme) | `simulations/bumn-explorer/scene/scene.js` |
+| BUMN Explorer: per-company facts (founding year, HQ, history, scale, insight; 4 languages) | `simulations/bumn-explorer/data/facts.js` |
 | Catalog thumbnails (one inline SVG per simulation, keyed by id) | `features/catalog/thumbs.js` |
-| BUMN Explorer: second wave of 23 companies (positions, clues, profiles in 4 languages) | `simulations/bumn-explorer/more.js` |
-| BUMN Explorer: 3D builders for the second wave | `simulations/bumn-explorer/buildings2.js` |
-| BUMN Explorer: terrain and infrastructure (sea, mountains, city, highway, rail, river, runway, forest) | `simulations/bumn-explorer/world.js` |
-| BUMN Explorer: one 3D builder per company (port, offshore platform, power plant, mine, ...) | `simulations/bumn-explorer/buildings.js` |
+| BUMN Explorer: second wave of 23 companies (positions, clues, profiles in 4 languages) | `simulations/bumn-explorer/data/more.js` |
+| BUMN Explorer: 3D builders for the second wave | `simulations/bumn-explorer/scene/buildings2.js` |
+| BUMN Explorer: terrain and infrastructure (sea, mountains, city, highway, rail, river, runway, forest) | `simulations/bumn-explorer/scene/world.js` |
+| BUMN Explorer: one 3D builder per company (port, offshore platform, power plant, mine, ...) | `simulations/bumn-explorer/scene/buildings.js` |
 | 3D city | `features/scene/scene.js` |
 | Remove a feature | delete its line in `data/features.js` |
 

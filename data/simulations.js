@@ -19,17 +19,7 @@ MBALAB.data.simulations = [
       "id": "Analisis keputusan multikriteria: bobot, peringkat, dan sensitivitas.",
       "ja": "多基準意思決定分析：重み付け、ランキング、感度分析。",
       "zh": "多准则决策分析：权重、排名与敏感性分析。"
-    },
-    "path": "simulations/smart-decision-studio/",
-    "scripts": [
-      "strings.js",
-      "template.js",
-      "assistant.js",
-      "app.js"
-    ],
-    "styles": [
-      "style.css"
-    ]
+    }
   },
   {
     "id": "disc-crisis-room",
@@ -47,20 +37,7 @@ MBALAB.data.simulations = [
       "id": "Pimpin tim melewati enam krisis. Pilihan Anda mengungkap gaya DISC Anda.",
       "ja": "6つの危機でチームを率いる。選択からあなたのDISCスタイルが見えてくる。",
       "zh": "带领团队度过六场危机，你的选择将揭示你的 DISC 风格。"
-    },
-    "path": "simulations/disc-crisis-room/",
-    "scripts": [
-      "strings.js",
-      "template.js",
-      "engine.js",
-      "scene.js",
-      "../smart-decision-studio/assistant.js",
-      "app.js"
-    ],
-    "styles": [
-      "../smart-decision-studio/style.css",
-      "style.css"
-    ]
+    }
   },
   {
     "id": "bumn-explorer",
@@ -78,10 +55,7 @@ MBALAB.data.simulations = [
       "id": "Jelajahi BUMN Indonesia di dunia 3D lengkap dengan pelabuhan, tambang, dan pembangkit, lalu uji lewat kuis.",
       "ja": "港・鉱山・発電所のある3Dの世界でインドネシアの国有企業を探索し、クイズに挑戦。",
       "zh": "在有港口、矿山和电厂的3D世界中探索印尼国有企业，再来一场测验。"
-    },
-    "path": "simulations/bumn-explorer/",
-    "scripts": ["strings.js", "template.js", "engine.js", "facts.js", "more.js", "world.js", "buildings.js", "buildings2.js", "scene.js", "../smart-decision-studio/assistant.js", "app.js"],
-    "styles": ["../smart-decision-studio/style.css", "style.css"]
+    }
   },
   {
     "id": "tryout-mba",
@@ -100,10 +74,7 @@ MBALAB.data.simulations = [
       "id": "Latihan ujian dari bank 1.074 soal untuk 6 mata kuliah. Pilih minggu dan tingkat kesulitan, ikut ujian berwaktu atau latihan dengan umpan balik langsung, lalu lihat bagian yang lemah.",
       "ja": "6科目・1,074問の問題バンクから模擬試験。週と難易度を選び、時間制限つき試験または即時フィードバック練習で弱点を把握。",
       "zh": "来自 6 门课程 1,074 道题库的模拟考试。选择周次与难度，进行限时考试或即时反馈练习，找出薄弱环节。"
-    },
-    "path": "simulations/tryout-mba/",
-    "scripts": ["data.js", "lang-en.js", "lang-id.js", "lang-ja.js", "lang-zh.js", "strings.js", "template.js", "engine.js", "app.js"],
-    "styles": ["../smart-decision-studio/style.css", "style.css"]
+    }
   },
   {
     "id": "life-40",
@@ -121,10 +92,7 @@ MBALAB.data.simulations = [
       "id": "Jalani usia 22 sampai 62 sebagai orang kaya, biasa, atau miskin. Menabung, berutang, dan berinvestasi melewati PHK, krisis, dan penipuan, lalu lihat nilai waktu uang bekerja.",
       "ja": "22歳から62歳まで、裕福・普通・貧しい家庭で生きる。解雇・暴落・詐欺の中で貯蓄・借入・投資をし、お金の時間価値を体感。",
       "zh": "以富裕、普通或贫寒的出身，从 22 岁活到 62 岁。在裁员、暴跌和骗局中储蓄、借贷、投资，看货币时间价值如何起作用。"
-    },
-    "path": "simulations/life-40/",
-    "scripts": ["strings.js", "template.js", "engine.js", "events.js", "scene.js", "app.js"],
-    "styles": ["../smart-decision-studio/style.css", "style.css"]
+    }
   },
   {
     "id": "break-even-analysis",
@@ -268,10 +236,7 @@ MBALAB.data.simulations = [
       "id": "Jalankan satu perusahaan di rantai pasok BUMN dan lihat fluktuasi kecil permintaan membesar ke hulu.",
       "ja": "国有企業のサプライチェーンの1社を運営し、小さな需要変動が上流で膨らむ様子を体験。",
       "zh": "运营国企供应链中的一家公司，亲眼看小幅需求波动如何向上游放大。"
-    },
-    "path": "simulations/bullwhip-effect/",
-    "scripts": ["strings.js", "template.js", "engine.js", "app.js"],
-    "styles": ["../smart-decision-studio/style.css", "style.css"]
+    }
   },
   {
     "id": "negotiation-batna",
@@ -289,20 +254,7 @@ MBALAB.data.simulations = [
       "id": "Jadi pembeli melawan empat penjual. Tawar, baca lawan, menang atau pergi.",
       "ja": "買い手として4人の売り手と対決。駆け引きし、読み、勝つか去るか。",
       "zh": "扮演买方对战四位卖家。砍价、读人，赢下或离场。"
-    },
-    "path": "simulations/negotiation-batna/",
-    "scripts": [
-      "strings.js",
-      "template.js",
-      "engine.js",
-      "scene.js",
-      "../smart-decision-studio/assistant.js",
-      "app.js"
-    ],
-    "styles": [
-      "../smart-decision-studio/style.css",
-      "style.css"
-    ]
+    }
   },
   {
     "id": "demand-forecasting",

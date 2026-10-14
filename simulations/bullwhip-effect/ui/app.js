@@ -9,11 +9,11 @@ MBALAB.sims.define('bullwhip-effect', {
     const saveBest = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} };
     const maxMap = (a, b) => { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (!(o[k] >= b[k])) o[k] = b[k]; }); return o; };
     const cloud = MBALAB.cloud('bullwhip-effect', { read: () => best, write: o => { best = o; saveBest(); }, merge: maxMap, refresh: () => cards() });
-    const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
+    const sfx = MBALAB.util.sfx;
 
     let sc = null, g = null, role = null, order = 4, showBench = false, res = null;
     const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
-    const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const esc = MBALAB.util.esc;
     const name = (s, tier) => t('n_' + s.chain[3 - tier]);
 
     /* ---------- chart helper ---------- */

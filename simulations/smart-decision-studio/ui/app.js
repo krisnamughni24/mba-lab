@@ -8,7 +8,7 @@
   MBALAB.sims.define('smart-decision-studio', {
     mount(host) {
       const q = id => host.querySelector('#' + id);
-      const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const esc = MBALAB.util.esc;
       const f = (x, d = 2) => Number(x).toFixed(d);
       const sv = v => Number.isFinite(v) ? v : '';
       const reduced = () => document.body.classList.contains('still');

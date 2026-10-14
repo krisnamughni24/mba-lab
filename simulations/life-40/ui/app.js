@@ -8,14 +8,14 @@ MBALAB.sims.define('life-40', {
     const saveBest = () => { try { localStorage.setItem(KEY, JSON.stringify(best)); } catch (e) {} };
     const maxMap = (a, b) => { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (!(o[k] >= b[k])) o[k] = b[k]; }); return o; };
     const cloud = MBALAB.cloud('life-40', { read: () => best, write: o => { best = o; saveBest(); }, merge: maxMap, refresh: () => selectScreen() });
-    const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
-    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const sfx = MBALAB.util.sfx;
+    const esc = MBALAB.util.esc;
     const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
 
     let bg = null, lv = null, seed = 1, G = null, phase = 'select', cards = [], cur = null, shown = null, row = null, log = [], res = null, wise = null;
     let ghostOn = false, infoKey = null, reactNow = null, prevAge = null, gPrev = {};
     const ensureWise = () => (wise = wise || L.wisePlay(bg, lv, seed));
-    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const clamp = MBALAB.util.clamp;
 
     /* ---------- formatting ---------- */
     const fmt = v => { const a = Math.abs(v), sg = v < 0 ? '−' : ''; return sg + t('cur') + ' ' + (a >= 1000 ? (a / 1000).toFixed(a >= 10000 ? 0 : 2) + ' ' + t('unitB') : (a < 10 ? a.toFixed(1) : Math.round(a)) + ' ' + t('unitM')); };

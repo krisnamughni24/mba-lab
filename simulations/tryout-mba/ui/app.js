@@ -3,8 +3,8 @@ MBALAB.sims.define('tryout-mba', {
   mount(host) {
     const E = MBALAB.tryout, D = MBALAB.tryoutData, $ = s => host.querySelector(s), root = $('#to'), self = this;
     const KEY = 'mbalab-to-v1', CK = 'mbalab-to-cfg';
-    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
+    const esc = MBALAB.util.esc;
+    const sfx = MBALAB.util.sfx;
     const clone = o => JSON.parse(JSON.stringify(o));
     const LET = ['A', 'B', 'C', 'D'], MKS = D.mk.map(m => m.n), WKS = [1, 2, 3, 4, 5, 6], CELLS = [].concat(...MKS.map(m => WKS.map(w => m + '-' + w)));
     const mkOf = n => D.mk.find(m => m.n === n);

@@ -19,7 +19,7 @@ MBALAB.account.push(simId, data)      // debounced upsert of the JSON document
 MBALAB.account.attempt(simId, {at, score, detail})   // history row (idempotent per user+sim+at)
 MBALAB.on('auth', user => ...)        // fired after sign-in (user) / sign-out (null)
 ```
-Try Out MBA is wired in `simulations/tryout-mba/app.js` (cloudSync / cloudPush); `MBALAB.tryout.merge` combines device and cloud stats.
+Try Out MBA is wired in `simulations/tryout-mba/ui/app.js` (cloudSync / cloudPush); `MBALAB.tryout.merge` combines device and cloud stats.
 
 ## Notes
 - Guests keep working; progress stays in localStorage. On first sign-in the device progress is merged into the account.

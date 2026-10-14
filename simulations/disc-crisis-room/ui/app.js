@@ -3,7 +3,7 @@ MBALAB.sims.define('disc-crisis-room', {
   mount(host) {
     const E = MBALAB.disc, $ = s => host.querySelector(s), T = (k, p) => t('dc_' + k, p), S = E.STYLES;
     const still = () => document.body.classList.contains('still');
-    const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
+    const sfx = MBALAB.util.sfx;
     const KEY = 'mbalab-dc-last';
     const cv = $('#dcCv'), scene = E.Scene(cv);
     const METER = { D: 'mR', I: 'mM', S: 'mH', C: 'mQ' };

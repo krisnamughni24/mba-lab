@@ -3,7 +3,7 @@ MBALAB.sims.define('bumn-explorer', {
   mount(host) {
     const E = MBALAB.bumn, Q = E.quiz, $ = s => host.querySelector(s), T = (k, p) => t('bm_' + k, p);
     const still = () => document.body.classList.contains('still');
-    const sfx = n => { try { MBALAB.audio && MBALAB.audio.play(n); } catch (e) {} };
+    const sfx = MBALAB.util.sfx;
     const KEY = 'mbalab-bumn', M = E.LIST.length;
     const stage = $('#bmStage'), name = id => E.byId[id].n;
     let gl = null;

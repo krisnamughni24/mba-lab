@@ -6,8 +6,8 @@
   const COLS = ['var(--cy)', 'var(--gn)', 'var(--mg)', 'var(--am)'];
   const GY = 206;
   const f1 = n => Math.round(n * 10) / 10;
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const esc = MBALAB.util.esc;
+  const clamp = MBALAB.util.clamp;
   const pr = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
   const hair = a => a >= 56 ? '#e6e8ef' : a >= 45 ? '#9a9aaa' : '#6b4a35';
 

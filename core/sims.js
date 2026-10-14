@@ -1,7 +1,7 @@
 /* Simulation host: loads simulations on demand (microsite style) and shows one at a time inside #app.
 
-   A simulation is a folder under simulations/<id>/ listed in data/simulations.js. Its files (strings, template,
-   app code, styles) are only downloaded the first time it is opened. Each file registers its part with
+   A simulation is a folder under simulations/<id>/ listed in data/simulations.js; its file list is simulations/<id>/sim.js.
+   Its files (strings, template, app code, styles) are only downloaded the first time it is opened. Each file registers its part with
        MBALAB.sims.define('<id>', { strings, template, mount(host), onShow(host), onHide(), onLang(), onTheme(day) })
    Parts from several files are merged. See docs/ADDING-A-SIMULATION.md. */
 (() => {
@@ -10,22 +10,30 @@
   const loading = {};     // id -> load promise
   const stash = {};       // id -> DocumentFragment holding a simulation's DOM while another one is shown
   const mounted = {};
+  const files = {};       // id -> { scripts, styles } registered by simulations/<id>/sim.js
   let owner = null;       // id of the simulation whose DOM is currently inside #app
 
   const manifest = id => (MBALAB.data.simulations || []).find(s => s.id === id);
   const host = () => $('app');
   const current = () => (owner && host().classList.contains('on')) ? impl[owner] : null;
 
+  const filesFor = (id, list) => { files[id] = list; };
   const define = (id, part) => {
     const target = impl[id] || (impl[id] = {});
     if (part.strings) MBALAB.i18n.add(part.strings);
     Object.assign(target, part);
   };
 
-  const load = (id, onEach) => loading[id] || (loading[id] = (async () => {
-    const m = manifest(id);
+  const load = (id, onEach, onTotal) => loading[id] || (loading[id] = (async () => {
+    let m = manifest(id);
     if (!m || m.status !== 'live') throw new Error('Simulation "' + id + '" is not available');
     const base = m.path || ('simulations/' + id + '/');
+    if (!m.scripts) {                                  // file list lives in simulations/<id>/sim.js
+      await MBALAB.load.scripts([base + 'sim.js']); onEach && onEach();
+      const F = files[id]; if (!F) throw new Error('Simulation "' + id + '" has no sim.js file list');
+      m = Object.assign({}, m, F);
+    }
+    onTotal && onTotal((m.styles || []).length + (m.scripts || []).length);
     await Promise.all([
       MBALAB.load.styles((m.styles || []).map(x => base + x), onEach),
       MBALAB.load.scripts((m.scripts || []).map(x => base + x), onEach)
@@ -51,12 +59,12 @@
     $('slName').textContent = m ? tr(m.name) : '';
     $('slDev').textContent = (A.developedBy ? tr(A.developedBy) + ' ' : '') + ((m && m.developer ? tr(m.developer) : '') || A.developer || '');
     const fill = $('slFill'), pct = $('slPct'), bar = screen.querySelector('.sl-bar');
-    let total = m ? ((m.scripts || []).length + (m.styles || []).length) || 1 : 1, got = 0, ready = false, failed = null;
+    let total = m && m.scripts ? ((m.scripts || []).length + (m.styles || []).length) || 1 : 8, got = 0, ready = false, failed = null;
     const shown = { v: 0 }, t0 = performance.now();
     const set = v => { const p = Math.round(v); fill.style.width = p + '%'; pct.textContent = p + '%'; bar.setAttribute('aria-valuenow', p); };
     MBALAB.audio && MBALAB.audio.loadStart && MBALAB.audio.loadStart(minMs);
     set(0); screen.hidden = false; void screen.offsetWidth; screen.classList.add('on');
-    const work = load(id, () => { got++; }).then(() => { ready = true; }, e => { failed = e; ready = true; });
+    const work = load(id, () => { got++; }, n => { total = n + 1; }).then(() => { ready = true; }, e => { failed = e; ready = true; });
     await new Promise(res => {
       const tick = now => {
         const timePart = Math.min(1, (now - t0) / minMs) * 100;
@@ -122,7 +130,7 @@
     if (sim && sim.onHide) sim.onHide();
   };
 
-  MBALAB.sims = { define, open, close, manifest, isOpen: () => host().classList.contains('on') };
+  MBALAB.sims = { define, files: filesFor, open, close, manifest, isOpen: () => host().classList.contains('on') };
   MBALAB.actions['open-sim'] = el => open(el.dataset.sim);
 
   /* back buttons inside a simulation, and the brand link in the top bar */
