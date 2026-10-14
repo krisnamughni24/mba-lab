@@ -137,3 +137,23 @@
 @media(min-width:1700px){
   .nb-select,.nb-play{padding-left:40px;padding-right:40px}
 }
+
+/* full-width play window that never scrolls: the stage takes whatever height is left
+   after the HUD and controls, and the scene extends sideways instead of stretching */
+@media(min-width:901px){
+  .nb-scroll:has(.nb-play:not([hidden])){overflow:hidden;padding-bottom:0;display:flex;flex-direction:column}
+  .nb-play:not([hidden]){display:flex;flex-direction:column;flex:1;min-height:0;max-width:none;width:100%;margin:0;padding:6px clamp(10px,1.4vw,22px) 10px}
+  .nb-play .nb-hud,.nb-play .nb-ctl,.nb-play .nb-res{max-width:none;margin-left:0;margin-right:0;flex:none}
+  .nb-play .nb-hud{margin-bottom:6px}
+  .nb-play .nb-stage{flex:1 1 0;min-height:200px;max-width:none;width:100%;margin:0;aspect-ratio:auto;container-type:size}
+  .nb-play .nb-ctl{margin-top:8px;padding:8px 12px;gap:8px 18px}
+  .nb-play .nb-res{margin-top:8px;max-height:46vh;overflow:auto}
+  .nb-play .nb-kb{display:none}
+  .nb-bub{--z:min(100cqw,177.78cqh)}
+  .nb-bub-n{right:calc(50% - var(--z) / 2 + var(--z) * .025)}
+  .nb-bub-y{left:calc(50% - var(--z) / 2 + var(--z) * .025)}
+}
+@media(min-width:901px){
+  .nb-bub{width:calc(var(--z) * .27)}
+  .nb-play .nb-acts{padding-left:120px}
+}

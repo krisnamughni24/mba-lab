@@ -50,12 +50,12 @@
     const glow = (c, b, f) => { ctx.shadowColor = c; ctx.shadowBlur = b; f(); ctx.shadowBlur = 0; };
     const rr = (x, y, w, h, r) => { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); };
 
-    function background() {
+    function background(ext) {
       const g = ctx.createLinearGradient(0, 0, 0, H); pal.sky.forEach((c, i) => g.addColorStop(i / 2, c)); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
       if (!day) stars.forEach(s => { ctx.globalAlpha = .4 + .6 * Math.abs(Math.sin(T * .0012 + s[3])); ctx.fillStyle = '#fff'; ctx.fillRect(s[0], s[1], s[2], s[2]); ctx.globalAlpha = 1; });
       else clouds.forEach(c => { const x = ((c[0] + T * .008 * c[2]) % (W + 240)) - 120; ctx.fillStyle = 'rgba(255,255,255,.82)'; [[0, 0, 34], [30, 6, 26], [-28, 8, 24], [8, -10, 24]].forEach(p => { ctx.beginPath(); ctx.arc(x + p[0] * c[2], c[1] + p[1], p[2] * c[2], 0, TAU); ctx.fill(); }); });
       const sunX = day ? 800 : 160, sunY = 110;
-      glow(day ? '#fff2b0' : '#ff9be8', 40, () => { ctx.fillStyle = day ? '#fff6c8' : '#ffd1f4'; ctx.beginPath(); ctx.arc(sunX, sunY, day ? 34 : 26, 0, TAU); ctx.fill(); });
+      if (!ext) glow(day ? '#fff2b0' : '#ff9be8', 40, () => { ctx.fillStyle = day ? '#fff6c8' : '#ffd1f4'; ctx.beginPath(); ctx.arc(sunX, sunY, day ? 34 : 26, 0, TAU); ctx.fill(); });
       planes.forEach(p => { const x = ((p.x + T * .001 * p.v) % (W + 120) + W + 120) % (W + 120) - 60, y = p.y + Math.sin(T * .0007 + p.ph) * 6; ctx.fillStyle = day ? '#fff' : '#cbd6ff'; ctx.beginPath(); ctx.ellipse(x, y, 9, 2.6, 0, 0, TAU); ctx.fill(); ctx.fillRect(x - 3, y - 1, 6, 5); if (!day) { ctx.globalAlpha = .5 + .5 * Math.sin(T * .01 + p.ph); ctx.fillStyle = '#ff4f6a'; ctx.fillRect(x - 10, y - 1, 2, 2); ctx.fillStyle = '#6dffb0'; ctx.fillRect(x + 8, y - 1, 2, 2); ctx.globalAlpha = 1; } else { ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.beginPath(); ctx.moveTo(x - 10, y); ctx.lineTo(x - 52, y + 1); ctx.stroke(); } });
       if (day) birds.forEach(b => { const x = (b.x + T * .001 * b.v) % (W + 40) - 20, y = b.y + Math.sin(T * .002 + b.ph) * 8, f = Math.sin(T * .012 + b.ph) * 4; ctx.strokeStyle = '#26406a'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(x - 6, y + f); ctx.quadraticCurveTo(x - 2, y - 4, x, y); ctx.quadraticCurveTo(x + 2, y - 4, x + 6, y + f); ctx.stroke(); });
       bldgs.forEach(b => {
@@ -303,9 +303,12 @@
     const oppPos = (n, k) => n === 1 ? [630, 372, 1] : k === 0 ? [598, 372, 1] : [744, 358, .9];
     function draw(dt) {
       dt = dt || 0;
-      ctx.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0);
+      /* uniform scale; a stage wider than 16:9 shows extra sky and skyline on both sides */
+      const wide = cv.width / cv.height > W / H + .02, sc = wide ? cv.height / H : cv.width / W, ox = wide ? (cv.width / sc - W) / 2 : 0;
+      ctx.setTransform(sc, 0, 0, wide ? sc : cv.height / H, ox * sc, 0);
       ctx.save();
       if (shake > 0) ctx.translate((Math.random() - .5) * shake, (Math.random() - .5) * shake);
+      if (ox > 0) { ctx.save(); ctx.translate(-W, 0); background(true); ctx.restore(); ctx.save(); ctx.translate(W, 0); background(true); ctx.restore(); }
       background(); spotlight(); floor(); table(); goods();
       const n = v.opps.length, items = [];
       /* pads first, then people sorted by depth */

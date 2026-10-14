@@ -200,7 +200,7 @@ MBALAB.sims.define('negotiation-batna', {
     function loop() { if (visible && gs && !still() && !document.hidden) scene.start(); else if (scene.running) scene.stop(); else scene.draw(); }
     document.addEventListener('visibilitychange', loop);
     /* size the canvas backing store to the displayed size */
-    function fit() { const w = cv.clientWidth || 960, d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(w * 9 / 16 * d); scene.draw(); }
+    function fit() { const w = cv.clientWidth || 960, h = cv.clientHeight || Math.round(w * 9 / 16), d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(h * d); scene.draw(); }
     if (window.ResizeObserver) new ResizeObserver(fit).observe($('#nbStage')); else window.addEventListener('resize', fit);
 
     /* ---------- info dialog (mission + how to play), always reachable ---------- */
