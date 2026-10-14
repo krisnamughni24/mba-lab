@@ -10,6 +10,30 @@ MBALAB.sims.define('bullwhip-effect', {
     const maxMap = (a, b) => { const o = Object.assign({}, a || {}); Object.keys(b || {}).forEach(k => { if (!(o[k] >= b[k])) o[k] = b[k]; }); return o; };
     const cloud = MBALAB.cloud('bullwhip-effect', { read: () => best, write: o => { best = o; saveBest(); }, merge: maxMap, refresh: () => cards() });
     const sfx = MBALAB.util.sfx;
+    const cv = $('#bwCv'), stage = $('#bwStage'), tipEl = $('#bwTip'), scroll = $('#bwScroll');
+    const scene = MBALAB.bwScene(cv);
+    let visible = false;
+    const still = () => document.body.classList.contains('still');
+    const live = () => !!(g && !g.over && role !== null);
+    function loop() { if (visible && live() && !still() && !document.hidden) scene.start(); else if (scene.running) scene.stop(); else scene.draw(); }
+    document.addEventListener('visibilitychange', loop);
+    if (window.MutationObserver) new MutationObserver(loop).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    function fit() { const w = cv.clientWidth || 960, h = cv.clientHeight || Math.round(w * 10 / 16), dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); scene.draw(); }
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(stage); else window.addEventListener('resize', fit);
+    function names() {
+      if (!sc) return;
+      const n = { cust: t('customers'), you: t('you'), hulu: t('hulu'), hilir: t('hilir') };
+      for (let i = 0; i < 4; i++) { n[i] = name(sc, i); n['tr' + i] = t('tr' + i); }
+      scene.setNames({ names: n, src: t('srcLbl'), goods: sc.icon });
+    }
+    /* the stage and the no-scroll layout only exist while a game is running */
+    function mode() {
+      const on = live();
+      stage.hidden = !on; scroll.classList.toggle('live', on); $('#bwChain').hidden = on;
+      if (!on) { tipEl.hidden = true; scene.set({ live: false }); }
+      else { names(); fit(); }
+      loop();
+    }
 
     let sc = null, g = null, role = null, order = 4, showBench = false, res = null;
     const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
@@ -65,12 +89,13 @@ MBALAB.sims.define('bullwhip-effect', {
       $('#bwChain').innerHTML = chainHtml();
       $('#bwBody').innerHTML = `<div class="bw-roles"><h2>${esc(t('roleT'))}</h2><p class="bw-sub">${esc(t('roleSub'))}</p><div class="bw-rg">` +
         [0, 1, 2, 3].map(r => `<button type="button" class="bw-role" data-r="${r}"><span class="ic" aria-hidden="true">${ICON[r]}</span><span><b>${esc(name(sc, r))}</b><i>${esc(t('tr' + r))}</i><small>${esc(t('rl' + r))}</small></span></button>`).join('') + '</div></div>';
+      mode();
     }
 
     /* ---------- play ---------- */
     function startGame(r) {
       role = r; g = B.create(sc.id, r); res = null;
-      order = Math.round(B.view(g).incoming); render();
+      order = Math.round(B.view(g).incoming); mode(); render(true);
     }
     function tipText(v) {
       if (g.week === 0) return t('tip0');
@@ -92,13 +117,18 @@ MBALAB.sims.define('bullwhip-effect', {
       const inc = h.slice(1).map(x => x.incoming[role]), out = h.slice(1).map(x => x.orders[role]);
       const pos = h.slice(1).map(x => x.inv[role] - x.back[role]);
       if (!inc.length) return '<div class="bw-mini empty"></div>';
-      return `<div class="bw-mini"><h3>${esc(t('chartMine'))}</h3>${chart([{ d: inc, c: 'c-in' }, { d: out, c: 'c-out' }, { d: pos, c: 'c-pos', dash: true }], { n, h: 190, aria: t('chartMine') })}
+      return `<div class="bw-mini"><h3>${esc(t('chartMine'))}</h3>${chart([{ d: inc, c: 'c-in' }, { d: out, c: 'c-out' }, { d: pos, c: 'c-pos', dash: true }], { n, h: 150, aria: t('chartMine') })}
         ${legend([{ c: 'c-in', t: t(role === 0 ? 'inCust' : 'inLbl') }, { c: 'c-out', t: t('lgOut') }, { c: 'c-pos', t: t('lgPos'), dash: true }])}</div>`;
     }
-    function render() {
+    function sync(snap) {
+      const v = B.view(g);
+      scene.set({ live: true, role, inv: v.inv, back: v.back, pipes: g.ship.map(p => p.slice()), inc: v.incoming, order, week: g.week, snap: !!snap });
+    }
+    function render(snap) {
       if (g.over) return results();
       const v = B.view(g);
-      hud();
+      hud(); sync(snap);
+      tipEl.textContent = '💡 ' + tipText(v); tipEl.hidden = false;
       $('#bwChain').innerHTML = chainHtml();
       $('#bwBody').innerHTML = `<div class="bw-board">
         <div class="bw-stats">
@@ -114,7 +144,6 @@ MBALAB.sims.define('bullwhip-effect', {
           <div class="bw-row"><button type="button" id="bwMinus" aria-label="-1">−</button><input type="range" id="bwRange" min="0" max="40" step="1" value="${order}"><button type="button" id="bwPlus" aria-label="+1">+</button><output id="bwVal" class="bw-val">${order}</output></div>
           <small class="bw-pos">${esc(t('posLbl'))}: <b>${v.position}</b> <span>(${esc(t('posHint'))})</span></small>
           <button type="button" id="bwGo" class="bw-main">${esc(t('btnOrder', { n: order }))}</button>
-          <p class="bw-tip">💡 ${esc(tipText(v))}</p>
         </div>
       </div>${miniChart()}`;
     }
@@ -126,7 +155,10 @@ MBALAB.sims.define('bullwhip-effect', {
     }
     function go() {
       if (!g || g.over) return;
+      const pv = B.view(g), prev = g.ship.map(p => p.slice()), sentOrder = order;
       B.step(g, order); sfx('tick');
+      const last = g.hist[g.hist.length - 1];
+      scene.step({ prev, arrived: prev[role][0], inc: pv.incoming, order: sentOrder, shipped: last.shipped[role], demand: pv.demand, served: last.shipped[role] }, still());
       $('#bwSr').textContent = t('srWeek', { n: g.week, s: g.inv[role], b: g.back[role] });
       if (!g.over) order = Math.round(B.view(g).incoming);
       render();
@@ -140,7 +172,7 @@ MBALAB.sims.define('bullwhip-effect', {
       const r = res, v = role;
       if (!best[sc.id] || r.stars > best[sc.id]) { best[sc.id] = r.stars; saveBest(); cloud.changed(); }
       if (firstTime) cloud.attempt({ at: Date.now(), score: Math.min(100, Math.round(r.bench / Math.max(1, r.total) * 100)), variant: sc.id, detail: { stars: r.stars, role: v } });
-      hud();
+      hud(); mode();
       $('#bwChain').innerHTML = chainHtml();
       const extra = Math.round((r.total / r.bench - 1) * 100);
       const COL = ['c-t0', 'c-t1', 'c-t2', 'c-t3'];
@@ -178,7 +210,7 @@ MBALAB.sims.define('bullwhip-effect', {
     root.addEventListener('click', e => {
       const x = e.target;
       const rb = x.closest('.bw-role'); if (rb) { sfx('open'); startGame(+rb.dataset.r); return; }
-      if (x.closest('#bwToChains') || x.closest('#bwAll')) { $('#bwPlay').hidden = true; $('#bwSelect').hidden = false; g = null; role = null; cards(); $('#bwScroll').scrollTop = 0; return; }
+      if (x.closest('#bwToChains') || x.closest('#bwAll')) { $('#bwPlay').hidden = true; $('#bwSelect').hidden = false; g = null; role = null; cards(); mode(); $('#bwScroll').scrollTop = 0; return; }
       if (x.closest('#bwMinus')) return setOrder(order - 1);
       if (x.closest('#bwPlus')) return setOrder(order + 1);
       if (x.closest('#bwGo')) return go();
@@ -191,12 +223,14 @@ MBALAB.sims.define('bullwhip-effect', {
     function refresh() {
       cards();
       if (!sc || $('#bwPlay').hidden) return;
-      if (!g) pickRole(); else if (g.over) results(); else render();
+      if (!g) pickRole(); else if (g.over) results(); else { names(); render(); }
     }
     this.refresh = refresh;
+    this._bw = { scene, fit, loop, setVisible(x) { visible = x; loop(); } };
     cards();
   },
-  onShow() { },
+  onShow() { const m = this._bw; if (!m) return; m.scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
+  onHide() { const m = this._bw; if (m) m.setVisible(false); },
   onLang() { if (this.refresh) this.refresh(); },
-  onTheme() { }
+  onTheme(day) { const m = this._bw; if (m) m.scene.setTheme(day); }
 });

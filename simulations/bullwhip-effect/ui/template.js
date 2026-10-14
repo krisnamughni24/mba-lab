@@ -16,6 +16,10 @@ MBALAB.sims.define('bullwhip-effect', {
     <section class="bw-play" id="bwPlay" hidden>
       <div class="bw-hud" id="bwHud"></div>
       <div class="bw-chain" id="bwChain"></div>
+      <div class="bw-stage" id="bwStage" hidden>
+        <canvas id="bwCv" width="960" height="540" role="img" data-ia="aria-label=sceneAria"></canvas>
+        <p class="bw-tip" id="bwTip" hidden></p>
+      </div>
       <div id="bwBody"></div>
     </section>
   </div>

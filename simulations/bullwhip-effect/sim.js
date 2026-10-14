@@ -4,6 +4,7 @@ MBALAB.sims.files('bullwhip-effect', {
     "i18n/strings.js",
     "ui/template.js",
     "engine/engine.js",
+    "scene/scene.js",
     "ui/app.js"
   ],
   styles: ["../../shared/studio.css", "ui/style.css"]
