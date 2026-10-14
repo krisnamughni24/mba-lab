@@ -64,7 +64,7 @@ MBALAB.data.simulations = [
     "status": "live",
     "icon": "📝",
     "category": "exam-prep",
-    "developer": "FauzanIkromi (FullCycle)",
+    "developer": "293 - M. Fauzan Ikromi",
     "name": {
       "en": "Try Out MBA",
       "id": "Try Out MBA",
