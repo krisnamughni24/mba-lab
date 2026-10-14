@@ -128,3 +128,12 @@
 .nb-stage{width:100%;max-width:max(640px,calc((100vh - 170px) * 16 / 9));margin-left:auto;margin-right:auto}
 .nb-hud,.nb-ctl,.nb-res{max-width:max(640px,calc((100vh - 170px) * 16 / 9));margin-left:auto;margin-right:auto}
 @media(max-width:900px){.nb-stage,.nb-hud,.nb-ctl,.nb-res{max-width:none}}
+
+/* wider mission menu: use more of the screen on large displays */
+@media(min-width:980px){
+  .nb-select{max-width:min(1880px,100%);grid-template-columns:minmax(0,1fr) clamp(340px,26vw,440px);column-gap:24px}
+  .nb-select>.nb-cards{gap:14px}
+}
+@media(min-width:1700px){
+  .nb-select,.nb-play{padding-left:40px;padding-right:40px}
+}
