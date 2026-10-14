@@ -259,6 +259,24 @@ MBALAB.data.simulations = [
     }
   },
   {
+    "id": "koperasi-tycoon",
+    "status": "live",
+    "icon": "🌾",
+    "category": "indonesia-business",
+    "name": {
+      "en": "Koperasi: Season by Season",
+      "id": "Koperasi: Musim ke Musim",
+      "ja": "協同組合：季節ごとに",
+      "zh": "合作社：四季经营"
+    },
+    "description": {
+      "en": "Manage a village cooperative for 8 years: shop, rice, loans, rivals and the members' trust.",
+      "id": "Kelola koperasi desa selama 8 tahun: toko, beras, pinjaman, pesaing, dan kepercayaan anggota.",
+      "ja": "村の協同組合を8年間運営。店、米、貸付、ライバル、組合員の信頼。",
+      "zh": "经营村合作社8年：商店、大米、贷款、对手与社员的信任。"
+    }
+  },
+  {
     "id": "demand-forecasting",
     "status": "soon",
     "icon": "📊",

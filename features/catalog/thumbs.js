@@ -78,6 +78,12 @@
     '' +
     '<circle class="fc k-pulse" cx="100" cy="45" r="5"/>');
 
+  T['koperasi-tycoon'] = S(
+    '<path class="g" d="M14 88H186"/><path class="fa o" d="M14 66Q50 52 90 64T186 60V88H14z"/>' +
+    [0, 1, 2, 3, 4, 5, 6, 7].map(i => '<path class="a k-bob" style="--d:' + (i * .15) + 's" d="M' + (22 + i * 20) + ' 80V66"/>').join('') +
+    '<rect class="fd o" x="70" y="34" width="56" height="36" rx="3"/><path class="fb" d="M64 36L98 14L132 36z"/><path class="c" d="M76 44H120"/><path class="c" d="M76 52H120"/>' +
+    '<circle class="fc k-pulse" cx="98" cy="58" r="4"/><circle class="fa k-ride" style="offset-path:path(\'M20 94H180\')" r="4" cx="0" cy="0"/>');
+
   T['demand-forecasting'] = S(axes +
     '<path class="fc o" d="M110 52L186 20V62L110 56z"/><path class="a k-draw" pathLength="1" d="M22 70L36 60 48 66 62 50 76 56 90 42 104 48 110 44"/>' +
     '<path class="c" stroke-dasharray="5 4" d="M110 44L134 36 160 30 184 24"/><path class="g" d="M110 12V86" stroke-dasharray="2 4"/><circle class="fc k-pulse" cx="110" cy="44" r="4"/><circle class="fa k-ride" style="offset-path:path(\'M22 70L36 60 48 66 62 50 76 56 90 42 104 48 110 44L134 36 160 30 184 24\');--d:0s" cx="0" cy="0" r="3.6"/>');
