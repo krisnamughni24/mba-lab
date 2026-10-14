@@ -15,7 +15,7 @@
   T['life-40'] = S(
     axes + [8, 11, 15, 21, 29, 40, 56].map((h, i) => '<rect class="fa k-up" style="--d:' + (i * .18) + 's" x="' + (30 + i * 21) + '" y="' + (86 - h) + '" width="14" height="' + h + '" rx="3" opacity=".55"/>').join('') +
     '<path class="c k-draw" pathLength="1" d="M34 76Q90 74 120 58T178 14"/><circle class="fc k-pulse" cx="178" cy="14" r="6"/><circle class="fc" cx="120" cy="58" r="4"/>' +
-    '<circle class="b" cx="34" cy="20" r="9"/><path class="b" d="M34 14v6l4 3"/>');
+    '<circle class="b" cx="34" cy="20" r="9"/><path class="b" d="M34 14v6l4 3"/><circle class="fa k-ride" style="offset-path:path(\'M34 76Q90 74 120 58T178 14\');--d:0s" cx="0" cy="0" r="4"/>');
 
   T['smart-decision-studio'] = S(
     [[140, 'fd'], [110, 'fa'], [84, 'fb'], [52, 'fc']].map((r, i) => '<rect class="fg" x="26" y="' + (12 + i * 20) + '" width="156" height="12" rx="6"/><rect class="k-gx ' + r[1] + '" style="--d:' + (i * .2) + 's" x="26" y="' + (12 + i * 20) + '" width="' + r[0] + '" height="12" rx="6"/><circle class="' + r[1] + '" cx="' + (26 + r[0]) + '" cy="' + (18 + i * 20) + '" r="7" stroke="#fff" stroke-width="1.5"/>').join('') +
@@ -51,12 +51,12 @@
   T['portfolio-risk-return'] = S(axes +
     '<path class="c k-draw" pathLength="1" d="M32 76C40 40 80 28 176 24"/>' +
     [[60, 70], [84, 62], [110, 70], [130, 56], [150, 66], [100, 50], [70, 56], [168, 52]].map((p, i) => '<circle class="fa o2 k-bob" style="--d:' + (i * .25) + 's" cx="' + p[0] + '" cy="' + p[1] + '" r="3.2"/>').join('') +
-    '<circle class="fd k-pulse" cx="71" cy="38" r="5"/><path class="g" d="M71 38H20M71 38V86" stroke-dasharray="3 4"/>');
+    '<circle class="fd k-pulse" cx="71" cy="38" r="5"/><path class="g" d="M71 38H20M71 38V86" stroke-dasharray="3 4"/><circle class="fd k-ride" style="offset-path:path(\'M32 76C40 40 80 28 176 24\');--d:0s" cx="0" cy="0" r="3.6"/>');
 
   T['pricing-elasticity'] = S(axes +
     '<rect class="fa o" x="24" y="50" width="43" height="36"/><path class="a k-draw" pathLength="1" d="M26 20Q70 70 184 82"/>' +
     '<path class="g" d="M67 50H20M67 50V86" stroke-dasharray="3 4"/><circle class="fc k-pulse" cx="67" cy="50" r="5"/>' +
-    '<path class="c k-bob" d="M150 14h24l6 6-6 6h-24z"/><circle class="fc" cx="158" cy="20" r="2"/>');
+    '<path class="c k-bob" d="M150 14h24l6 6-6 6h-24z"/><circle class="fc" cx="158" cy="20" r="2"/><circle class="fc k-ride" style="offset-path:path(\'M26 20Q70 70 184 82\');--d:0s" cx="0" cy="0" r="3.6"/>');
 
   T['market-segmentation'] = S(
     '<ellipse class="a o2" cx="52" cy="36" rx="34" ry="22" stroke-dasharray="4 4"/><ellipse class="b o2" cx="136" cy="32" rx="36" ry="20" stroke-dasharray="4 4"/><ellipse class="d o2" cx="98" cy="74" rx="40" ry="18" stroke-dasharray="4 4"/>' +
@@ -66,11 +66,11 @@
 
   T['inventory-eoq'] = S(axes +
     '<path class="a k-draw" pathLength="1" d="M24 20L64 80V20L104 80V20L144 80V20L184 80"/><path class="c" d="M20 50H186" stroke-dasharray="4 4"/>' +
-    '<circle class="fc k-pulse" cx="64" cy="80" r="3.5"/><circle class="fc k-pulse" style="--d:.4s" cx="104" cy="80" r="3.5"/><circle class="fc k-pulse" style="--d:.8s" cx="144" cy="80" r="3.5"/>');
+    '<circle class="fc k-pulse" cx="64" cy="80" r="3.5"/><circle class="fc k-pulse" style="--d:.4s" cx="104" cy="80" r="3.5"/><circle class="fc k-pulse" style="--d:.8s" cx="144" cy="80" r="3.5"/><circle class="fc k-ride" style="offset-path:path(\'M24 20L64 80V20L104 80V20L144 80V20L184 80\');--d:0s" cx="0" cy="0" r="3.4"/>');
 
   T['bullwhip-effect'] = S(
     '<path class="g" d="M16 50H186" stroke-dasharray="3 5"/><path class="b k-draw" pathLength="1" d="M20 50L50 44L70 56L90 38L112 62L132 28L152 72L172 16L184 84"/>' +
-    [[20, 'fa'], [70, 'fa'], [112, 'fc'], [152, 'fb']].map((p, i) => '<circle class="' + p[1] + ' k-pulse" style="--d:' + (i * .4) + 's" cx="' + p[0] + '" cy="92" r="4"/>').join('') + '<path class="g" d="M24 92H66M74 92H108M116 92H148" stroke-dasharray="2 3"/>');
+    [[20, 'fa'], [70, 'fa'], [112, 'fc'], [152, 'fb']].map((p, i) => '<circle class="' + p[1] + ' k-pulse" style="--d:' + (i * .4) + 's" cx="' + p[0] + '" cy="92" r="4"/>').join('') + '<path class="g" d="M24 92H66M74 92H108M116 92H148" stroke-dasharray="2 3"/><circle class="fc k-ride" style="offset-path:path(\'M20 50L50 44L70 56L90 38L112 62L132 28L152 72L172 16L184 84\');--d:0s" cx="0" cy="0" r="4"/>');
 
   T['negotiation-batna'] = S(
     '<path class="g" d="M14 86H186"/><rect class="fd o" x="80" y="14" width="40" height="64" rx="6"/>' +
@@ -80,7 +80,7 @@
 
   T['demand-forecasting'] = S(axes +
     '<path class="fc o" d="M110 52L186 20V62L110 56z"/><path class="a k-draw" pathLength="1" d="M22 70L36 60 48 66 62 50 76 56 90 42 104 48 110 44"/>' +
-    '<path class="c" stroke-dasharray="5 4" d="M110 44L134 36 160 30 184 24"/><path class="g" d="M110 12V86" stroke-dasharray="2 4"/><circle class="fc k-pulse" cx="110" cy="44" r="4"/>');
+    '<path class="c" stroke-dasharray="5 4" d="M110 44L134 36 160 30 184 24"/><path class="g" d="M110 12V86" stroke-dasharray="2 4"/><circle class="fc k-pulse" cx="110" cy="44" r="4"/><circle class="fa k-ride" style="offset-path:path(\'M22 70L36 60 48 66 62 50 76 56 90 42 104 48 110 44L134 36 160 30 184 24\');--d:0s" cx="0" cy="0" r="3.6"/>');
 
   T['situational-leadership'] = S(
     [['fb', 20], ['fc', 58], ['fa', 96], ['fd', 134]].map((c, i) => '<g class="k-up" style="--d:' + (i * .25) + 's"><rect class="' + c[0] + '" x="' + (c[1] + 6) + '" y="' + (72 - i * 17) + '" width="32" height="' + (14 + i * 17) + '" rx="5"/><text class="tk" x="' + (c[1] + 22) + '" y="' + (86 - i * 0) + '" text-anchor="middle" style="font-size:11px">S' + (i + 1) + '</text></g>').join('') +

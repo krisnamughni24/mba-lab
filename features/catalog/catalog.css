@@ -66,10 +66,14 @@ body.still .tb *{animation:none!important}
 .tb .k-draw{stroke-dasharray:1;animation-name:kdraw;animation-duration:3.6s}
 @keyframes kup{0%{transform:scaleY(.15)}45%,85%{transform:scaleY(1)}100%{transform:scaleY(.15)}}
 @keyframes kgx{0%{transform:scaleX(.1)}45%,85%{transform:scaleX(1)}100%{transform:scaleX(.1)}}
-@keyframes kpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.28)}}
-@keyframes kbob{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
-@keyframes ksx{0%,100%{transform:translateX(-7px)}50%{transform:translateX(7px)}}
-@keyframes ksxr{0%,100%{transform:translateX(7px)}50%{transform:translateX(-7px)}}
+@keyframes kpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+@keyframes kbob{0%,100%{transform:translateY(-4px)}50%{transform:translateY(4px)}}
+@keyframes ksx{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
+@keyframes ksxr{0%,100%{transform:translateX(12px)}50%{transform:translateX(-12px)}}
 @keyframes kblink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes kspin{to{transform:rotate(360deg)}}
 @keyframes kdraw{0%{stroke-dashoffset:1}50%,88%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+
+.tb .k-ride{offset-rotate:0deg;offset-distance:0%;animation:kride 4s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes kride{0%{offset-distance:0%}85%,100%{offset-distance:100%}}
+.sim.live:hover .tb svg{transform:scale(1.08)}
