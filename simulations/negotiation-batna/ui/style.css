@@ -110,3 +110,15 @@
   .nb-select>.nb-how{grid-area:how;margin-top:0;position:sticky;top:8px}
   .nb-select[hidden]{display:none}
 }
+
+/* wider how-to box, four mission cards per row on large screens */
+@media(min-width:980px){
+  .nb-select{max-width:1560px;grid-template-columns:minmax(0,1fr) 400px}
+}
+@media(min-width:1280px){
+  .nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .nb-select .nb-card{flex-direction:column;align-items:flex-start;gap:8px;height:100%}
+  .nb-select .nb-card .nb-ct{width:100%}
+  .nb-select .nb-card .nb-cs{align-self:flex-start}
+  .nb-select .nb-card .nb-av{order:-1}
+}
