@@ -1,4 +1,4 @@
-/* Account feature: Google sign-in through Supabase, profile, cloud progress and history.
+/* Account feature: Google and email/password sign-in through Supabase, profile, cloud progress and history.
    Hidden unless data/config.js has supabaseUrl + supabaseKey. Guests keep working with device-only storage.
    Public API (used by simulations): MBALAB.account.user() / pull(sim) / push(sim, data) / attempt(sim, rowOrRows).
    Event: MBALAB.on('auth', user|null). Database: supabase/schema.sql (row level security, one user sees only their rows). */
@@ -40,8 +40,22 @@ MBALAB.feature('account', () => {
   function paintDialog() {
     $('acctT').textContent = t('acctTitle');
     const u = me(), body = $('acctBody');
+    if (u && recovering) {
+      body.innerHTML = '<form class="acct-form" data-acct-form="newpw" novalidate><p>' + esc(t('acctNewPass')) + '</p>' + (msg ? '<p class="acct-st ' + (msgOk ? 'ok' : 'err') + '">' + esc(msg) + '</p>' : '') +
+        '<input type="password" name="p" autocomplete="new-password" minlength="8" placeholder="' + esc(t('acctPass')) + '" aria-label="' + esc(t('acctPass')) + '">' +
+        '<button type="submit" class="acct-go"' + (busy ? ' disabled' : '') + '>' + esc(t('acctSetPass')) + '</button></form>';
+      return;
+    }
     if (!u) {
-      body.innerHTML = '<p>' + esc(t('acctIntro')) + '</p>' + (msg ? '<p class="acct-st err">' + esc(msg) + '</p>' : '') +
+      const up = amode === 'up', rs = amode === 'reset';
+      body.innerHTML = '<p>' + esc(t('acctIntro')) + '</p>' + (msg ? '<p class="acct-st ' + (msgOk ? 'ok' : 'err') + '" role="status">' + esc(msg) + '</p>' : '') +
+        '<form class="acct-form" data-acct-form="' + amode + '" novalidate>' +
+        '<input type="email" name="e" autocomplete="email" inputmode="email" placeholder="' + esc(t('acctEmail')) + '" aria-label="' + esc(t('acctEmail')) + '">' +
+        (rs ? '' : '<input type="password" name="p" autocomplete="' + (up ? 'new-password' : 'current-password') + '" placeholder="' + esc(t('acctPass')) + '" aria-label="' + esc(t('acctPass')) + '">') +
+        '<button type="submit" class="acct-go"' + (busy ? ' disabled' : '') + '>' + esc(t(rs ? 'acctSendReset' : up ? 'acctSignUp' : 'acctSignIn')) + '</button></form>' +
+        '<div class="acct-links">' + (rs ? '' : '<button type="button" data-acct="mode" data-m="' + (up ? 'in' : 'up') + '">' + esc(t(up ? 'acctHaveAcct' : 'acctNoAcct')) + '</button>') +
+        (up ? '' : '<button type="button" data-acct="mode" data-m="' + (rs ? 'in' : 'reset') + '">' + esc(t(rs ? 'acctBack' : 'acctForgot')) + '</button>') + '</div>' +
+        '<div class="acct-or"><span>' + esc(t('acctOr')) + '</span></div>' +
         '<div class="acct-act"><button type="button" class="acct-go" data-acct="in" data-sfx="click">' + esc(t('acctGoogle')) + '</button></div><p class="acct-note">' + esc(t('acctPriv')) + '</p>';
       return;
     }
@@ -142,7 +156,7 @@ MBALAB.feature('account', () => {
   };
 
   /* ---------- leaderboard + board profile ---------- */
-  let setupErr = false, tab = 'me', board = null, boardErr = false, boardSim = '', prof = null;
+  let amode = 'in', msgOk = false, busy = false, recovering = false, setupErr = false, tab = 'me', board = null, boardErr = false, boardSim = '', prof = null;
   async function loadBoard() {
     if (!ready()) return;
     board = null; boardErr = false; paintDialog();
@@ -165,6 +179,7 @@ MBALAB.feature('account', () => {
       msg = '';
       const r = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + location.pathname, queryParams: { prompt: 'select_account' } } });
       if (r.error) { msg = t('acctSignErr'); paintDialog(); }
+    } else if (act === 'mode') { amode = b.dataset.m; msg = ''; paintDialog();
     } else if (act === 'tab') { tab = b.dataset.tab; paintDialog(); if (tab === 'board') loadBoard();
     } else if (act === 'savep' && ready()) {
       const name = dlg.querySelector('[data-acct=dname]').value.trim().slice(0, 24), show = dlg.querySelector('[data-acct=show]').checked;
@@ -179,6 +194,35 @@ MBALAB.feature('account', () => {
       await sb.auth.signOut().catch(() => {});
     }
   });
+  dlg.addEventListener('submit', async e => {
+    const f = e.target.closest('[data-acct-form]'); if (!f || !sb) return;
+    e.preventDefault(); if (busy) return;
+    const kind = f.dataset.acctForm, em = f.elements.e ? f.elements.e.value.trim() : '', pw = f.elements.p ? f.elements.p.value : '';
+    msg = ''; msgOk = false;
+    const bad = k => { msg = t(k); paintDialog(); };
+    if (kind !== 'newpw' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return bad('acctBadEmail');
+    if ((kind === 'up' || kind === 'newpw') && pw.length < 8) return bad('acctPassShort');
+    if (kind === 'in' && !pw) return bad('acctBadLogin');
+    busy = true; paintDialog();
+    try {
+      const back = location.origin + location.pathname;
+      if (kind === 'in') {
+        const r = await sb.auth.signInWithPassword({ email: em, password: pw });
+        if (r.error) msg = /confirm/i.test(r.error.message) ? t('acctNeedConfirm') : t('acctBadLogin');
+      } else if (kind === 'up') {
+        const r = await sb.auth.signUp({ email: em, password: pw, options: { emailRedirectTo: back } });
+        if (r.error) msg = r.error.message || t('acctSignErr');
+        else if (!r.data.session) { msg = t('acctCheckMail'); msgOk = true; amode = 'in'; }
+      } else if (kind === 'reset') {
+        const r = await sb.auth.resetPasswordForEmail(em, { redirectTo: back });
+        if (r.error) msg = t('acctSignErr'); else { msg = t('acctResetSent'); msgOk = true; amode = 'in'; }
+      } else if (kind === 'newpw') {
+        const r = await sb.auth.updateUser({ password: pw });
+        if (r.error) msg = r.error.message || t('acctSignErr'); else { recovering = false; msg = ''; }
+      }
+    } catch (err) { msg = t('acctSignErr'); }
+    busy = false; paint();
+  });
   dlg.addEventListener('change', e => { const el = e.target.closest('[data-acct=bsim]'); if (el) { boardSim = el.value; loadBoard(); } });
   MBALAB.on('lang', paint);
   paint();
@@ -187,6 +231,6 @@ MBALAB.feature('account', () => {
   MBALAB.load.scripts([LIB]).then(() => {
     sb = window.supabase.createClient(C.supabaseUrl, C.supabaseKey, { auth: { flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
     /* never await Supabase calls inside this callback (it would block the auth lock): hand over to a timer */
-    sb.auth.onAuthStateChange((ev, s) => { setTimeout(() => setSession(s), 0); });
+    sb.auth.onAuthStateChange((ev, s) => { if (ev === 'PASSWORD_RECOVERY') { recovering = true; setTimeout(() => MBALAB.actions['open-account'](), 0); } if (ev === 'SIGNED_OUT') recovering = false; setTimeout(() => setSession(s), 0); });
   }).catch(err => { console.error('[account] Supabase library did not load', err); button.style.display = 'none'; });
 });
