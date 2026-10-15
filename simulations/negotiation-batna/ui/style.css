@@ -157,3 +157,28 @@
   .nb-bub{width:calc(var(--z) * .27)}
   .nb-play .nb-acts{padding-left:120px}
 }
+
+/* ===== mission cards v2: art header, avatars, difficulty pips, stars ===== */
+.nb-select>.nb-cards{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))!important;gap:16px!important}
+@media(min-width:1280px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+.nb .nb-card.v2{--ac:var(--cy);position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;height:100%;overflow:hidden;border-radius:20px;border:2px solid color-mix(in srgb,var(--ac) 55%,var(--edge));background:var(--panel);text-align:left;animation:nbup .5s calc(var(--i)*.045s) backwards;transition:transform .2s,box-shadow .25s,border-color .2s}
+.nb .nb-card.v2:hover{transform:translateY(-6px);box-shadow:0 14px 30px color-mix(in srgb,var(--ac) 40%,transparent);border-color:var(--ac)}
+@keyframes nbup{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.nb-art{display:block;width:100%;height:auto;color:var(--txt)}
+.nb-lvn{position:absolute;left:10px;top:10px;padding:3px 11px;border-radius:999px;background:color-mix(in srgb,var(--panel) 85%,transparent);border:1px solid var(--ac);font-size:13.5px;font-weight:800;letter-spacing:.04em;backdrop-filter:blur(4px)}
+.nb-ask{animation:nbask 3.4s ease-in-out infinite alternate}.nb-off{animation:nboff 3.4s ease-in-out infinite alternate}
+@keyframes nbask{to{transform:translateX(var(--dx))}}@keyframes nboff{to{transform:translateX(40px)}}
+.nb-bt{transform-box:fill-box;transform-origin:center;animation:nbbt 2s ease-in-out infinite}@keyframes nbbt{50%{transform:scale(1.25) rotate(8deg)}}
+.nb-gd{transform-box:fill-box;transform-origin:center bottom;animation:nbgd 2.6s ease-in-out infinite}@keyframes nbgd{50%{transform:translateY(-5px) rotate(-4deg)}}
+.nb-orb{transform-box:fill-box;transform-origin:center;animation:nborb 5s ease-in-out infinite}@keyframes nborb{50%{transform:scale(1.18)}}
+.nb-body{display:flex;flex-direction:column;gap:4px;padding:0 14px 8px;flex:1}
+.nb-who{display:flex;align-items:center;gap:6px;margin-top:-22px;margin-bottom:4px;position:relative}
+.nb .nb-card.v2 .nb-av{width:46px;height:46px;font-size:24px;border:3px solid var(--ac);box-shadow:0 4px 12px color-mix(in srgb,var(--ac) 50%,transparent);background:var(--panel)}
+.nb-tm{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--panel2);border:2px solid var(--cy);font-size:15px;margin-left:-2px}
+.nb-tt{font-size:19px;line-height:1.25}.nb-tg{font-style:normal;font-weight:800;font-size:14.5px;color:var(--ac)}.nb-ds{font-size:15px;color:var(--txt2);line-height:1.45}
+.nb-ft{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 14px;border-top:1px dashed color-mix(in srgb,var(--ac) 35%,transparent)}
+.nb-df{display:inline-flex;gap:4px}.nb-df u{width:14px;height:14px;border-radius:4px;transform:rotate(45deg) scale(.75);background:color-mix(in srgb,var(--txt) 16%,transparent)}.nb-df u.on{background:var(--ac);box-shadow:0 0 8px var(--ac)}
+.nb .nb-card.v2 .nb-cs{display:inline-flex;gap:2px;font-size:22px;letter-spacing:0}.nb-cs b{color:color-mix(in srgb,var(--txt) 22%,transparent)}.nb-cs b.on{color:var(--am);text-shadow:0 0 10px var(--am);animation:nbstar .6s both}
+@keyframes nbstar{0%{transform:scale(0) rotate(-90deg)}70%{transform:scale(1.35)}100%{transform:none}}
+body.still .nb-card.v2,body.still .nb-card.v2 *{animation:none!important}
+@media(max-width:640px){.nb-art{height:118px}.nb-tt{font-size:18px}}

@@ -20,13 +20,24 @@ MBALAB.sims.define('negotiation-batna', {
     const unit = n => t('unit', { n });
 
     /* ---------- level cards ---------- */
+    const GE = ['🧵', '🔩', '💡', '📦', '☕', '☀️', '🚢', '🖥️'], AC = ['#ff6ad5', '#4dd2ff', '#ffd166', '#a78bfa', '#ffb36b', '#6ee7b7', '#4dd2ff', '#ff7a7a'];
+    function art(L, i) {
+      const X = v => 16 + (v - N.MIN) / (N.MAX - N.MIN) * 140, bx = X(L.batna), ox = X(L.open), end = bx + (ox - bx) * .35, ac = AC[L.goods], two = L.opps.length > 1;
+      return `<svg class="nb-art" viewBox="0 0 240 112" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><linearGradient id="nbg${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${ac}" stop-opacity=".42"/><stop offset="1" stop-color="${ac}" stop-opacity=".06"/></linearGradient></defs>
+        <rect width="240" height="112" fill="url(#nbg${i})"/><circle class="nb-orb" cx="206" cy="26" r="34" fill="${ac}" opacity=".16"/>
+        <path d="M0 92H240" stroke="${ac}" stroke-opacity=".35"/><path d="M12 66H160" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="3 5"/>
+        <rect x="${(bx - 40).toFixed(1)}" y="52" width="40" height="28" rx="6" fill="#6ee7b7" opacity=".18"/><text x="${(bx - 20).toFixed(1)}" y="72" text-anchor="middle" font-size="16" font-weight="800" fill="#6ee7b7" opacity=".85">?</text>
+        <path d="M${bx.toFixed(1)} 34V84" stroke="#4dd2ff" stroke-width="2" stroke-dasharray="3 3"/><path class="nb-bt" d="M${bx.toFixed(1)} 26l7 8-7 8-7-8z" fill="#4dd2ff"/>
+        <g class="nb-ask" style="--dx:${(end - ox).toFixed(1)}px"><path d="M${(ox + 8).toFixed(1)} 66h${two ? 22 : 14}" stroke="#ff6ad5" stroke-width="4" stroke-linecap="round" opacity=".5"/><circle cx="${ox.toFixed(1)}" cy="66" r="7" fill="#ff6ad5"/>${two ? `<circle cx="${ox.toFixed(1)}" cy="82" r="5" fill="#ff9ae6"/>` : ''}</g>
+        <g class="nb-off"><circle cx="22" cy="66" r="6" fill="#4dd2ff"/></g>
+        <text class="nb-gd" x="204" y="76" text-anchor="middle" font-size="44">${GE[L.goods]}</text></svg>`;
+    }
     function cards() {
       $('#nbCards').innerHTML = N.LEVELS.map((L, i) => {
-        const av = L.opps.map(q => AV[q.p]).join(''), team = L.allies.map(a => AB[a.id]).join('');
-        return `<button type="button" class="nb-card" data-i="${i}">
-        <span class="nb-av ${L.opps.length > 1 ? 'two' : ''}" aria-hidden="true">${av}</span>
-        <span class="nb-ct"><b>${t('lvN', { n: i + 1 })} · ${t('m' + i + 't')}</b><i>${t('m' + i + 'tag')} ${team}</i><small>${t('m' + i + 'd')}</small></span>
-        <span class="nb-cs" aria-label="${t('stars', { n: best[i] })}">${starsTxt(best[i])}</span></button>`;
+        const av = L.opps.map(q => `<span class="nb-av" aria-hidden="true">${AV[q.p]}</span>`).join(''), team = L.allies.map(a => `<span class="nb-tm" aria-hidden="true">${AB[a.id]}</span>`).join(''), d = Math.ceil((i + 1) / 12 * 5);
+        return `<button type="button" class="nb-card v2" data-i="${i}" style="--ac:${AC[L.goods]};--i:${i}">${art(L, i)}<span class="nb-lvn">${t('lvN', { n: i + 1 })}</span>
+        <span class="nb-body"><span class="nb-who">${av}${team}</span><b class="nb-tt">${t('m' + i + 't')}</b><i class="nb-tg">${t('m' + i + 'tag')}</i><small class="nb-ds">${t('m' + i + 'd')}</small></span>
+        <span class="nb-ft"><span class="nb-df" aria-hidden="true">${[1, 2, 3, 4, 5].map(k => `<u class="${k <= d ? 'on' : ''}"></u>`).join('')}</span><span class="nb-cs" aria-label="${t('stars', { n: best[i] })}">${[0, 1, 2].map(k => `<b class="${k < best[i] ? 'on' : ''}">★</b>`).join('')}</span></span></button>`;
       }).join('');
       how();
     }
