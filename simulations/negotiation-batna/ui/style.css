@@ -183,3 +183,14 @@
 @keyframes nbstar{0%{transform:scale(0) rotate(-90deg)}70%{transform:scale(1.35)}100%{transform:none}}
 body.still .nb-card.v2,body.still .nb-card.v2 *{animation:none!important}
 @media(max-width:640px){.nb-art{height:118px}.nb-tt{font-size:18px}}
+
+/* widest cards: the how-to box moves under the cards so they can use the full width */
+@media(min-width:1000px){
+  .nb-select{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"h" "s" "c" "how"!important}
+  .nb-select>.nb-sub{grid-column:auto}
+  .nb-select>.nb-how{position:static;margin-top:18px}
+  .nb-select>.nb-how ol{columns:2;column-gap:36px}.nb-select>.nb-how li{break-inside:avoid}
+}
+@media(min-width:1000px){.nb-select>.nb-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(min-width:1900px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(min-width:1000px){.nb-art{height:170px}}
