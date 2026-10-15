@@ -1445,5 +1445,941 @@ MBALAB.data.simulations = [
       "ja": "場の空気を読み、反応でなく対応する。",
       "zh": "读懂氛围，从容回应而非冲动反应。"
     }
+  },
+  {
+    "id": "financial-mgmt-objectives",
+    "status": "soon",
+    "icon": "🏦",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Financial management & objectives",
+      "id": "Fungsi & tujuan manajemen keuangan",
+      "ja": "財務管理の機能と目的",
+      "zh": "财务管理的职能与目标"
+    },
+    "description": {
+      "en": "Why the goal is shareholder value, not just profit.",
+      "id": "Mengapa tujuannya nilai pemegang saham, bukan sekadar laba.",
+      "ja": "目標が利益だけでなく株主価値である理由。",
+      "zh": "为何目标是股东价值而不只是利润。"
+    }
+  },
+  {
+    "id": "financial-statement-analysis",
+    "status": "soon",
+    "icon": "📒",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Reading the three financial statements",
+      "id": "Membaca tiga laporan keuangan",
+      "ja": "財務三表の読み方",
+      "zh": "解读三大财务报表"
+    },
+    "description": {
+      "en": "Connect the income statement, balance sheet and cash flow.",
+      "id": "Hubungkan laba rugi, neraca, dan arus kas.",
+      "ja": "損益計算書・貸借対照表・キャッシュフローを結びつける。",
+      "zh": "把利润表、资产负债表与现金流量表联系起来。"
+    }
+  },
+  {
+    "id": "financial-projections",
+    "status": "soon",
+    "icon": "🔭",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Pro forma financial projections",
+      "id": "Proyeksi laporan keuangan pro forma",
+      "ja": "予測財務諸表",
+      "zh": "预测财务报表"
+    },
+    "description": {
+      "en": "Forecast statements from sales growth and assumptions.",
+      "id": "Proyeksikan laporan dari pertumbuhan penjualan dan asumsi.",
+      "ja": "売上成長と前提から財務諸表を予測する。",
+      "zh": "根据销售增长与假设预测报表。"
+    }
+  },
+  {
+    "id": "management-accounting",
+    "status": "soon",
+    "icon": "🧮",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Management accounting fundamentals",
+      "id": "Dasar akuntansi manajemen",
+      "ja": "管理会計の基礎",
+      "zh": "管理会计基础"
+    },
+    "description": {
+      "en": "Use cost data to run the business day to day.",
+      "id": "Gunakan data biaya untuk menjalankan bisnis sehari-hari.",
+      "ja": "原価データを日々の経営に活かす。",
+      "zh": "用成本数据支持日常经营。"
+    }
+  },
+  {
+    "id": "time-value-of-money",
+    "status": "soon",
+    "icon": "⏳",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Time value of money",
+      "id": "Nilai waktu uang",
+      "ja": "貨幣の時間価値",
+      "zh": "货币时间价值"
+    },
+    "description": {
+      "en": "Compound, discount and compare cash across time.",
+      "id": "Majemuk, diskonto, dan bandingkan kas lintas waktu.",
+      "ja": "複利・割引で異なる時点の現金を比較する。",
+      "zh": "通过复利与折现比较不同时点的现金。"
+    }
+  },
+  {
+    "id": "financing-environment",
+    "status": "soon",
+    "icon": "🏛️",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Financing decisions & financial environment",
+      "id": "Keputusan pendanaan & lingkungan keuangan",
+      "ja": "資金調達の意思決定と金融環境",
+      "zh": "融资决策与金融环境"
+    },
+    "description": {
+      "en": "Banks, markets and rates: where firms raise money.",
+      "id": "Bank, pasar, dan suku bunga: dari mana perusahaan mendapat dana.",
+      "ja": "銀行・市場・金利：企業の資金調達先。",
+      "zh": "银行、市场与利率：企业从哪里融资。"
+    }
+  },
+  {
+    "id": "working-capital",
+    "status": "soon",
+    "icon": "🚰",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Working capital management",
+      "id": "Manajemen modal kerja",
+      "ja": "運転資本管理",
+      "zh": "营运资本管理"
+    },
+    "description": {
+      "en": "Keep cash, receivables and payables flowing.",
+      "id": "Jaga kas, piutang, dan utang usaha tetap mengalir.",
+      "ja": "現金・売掛金・買掛金を円滑に回す。",
+      "zh": "保持现金、应收与应付款顺畅流动。"
+    }
+  },
+  {
+    "id": "risk-return-concepts",
+    "status": "soon",
+    "icon": "🎢",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Risk and the risk-return relationship",
+      "id": "Risiko & hubungan risiko-imbal hasil",
+      "ja": "リスクとリスク・リターンの関係",
+      "zh": "风险与风险收益关系"
+    },
+    "description": {
+      "en": "Define risk and see why higher return needs higher risk.",
+      "id": "Definisikan risiko dan pahami mengapa imbal hasil tinggi butuh risiko tinggi.",
+      "ja": "リスクを定義し、高リターンに高リスクが伴う理由を知る。",
+      "zh": "定义风险，理解高收益为何伴随高风险。"
+    }
+  },
+  {
+    "id": "capital-budgeting-cases",
+    "status": "soon",
+    "icon": "🏭",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Capital budgeting case lab",
+      "id": "Studi kasus penganggaran modal",
+      "ja": "資本予算ケースラボ",
+      "zh": "资本预算案例实验室"
+    },
+    "description": {
+      "en": "Payback, NPV and IRR on real investment cases.",
+      "id": "Payback, NPV, dan IRR pada kasus investasi nyata.",
+      "ja": "実際の投資案件で回収期間・NPV・IRRを試す。",
+      "zh": "在真实投资案例中运用回收期、NPV与IRR。"
+    }
+  },
+  {
+    "id": "creating-customer-value",
+    "status": "soon",
+    "icon": "💝",
+    "category": "marketing",
+    "name": {
+      "en": "Creating customer value",
+      "id": "Menciptakan nilai pelanggan",
+      "ja": "顧客価値の創造",
+      "zh": "创造客户价值"
+    },
+    "description": {
+      "en": "Turn customer needs into an offer worth paying for.",
+      "id": "Ubah kebutuhan pelanggan menjadi tawaran yang layak dibayar.",
+      "ja": "顧客ニーズを対価に値する提案に変える。",
+      "zh": "把客户需求转化为值得付费的产品。"
+    }
+  },
+  {
+    "id": "marketing-environment",
+    "status": "soon",
+    "icon": "🌦️",
+    "category": "marketing",
+    "name": {
+      "en": "Analyzing the marketing environment",
+      "id": "Menganalisis lingkungan pemasaran",
+      "ja": "マーケティング環境の分析",
+      "zh": "分析营销环境"
+    },
+    "description": {
+      "en": "Separate the micro and macro forces that shape demand.",
+      "id": "Pisahkan kekuatan mikro dan makro yang membentuk permintaan.",
+      "ja": "需要を左右するミクロ・マクロ要因を切り分ける。",
+      "zh": "区分影响需求的微观与宏观力量。"
+    }
+  },
+  {
+    "id": "marketing-insights",
+    "status": "soon",
+    "icon": "💡",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing information & customer insights",
+      "id": "Informasi pemasaran & wawasan pelanggan",
+      "ja": "マーケティング情報と顧客インサイト",
+      "zh": "营销信息与客户洞察"
+    },
+    "description": {
+      "en": "Turn raw data into insight a manager can act on.",
+      "id": "Ubah data mentah menjadi wawasan yang bisa ditindaklanjuti.",
+      "ja": "生データを行動につながるインサイトに変える。",
+      "zh": "把原始数据变成可行动的洞察。"
+    }
+  },
+  {
+    "id": "marketing-research",
+    "status": "soon",
+    "icon": "📋",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing research",
+      "id": "Riset pemasaran",
+      "ja": "マーケティングリサーチ",
+      "zh": "市场调研"
+    },
+    "description": {
+      "en": "Design a survey, sample and read the answers.",
+      "id": "Rancang survei, ambil sampel, dan baca jawabannya.",
+      "ja": "調査を設計し、標本を取り、回答を読む。",
+      "zh": "设计问卷、抽样并解读结果。"
+    }
+  },
+  {
+    "id": "selling-race",
+    "status": "soon",
+    "icon": "🏁",
+    "category": "marketing",
+    "name": {
+      "en": "Game: Selling Race",
+      "id": "Game: Selling Race",
+      "ja": "ゲーム:セリング・レース",
+      "zh": "游戏：销售竞赛"
+    },
+    "description": {
+      "en": "Outsell rival teams round by round.",
+      "id": "Kalahkan tim pesaing ronde demi ronde.",
+      "ja": "ラウンドごとにライバルチームと売上を競う。",
+      "zh": "逐轮与对手团队比拼销量。"
+    }
+  },
+  {
+    "id": "product-service-mix",
+    "status": "soon",
+    "icon": "📦",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing mix: product & services",
+      "id": "Bauran pemasaran: produk & jasa",
+      "ja": "マーケティングミックス:製品とサービス",
+      "zh": "营销组合：产品与服务"
+    },
+    "description": {
+      "en": "Design the core offer, features and service layers.",
+      "id": "Rancang tawaran inti, fitur, dan lapisan layanan.",
+      "ja": "中核提案・機能・サービス層を設計する。",
+      "zh": "设计核心产品、功能与服务层次。"
+    }
+  },
+  {
+    "id": "price-setting",
+    "status": "soon",
+    "icon": "🏷️",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing mix: price setting",
+      "id": "Bauran pemasaran: penetapan harga",
+      "ja": "マーケティングミックス:価格設定",
+      "zh": "营销组合：定价"
+    },
+    "description": {
+      "en": "Cost-plus, value-based or competitive pricing.",
+      "id": "Harga berbasis biaya, nilai, atau pesaing.",
+      "ja": "コストプラス・価値・競争ベースの価格設定。",
+      "zh": "成本加成、价值导向或竞争导向定价。"
+    }
+  },
+  {
+    "id": "place-digital-channels",
+    "status": "soon",
+    "icon": "🛒",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing mix: channels & digital marketing",
+      "id": "Bauran pemasaran: saluran & pemasaran digital",
+      "ja": "マーケティングミックス:流通とデジタル",
+      "zh": "营销组合：渠道与数字营销"
+    },
+    "description": {
+      "en": "Pick where and how customers buy, online and offline.",
+      "id": "Pilih di mana dan bagaimana pelanggan membeli, daring dan luring.",
+      "ja": "オンライン・オフラインで顧客がどこでどう買うかを選ぶ。",
+      "zh": "选择线上线下客户的购买地点与方式。"
+    }
+  },
+  {
+    "id": "promotion-imc",
+    "status": "soon",
+    "icon": "📣",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing mix: promotion & IMC",
+      "id": "Bauran pemasaran: promosi & IMC",
+      "ja": "マーケティングミックス:プロモーションとIMC",
+      "zh": "营销组合：促销与整合营销传播"
+    },
+    "description": {
+      "en": "Blend ads, PR, sales and social into one message.",
+      "id": "Padukan iklan, PR, penjualan, dan media sosial dalam satu pesan.",
+      "ja": "広告・PR・営業・SNSを一つのメッセージに統合する。",
+      "zh": "将广告、公关、销售与社交融为统一信息。"
+    }
+  },
+  {
+    "id": "branding",
+    "status": "soon",
+    "icon": "🎨",
+    "category": "marketing",
+    "name": {
+      "en": "Branding",
+      "id": "Branding",
+      "ja": "ブランディング",
+      "zh": "品牌建设"
+    },
+    "description": {
+      "en": "Build brand equity that supports a price premium.",
+      "id": "Bangun ekuitas merek yang menopang harga premium.",
+      "ja": "価格プレミアムを支えるブランド資産を築く。",
+      "zh": "打造支撑溢价的品牌资产。"
+    }
+  },
+  {
+    "id": "operations-strategy",
+    "status": "soon",
+    "icon": "♟️",
+    "category": "operations",
+    "name": {
+      "en": "Operations strategy",
+      "id": "Strategi operasi",
+      "ja": "オペレーション戦略",
+      "zh": "运营战略"
+    },
+    "description": {
+      "en": "Choose cost, quality, speed or flexibility as the edge.",
+      "id": "Pilih biaya, kualitas, kecepatan, atau fleksibilitas sebagai keunggulan.",
+      "ja": "コスト・品質・速度・柔軟性のどれで勝つか選ぶ。",
+      "zh": "选择成本、质量、速度或灵活性作为优势。"
+    }
+  },
+  {
+    "id": "product-service-design",
+    "status": "soon",
+    "icon": "📐",
+    "category": "operations",
+    "name": {
+      "en": "Product & service design",
+      "id": "Desain produk & jasa",
+      "ja": "製品・サービス設計",
+      "zh": "产品与服务设计"
+    },
+    "description": {
+      "en": "Design for customers, cost and manufacturability.",
+      "id": "Rancang untuk pelanggan, biaya, dan kemudahan produksi.",
+      "ja": "顧客・コスト・作りやすさを考えて設計する。",
+      "zh": "兼顾客户、成本与可制造性的设计。"
+    }
+  },
+  {
+    "id": "project-management",
+    "status": "soon",
+    "icon": "🗓️",
+    "category": "operations",
+    "name": {
+      "en": "Project management basics",
+      "id": "Dasar manajemen proyek",
+      "ja": "プロジェクト管理の基礎",
+      "zh": "项目管理基础"
+    },
+    "description": {
+      "en": "Scope, schedule, cost and risk of a project.",
+      "id": "Lingkup, jadwal, biaya, dan risiko proyek.",
+      "ja": "プロジェクトの範囲・日程・コスト・リスク。",
+      "zh": "项目的范围、进度、成本与风险。"
+    }
+  },
+  {
+    "id": "strategic-capacity",
+    "status": "soon",
+    "icon": "🏗️",
+    "category": "operations",
+    "name": {
+      "en": "Strategic capacity planning",
+      "id": "Perencanaan kapasitas strategis",
+      "ja": "戦略的キャパシティ計画",
+      "zh": "战略产能规划"
+    },
+    "description": {
+      "en": "Decide how much capacity to build, and when.",
+      "id": "Putuskan seberapa besar kapasitas dan kapan dibangun.",
+      "ja": "どれだけの設備をいつ作るかを決める。",
+      "zh": "决定建设多少产能以及何时建设。"
+    }
+  },
+  {
+    "id": "process-design",
+    "status": "soon",
+    "icon": "⚙️",
+    "category": "operations",
+    "name": {
+      "en": "Process design & analysis",
+      "id": "Desain & analisis proses",
+      "ja": "プロセス設計と分析",
+      "zh": "流程设计与分析"
+    },
+    "description": {
+      "en": "Map a process, find waste and measure cycle time.",
+      "id": "Petakan proses, temukan pemborosan, dan ukur waktu siklus.",
+      "ja": "工程を可視化し、ムダとサイクルタイムを測る。",
+      "zh": "绘制流程，找出浪费并测量周期时间。"
+    }
+  },
+  {
+    "id": "lean-operations",
+    "status": "soon",
+    "icon": "🍃",
+    "category": "operations",
+    "name": {
+      "en": "Lean operations",
+      "id": "Operasi lean",
+      "ja": "リーンオペレーション",
+      "zh": "精益运营"
+    },
+    "description": {
+      "en": "Pull, flow and kaizen: remove the seven wastes.",
+      "id": "Pull, flow, dan kaizen: hapus tujuh jenis pemborosan.",
+      "ja": "プル・フロー・改善で7つのムダを取り除く。",
+      "zh": "拉动、流动与改善：消除七大浪费。"
+    }
+  },
+  {
+    "id": "statistical-quality-control",
+    "status": "soon",
+    "icon": "📉",
+    "category": "operations",
+    "name": {
+      "en": "Statistical quality control",
+      "id": "Pengendalian mutu statistik",
+      "ja": "統計的品質管理",
+      "zh": "统计质量控制"
+    },
+    "description": {
+      "en": "Control charts that tell noise from a real problem.",
+      "id": "Peta kendali yang membedakan gangguan acak dari masalah nyata.",
+      "ja": "ばらつきと本当の異常を見分ける管理図。",
+      "zh": "区分随机波动与真实问题的控制图。"
+    }
+  },
+  {
+    "id": "sales-operations-planning",
+    "status": "soon",
+    "icon": "🔁",
+    "category": "operations",
+    "name": {
+      "en": "Sales & operations planning (S&OP)",
+      "id": "Perencanaan penjualan & operasi (S&OP)",
+      "ja": "販売・生産計画(S&OP)",
+      "zh": "销售与运营计划(S&OP)"
+    },
+    "description": {
+      "en": "Align demand, supply and finance in one monthly plan.",
+      "id": "Selaraskan permintaan, pasokan, dan keuangan dalam satu rencana bulanan.",
+      "ja": "需要・供給・財務を一つの月次計画に揃える。",
+      "zh": "把需求、供应与财务统一到月度计划中。"
+    }
+  },
+  {
+    "id": "mrp-erp",
+    "status": "soon",
+    "icon": "🗃️",
+    "category": "operations",
+    "name": {
+      "en": "MRP & ERP",
+      "id": "MRP & ERP",
+      "ja": "MRPとERP",
+      "zh": "MRP与ERP"
+    },
+    "description": {
+      "en": "Explode a bill of materials into an order schedule.",
+      "id": "Uraikan bill of materials menjadi jadwal pemesanan.",
+      "ja": "部品表から発注計画を展開する。",
+      "zh": "把物料清单分解为订货计划。"
+    }
+  },
+  {
+    "id": "rational-decision-framework",
+    "status": "soon",
+    "icon": "🧭",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Rational framework of decision making",
+      "id": "Kerangka rasional pengambilan keputusan",
+      "ja": "合理的意思決定の枠組み",
+      "zh": "理性决策框架"
+    },
+    "description": {
+      "en": "Define, generate, evaluate, choose and review.",
+      "id": "Definisikan, buat opsi, evaluasi, pilih, dan tinjau.",
+      "ja": "定義・案出し・評価・選択・振り返り。",
+      "zh": "界定、生成方案、评估、选择与复盘。"
+    }
+  },
+  {
+    "id": "kepner-tregoe",
+    "status": "soon",
+    "icon": "🔦",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Kepner-Tregoe analysis",
+      "id": "Analisis Kepner-Tregoe",
+      "ja": "ケプナー・トリゴー分析",
+      "zh": "凯普纳-特雷戈分析"
+    },
+    "description": {
+      "en": "Separate musts and wants, then weigh the risks.",
+      "id": "Pisahkan syarat wajib dan keinginan, lalu timbang risikonya.",
+      "ja": "必須条件と希望条件を分けリスクを評価する。",
+      "zh": "区分必要条件与期望条件并权衡风险。"
+    }
+  },
+  {
+    "id": "smart-method",
+    "status": "soon",
+    "icon": "🎯",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Decision analysis: SMART",
+      "id": "Analisis keputusan: SMART",
+      "ja": "意思決定分析:SMART",
+      "zh": "决策分析：SMART"
+    },
+    "description": {
+      "en": "Score options on weighted criteria.",
+      "id": "Beri skor opsi pada kriteria berbobot.",
+      "ja": "重み付き基準で選択肢を採点する。",
+      "zh": "按加权标准给方案打分。"
+    }
+  },
+  {
+    "id": "decision-tree-ev",
+    "status": "soon",
+    "icon": "🌳",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Decision tree & expected value",
+      "id": "Pohon keputusan & nilai harapan",
+      "ja": "決定木と期待値",
+      "zh": "决策树与期望值"
+    },
+    "description": {
+      "en": "Branch choices and chances to find the best path.",
+      "id": "Cabangkan pilihan dan peluang untuk menemukan jalur terbaik.",
+      "ja": "選択と確率を枝分かれさせ最良の道を探す。",
+      "zh": "通过选择与概率分支找出最佳路径。"
+    }
+  },
+  {
+    "id": "scenario-planning",
+    "status": "soon",
+    "icon": "🌅",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Scenario planning",
+      "id": "Perencanaan skenario",
+      "ja": "シナリオプランニング",
+      "zh": "情景规划"
+    },
+    "description": {
+      "en": "Prepare for several futures, not one forecast.",
+      "id": "Bersiap untuk beberapa masa depan, bukan satu ramalan.",
+      "ja": "一つの予測でなく複数の未来に備える。",
+      "zh": "为多种未来做准备，而非单一预测。"
+    }
+  },
+  {
+    "id": "systems-thinking",
+    "status": "soon",
+    "icon": "🕸️",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Systems thinking",
+      "id": "Berpikir sistem",
+      "ja": "システム思考",
+      "zh": "系统思考"
+    },
+    "description": {
+      "en": "Loops, delays and unintended consequences.",
+      "id": "Loop, jeda, dan konsekuensi yang tidak disengaja.",
+      "ja": "ループ・遅れ・意図せぬ結果を読み解く。",
+      "zh": "反馈环、延迟与意外后果。"
+    }
+  },
+  {
+    "id": "negotiation-dilemma",
+    "status": "soon",
+    "icon": "🪤",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "The negotiator's dilemma",
+      "id": "Dilema negosiator",
+      "ja": "交渉者のジレンマ",
+      "zh": "谈判者的困境"
+    },
+    "description": {
+      "en": "Create value together or claim it alone?",
+      "id": "Menciptakan nilai bersama atau mengklaimnya sendiri?",
+      "ja": "価値を共に創るか、独り占めするか。",
+      "zh": "共同创造价值还是独自攫取？"
+    }
+  },
+  {
+    "id": "negotiation-style",
+    "status": "soon",
+    "icon": "🦊",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Know your negotiation style",
+      "id": "Kenali gaya negosiasi Anda",
+      "ja": "自分の交渉スタイルを知る",
+      "zh": "了解你的谈判风格"
+    },
+    "description": {
+      "en": "Find your default style and when to switch.",
+      "id": "Temukan gaya bawaan Anda dan kapan harus berganti.",
+      "ja": "自分の標準スタイルと切り替え時を知る。",
+      "zh": "发现你的默认风格及何时切换。"
+    }
+  },
+  {
+    "id": "claiming-value",
+    "status": "soon",
+    "icon": "🍰",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Claiming value: slicing the pie",
+      "id": "Mengklaim nilai: membagi kue",
+      "ja": "価値の獲得:パイの分け方",
+      "zh": "价值分配：分蛋糕"
+    },
+    "description": {
+      "en": "Anchors, reservation points and the zone of agreement.",
+      "id": "Anchor, titik batas, dan zona kesepakatan.",
+      "ja": "アンカー・留保価格・合意可能領域。",
+      "zh": "锚点、底线与协议区间。"
+    }
+  },
+  {
+    "id": "distributive-integrative",
+    "status": "soon",
+    "icon": "🔀",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "From distributive to integrative negotiation",
+      "id": "Dari negosiasi distributif ke integratif",
+      "ja": "分配型から統合型交渉へ",
+      "zh": "从分配型到整合型谈判"
+    },
+    "description": {
+      "en": "Trade what you value less for what you value more.",
+      "id": "Tukar yang kurang berharga dengan yang lebih berharga.",
+      "ja": "重要度の低いものと高いものを交換する。",
+      "zh": "用次要利益交换重要利益。"
+    }
+  },
+  {
+    "id": "integrative-negotiation-technique",
+    "status": "soon",
+    "icon": "🧩",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Integrative negotiation techniques",
+      "id": "Teknik negosiasi integratif",
+      "ja": "統合型交渉のテクニック",
+      "zh": "整合型谈判技巧"
+    },
+    "description": {
+      "en": "Logrolling, bridging and packaging for win-win deals.",
+      "id": "Logrolling, bridging, dan packaging untuk kesepakatan menang-menang.",
+      "ja": "ログローリング等でWin-Winの合意を作る。",
+      "zh": "互惠让步、搭桥与打包促成双赢。"
+    }
+  },
+  {
+    "id": "multiparty-negotiation",
+    "status": "soon",
+    "icon": "👥",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Multiparty negotiation",
+      "id": "Negosiasi multipihak",
+      "ja": "多者間交渉",
+      "zh": "多方谈判"
+    },
+    "description": {
+      "en": "Coalitions, agendas and consensus among many parties.",
+      "id": "Koalisi, agenda, dan konsensus di antara banyak pihak.",
+      "ja": "多数の当事者間の連合・議題・合意形成。",
+      "zh": "多方之间的联盟、议程与共识。"
+    }
+  },
+  {
+    "id": "data-literacy",
+    "status": "soon",
+    "icon": "🗂️",
+    "category": "analytics",
+    "name": {
+      "en": "How to deal with data",
+      "id": "Cara menghadapi data",
+      "ja": "データとの付き合い方",
+      "zh": "如何处理数据"
+    },
+    "description": {
+      "en": "Clean, question and sanity-check data before using it.",
+      "id": "Bersihkan, pertanyakan, dan periksa data sebelum dipakai.",
+      "ja": "使う前にデータを整え、疑い、検証する。",
+      "zh": "使用前清洗、质疑并检验数据。"
+    }
+  },
+  {
+    "id": "descriptive-diagnostic",
+    "status": "soon",
+    "icon": "🔎",
+    "category": "analytics",
+    "name": {
+      "en": "Descriptive & diagnostic analytics",
+      "id": "Analitik deskriptif & diagnostik",
+      "ja": "記述的・診断的アナリティクス",
+      "zh": "描述性与诊断性分析"
+    },
+    "description": {
+      "en": "What happened, and why did it happen?",
+      "id": "Apa yang terjadi, dan mengapa terjadi?",
+      "ja": "何が起き、なぜ起きたのか。",
+      "zh": "发生了什么，为什么发生？"
+    }
+  },
+  {
+    "id": "predictive-analytics",
+    "status": "soon",
+    "icon": "🔮",
+    "category": "analytics",
+    "name": {
+      "en": "Predictive analytics",
+      "id": "Analitik prediktif",
+      "ja": "予測アナリティクス",
+      "zh": "预测性分析"
+    },
+    "description": {
+      "en": "Forecast what is likely to happen next.",
+      "id": "Perkirakan apa yang mungkin terjadi berikutnya.",
+      "ja": "次に起こりそうなことを予測する。",
+      "zh": "预测接下来可能发生什么。"
+    }
+  },
+  {
+    "id": "prescriptive-analytics",
+    "status": "soon",
+    "icon": "💊",
+    "category": "analytics",
+    "name": {
+      "en": "Prescriptive analytics",
+      "id": "Analitik preskriptif",
+      "ja": "処方的アナリティクス",
+      "zh": "规范性分析"
+    },
+    "description": {
+      "en": "Optimize: what should we do about it?",
+      "id": "Optimalkan: apa yang harus kita lakukan?",
+      "ja": "最適化：どう対処すべきか。",
+      "zh": "优化：我们该怎么做？"
+    }
+  },
+  {
+    "id": "marketing-analytics",
+    "status": "soon",
+    "icon": "📱",
+    "category": "analytics",
+    "name": {
+      "en": "Marketing analytics",
+      "id": "Analitik pemasaran",
+      "ja": "マーケティングアナリティクス",
+      "zh": "营销分析"
+    },
+    "description": {
+      "en": "Attribution, churn and campaign ROI.",
+      "id": "Atribusi, churn, dan ROI kampanye.",
+      "ja": "アトリビューション・解約・施策ROI。",
+      "zh": "归因、流失与营销活动ROI。"
+    }
+  },
+  {
+    "id": "finance-analytics",
+    "status": "soon",
+    "icon": "💹",
+    "category": "analytics",
+    "name": {
+      "en": "Finance analytics",
+      "id": "Analitik keuangan",
+      "ja": "ファイナンス・アナリティクス",
+      "zh": "金融分析"
+    },
+    "description": {
+      "en": "Credit scoring, fraud flags and forecasting cash.",
+      "id": "Penilaian kredit, deteksi fraud, dan proyeksi kas.",
+      "ja": "与信スコア・不正検知・資金予測。",
+      "zh": "信用评分、欺诈预警与现金预测。"
+    }
+  },
+  {
+    "id": "operations-analytics",
+    "status": "soon",
+    "icon": "🏗️",
+    "category": "analytics",
+    "name": {
+      "en": "Operations analytics",
+      "id": "Analitik operasi",
+      "ja": "オペレーション・アナリティクス",
+      "zh": "运营分析"
+    },
+    "description": {
+      "en": "Use data to cut delays, stockouts and downtime.",
+      "id": "Gunakan data untuk mengurangi keterlambatan, stok habis, dan downtime.",
+      "ja": "データで遅延・欠品・停止を減らす。",
+      "zh": "用数据减少延误、缺货与停机。"
+    }
+  },
+  {
+    "id": "people-analytics",
+    "status": "soon",
+    "icon": "🧑‍💼",
+    "category": "analytics",
+    "name": {
+      "en": "People analytics",
+      "id": "Analitik SDM",
+      "ja": "ピープル・アナリティクス",
+      "zh": "人才分析"
+    },
+    "description": {
+      "en": "Data on hiring, engagement and attrition.",
+      "id": "Data rekrutmen, keterlibatan, dan pengunduran diri.",
+      "ja": "採用・エンゲージメント・離職のデータ。",
+      "zh": "招聘、敬业度与离职数据。"
+    }
+  },
+  {
+    "id": "big-data-analytics",
+    "status": "soon",
+    "icon": "🛰️",
+    "category": "analytics",
+    "name": {
+      "en": "Big data analytics",
+      "id": "Analitik big data",
+      "ja": "ビッグデータ分析",
+      "zh": "大数据分析"
+    },
+    "description": {
+      "en": "Handle volume, velocity and variety of data.",
+      "id": "Menangani volume, kecepatan, dan variasi data.",
+      "ja": "データの量・速度・多様性を扱う。",
+      "zh": "处理海量、高速与多样的数据。"
+    }
+  },
+  {
+    "id": "deep-learning",
+    "status": "soon",
+    "icon": "🧠",
+    "category": "analytics",
+    "name": {
+      "en": "Deep learning for business",
+      "id": "Deep learning untuk bisnis",
+      "ja": "ビジネスのためのディープラーニング",
+      "zh": "商业深度学习"
+    },
+    "description": {
+      "en": "Neural networks: where they help and where they don't.",
+      "id": "Jaringan saraf: di mana berguna dan di mana tidak.",
+      "ja": "ニューラルネットが役立つ場面と限界。",
+      "zh": "神经网络：何时有用、何时无用。"
+    }
+  },
+  {
+    "id": "generative-ai-business",
+    "status": "soon",
+    "icon": "✨",
+    "category": "analytics",
+    "name": {
+      "en": "Generative AI for managers",
+      "id": "AI generatif untuk manajer",
+      "ja": "マネージャーのための生成AI",
+      "zh": "管理者的生成式AI"
+    },
+    "description": {
+      "en": "Use LLMs for real work and spot their limits.",
+      "id": "Gunakan LLM untuk pekerjaan nyata dan kenali batasnya.",
+      "ja": "LLMを実務で使い限界を見抜く。",
+      "zh": "在实际工作中运用大模型并识别其局限。"
+    }
+  },
+  {
+    "id": "ai-ethics-governance",
+    "status": "soon",
+    "icon": "🛡️",
+    "category": "analytics",
+    "name": {
+      "en": "AI ethics, regulation & data governance",
+      "id": "Etika AI, regulasi & tata kelola data",
+      "ja": "AI倫理・規制・データガバナンス",
+      "zh": "AI伦理、监管与数据治理"
+    },
+    "description": {
+      "en": "Bias, privacy and compliance for AI in business.",
+      "id": "Bias, privasi, dan kepatuhan AI dalam bisnis.",
+      "ja": "ビジネスにおけるAIのバイアス・プライバシー・コンプライアンス。",
+      "zh": "商业中AI的偏见、隐私与合规。"
+    }
   }
 ];

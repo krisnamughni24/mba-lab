@@ -89,5 +89,19 @@
     'ab-testing': M.sliders(), 'pareto-root-cause': M.bars([76, 54, 36, 24, 14, 8], 'M34 14Q80 30 120 34T178 40'), 'regression-for-managers': M.curve('M30 76L178 24'), 'monte-carlo-risk': M.bell(),
     'ethical-dilemmas': M.shield(), 'emotional-intelligence': M.chat()
   };
+  // spec strings "motif:arg" resolved against the motifs above
+  const CUR = { up: [up], rise: [rise], hump: [hump], down: [down], fan: ['M24 80Q80 70 178 20', 'M24 80Q80 74 178 52'] };
+  const BARS = { grow: [[18, 28, 40, 54, 70], 'M30 76L90 56L170 18'], cap: [[30, 30, 60, 60, 90], 'M30 62H170'] };
+  const res = spec => {
+    const [k, a] = spec.split(':');
+    if (k === 'curve') return M.curve(CUR[a][0], CUR[a][1]);
+    if (k === 'bars') return M.bars(BARS[a][0], BARS[a][1]);
+    if (k === 'chain') return M.chain(parseInt(a, 10), /loop/.test(a));
+    if (k === 'matrix') return M.matrix(a.split(''));
+    if (k === 'people') return M.people(parseInt(a, 10));
+    return M[k]();
+  };
+  const SPEC = {"financial-mgmt-objectives": "curve:up", "financial-statement-analysis": "scan", "financial-projections": "bars:grow", "management-accounting": "canvas", "time-value-of-money": "curve:rise", "financing-environment": "globe", "working-capital": "chain:4loop", "risk-return-concepts": "curve:hump", "capital-budgeting-cases": "coins", "creating-customer-value": "pyramid", "marketing-environment": "globe", "marketing-insights": "scan", "marketing-research": "sliders", "selling-race": "gantt", "product-service-mix": "matrix:PSLQ", "price-setting": "curve:down", "place-digital-channels": "funnel", "promotion-imc": "chat", "branding": "bolt", "operations-strategy": "matrix:CQDF", "product-service-design": "canvas", "project-management": "gantt", "strategic-capacity": "bars:cap", "process-design": "chain:5", "lean-operations": "chain:3loop", "statistical-quality-control": "bell", "sales-operations-planning": "chain:4loop", "mrp-erp": "canvas", "rational-decision-framework": "chain:5", "kepner-tregoe": "matrix:MWRS", "smart-method": "target", "decision-tree-ev": "chain:3", "scenario-planning": "curve:fan", "systems-thinking": "people:6", "negotiation-dilemma": "payoff", "negotiation-style": "people:4", "claiming-value": "venn", "distributive-integrative": "scale", "integrative-negotiation-technique": "canvas", "multiparty-negotiation": "people:6", "data-literacy": "scan", "descriptive-diagnostic": "bars:grow", "predictive-analytics": "curve:up", "prescriptive-analytics": "sliders", "marketing-analytics": "funnel", "finance-analytics": "curve:rise", "operations-analytics": "gauges", "people-analytics": "people:5", "big-data-analytics": "globe", "deep-learning": "people:6", "generative-ai-business": "bolt", "ai-ethics-governance": "shield"};
+  Object.keys(SPEC).forEach(id => { MAP[id] = res(SPEC[id]); });
   MBALAB.thumbs = Object.assign(MBALAB.thumbs || {}, MAP);
 })();
