@@ -194,3 +194,7 @@ body.still .nb-card.v2,body.still .nb-card.v2 *{animation:none!important}
 @media(min-width:1000px){.nb-select>.nb-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(min-width:1900px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(min-width:1000px){.nb-art{height:170px}}
+
+/* five missions per row */
+@media(min-width:1100px){.nb-select>.nb-cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important}.nb-art{height:128px}.nb-tt{font-size:18px}}
+@media(min-width:1000px) and (max-width:1099px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
