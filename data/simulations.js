@@ -241,6 +241,24 @@ MBALAB.data.simulations = [
     }
   },
   {
+    "id": "five-forces",
+    "status": "live",
+    "icon": "🛡️",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Porter's Five Forces",
+      "id": "Lima Kekuatan Porter",
+      "ja": "ポーターの5フォース",
+      "zh": "波特五力模型"
+    },
+    "description": {
+      "en": "Read how hard five forces squeeze an industry, then pick the moves that protect your profit.",
+      "id": "Baca seberapa keras lima kekuatan menekan sebuah industri, lalu pilih langkah yang melindungi labamu.",
+      "ja": "5つの力が業界をどれだけ締め付けるかを読み取り、利益を守る一手を選ぶ。",
+      "zh": "读懂五种力量对行业的挤压程度，再选择保护利润的行动。"
+    }
+  },
+  {
     "id": "van-westendorp",
     "status": "live",
     "icon": "🏷️",
