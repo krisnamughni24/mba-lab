@@ -36,3 +36,4 @@ body.day .kn{transform:translateX(32px)}
 /* small screens: keep the top bar on one line */
 .brand{white-space:nowrap}
 @media(max-width:480px){body.inapp .brand{font-size:0;gap:0}body.inapp .brand .logo{font-size:15px}.pill{padding:0 9px}}
+body.inapp{font-size:16px}
