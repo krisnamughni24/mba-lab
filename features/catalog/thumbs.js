@@ -72,6 +72,12 @@
     '<path class="g" d="M16 50H186" stroke-dasharray="3 5"/><path class="b k-draw" pathLength="1" d="M20 50L50 44L70 56L90 38L112 62L132 28L152 72L172 16L184 84"/>' +
     [[20, 'fa'], [70, 'fa'], [112, 'fc'], [152, 'fb']].map((p, i) => '<circle class="' + p[1] + ' k-pulse" style="--d:' + (i * .4) + 's" cx="' + p[0] + '" cy="92" r="4"/>').join('') + '<path class="g" d="M24 92H66M74 92H108M116 92H148" stroke-dasharray="2 3"/><circle class="fc k-ride" style="offset-path:path(\'M20 50L50 44L70 56L90 38L112 62L132 28L152 72L172 16L184 84\');--d:0s" cx="0" cy="0" r="4"/>');
 
+  T['van-westendorp'] = S(
+    '<rect class="fa o" x="68" y="12" width="62" height="76" rx="3"/><path class="g" d="M14 88H186"/>' +
+    '<path class="a k-draw" pathLength="1" d="M20 20C60 22 80 50 100 60S150 84 180 86"/><path class="b k-draw" pathLength="1" d="M20 30C60 34 90 56 110 66S160 86 180 88"/>' +
+    '<path class="c k-draw" pathLength="1" d="M20 88C60 86 90 70 112 52S150 24 180 20"/><path class="d k-draw" pathLength="1" d="M20 86C70 82 100 64 122 44S160 22 180 14"/>' +
+    '<circle class="fc k-pulse" cx="100" cy="52" r="3.5"/><circle class="fa k-pulse" style="--d:.4s" cx="82" cy="60" r="3.5"/><circle class="fb k-pulse" style="--d:.8s" cx="122" cy="44" r="3.5"/>');
+
   T['negotiation-batna'] = S(
     '<path class="g" d="M14 86H186"/><rect class="fd o" x="80" y="14" width="40" height="64" rx="6"/>' +
     '<g class="k-sx"><path class="b" stroke-width="9" d="M30 34H120"/><path class="fb" d="M30 24l6 10-6 10-6-10z"/></g><g class="k-sxr"><path class="a" stroke-width="9" d="M80 56H170"/><path class="fa" d="M170 46l6 10-6 10-6-10z"/></g>' +

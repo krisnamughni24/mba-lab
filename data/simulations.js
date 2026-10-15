@@ -241,6 +241,24 @@ MBALAB.data.simulations = [
     }
   },
   {
+    "id": "van-westendorp",
+    "status": "live",
+    "icon": "🏷️",
+    "category": "marketing",
+    "name": {
+      "en": "Price Sensitivity Meter",
+      "id": "Price Sensitivity Meter",
+      "ja": "価格感度測定（PSM）",
+      "zh": "价格敏感度测试（PSM）"
+    },
+    "description": {
+      "en": "Van Westendorp pricing: four price questions, four curves, and the range of prices people accept.",
+      "id": "Penetapan harga Van Westendorp: empat pertanyaan harga, empat kurva, dan rentang harga yang diterima orang.",
+      "ja": "ヴァン・ウェステンドルプ法：4つの価格質問と4本の曲線から、受け入れられる価格帯を見つける。",
+      "zh": "Van Westendorp 定价法：四个价格问题、四条曲线，找出大家能接受的价格区间。"
+    }
+  },
+  {
     "id": "negotiation-batna",
     "status": "live",
     "icon": "🤝",
