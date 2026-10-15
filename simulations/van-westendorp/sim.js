@@ -2,9 +2,13 @@
 MBALAB.sims.files('van-westendorp', {
   scripts: [
     "i18n/strings.js",
+    "i18n/strings-game.js",
     "ui/template.js",
     "engine/engine.js",
+    "scene/scene.js",
+    "ui/chart.js",
     "../../shared/assistant.js",
+    "ui/game.js",
     "ui/app.js"
   ],
   styles: ["../../shared/studio.css", "ui/style.css"]

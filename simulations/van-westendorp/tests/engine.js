@@ -14,5 +14,16 @@ V.SCEN.forEach(s => {
 const hi = V.analyze(V.generate(7, V.SCEN[0], { noise: 1 })); ok(hi.bad > 0, 'noise removes illogical rows (' + hi.bad + ')');
 const br = V.analyze(V.generate(7, V.SCEN[0], { brand: .3 })), b0 = V.analyze(V.generate(7, V.SCEN[0])); ok(br.pts.ipp.x > b0.pts.ipp.x, 'brand shifts prices up');
 ok(V.parse('1.000; 2.000; 3.000; 4.000\n5,6,7,8\nfoo').length === 2, 'parse'); ok(!V.analyze([[1, 2, 3, 4]]).valid, 'too few rows');
+/* mission game: a sensible strategy (about 60 interviews, price midway between IPP and PME) should clear 70 points on every mission; ignoring the data (huge or tiny price) should not */
+V.LEVELS.forEach(lv => {
+  for (let att = 0; att < 3; att++) {
+    const m = V.market(lv, att), best = V.hindsight(m), smp = m.order.slice(0, 60).map(i => m.pop[i]), res = V.analyze(smp, { max: m.sc.max, step: m.sc.step });
+    ok(res.sane, lv.id + ' sample sane'); const p = Math.round((res.pts.ipp.x + res.pts.pme.x) / 2 / m.sc.step) * m.sc.step, net = V.launch(m, p).profit - 60 * m.ic, sc = Math.round(net / best.profit * 100);
+    const lowp = V.launch(m, m.sc.step * 2).profit / best.profit, highp = V.launch(m, m.sc.max * .9).profit / best.profit;
+    console.log(lv.id, att, 'ic', m.ic, 'hind', best.p, 'ipp', p, 'score', sc, 'low', lowp.toFixed(2), 'high', highp.toFixed(2), 'bad', res.bad);
+    ok(sc >= 65, lv.id + ' good play scores ' + sc); ok(lowp < .3 && highp < .75, lv.id + ' dumb prices score low');
+    const bs = V.bootstrap(res.ok, res.grid, 20, 5); ok(bs.pmc && bs.pme && bs.pmc[0] <= bs.pmc[1], lv.id + ' bootstrap');
+  }
+});
 console.log(bad ? bad + ' FAILED' : 'OK');
 process.exit(bad ? 1 : 0);

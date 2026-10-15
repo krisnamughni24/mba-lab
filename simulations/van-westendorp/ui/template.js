@@ -4,9 +4,22 @@ MBALAB.sims.define('van-westendorp', {
   <header class="vw-top">
     <button class="vw-back" data-sim-back><span data-i18n="vwBack">← Home</span></button>
     <h1 data-i18n="vwTitle">Price Sensitivity Meter</h1>
+    <div class="vw-tabs" role="tablist"><button type="button" role="tab" class="on" aria-selected="true" data-tab="game" data-i18n="tabGame"></button><button type="button" role="tab" aria-selected="false" data-tab="lab" data-i18n="tabLab"></button></div>
   </header>
   <div class="vw-scroll" id="vwScroll">
-    <div class="vw-wrap">
+    <div class="vg" id="vgGame">
+      <div class="vg-menu" id="vgMenu"></div>
+      <div class="vg-level" id="vgLevel" hidden>
+        <div class="vg-top" id="vgTop"></div>
+        <ol class="vg-steps" id="vgSteps"></ol>
+        <div class="vg-row2">
+          <div class="vg-stage"><canvas id="vgCv" width="960" height="540" role="img" data-ia="aria-label=vgStageAria"></canvas><div class="vg-say" id="vgSay" aria-live="polite"></div></div>
+          <div class="vg-chartcard"><div id="vgChart"></div><div class="vw-legend" id="vgLegend"></div></div>
+        </div>
+        <div class="vg-panel" id="vgPanel"></div>
+      </div>
+    </div>
+    <div class="vw-wrap" id="vwLab" hidden>
       <p class="vw-sub" data-i18n="vwSub"></p>
       <h2 class="vw-h" data-i18n="vwScen"></h2>
       <div class="vw-scen" id="vwScen" role="radiogroup"></div>

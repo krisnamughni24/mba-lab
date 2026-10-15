@@ -158,8 +158,14 @@ MBALAB.sims.define('van-westendorp', {
     host.addEventListener('pointerleave', () => { if (hover != null) { hover = null; chart(); } }, true);
 
     renderLearn(); renderOwn(); refresh(true);
-    this._vw = { relabel() { renderLearn(); const ta = $("#vwTa") ? $("#vwTa").value : ""; renderOwn(); $("#vwTa").value = ta; refresh(true); } };
+    const game = MBALAB.vwGame(host); let tab = 'game', shown = false;
+    const setTab = k => { tab = k; $('#vgGame').hidden = k !== 'game'; $('#vwLab').hidden = k !== 'lab'; host.querySelectorAll('[data-tab]').forEach(b => { const on = b.dataset.tab === k; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); }); game.setVisible(shown && k === 'game'); if (k === 'game') setTimeout(() => game.fit(), 30); };
+    host.addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) { setTab(b.dataset.tab); sfx('tick'); } });
+    this._vw = { game, setTab, show(v) { shown = v; game.setVisible(v && tab === 'game'); if (v) game.setTheme(MBALAB.theme && MBALAB.theme.isDay()); }, relabel() { game.relabel(); renderLearn(); const ta = $("#vwTa") ? $("#vwTa").value : ""; renderOwn(); $("#vwTa").value = ta; refresh(true); } };
+    this._vw.show(true);
   },
-  onShow() { },
+  onShow() { const m = this._vw; if (m) m.show(true); },
+  onHide() { const m = this._vw; if (m) m.show(false); },
+  onTheme(day) { const m = this._vw; if (m) m.game.setTheme(day); },
   onLang() { const m = this._vw; if (m) m.relabel(); }
 });

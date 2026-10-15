@@ -95,7 +95,50 @@
     const b = bestInRange(res, cost); if (!b || b.v <= 0) return 0; const v = profit(res, p, cost);
     return Math.max(0, Math.min(100, Math.round(v / b.v * 100)));
   }
-  const api = { SCEN, DEF, rng, generate, clean, parse, gridFor, curves, cross, analyze, at, profit, bestInRange, zone, score };
+
+  /* ---------- mission game: hidden market, interviews, launch week ---------- */
+  const LEVELS = [
+    { id: 'kopi',   scen: 'kopi',   owner: 'Bu Sari',   ic: 1,  spread: .30, noise: .10, brand: 0,   seed: 101 },
+    { id: 'sepatu', scen: 'sepatu', owner: 'Mas Dimas', ic: .5, spread: .40, noise: .15, brand: -.1, seed: 202 },
+    { id: 'app',    scen: 'app',    owner: 'Kak Nadia', ic: 2,  spread: .40, noise: .45, brand: 0,   seed: 303 },
+    { id: 'batik',  scen: 'batik',  owner: 'Bu Wulan',  ic: .5, spread: .50, noise: .20, brand: .2,  seed: 404 }
+  ];
+  const POP = 300;
+  /* the whole market (everyone's four answers, even the inconsistent ones), the interview order and one random number per shopper */
+  function market(lv, attempt) {
+    const sc = SCEN.find(x => x.id === lv.scen), seed = lv.seed + (attempt || 0) * 7919, r = rng(seed + 5);
+    const pop = generate(seed, sc, { n: POP, spread: lv.spread, noise: lv.noise, brand: lv.brand });
+    const order = pop.map((_, i) => i); for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const x = order[i]; order[i] = order[j]; order[j] = x; }
+    return { sc, pop, order, u: pop.map(() => r()), cost: sc.cost, ic: Math.round(sc.cost * lv.ic / 100) * 100 || 100 };
+  }
+  /* how one shopper reacts at a price: 'buy', 'hes' (finds it expensive, buys half the time), 'doubt' (too cheap, quality doubt) or 'no' */
+  function reaction(row, p, u) {
+    const a = row.slice().sort((x, y) => x - y);
+    if (p > a[3]) return 'no';
+    if (p > a[2]) return u < .5 ? 'hes' : 'no';
+    if (p < a[0]) return u < .4 ? 'doubt' : 'no';
+    return 'buy';
+  }
+  const buys = r => r === 'buy' || r === 'hes' || r === 'doubt';
+  function launch(m, p) {
+    const res = m.pop.map((row, i) => reaction(row, p, m.u[i])); let n = 0; res.forEach(r => { if (buys(r)) n++; });
+    return { res, sales: n, revenue: n * p, profit: n * (p - m.cost) };
+  }
+  function hindsight(m) {
+    let best = { p: m.sc.step, profit: -Infinity }; for (let p = m.sc.step; p <= m.sc.max; p += m.sc.step) { const pr = launch(m, p).profit; if (pr > best.profit) best = { p, profit: pr }; } return best;
+  }
+  /* bootstrap spread of the range edges: 10th-90th percentile over resamples */
+  function bootstrap(ok, grid, B, seed) {
+    const r = rng(seed || 3), out = { pmc: [], pme: [], opp: [], ipp: [] };
+    for (let b = 0; b < (B || 30); b++) {
+      const smp = []; for (let i = 0; i < ok.length; i++) smp.push(ok[Math.floor(r() * ok.length)]);
+      const cv = curves(smp, grid);
+      [['pmc', cv.tc, cv.nc], ['pme', cv.te, cv.ne], ['opp', cv.tc, cv.te], ['ipp', cv.c, cv.e]].forEach(a => { const q = cross(cv.xs, a[1], a[2]); if (q) out[a[0]].push(q.x); });
+    }
+    const pc = (a, q) => { a.sort((x, y) => x - y); return a.length ? a[Math.min(a.length - 1, Math.floor(q * a.length))] : null; };
+    const o = {}; Object.keys(out).forEach(k => { o[k] = out[k].length >= 5 ? [pc(out[k], .1), pc(out[k], .9)] : null; }); return o;
+  }
+  const api = { LEVELS, POP, market, reaction, buys, launch, hindsight, bootstrap, SCEN, DEF, rng, generate, clean, parse, gridFor, curves, cross, analyze, at, profit, bestInRange, zone, score };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root.MBALAB) root.MBALAB.vw = api;
 })(typeof window !== 'undefined' ? window : globalThis);
