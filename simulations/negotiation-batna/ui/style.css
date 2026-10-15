@@ -160,7 +160,8 @@
 
 /* ===== mission cards v2: art header, avatars, difficulty pips, stars ===== */
 .nb-select>.nb-cards{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))!important;gap:16px!important}
-@media(min-width:1280px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(min-width:1000px){.nb-select>.nb-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(min-width:1640px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 .nb .nb-card.v2{--ac:var(--cy);position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;height:100%;overflow:hidden;border-radius:20px;border:2px solid color-mix(in srgb,var(--ac) 55%,var(--edge));background:var(--panel);text-align:left;animation:nbup .5s calc(var(--i)*.045s) backwards;transition:transform .2s,box-shadow .25s,border-color .2s}
 .nb .nb-card.v2:hover{transform:translateY(-6px);box-shadow:0 14px 30px color-mix(in srgb,var(--ac) 40%,transparent);border-color:var(--ac)}
 @keyframes nbup{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
