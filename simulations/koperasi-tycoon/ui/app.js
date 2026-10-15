@@ -1,13 +1,19 @@
 /* Koperasi: UI wiring. Rules live in engine/engine.js, stories in data/events.js, drawing in scene/scene.js. */
+const gtr = (k, p) => t(k, p);   /* global translator; mount() shadows t with a mode-aware one */
 MBALAB.sims.define('koperasi-tycoon', {
   mount(host) {
     const E = MBALAB.coop, $ = s => host.querySelector(s), sfx = MBALAB.util.sfx;
     const still = () => document.body.classList.contains('still');
-    const KEY = 'mbalab-kp-best';
-    let best = 0;
-    try { best = +localStorage.getItem(KEY) || 0; } catch (e) {}
-    const saveBest = () => { try { localStorage.setItem(KEY, String(best)); } catch (e) {} };
-    const cloud = MBALAB.cloud('koperasi-tycoon', { read: () => best, write: n => { best = Math.max(best, +n || 0); saveBest(); }, merge: (a, b) => Math.max(+a || 0, +b || 0), refresh: () => bestLine() });
+    const KEY = 'mbalab-kp-best', MODES = ['village', 'remote', 'fishing'], PRE = { remote: 're_', fishing: 'fi_' };
+    let mode = 'village'; const bests = { village: 0, remote: 0, fishing: 0 };
+    const kfor = m => (m === 'village' ? KEY : KEY + '-' + m);
+    MODES.forEach(m => { try { bests[m] = +localStorage.getItem(kfor(m)) || 0; } catch (e) {} });
+    const top = () => Math.max(bests.village, bests.remote, bests.fishing);
+    const saveBest = () => MODES.forEach(m => { try { localStorage.setItem(kfor(m), String(bests[m])); } catch (e) {} });
+    const cloud = MBALAB.cloud('koperasi-tycoon', { read: () => top(), write: n => { bests.village = Math.max(bests.village, +n || 0); saveBest(); }, merge: (a, b) => Math.max(+a || 0, +b || 0), refresh: () => bestLine() });
+    /* mode-aware text: a key such as re_kpIntro overrides kpIntro in the highland village */
+    const gt = gtr;
+    const t = (k, p) => { const pre = PRE[mode]; if (pre) { const r = gt(pre + k, p); if (r !== pre + k) return r; } return gt(k, p); };
 
     const cv = $('#kpCv'), scene = E.Scene(cv), panel = $('#kpPanel');
     let gs = null, plan = null, visible = false, view = null, ratRes = null, reported = false;
@@ -15,9 +21,13 @@ MBALAB.sims.define('koperasi-tycoon', {
     const M = n => t('kpMoney', { n: Math.round(n) });
     const sgn = n => (n >= 0 ? '+' : '−') + Math.abs(Math.round(n));
     const cls = n => (n >= 0 ? 'kp-pos' : 'kp-neg');
-    const ACTS = ['none', 'marketing', 'visit', 'collect', 'training', 'social', 'storage', 'digital'];
+    const acts = () => E.MODES[mode].cfg.acts || ['none', 'marketing', 'visit', 'collect', 'training', 'social', 'storage', 'digital'];
 
-    function bestLine() { $('#kpBest').textContent = best ? t('kpBest', { n: best }) : ''; }
+    function bestLine() { const b = bests[mode]; $('#kpBest').textContent = b ? t('kpBest', { n: b }) : ''; }
+    function picker() {
+      $('#kpPick').innerHTML = `<h3>${t('modePick')}</h3><p>${t('modeSub')}</p><div class="kp-modes" role="radiogroup">${MODES.map(m => `<button type="button" role="radio" aria-checked="${m === mode}" class="kp-mode kp-m-${m} ${m === mode ? 'on' : ''}" data-mode="${m}"><span class="kp-mi" aria-hidden="true"></span><b>${gt('mode_' + m + '_t')}</b><em>${gt('mode_' + m + '_lv')}</em><small>${gt('mode_' + m + '_d')}</small>${bests[m] ? `<i>★ ${bests[m]}</i>` : ''}</button>`).join('')}</div>`;
+      $('#kpIntroT').textContent = t('kpIntroT'); $('#kpIntro').textContent = t('kpIntro'); $('#kpGo').textContent = gt('modeStart'); how(); bestLine();
+    }
     function how() { $('#kpHow').innerHTML = `<h3>${t('howT')}</h3><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>`; }
 
     /* ---------- hud, bars, scene ---------- */
@@ -30,7 +40,7 @@ MBALAB.sims.define('koperasi-tycoon', {
       const d = $('#kpDebt'); d.hidden = s.debt < 1; d.textContent = t('kpDebt', { n: Math.round(s.debt) });
       $('#kpSat').innerHTML = E.SEGS.map(k => { const x = s.sat[k]; return `<div class="kp-seg"><b>${t('seg_' + k)}</b><div class="kp-bar" role="img" aria-label="${t('seg_' + k)} ${Math.round(x)}"><i style="width:${x}%;background:${x >= 62 ? 'var(--gn)' : x >= 42 ? 'var(--am)' : 'var(--rd)'}"></i></div></div>`; }).join('');
       const fl = s.shocks.defMul[1] > 0 && s.shocks.defMul[0] >= 1.5 ? .85 : 0;
-      scene.set({ season: E.season(s), goods: s.goods, rice: s.rice, comp: s.comp, sat: s.sat, digital: s.inv.digital, storage: s.inv.storage, flood: fl, rain: fl, cash: s.cash });
+      scene.set({ mode: s.mode, season: E.season(s), goods: s.goods, rice: s.rice, comp: s.comp, sat: s.sat, digital: s.inv.digital, storage: s.inv.storage, road: s.inv.road, solar: s.inv.solar, signal: s.inv.digital, boat: s.inv.boat || 0, tpi: s.inv.tpi, cut: s.report && s.report.cut ? 1 : 0, flood: fl, rain: fl, cash: s.cash });
     }
 
     /* ---------- phases ---------- */
@@ -69,12 +79,12 @@ MBALAB.sims.define('koperasi-tycoon', {
         <div class="kp-grid">
           ${slider('markup', t('plMarkup'), 5, 30, 1, Math.round(d.markup * 100), Math.round(d.markup * 100) + '%')}
           ${slider('restock', t('plRestock'), 0, 320, 5, d.restock, d.restock)}
-          ${slider('riceBuy', t('plRiceBuy'), 0, 50, 1, d.riceBuy, d.riceBuy)}
+          ${slider('riceBuy', t('plRiceBuy'), 0, E.cfg(gs).maxBuy || 50, 1, d.riceBuy, d.riceBuy)}
           ${slider('ricePay', t('plRicePay'), 85, 120, 1, Math.round(d.ricePay * 100), '×' + d.ricePay.toFixed(2))}
           ${seg('rate', t('plRate'), ['low', 'std', 'high'], d.rate)}
           ${seg('screen', t('plScreen'), ['loose', 'normal', 'strict'], d.screen)}
         </div>
-        <div class="kp-f"><span class="lb">${t('plAction')}</span><div class="kp-acts">${ACTS.map(k => `<button type="button" class="kp-act ${d.action === k ? 'on' : ''}" data-act="${k}" ${u(k) ? '' : 'disabled'}>${t('act_' + k)}<small>${k === 'none' ? '—' : M(E.INVEST[k])}</small></button>`).join('')}</div></div>
+        <div class="kp-f"><span class="lb">${t('plAction')}</span><div class="kp-acts">${acts().map(k => `<button type="button" class="kp-act ${d.action === k ? 'on' : ''}" data-act="${k}" ${u(k) ? '' : 'disabled'}>${t('act_' + k)}<small>${k === 'none' ? '—' : M(E.INVEST[k])}</small></button>`).join('')}</div></div>
         <div><span class="lb" style="font-weight:700;font-size:12.5px">${t('pvT')}</span><div class="kp-prev" id="kpPrev"></div></div>
         <button type="button" class="kp-main" data-a="run">${t('kpRun')}</button>`);
       preview();
@@ -95,7 +105,7 @@ MBALAB.sims.define('koperasi-tycoon', {
       const rows = [['rpRevGoods', R.revGoods - R.cogs], ['rpRevRice', R.revRice - R.cogsRice], ['rpInterest', R.interest], ['rpDefaults', -R.defaults], ['rpOverhead', -R.overhead], ['rpInvest', -R.invest * (['storage', 'digital'].includes(R.action) ? .3 : 1)]];
       const pts = gs.hist.map(h => h.eq), mn = Math.min.apply(null, pts), mx = Math.max.apply(null, pts), sp = pts.length > 1 ? pts.map((p, i) => `${(i / (pts.length - 1) * 300).toFixed(1)},${(56 - (p - mn) / ((mx - mn) || 1) * 50).toFixed(1)}`).join(' ') : '';
       put(`<h2>${t('rpT')}</h2><div class="kp-rows">${rows.map(r => `<div><span>${t(r[0])}</span><b class="${cls(r[1])}">${sgn(r[1])}</b></div>`).join('')}<div class="tot"><span>${t('rpProfit')}</span><b class="${cls(R.profit)}">${sgn(R.profit)}</b></div></div>
-        ${R.lost > R.demand * .1 ? `<p class="kp-note">${t('rpLost', { n: Math.round(R.lost) })}</p>` : ''}${R.spoil > 3 ? `<p class="kp-note">${t('rpSpoil', { n: Math.round(R.spoil) })}</p>` : ''}${R.borrowed ? `<p class="kp-note">${t('rpBorrow', { n: Math.round(R.borrowed) })}</p>` : ''}
+        ${R.lost > R.demand * .1 ? `<p class="kp-note">${t('rpLost', { n: Math.round(R.lost) })}</p>` : ''}${R.cut ? `<p class="kp-note">${t('rpRoad')}</p>` : ''}${R.spoil > 3 ? `<p class="kp-note">${t('rpSpoil', { n: Math.round(R.spoil) })}</p>` : ''}${R.borrowed ? `<p class="kp-note">${t('rpBorrow', { n: Math.round(R.borrowed) })}</p>` : ''}
         ${sp ? `<svg class="kp-spark" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true"><polyline points="${sp}" fill="none" stroke="var(--cy)" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>` : ''}
         <button type="button" class="kp-main" data-a="next">${gs.over ? t('kpContinue') : t('kpContinue')}</button>`);
     }
@@ -125,7 +135,7 @@ MBALAB.sims.define('koperasi-tycoon', {
     /* ---------- ending ---------- */
     function renderEnd() {
       const r = E.result(gs), P = r.parts;
-      if (!reported) { reported = true; if (r.score > best) { best = r.score; saveBest(); cloud.changed(); } cloud.attempt({ at: Date.now(), score: r.score, variant: 'main', detail: { ending: r.ending, years: Math.ceil(r.turns / 4) } }); bestLine(); scene.fx(r.score >= 58 ? 'cheer' : 'warn'); }
+      if (!reported) { reported = true; if (r.score > bests[mode]) { bests[mode] = r.score; saveBest(); cloud.changed(); } cloud.attempt({ at: Date.now(), score: r.score, variant: mode === 'village' ? 'main' : mode, detail: { ending: r.ending, years: Math.ceil(r.turns / 4) } }); bestLine(); scene.fx(r.score >= 58 ? 'cheer' : 'warn'); }
       put(`<div class="kp-end" style="display:flex;flex-direction:column;gap:10px"><span class="kp-tag">${t('endT')}</span><h2>${t('end_' + r.ending)}</h2><div class="kp-score">${t('endScore', { n: r.score })}</div><p>${t('endb_' + r.ending)}</p>
         <div class="kp-parts">${[['pfin', P.fin], ['ptrust', P.trust], ['pindep', P.indep], ['psoc', P.social], ['peth', P.ethics]].map(([k, x]) => `<div class="kp-seg"><b>${t(k)} · ${x}</b><div class="kp-bar"><i style="width:${x}%;background:${x >= 62 ? 'var(--gn)' : x >= 42 ? 'var(--am)' : 'var(--rd)'}"></i></div></div>`).join('')}</div>
         <h3>${t('endLessons')}</h3><ul class="kp-lessons">${r.lessons.map(l => `<li>${t(l)}</li>`).join('')}</ul>
@@ -134,11 +144,12 @@ MBALAB.sims.define('koperasi-tycoon', {
 
     /* ---------- actions ---------- */
     function newGame() {
-      gs = E.create((Math.random() * 1e9) | 0); plan = null; view = null; ratRes = null; reported = false; alloc = { members: 40, reserve: 40 };
+      gs = E.create((Math.random() * 1e9) | 0, mode); cv.setAttribute('aria-label', t('stageAria')); plan = null; view = null; ratRes = null; reported = false; alloc = { members: 40, reserve: 40 };
       $('#kpStart').hidden = true; $('#kpPlay').hidden = false; scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); fit(); loop(); render();
       const sc = $('#kpScroll'); if (sc) sc.scrollTop = 0;
     }
     $('#kpGo').addEventListener('click', () => { sfx('open'); newGame(); });
+    $('#kpPick').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (!b || b.dataset.mode === mode) return; mode = b.dataset.mode; sfx('tick'); picker(); });
     panel.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b || !gs) return;
       if (b.dataset.c) { sfx('click'); const ev = E.eventOf(gs), c = ev.choices.find(x => x.id === b.dataset.c); E.choose(gs, c.id); afterChoice(ev, c); return; }
@@ -178,8 +189,8 @@ MBALAB.sims.define('koperasi-tycoon', {
     }
     if (window.SmartAssistant) SmartAssistant.create(host, { root: $('#kp'), hints, busy: () => !guide.hidden });
 
-    how(); bestLine();
-    this._kp = { fit, loop, scene, setVisible(v) { visible = v; loop(); }, relabel() { how(); bestLine(); if (gs) { hud(); if (!view) render(); else view(); } if (!guide.hidden) showGuide(); } };
+    picker();
+    this._kp = { fit, loop, scene, setVisible(v) { visible = v; loop(); }, relabel() { picker(); if (gs) { hud(); if (!view) render(); else view(); } if (!guide.hidden) showGuide(); } };
   },
   onShow() { const m = this._kp; if (!m) return; m.scene.setTheme(MBALAB.theme && MBALAB.theme.isDay()); m.setVisible(true); m.fit(); },
   onHide() { const m = this._kp; if (m) m.setVisible(false); },

@@ -1,0 +1,245 @@
+/* Koperasi: story events for the REMOTE HIGHLAND VILLAGE mode (mode: 'remote'). Same data format as data/events.js.
+   Setting: Koperasi Sumber Harapan, nine hours by motorbike from the nearest town. Chairman Pak Hasan (tradition), teacher Rina (new ideas),
+   treasurer Bu Salma. The flags 'darmo' (tradition side) and 'dimas' (modern side) are shared with the classic mode on purpose. */
+(function () {
+  const root = typeof window !== 'undefined' ? window : globalThis;
+  root.MBALAB = root.MBALAB || {}; const C = (MBALAB.coop = MBALAB.coop || {});
+  const A = (e, i, j, z) => [e, i, j, z];
+  const season = s => s.t % 4;
+  const M = 'remote';
+  const X = [
+    { id: 'rm_books', mode: M, turn: 0,
+      t: A('The books at the end of the road', 'Buku di ujung jalan', '道の果ての帳簿', '路尽头的账本'),
+      b: A('You arrive after nine hours on a motorbike. The shelves are half empty, the solar lamp is dead, and the ledgers hold about Rp 30 million of loans nobody has repaid. Treasurer Bu Salma watches how you react.',
+        'Anda tiba setelah sembilan jam naik motor. Rak setengah kosong, lampu surya mati, dan buku besar memuat sekitar Rp 30 juta pinjaman yang belum dibayar. Bendahara Bu Salma mengamati reaksi Anda.',
+        'バイクで9時間かけて到着しました。棚は半分空っぽ、ソーラーランプは壊れ、帳簿には約3,000万ルピアの未返済の貸付が残っています。会計係のサルマさんがあなたの対応を見守ります。',
+        '你骑摩托车颠簸了九个小时才到。货架半空，太阳能灯坏了，账本上有约3000万盾无人偿还的贷款。出纳萨尔玛女士在观察你的反应。'),
+      choices: [
+        { id: 'a', l: A('Show the books to the members and write off the bad loans', 'Tunjukkan buku kepada anggota dan hapus buku pinjaman macet', '帳簿を組合員に見せ、不良貸付を償却する', '向社员公开账本并核销坏账'),
+          r: A('The members are quiet, then relieved. Bu Salma nods for the first time.', 'Anggota diam, lalu lega. Bu Salma mengangguk untuk pertama kalinya.', '組合員は静まり返り、やがて安堵します。サルマさんが初めてうなずきます。', '社员先是沉默，随后松了口气。萨尔玛女士第一次点了点头。'),
+          eff: { cash: -8, legacy: -30, loans: -20, ethics: 10, satAll: 3, flag: 'audited' } },
+        { id: 'b', l: A('Reschedule them quietly and hope', 'Jadwal ulang diam-diam dan berharap', 'こっそり繰り延べて様子を見る', '悄悄展期并期待好转'),
+          r: A('It looks tidier on paper. The risk stays in the drawer.', 'Di atas kertas tampak lebih rapi. Risikonya tetap tersimpan di laci.', '帳簿上はきれいになりますが、リスクは引き出しの中です。', '账面上整洁了些，风险仍留在抽屉里。'),
+          eff: { legacy: -15, ethics: -5, flag: 'hidden' } },
+        { id: 'c', l: A('Fill the empty shelves first, books later', 'Isi rak kosong dulu, buku belakangan', 'まず空の棚を埋め、帳簿は後回し', '先补满空货架，账本以后再说'),
+          r: A('Villagers are glad to see goods again. The old loans keep slipping.', 'Warga senang melihat barang lagi. Pinjaman lama terus menunggak.', '村人は商品が戻って喜びます。古い貸付は焦げ付いたままです。', '村民很高兴又见到了商品，旧贷款依旧在拖欠。'),
+          eff: { cash: -10, goods: 25, sat: { home: 3 }, ethics: -2, flag: 'later' } }] },
+
+    { id: 'rm_slide', mode: M, turn: 4,
+      t: A('The rains cut the road', 'Hujan memutus jalan', '雨で道が寸断', '大雨冲断了道路'),
+      b: A('A landslide has buried the only road. The next delivery truck cannot reach the village, and the shelves will run low before the district grader arrives.',
+        'Longsor menimbun satu-satunya jalan. Truk pengiriman berikutnya tidak bisa masuk desa, dan rak akan menipis sebelum alat berat dinas tiba.',
+        '土砂崩れで唯一の道が埋まりました。次の配送トラックは村に入れず、道路局の重機が来る前に棚が空になりそうです。',
+        '山体滑坡埋掉了唯一的道路。下一辆送货卡车进不了村，在县里的平地机赶到之前货架就要见底了。'),
+      choices: [
+        { id: 'a', l: A('Pay villagers to clear the road by hand', 'Bayar warga untuk membersihkan jalan dengan tangan', '村人を雇って手作業で道を開ける', '雇村民人工清理道路'),
+          r: A('Forty people with hoes and baskets. The road opens in three days, and everyone gets paid.', 'Empat puluh orang dengan cangkul dan keranjang. Jalan terbuka dalam tiga hari, dan semua dibayar.', '40人がクワとかごで作業し、3日で開通。全員に日当が出ます。', '四十个人带着锄头和竹筐，三天通路，人人都领到了工钱。'),
+          eff: { cash: -8, sat: { small: 3, home: 2 }, ethics: 1 } },
+        { id: 'b', l: A('Wait for the district grader', 'Tunggu alat berat dinas', '道路局の重機を待つ', '等县里的平地机'),
+          r: A('It takes ten days. Customers go without, and some grumble.', 'Butuh sepuluh hari. Pelanggan tidak kebagian barang, sebagian menggerutu.', '10日かかります。客は品不足に耐え、不満も出ます。', '等了十天，顾客买不到东西，有些人抱怨起来。'),
+          eff: { demand: [.92, 2], sat: { home: -3 } } },
+        { id: 'c', l: A('Hire porters to carry the goods over the slide', 'Sewa pikul untuk membawa barang melewati longsoran', 'ポーターを雇って土砂の上を運ぶ', '雇挑夫把货物背过塌方段'),
+          r: A('Expensive, but the shelves stay stocked.', 'Mahal, tetapi rak tetap terisi.', '高くつきますが、棚は埋まったままです。', '价格不菲，但货架没有空。'),
+          eff: { cash: -18, goods: 25, sat: { home: 1 } } }] },
+
+    { id: 'rm_signal', mode: M, turn: 7,
+      t: A('A phone tower wants to be your neighbour', 'Menara telepon ingin jadi tetangga', '携帯基地局が隣にやって来る', '手机信号塔想做邻居'),
+      b: A('A telecom company wants to put a tower beside the shop. It needs a power source, and the whole village has had no signal for years. Young members are asking you to say yes.',
+        'Sebuah perusahaan telekomunikasi ingin memasang menara di samping toko. Perlu sumber listrik, dan seluruh desa bertahun-tahun tanpa sinyal. Anggota muda memohon Anda menyetujuinya.',
+        '通信会社が店の隣に基地局を建てたいと言います。電源が必要で、村は何年も圏外でした。若い組合員は賛成してほしいと頼みます。',
+        '一家电信公司想在商店旁边建信号塔，需要供电，而全村多年没有信号。年轻社员恳请你答应。'),
+      choices: [
+        { id: 'a', l: A('Host the tower and rent the land', 'Terima menara dan sewakan lahan', '基地局を受け入れて土地を貸す', '接受信号塔并出租土地'),
+          r: A('Signal at last. Phones light up across the village, and the rent helps.', 'Akhirnya ada sinyal. Ponsel menyala di seluruh desa, dan uang sewanya membantu.', 'ついに電波が届き、村中で携帯が光ります。賃料も助けになります。', '终于有信号了，全村的手机都亮了起来，租金也帮了大忙。'),
+          eff: { cash: 20, sat: { youth: 6, home: 2 }, flag: 'tower' } },
+        { id: 'b', l: A('Say yes if they also give the shop a solar system (50% chance)', 'Setuju jika mereka juga memberi toko panel surya (peluang 50%)', '店にソーラー設備も付けてくれるなら受け入れる（成功率50%）', '若他们同时给商店装太阳能系统就同意（50%概率）'),
+          rw: A('They agree. The shop gets panels and a battery, and the tower gets its power.', 'Mereka setuju. Toko mendapat panel dan baterai, dan menara mendapat listriknya.', '先方が同意。店にパネルと蓄電池が付き、基地局も電源を得ます。', '他们同意了，商店得到太阳能板和电池，信号塔也有了电。'),
+          rl: A('They walk away. The tower goes to the next village.', 'Mereka pergi. Menara dibangun di desa sebelah.', '先方は去り、基地局は隣の村に建ちます。', '他们转身离开，信号塔建到了隔壁村。'),
+          eff: { gamble: { p: .5, win: { cash: 10, inv: { solar: 1 }, sat: { youth: 7, home: 3 }, flag: 'tower' }, lose: { sat: { youth: -4 } } } } },
+        { id: 'c', l: A('Decline, because the village is used to the quiet', 'Tolak, karena desa sudah terbiasa tenang', '断る。村は静けさに慣れている', '拒绝，村里习惯了安静'),
+          r: A('Pak Hasan nods. The young members sigh.', 'Pak Hasan mengangguk. Anggota muda menghela napas.', 'ハサン氏はうなずき、若者はため息をつきます。', '哈桑先生点点头，年轻社员叹了口气。'),
+          eff: { sat: { youth: -5 }, flag: 'darmo' } }] },
+
+    { id: 'rm_online', mode: M, turn: 10,
+      t: A("Rina's coffee idea", 'Gagasan kopi Rina', 'リナのコーヒー案', '丽娜的咖啡点子'),
+      b: A('Teacher Rina proposes selling the highland coffee and honey to city buyers online, shipped by courier. It needs packing, labels and a trust that the co-op can keep its promises.',
+        'Guru Rina mengusulkan menjual kopi dan madu dataran tinggi kepada pembeli kota lewat daring, dikirim lewat kurir. Butuh pengemasan, label, dan kepercayaan bahwa koperasi bisa menepati janji.',
+        '教師のリナが、高原のコーヒーとはちみつをオンラインで都会の買い手に売り、宅配で送ることを提案。梱包やラベルが必要で、約束を守れる協同組合だという信頼も要ります。',
+        '教师丽娜提议把高原咖啡和蜂蜜通过网络卖给城里买家，再由快递寄出。这需要包装、标签，以及合作社能守信用的口碑。'),
+      choices: [
+        { id: 'a', l: A('Go all in with a packing room', 'Langsung total dengan ruang pengemasan', '梱包室を作って本格的に始める', '全力投入并建包装间'),
+          r: A('The first parcels leave the village. City buyers pay well for a story they can taste.', 'Paket pertama meninggalkan desa. Pembeli kota membayar mahal untuk cerita yang bisa dicicip.', '最初の荷物が村を出ます。都会の客は味わえるストーリーに高く払います。', '第一批包裹离开了村子。城里买家愿意为能品尝的故事付高价。'),
+          eff: { cash: -25, ricePrice: [1.12, 6], sat: { youth: 8, small: 3 }, flag: 'dimas', unflag: 'darmo' } },
+        { id: 'b', l: A('Pilot with a few farmers', 'Uji coba dengan beberapa petani', '数軒の農家で試験的に始める', '先让几户农民试点'),
+          r: A('A small batch sells out. Others in the village start asking when it is their turn.', 'Satu partai kecil habis terjual. Warga lain mulai bertanya kapan giliran mereka.', '小ロットは完売。他の村人も自分の番はいつかと聞き始めます。', '小批量很快售罄，村里别的人开始问什么时候轮到自己。'),
+          eff: { cash: -10, ricePrice: [1.05, 4], sat: { youth: 3 } } },
+        { id: 'c', l: A('Not now, we cannot even keep the road open', 'Belum, jalan saja belum bisa dijaga tetap terbuka', '今は見送る。道さえ開けておけない', '暂时不做，连路都保不住'),
+          r: A('Rina shrugs. Pak Hasan is pleased.', 'Rina mengangkat bahu. Pak Hasan senang.', 'リナは肩をすくめ、ハサン氏は満足そうです。', '丽娜耸了耸肩，哈桑先生很满意。'),
+          eff: { sat: { youth: -4 }, flag: 'darmo' } }] },
+
+    { id: 'rm_clash', mode: M, turn: 13,
+      t: A('Two visions for the co-op', 'Dua visi untuk koperasi', '協同組合の二つのビジョン', '合作社的两种愿景'),
+      b: A('Before the meeting, Pak Hasan wants to stay with what the village knows, and Rina wants new buyers and new tools. Both ask for your public support.',
+        'Menjelang rapat, Pak Hasan ingin bertahan dengan yang sudah dikenal desa, dan Rina ingin pembeli baru dan alat baru. Keduanya meminta dukungan terbuka Anda.',
+        '総会を前に、ハサン氏は村が慣れ親しんだやり方を、リナは新しい買い手と道具を望みます。二人とも公の支持を求めています。',
+        '大会之前，哈桑先生想守住村里熟悉的做法，丽娜则想要新买家和新工具。两人都要求你公开表态。'),
+      choices: [
+        { id: 'a', l: A('Back Pak Hasan', 'Dukung Pak Hasan', 'ハサン氏を支持する', '支持哈桑先生'),
+          r: A('The older farmers cheer. The young members go quiet.', 'Petani senior bersorak. Anggota muda terdiam.', '年配の農家は歓声を上げ、若者は黙り込みます。', '年长的农民欢呼，年轻社员沉默了。'),
+          eff: { sat: { small: 5, big: 4, youth: -6 }, flag: 'darmo', unflag: 'dimas' } },
+        { id: 'b', l: A('Back Rina', 'Dukung Rina', 'リナを支持する', '支持丽娜'),
+          r: A('The young are energised. The elders frown.', 'Anak muda bersemangat. Para sesepuh cemberut.', '若者は活気づき、年長者は眉をひそめます。', '年轻人精神一振，长辈们皱起了眉头。'),
+          eff: { sat: { youth: 8, small: -4 }, flag: 'dimas', unflag: 'darmo' } },
+        { id: 'c', l: A('Form a joint committee', 'Bentuk panitia bersama', '合同委員会をつくる', '成立联合委员会'),
+          r: A('Slow, but both sides feel heard.', 'Lambat, tetapi kedua pihak merasa didengar.', '遅いけれど、双方が話を聞いてもらえたと感じます。', '虽然慢，但双方都觉得被倾听了。'),
+          eff: { cash: -8, satAll: 1, ethics: 2 } }] },
+
+    { id: 'rm_flood', mode: M, turn: 17, pre: { harvest: .5, defMul: [2, 3] },
+      t: A('Flash flood and landslides', 'Banjir bandang dan longsor', '鉄砲水と土砂崩れ', '山洪与滑坡'),
+      b: A('Days of rain wash out the terraces and the bridge. The harvest will be poor and many members will struggle to repay their loans.',
+        'Hujan berhari-hari menyapu teras kebun dan jembatan. Panen akan buruk dan banyak anggota akan kesulitan membayar pinjaman.',
+        '何日も降り続く雨で棚畑と橋が流されました。収穫は不作となり、多くの組合員が返済に苦しみそうです。',
+        '连日大雨冲毁了梯田和桥梁。收成会很差，许多社员将难以还款。'),
+      choices: [
+        { id: 'a', l: A('Reschedule loans and give relief', 'Jadwal ulang pinjaman dan beri bantuan', '貸付を繰り延べ、救済を行う', '贷款展期并提供救济'),
+          r: A('Members will remember who stood by them.', 'Anggota akan ingat siapa yang mendampingi mereka.', '組合員は誰が寄り添ったかを忘れません。', '社员会记得是谁与他们站在一起。'),
+          eff: { cash: -15, defMul: [1.2, 3], sat: { small: 8, big: 3 }, ethics: 3 } },
+        { id: 'b', l: A('Collect as scheduled', 'Tagih sesuai jadwal', '予定どおり回収する', '按期催收'),
+          r: A('The cash is safe. The goodwill is not.', 'Kas aman. Niat baik tidak.', '現金は守れますが、信頼は守れません。', '现金保住了，人心没有。'),
+          eff: { sat: { small: -10, trader: -3 } } },
+        { id: 'c', l: A('Ask the district for disaster aid (50% chance)', 'Ajukan bantuan bencana ke kabupaten (peluang 50%)', '郡に災害支援を申請する（成功率50%）', '向县里申请灾害援助（50%概率）'),
+          rw: A('The aid arrives by helicopter. It is not much, but it is something.', 'Bantuan tiba lewat helikopter. Tidak banyak, tetapi berarti.', '支援物資がヘリで届きます。多くはありませんが助けになります。', '援助用直升机运来，不多，但聊胜于无。'),
+          rl: A('The paperwork stalls in the district office.', 'Berkasnya macet di kantor kabupaten.', '書類は郡の事務所で止まってしまいます。', '申请材料卡在了县里的办公室。'),
+          eff: { gamble: { p: .5, win: { cash: 45, sat: { small: 4 } }, lose: { cash: -5, sat: { small: -2 } } } } }] },
+
+    { id: 'rm_buyer', mode: M, turn: 21, pre: { comp: 1 },
+      t: A('A trader comes up the mountain', 'Pengepul naik gunung', '仲買人が山を登ってくる', '收购商上山来了'),
+      b: A('A trader from the city pays cash on the spot for the whole harvest, at a lower price than your co-op, but with no waiting. Farmers who need money fast are tempted.',
+        'Seorang pengepul dari kota membayar tunai di tempat untuk seluruh hasil panen, dengan harga lebih rendah dari koperasi, tetapi tanpa menunggu. Petani yang butuh uang cepat tergoda.',
+        '都会の仲買人が、収穫物を丸ごと現金で即買いします。協同組合より安いものの待たずに済み、急いで現金が欲しい農家は心が揺れます。',
+        '一位城里的收购商当场付现金收下全部收成，价格比合作社低，但不用等。急着用钱的农民很动心。'),
+      choices: [
+        { id: 'a', l: A('Match part of the price and pay faster', 'Samakan sebagian harga dan bayar lebih cepat', '価格の一部に合わせ、支払いも早くする', '部分跟进价格并加快付款'),
+          r: A('Farmers stay. Your cash flow feels the squeeze.', 'Petani bertahan. Arus kas Anda terasa terhimpit.', '農家は残ります。あなたの資金繰りは苦しくなります。', '农民留了下来，你的现金流却吃紧了。'),
+          eff: { cash: -15, comp: -1, sat: { small: 5 } } },
+        { id: 'b', l: A('Help farmers bargain as a group (55% chance)', 'Bantu petani menawar bersama sebagai kelompok (peluang 55%)', '農家がグループで交渉できるよう支援する（成功率55%）', '帮农民组团议价（55%概率）'),
+          rw: A('The trader raises his price to avoid losing the whole village.', 'Pengepul menaikkan harganya agar tidak kehilangan seluruh desa.', '仲買人は村全体を失うまいと価格を上げます。', '收购商为了不丢掉全村，提高了价格。'),
+          rl: A('He simply goes to the next village.', 'Ia pindah saja ke desa berikutnya.', '彼は次の村へ行ってしまいます。', '他干脆去了下一个村子。'),
+          eff: { gamble: { p: .55, win: { cash: 10, comp: -1, sat: { small: 6, big: 6 }, flag: 'supplydeal' }, lose: { sat: { small: -2 } } } } },
+        { id: 'c', l: A('Let him buy', 'Biarkan ia membeli', '買わせておく', '任他收购'),
+          r: A('Some members sell to him directly, and trust slips.', 'Sebagian anggota menjual langsung kepadanya, dan kepercayaan menurun.', '一部の組合員が直接売り、信頼が揺らぎます。', '一些社员直接卖给他，信任开始下滑。'),
+          eff: { sat: { small: -6, big: -3 } } }] },
+
+    { id: 'rm_road', mode: M, turn: 24,
+      t: A('The district road program', 'Program jalan kabupaten', '郡の道路整備計画', '县里的道路工程'),
+      b: A('The district announces a road upgrade, but villages must contribute labour and materials first. Pak Hasan asks whether the co-op should front the money.',
+        'Kabupaten mengumumkan peningkatan jalan, tetapi desa harus menyumbang tenaga dan bahan lebih dulu. Pak Hasan bertanya apakah koperasi mau menalangi dananya.',
+        '郡が道路の改良を発表しますが、村が先に労力と資材を出す必要があります。ハサン氏は、協同組合が資金を立て替えるべきか尋ねます。',
+        '县里宣布升级道路，但村里要先出工出料。哈桑先生问合作社是否愿意垫付资金。'),
+      choices: [
+        { id: 'a', l: A('Front the money and send workers (55% chance the district follows through)', 'Talangi dana dan kirim pekerja (peluang 55% kabupaten menepati)', '資金を立て替え、作業員も出す（郡が実行する確率55%）', '垫付资金并派工（县里兑现的概率55%）'),
+          rw: A('The district keeps its word. The new road survives its first rainy season.', 'Kabupaten menepati janji. Jalan baru bertahan di musim hujan pertamanya.', '郡は約束を守り、新しい道は最初の雨季を持ちこたえます。', '县里兑现了承诺，新路挺过了第一个雨季。'),
+          rl: A('The budget is cut and only the first kilometre gets paved.', 'Anggaran dipotong dan hanya kilometer pertama yang diaspal.', '予算が削られ、最初の1キロしか舗装されません。', '预算被砍，只铺了第一公里。'),
+          eff: { gamble: { p: .55, win: { cash: -20, inv: { road: 1 }, sat: { small: 5, home: 5 } }, lose: { cash: -20, sat: { small: 1 } } } } },
+        { id: 'b', l: A('Send workers only, no money', 'Kirim pekerja saja, tanpa dana', '作業員だけ出し、資金は出さない', '只派工，不出钱'),
+          r: A('The village shows up with hoes. It is a start.', 'Warga datang dengan cangkul. Ini awal yang baik.', '村人がクワを持って集まります。まずは一歩です。', '村民扛着锄头来了，这是个开始。'),
+          eff: { sat: { small: 3, home: 2 }, ethics: 1 } },
+        { id: 'c', l: A('Stay out of it', 'Tidak ikut campur', '関わらない', '不参与'),
+          r: A('The road stays as it is. So do the freight costs.', 'Jalan tetap seperti sekarang. Begitu juga ongkos angkut.', '道はそのままで、輸送費もそのままです。', '路还是老样子，运费也一样。'),
+          eff: { sat: { home: -2 } } }] },
+
+    { id: 'rm_audit', mode: M, turn: 26,
+      t: A('The district audit', 'Pemeriksaan dinas', '郡の監査', '县级审计'),
+      b: A('Inspectors from the cooperatives office finally make the long trip up the mountain for the annual health check. They want the loan files.',
+        'Pemeriksa dari dinas koperasi akhirnya menempuh perjalanan jauh naik gunung untuk penilaian tahunan. Mereka meminta berkas pinjaman.',
+        '協同組合局の検査官が、ようやく長い山道を登って年次検査に来ました。貸付ファイルの提出を求められます。',
+        '合作社主管部门的检查人员终于长途跋涉上山，来做年度评估。他们要看贷款档案。'),
+      choices: [
+        { id: 'a', l: A('Cooperate fully', 'Bekerja sama penuh', '全面的に協力する', '全力配合'), rk: s => (s.legacy <= 5 || s.flags.audited) ? 'p' : 'f', r: A('', '', '', ''),
+          rp: A('The files are clean. The inspectors leave impressed.', 'Berkasnya bersih. Para pemeriksa pergi dengan kesan baik.', '書類は問題なし。検査官は好印象で帰ります。', '档案很干净，检查人员满意地离开。'),
+          rf: A('They find the old bad loans. A formal warning follows.', 'Mereka menemukan pinjaman macet lama. Teguran resmi menyusul.', '古い不良貸付が見つかり、正式な警告を受けます。', '他们发现了旧坏账，随后收到正式警告。'),
+          eff: s => (s.legacy <= 5 || s.flags.audited) ? { ethics: 5, satAll: 2 } : { ethics: -12, satAll: -4, cash: -15 } },
+        { id: 'b', l: A('Say the road is too bad to bring the files down', 'Bilang jalan terlalu buruk untuk membawa berkas', '道が悪くてファイルを持ち出せないと言う', '推说路太难走，档案拿不下来'),
+          rk: () => 'f', r: A('', '', '', ''), rp: A('', '', '', ''),
+          rf: A('They have seen the road. They note the excuse anyway.', 'Mereka sudah melihat jalannya. Alasan itu tetap dicatat.', '検査官は道を見てきましたが、言い訳として記録します。', '他们亲眼见过那条路，但还是把这个借口记了下来。'),
+          eff: { ethics: -8, satAll: -2 } },
+        { id: 'c', l: A('Ask the village head to smooth things over', 'Minta kepala desa melunakkan keadaan', '村長に口利きを頼む', '请村长出面疏通'),
+          rk: s => s.flags.headfavor ? 'p' : 'f', r: A('', '', '', ''),
+          rp: A('The village head makes a call. It passes, but not cleanly.', 'Kepala desa menelepon. Lolos, tetapi tidak bersih.', '村長が電話をかけ、通りますが、きれいな結果ではありません。', '村长打了个电话，勉强过关，但并不干净。'),
+          rf: A('He will not help you. The report is harsh.', 'Ia tidak mau membantu. Laporannya keras.', '村長は助けてくれず、報告書は厳しい内容です。', '他不肯帮忙，报告措辞严厉。'),
+          eff: s => s.flags.headfavor ? { ethics: -6 } : { ethics: -10, cash: -10 } }] },
+
+    { id: 'rm_final', mode: M, turn: 29,
+      t: A('The final offer', 'Tawaran terakhir', '最後の提案', '最后的提议'),
+      b: A("A national food company, Pangan Nusantara, makes a formal offer: buy the co-op for Rp 80 million above book value, partner with it as a supplier while it keeps its name, or leave you alone.",
+        'Perusahaan pangan nasional, Pangan Nusantara, mengajukan tawaran resmi: membeli koperasi dengan harga Rp 80 juta di atas nilai buku, bermitra sebagai pemasok dengan nama koperasi tetap, atau membiarkan Anda mandiri.',
+        '全国規模の食品会社パンガン・ヌサンタラが正式に提案します。帳簿価額に8,000万ルピアを上乗せして買収するか、名前を残したまま供給業者として提携するか、このまま放っておくか。',
+        '全国性食品公司 Pangan Nusantara 提出正式方案：以高于账面价值8000万盾收购合作社；或作为供应商合作并保留名称；或者不再打扰你。'),
+      choices: [
+        { id: 'a', l: A('Accept the acquisition', 'Terima akuisisi', '買収を受け入れる', '接受收购'),
+          r: A('The co-op becomes a branch. The members get paid, and a chapter closes.', 'Koperasi menjadi cabang. Anggota dibayar, dan sebuah bab berakhir.', '協同組合は支店になります。組合員には支払いがあり、一つの章が終わります。', '合作社变成分店，社员拿到补偿，一个篇章就此结束。'),
+          eff: { end: 'acquired' } },
+        { id: 'b', l: A('Partner as a supplier, keep the name', 'Bermitra sebagai pemasok, nama tetap', '名前を残して供給業者として提携', '作为供应商合作，保留名称'),
+          r: A('Their trucks finally come up the mountain. Some members wonder who is really in charge.', 'Truk mereka akhirnya naik gunung. Sebagian anggota bertanya siapa sebenarnya yang berkuasa.', '彼らのトラックがようやく山に上がってきます。一部の組合員は、本当は誰が主導権を握っているのかと考えます。', '他们的卡车终于开上了山。一些社员开始怀疑到底谁说了算。'),
+          eff: { cash: 35, comp: -1, flag: 'partner', sat: { small: 4 } } },
+        { id: 'c', l: A('Refuse and stay independent', 'Tolak dan tetap mandiri', '断って独立を守る', '拒绝并保持独立'),
+          rk: s => C.trust(s) >= 60 ? 'p' : 'f', r: A('', '', '', ''),
+          rp: A('The members rally around you. Pride is a currency too.', 'Anggota merapat di belakang Anda. Kebanggaan juga mata uang.', '組合員はあなたの周りに結集します。誇りもまた通貨です。', '社员团结在你身边，自豪感也是一种资本。'),
+          rf: A('Some members wonder if you refused a rescue.', 'Sebagian anggota bertanya apakah Anda menolak penyelamatan.', '救いの手を断ったのではと疑う組合員もいます。', '一些社员怀疑你拒绝了一次救援。'),
+          eff: s => C.trust(s) >= 60 ? { satAll: 5, flag: 'indep' } : { satAll: -3, flag: 'indep' } }] },
+
+    /* ---------- random events ---------- */
+    { id: 'rm_porter', mode: M, w: 1,
+      t: A('The motorbike taxis raise their fares', 'Ojek menaikkan tarif', 'バイクタクシーが運賃を上げる', '摩托车运价上涨'),
+      b: A('The riders who bring your goods up the mountain say fuel has gone up and they want a higher fare. Without them, nothing reaches the shelves.',
+        'Para pengojek yang membawa barang ke atas gunung bilang bahan bakar naik dan mereka minta tarif lebih tinggi. Tanpa mereka, tidak ada yang sampai ke rak.',
+        '山に荷物を運ぶバイクの運転手が、燃料高を理由に運賃の値上げを求めます。彼らがいなければ棚に何も届きません。',
+        '把货驮上山的骑手说油价涨了，要求提高运费。没有他们，货架上什么也不会有。'),
+      choices: [
+        { id: 'a', l: A('Agree to the new fare', 'Setuju tarif baru', '新しい運賃に同意する', '同意新运价'), r: A('The riders keep coming. Your costs rise a little for good.', 'Para pengojek tetap datang. Biaya Anda naik sedikit untuk seterusnya.', '運転手は通い続けます。コストは少し恒久的に上がります。', '骑手继续上山，你的成本从此小幅上升。'), eff: { ovh: 2, sat: { small: 2 } } },
+        { id: 'b', l: A('Form a rider cooperative with a fixed rate', 'Bentuk koperasi pengojek dengan tarif tetap', '運転手の協同組合をつくり、固定料金にする', '成立骑手合作社并固定运价'), r: A('Riders become members. The fare is fair and predictable.', 'Para pengojek menjadi anggota. Tarifnya adil dan dapat diprediksi.', '運転手が組合員になり、運賃は公平で予測可能になります。', '骑手成了社员，运价公道且可预期。'), eff: { cash: -10, sat: { youth: 3, small: 2 }, ethics: 2 } },
+        { id: 'c', l: A('Refuse and wait for the truck', 'Tolak dan tunggu truk', '断ってトラックを待つ', '拒绝并等卡车'), r: A('Two weeks of thin shelves.', 'Dua minggu rak menipis.', '2週間、棚がさみしくなります。', '货架空了两个星期。'), eff: { demand: [.92, 2], sat: { home: -3 } } }] },
+    { id: 'rm_sick', mode: M, w: 1,
+      t: A('A sick child and no clinic', 'Anak sakit dan tak ada klinik', '病気の子どもと診療所のない村', '孩子生病，村里没有诊所'),
+      b: A('A member\'s child needs a hospital in town. The family asks the co-op for an emergency advance and a vehicle.',
+        'Anak seorang anggota perlu dibawa ke rumah sakit di kota. Keluarganya meminta koperasi memberi pinjaman darurat dan kendaraan.',
+        '組合員の子どもが町の病院へ行く必要があります。家族は協同組合に緊急の前貸しと車の手配を頼みます。',
+        '一位社员的孩子需要送到城里的医院。家人请求合作社提供紧急垫款和车辆。'),
+      choices: [
+        { id: 'a', l: A('Give an advance from the community fund', 'Beri talangan dari dana sosial', '地域基金から前貸しする', '从社会基金里垫付'), r: A('The child recovers. The village will talk about this for years.', 'Anak itu sembuh. Desa akan membicarakannya bertahun-tahun.', '子どもは回復します。村は何年もこの話をするでしょう。', '孩子康复了，村里会谈论这件事很多年。'), eff: { cash: -12, sat: { home: 5, youth: 3 }, ethics: 3, social: 8 } },
+        { id: 'b', l: A('Lend at the normal rate', 'Pinjamkan dengan bunga normal', '通常の金利で貸す', '按常规利率借款'), r: A('Fair on paper, cold in practice.', 'Adil di atas kertas, dingin dalam praktik.', '書類上は公平でも、実際には冷たい対応です。', '纸面上公平，实际上冷冰冰。'), eff: { loans: 8, sat: { home: -2 } } },
+        { id: 'c', l: A('Lend the vehicle only', 'Pinjamkan kendaraannya saja', '車だけ貸す', '只借车'), r: A('A modest gesture that still counts.', 'Gestur sederhana yang tetap berarti.', 'ささやかですが、心は伝わります。', '小小的心意，也算数。'), eff: { cash: -3, sat: { home: 2 } } }] },
+    { id: 'rm_govt', mode: M, w: 1, when: s => s.t >= 6,
+      t: A('The village fund program', 'Program dana desa', '村落基金プログラム', '村庄基金项目'),
+      b: A('The government offers village fund money for co-op projects that employ local people. The paperwork is long and the village head wants a say.',
+        'Pemerintah menawarkan dana desa untuk proyek koperasi yang memperkerjakan warga lokal. Berkasnya panjang dan kepala desa ingin ikut bicara.',
+        '政府が、地元の人を雇う協同組合事業に村落基金を出すと言います。書類は長く、村長も口を出したがります。',
+        '政府为雇用本地人的合作社项目提供村庄基金。手续繁琐，村长也想插手。'),
+      choices: [
+        { id: 'a', l: A('Apply and share decisions openly', 'Ajukan dan bagi keputusan secara terbuka', '申請し、決定を公開で行う', '申请，并公开共同决策'), r: A('The money comes with strings, but the village feels ownership.', 'Dananya ada syaratnya, tetapi warga merasa memiliki.', '資金には条件が付きますが、村人は自分たちのものだと感じます。', '这笔钱附带条件，但村民有了主人翁的感觉。'), eff: { cash: 30, sat: { small: 4, home: 3 }, ethics: 2, flag: 'headfavor' } },
+        { id: 'b', l: A('Apply and let the village head run it', 'Ajukan dan biarkan kepala desa mengelolanya', '申請して村長に運営を任せる', '申请并让村长主导'), r: A('The money arrives quickly. So do the questions.', 'Uang cepat datang. Begitu juga pertanyaan.', 'お金はすぐ届きますが、疑問も同時に届きます。', '钱很快到账，质疑也跟着来了。'), eff: { cash: 40, ethics: -6, sat: { small: -2 }, flag: 'headfavor' } },
+        { id: 'c', l: A('Skip it', 'Lewati', '見送る', '跳过'), r: A('Nothing gained, nothing owed.', 'Tidak untung, tidak berutang.', '得るものも、負うものもありません。', '无所得，也无所欠。'), eff: {} }] },
+    { id: 'rm_bumper', mode: M, w: 1, when: s => season(s) <= 1,
+      t: A('A bumper coffee season', 'Musim kopi melimpah', 'コーヒーの豊作', '咖啡大丰收'),
+      b: A('The rain came at the right time. The coming harvest may be a big one.', 'Hujan datang di waktu yang tepat. Panen mendatang bisa besar.', '雨が絶好のタイミングで降りました。次の収穫は豊作になりそうです。', '雨下得正是时候，接下来的收成可能很大。'),
+      choices: [
+        { id: 'a', l: A("Pre-contract the farmers' harvest", 'Kontrak awal hasil panen petani', '農家の収穫を前もって契約する', '提前与农民签收购合同'), r: A('Farmers appreciate the certainty.', 'Petani menghargai kepastian.', '農家は確実性を歓迎します。', '农民欣赏这份确定性。'), eff: { cash: -10, harvest: 1.3, sat: { small: 4 } } },
+        { id: 'b', l: A('Wait and see', 'Lihat saja dulu', '様子を見る', '先观望'), r: A('Good weather helps anyway.', 'Cuaca baik tetap membantu.', '天候の恩恵は受けられます。', '好天气总归有帮助。'), eff: { harvest: 1.2 } }] },
+    { id: 'rm_bank', mode: M, w: .8, when: s => s.cash < 90 && s.debt < 1,
+      t: A('A bank loan offer', 'Tawaran kredit bank', '銀行からの融資提案', '银行贷款邀约'),
+      b: A('A bank officer who rarely comes this far offers a short-term loan of Rp 60 million.', 'Seorang petugas bank yang jarang datang sejauh ini menawarkan pinjaman jangka pendek Rp 60 juta.', 'めったにここまで来ない銀行員が、6,000万ルピアの短期融資を提案します。', '一位难得来到这么远的银行职员，提出了6000万盾的短期贷款。'),
+      choices: [
+        { id: 'a', l: A('Take it', 'Ambil', '利用する', '使用'), r: A('Cash is comfortable. Interest will bite.', 'Kas lega. Bunga akan terasa.', '資金に余裕ができますが、利息が重くのしかかります。', '现金宽裕了，利息会咬人。'), eff: { cash: 60, debt: 60 } },
+        { id: 'b', l: A('Decline', 'Tolak', '断る', '拒绝'), r: A('You keep your independence.', 'Anda tetap mandiri.', '独立性を保ちます。', '你保持了独立。'), eff: {} }] }
+  ];
+  C.EVENTS = (C.EVENTS || []).concat(X);
+
+  /* texts -> i18n keys (same scheme as data/events.js) */
+  const strings = { en: {}, id: {}, ja: {}, zh: {} }, L = ['en', 'id', 'ja', 'zh'];
+  const put = (k, a) => { if (a && a[0]) L.forEach((l, i) => { strings[l][k] = a[i]; }); };
+  X.forEach(e => {
+    put('ev_' + e.id + '_t', e.t); put('ev_' + e.id + '_b', e.b);
+    e.choices.forEach(c => { const p = 'ev_' + e.id + '_' + c.id; put(p, c.l); put(p + 'r', c.r); put(p + 'w', c.rw); put(p + 'l', c.rl); put(p + 'p', c.rp); put(p + 'f', c.rf); });
+  });
+  if (root.MBALAB.sims && root.MBALAB.sims.define) root.MBALAB.sims.define('koperasi-tycoon', { strings });
+})();

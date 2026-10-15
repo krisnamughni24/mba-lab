@@ -2,8 +2,11 @@
 MBALAB.sims.files('koperasi-tycoon', {
   scripts: [
     "i18n/strings.js",
+    "i18n/strings-modes.js",
     "ui/template.js",
     "data/events.js",
+    "data/events-remote.js",
+    "data/events-fishing.js",
     "engine/engine.js",
     "scene/scene.js",
     "../../shared/assistant.js",

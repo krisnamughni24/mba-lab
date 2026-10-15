@@ -8,10 +8,11 @@ MBALAB.sims.define('koperasi-tycoon', {
   <div class="kp-scroll" id="kpScroll">
     <section class="kp-start" id="kpStart">
       <div class="kp-card">
-        <h2 data-i18n="kpIntroT"></h2>
-        <p data-i18n="kpIntro"></p>
+        <div class="kp-pick" id="kpPick"></div>
+        <h2 id="kpIntroT"></h2>
+        <p id="kpIntro"></p>
         <div class="kp-how" id="kpHow"></div>
-        <button type="button" class="kp-main" id="kpGo" data-i18n="kpStart"></button>
+        <button type="button" class="kp-main" id="kpGo"></button>
         <p class="kp-best" id="kpBest"></p>
       </div>
     </section>
