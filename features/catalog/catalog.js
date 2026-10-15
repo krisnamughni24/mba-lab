@@ -16,7 +16,7 @@ MBALAB.feature('catalog', () => {
   const card = s => {
     const live = s.status === 'live';
     const th = s.thumb || (MBALAB.thumbs && MBALAB.thumbs[s.id]) || '<svg viewBox="0 0 200 100" aria-hidden="true"><text class="em" x="100" y="68" text-anchor="middle">' + s.icon + '</text></svg>';
-    const head = '<div class="tb" aria-hidden="true">' + th + '</div><span class="bd">' + t(live ? 'live' : 'soon') + '</span><b><span aria-hidden="true">' + s.icon + '</span> ' + tr(s.name) + '</b>' +
+    const head = '<div class="tb" aria-hidden="true">' + th + '</div><span class="bd">' + t(live ? 'live' : 'soon') + '</span><b title="' + tr(s.name).replace(/"/g, '&quot;') + '"><span aria-hidden="true">' + s.icon + '</span> ' + tr(s.name) + '</b>' +
       '<span class="cat">' + catName(s.category) + '</span><span class="note">' + tr(s.description) + '</span>';
     /* footer row: the Open button is always pinned bottom-left of the square; the developer text sits beside it */
     const A = MBALAB.data.about || {};

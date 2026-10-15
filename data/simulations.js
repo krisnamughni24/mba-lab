@@ -54,7 +54,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Explore Indonesia's state-owned companies in 3D, then take the quiz.",
-      "id": "Jelajahi BUMN Indonesia di dunia 3D lengkap dengan pelabuhan, tambang, dan pembangkit, lalu uji lewat kuis.",
+      "id": "Jelajahi BUMN Indonesia di dunia 3D, lalu uji lewat kuis.",
       "ja": "港・鉱山・発電所のある3Dの世界でインドネシアの国有企業を探索し、クイズに挑戦。",
       "zh": "在有港口、矿山和电厂的3D世界中探索印尼国有企业，再来一场测验。"
     }
@@ -72,10 +72,10 @@ MBALAB.data.simulations = [
       "zh": "MBA 模拟考试"
     },
     "description": {
-      "en": "Practice exams from a bank of 1,074 questions across 6 courses. Pick weeks and difficulty, sit a timed exam or practise with instant feedback, then see your weak spots.",
-      "id": "Latihan ujian dari bank 1.074 soal untuk 6 mata kuliah. Pilih minggu dan tingkat kesulitan, ikut ujian berwaktu atau latihan dengan umpan balik langsung, lalu lihat bagian yang lemah.",
-      "ja": "6科目・1,074問の問題バンクから模擬試験。週と難易度を選び、時間制限つき試験または即時フィードバック練習で弱点を把握。",
-      "zh": "来自 6 门课程 1,074 道题库的模拟考试。选择周次与难度，进行限时考试或即时反馈练习，找出薄弱环节。"
+      "en": "1,074 practice questions across 6 courses, timed or with instant feedback.",
+      "id": "1.074 soal latihan untuk 6 mata kuliah, berwaktu atau dengan umpan balik.",
+      "ja": "6科目1,074問の模擬試験。時間制限つき試験と即時フィードバック練習。",
+      "zh": "6门课程1,074道模拟题，限时考试或即时反馈练习。"
     }
   },
   {
@@ -84,16 +84,16 @@ MBALAB.data.simulations = [
     "icon": "⏳",
     "category": "strategy-finance",
     "name": {
-      "en": "Life 40: Money Over Time",
-      "id": "Hidup 40 Tahun: Uang dan Waktu",
+      "en": "Life 40",
+      "id": "Hidup 40 Tahun",
       "ja": "ライフ40：お金と時間",
       "zh": "人生40年：金钱与时间"
     },
     "description": {
-      "en": "Live from 22 to 62 as rich, middle or poor. Save, borrow and invest through layoffs, crashes and scams, and see how time value of money plays out.",
-      "id": "Jalani usia 22 sampai 62 sebagai orang kaya, biasa, atau miskin. Menabung, berutang, dan berinvestasi melewati PHK, krisis, dan penipuan, lalu lihat nilai waktu uang bekerja.",
-      "ja": "22歳から62歳まで、裕福・普通・貧しい家庭で生きる。解雇・暴落・詐欺の中で貯蓄・借入・投資をし、お金の時間価値を体感。",
-      "zh": "以富裕、普通或贫寒的出身，从 22 岁活到 62 岁。在裁员、暴跌和骗局中储蓄、借贷、投资，看货币时间价值如何起作用。"
+      "en": "Live from 22 to 62 as rich, middle or poor. Save, borrow and invest.",
+      "id": "Jalani usia 22–62 sebagai kaya, biasa, atau miskin. Menabung dan berinvestasi.",
+      "ja": "22歳から62歳まで生きる。貯蓄・借入・投資で時間価値を体感。",
+      "zh": "从22岁活到62岁，储蓄、借贷、投资，体会货币时间价值。"
     }
   },
   {
@@ -120,8 +120,8 @@ MBALAB.data.simulations = [
     "icon": "💰",
     "category": "strategy-finance",
     "name": {
-      "en": "NPV & capital budgeting",
-      "id": "NPV & penganggaran modal",
+      "en": "NPV & budgeting",
+      "id": "NPV & anggaran",
       "ja": "NPVと資本予算",
       "zh": "净现值与资本预算"
     },
@@ -156,9 +156,9 @@ MBALAB.data.simulations = [
     "icon": "🎯",
     "category": "strategy-finance",
     "name": {
-      "en": "Portfolio risk–return",
-      "id": "Risiko–imbal hasil portofolio",
-      "ja": "ポートフォリオのリスクとリターン",
+      "en": "Portfolio risk",
+      "id": "Risiko portofolio",
+      "ja": "ポートフォリオ",
       "zh": "投资组合风险与收益"
     },
     "description": {
@@ -175,7 +175,7 @@ MBALAB.data.simulations = [
     "category": "marketing",
     "name": {
       "en": "Pricing & elasticity",
-      "id": "Penetapan harga & elastisitas",
+      "id": "Harga & elastisitas",
       "ja": "価格設定と弾力性",
       "zh": "定价与弹性"
     },
@@ -192,7 +192,7 @@ MBALAB.data.simulations = [
     "icon": "👥",
     "category": "marketing",
     "name": {
-      "en": "Market segmentation",
+      "en": "Segmentation",
       "id": "Segmentasi pasar",
       "ja": "市場セグメンテーション",
       "zh": "市场细分"
@@ -234,8 +234,8 @@ MBALAB.data.simulations = [
       "zh": "牛鞭效应"
     },
     "description": {
-      "en": "Run one company in a state-owned supply chain and watch small demand swings grow upstream.",
-      "id": "Jalankan satu perusahaan di rantai pasok BUMN dan lihat fluktuasi kecil permintaan membesar ke hulu.",
+      "en": "Run one firm in a state-owned supply chain and watch demand swings grow upstream.",
+      "id": "Jalankan satu perusahaan di rantai pasok BUMN, lihat fluktuasi permintaan membesar.",
       "ja": "国有企業のサプライチェーンの1社を運営し、小さな需要変動が上流で膨らむ様子を体験。",
       "zh": "运营国企供应链中的一家公司，亲眼看小幅需求波动如何向上游放大。"
     }
@@ -252,8 +252,8 @@ MBALAB.data.simulations = [
       "zh": "波特五力模型"
     },
     "description": {
-      "en": "Read how hard five forces squeeze an industry, then pick the moves that protect your profit.",
-      "id": "Baca seberapa keras lima kekuatan menekan sebuah industri, lalu pilih langkah yang melindungi labamu.",
+      "en": "See how hard five forces squeeze an industry, then protect your profit.",
+      "id": "Lihat tekanan lima kekuatan pada industri, lalu lindungi labamu.",
       "ja": "5つの力が業界をどれだけ締め付けるかを読み取り、利益を守る一手を選ぶ。",
       "zh": "读懂五种力量对行业的挤压程度，再选择保护利润的行动。"
     }
@@ -264,16 +264,16 @@ MBALAB.data.simulations = [
     "icon": "🏷️",
     "category": "marketing",
     "name": {
-      "en": "Price Sensitivity Meter",
-      "id": "Price Sensitivity Meter",
+      "en": "Van Westendorp",
+      "id": "Van Westendorp",
       "ja": "価格感度測定（PSM）",
       "zh": "价格敏感度测试（PSM）"
     },
     "description": {
-      "en": "Van Westendorp pricing: four price questions, four curves, and the range of prices people accept.",
-      "id": "Penetapan harga Van Westendorp: empat pertanyaan harga, empat kurva, dan rentang harga yang diterima orang.",
-      "ja": "ヴァン・ウェステンドルプ法：4つの価格質問と4本の曲線から、受け入れられる価格帯を見つける。",
-      "zh": "Van Westendorp 定价法：四个价格问题、四条曲线，找出大家能接受的价格区间。"
+      "en": "Four price questions, four curves: find the price range people accept.",
+      "id": "Empat pertanyaan harga, empat kurva: temukan rentang harga yang diterima.",
+      "ja": "4つの価格質問と4本の曲線から受容価格帯を見つける。",
+      "zh": "四个价格问题、四条曲线，找出可接受的价格区间。"
     }
   },
   {
@@ -282,14 +282,14 @@ MBALAB.data.simulations = [
     "icon": "🤝",
     "category": "decision-negotiation",
     "name": {
-      "en": "BATNA: Price of Patience",
-      "id": "BATNA: Price of Patience",
-      "ja": "BATNA: Price of Patience",
-      "zh": "BATNA: Price of Patience"
+      "en": "BATNA: Patience",
+      "id": "BATNA: Patience",
+      "ja": "BATNA:忍耐の価格",
+      "zh": "BATNA：耐心的代价"
     },
     "description": {
-      "en": "12 negotiation missions: solo, with teammates, or against two sellers. Haggle, read, win or walk.",
-      "id": "12 misi negosiasi: sendiri, bersama teman, atau melawan dua penjual. Tawar, baca lawan, menang atau pergi.",
+      "en": "12 negotiation missions: solo, teams or two sellers. Haggle, read, win or walk.",
+      "id": "12 misi negosiasi: sendiri, tim, atau dua penjual. Tawar, baca lawan, menang atau pergi.",
       "ja": "12の交渉ミッション：単独、仲間と、売り手2人と。駆け引きし、読み、勝つか去るか。",
       "zh": "12 个谈判任务：单人、携队友或对战两位卖家。砍价、读人，赢下或离场。"
     }
@@ -300,14 +300,14 @@ MBALAB.data.simulations = [
     "icon": "🌾",
     "category": "indonesia-business",
     "name": {
-      "en": "Koperasi: Season by Season",
-      "id": "Koperasi: Musim ke Musim",
+      "en": "Koperasi Tycoon",
+      "id": "Koperasi Tycoon",
       "ja": "協同組合：季節ごとに",
       "zh": "合作社：四季经营"
     },
     "description": {
-      "en": "Manage a village cooperative for 8 years: shop, rice, loans, rivals and the members' trust.",
-      "id": "Kelola koperasi desa selama 8 tahun: toko, beras, pinjaman, pesaing, dan kepercayaan anggota.",
+      "en": "Run a village cooperative for 8 years: shop, rice, loans, rivals and trust.",
+      "id": "Kelola koperasi desa 8 tahun: toko, beras, pinjaman, pesaing, dan kepercayaan.",
       "ja": "村の協同組合を8年間運営。店、米、貸付、ライバル、組合員の信頼。",
       "zh": "经营村合作社8年：商店、大米、贷款、对手与社员的信任。"
     }
@@ -336,8 +336,8 @@ MBALAB.data.simulations = [
     "icon": "🧭",
     "category": "leadership",
     "name": {
-      "en": "Situational leadership",
-      "id": "Kepemimpinan situasional",
+      "en": "Situational leader",
+      "id": "Pemimpin situasional",
       "ja": "状況対応型リーダーシップ",
       "zh": "情境领导力"
     },
@@ -354,10 +354,10 @@ MBALAB.data.simulations = [
     "icon": "🧭",
     "category": "strategy-finance",
     "name": {
-      "en": "SWOT & TOWS matrix",
-      "id": "Matriks SWOT & TOWS",
-      "ja": "SWOT・TOWSマトリクス",
-      "zh": "SWOT与TOWS矩阵"
+      "en": "SWOT & TOWS",
+      "id": "SWOT & TOWS",
+      "ja": "SWOTとTOWS",
+      "zh": "SWOT与TOWS"
     },
     "description": {
       "en": "Turn strengths and threats into concrete strategic moves.",
@@ -372,9 +372,9 @@ MBALAB.data.simulations = [
     "icon": "⭐",
     "category": "strategy-finance",
     "name": {
-      "en": "BCG growth-share matrix",
+      "en": "BCG matrix",
       "id": "Matriks BCG",
-      "ja": "BCG成長・シェアマトリクス",
+      "ja": "BCGマトリクス",
       "zh": "波士顿矩阵"
     },
     "description": {
@@ -390,14 +390,14 @@ MBALAB.data.simulations = [
     "icon": "🧩",
     "category": "strategy-finance",
     "name": {
-      "en": "Ansoff growth matrix",
-      "id": "Matriks pertumbuhan Ansoff",
-      "ja": "アンゾフの成長マトリクス",
+      "en": "Ansoff matrix",
+      "id": "Matriks Ansoff",
+      "ja": "アンゾフ・マトリクス",
       "zh": "安索夫增长矩阵"
     },
     "description": {
-      "en": "Choose between penetration, new markets, new products and diversification.",
-      "id": "Pilih antara penetrasi, pasar baru, produk baru, dan diversifikasi.",
+      "en": "Pick penetration, new markets, new products or diversification.",
+      "id": "Pilih antara penetrasi, pasar baru, produk baru, atau diversifikasi.",
       "ja": "市場浸透・新市場・新製品・多角化から選ぶ。",
       "zh": "在渗透、新市场、新产品与多元化之间选择。"
     }
@@ -408,9 +408,9 @@ MBALAB.data.simulations = [
     "icon": "🌊",
     "category": "strategy-finance",
     "name": {
-      "en": "Blue Ocean strategy canvas",
-      "id": "Kanvas strategi Blue Ocean",
-      "ja": "ブルー・オーシャン戦略キャンバス",
+      "en": "Blue Ocean canvas",
+      "id": "Kanvas Blue Ocean",
+      "ja": "ブルー・オーシャン戦略",
       "zh": "蓝海战略画布"
     },
     "description": {
@@ -426,10 +426,10 @@ MBALAB.data.simulations = [
     "icon": "💎",
     "category": "strategy-finance",
     "name": {
-      "en": "VRIO & resource-based view",
-      "id": "VRIO & pandangan berbasis sumber daya",
-      "ja": "VRIOと資源ベース理論",
-      "zh": "VRIO与资源基础观"
+      "en": "VRIO framework",
+      "id": "Kerangka VRIO",
+      "ja": "VRIO分析",
+      "zh": "VRIO框架"
     },
     "description": {
       "en": "Test which resources really give a lasting edge.",
@@ -444,8 +444,8 @@ MBALAB.data.simulations = [
     "icon": "🌍",
     "category": "strategy-finance",
     "name": {
-      "en": "PESTEL environment scan",
-      "id": "Pemindaian lingkungan PESTEL",
+      "en": "PESTEL scan",
+      "id": "Pemindaian PESTEL",
       "ja": "PESTEL環境分析",
       "zh": "PESTEL环境扫描"
     },
@@ -462,8 +462,8 @@ MBALAB.data.simulations = [
     "icon": "🔗",
     "category": "strategy-finance",
     "name": {
-      "en": "Value chain analysis",
-      "id": "Analisis rantai nilai",
+      "en": "Value chain",
+      "id": "Rantai nilai",
       "ja": "バリューチェーン分析",
       "zh": "价值链分析"
     },
@@ -498,8 +498,8 @@ MBALAB.data.simulations = [
     "icon": "🤝",
     "category": "strategy-finance",
     "name": {
-      "en": "M&A synergy valuation",
-      "id": "Valuasi sinergi M&A",
+      "en": "M&A synergy",
+      "id": "Sinergi M&A",
       "ja": "M&Aシナジー評価",
       "zh": "并购协同估值"
     },
@@ -516,8 +516,8 @@ MBALAB.data.simulations = [
     "icon": "🧮",
     "category": "strategy-finance",
     "name": {
-      "en": "DCF valuation & WACC",
-      "id": "Valuasi DCF & WACC",
+      "en": "DCF & WACC",
+      "id": "DCF & WACC",
       "ja": "DCF評価とWACC",
       "zh": "DCF估值与WACC"
     },
@@ -534,8 +534,8 @@ MBALAB.data.simulations = [
     "icon": "⚖️",
     "category": "strategy-finance",
     "name": {
-      "en": "IRR vs. NPV conflicts",
-      "id": "Konflik IRR vs. NPV",
+      "en": "IRR vs. NPV",
+      "id": "IRR vs. NPV",
       "ja": "IRRとNPVの矛盾",
       "zh": "IRR与NPV冲突"
     },
@@ -552,8 +552,8 @@ MBALAB.data.simulations = [
     "icon": "🏗️",
     "category": "strategy-finance",
     "name": {
-      "en": "Capital structure & leverage",
-      "id": "Struktur modal & leverage",
+      "en": "Capital structure",
+      "id": "Struktur modal",
       "ja": "資本構成とレバレッジ",
       "zh": "资本结构与杠杆"
     },
@@ -588,10 +588,10 @@ MBALAB.data.simulations = [
     "icon": "🔮",
     "category": "strategy-finance",
     "name": {
-      "en": "Real options & decision trees",
-      "id": "Opsi riil & pohon keputusan",
-      "ja": "リアルオプションと決定木",
-      "zh": "实物期权与决策树"
+      "en": "Real options",
+      "id": "Opsi riil",
+      "ja": "リアルオプション",
+      "zh": "实物期权"
     },
     "description": {
       "en": "Value the flexibility to wait, expand or abandon.",
@@ -606,8 +606,8 @@ MBALAB.data.simulations = [
     "icon": "💸",
     "category": "strategy-finance",
     "name": {
-      "en": "Dividend vs. buyback policy",
-      "id": "Kebijakan dividen vs. buyback",
+      "en": "Dividend vs. buyback",
+      "id": "Dividen vs. buyback",
       "ja": "配当と自社株買い",
       "zh": "股息与回购政策"
     },
@@ -624,9 +624,9 @@ MBALAB.data.simulations = [
     "icon": "🔄",
     "category": "strategy-finance",
     "name": {
-      "en": "Cash conversion cycle",
-      "id": "Siklus konversi kas",
-      "ja": "キャッシュ・コンバージョン・サイクル",
+      "en": "Cash cycle",
+      "id": "Siklus kas",
+      "ja": "現金循環サイクル",
       "zh": "现金转换周期"
     },
     "description": {
@@ -642,9 +642,9 @@ MBALAB.data.simulations = [
     "icon": "🛫",
     "category": "strategy-finance",
     "name": {
-      "en": "Startup runway & burn rate",
-      "id": "Runway & burn rate startup",
-      "ja": "スタートアップのランウェイとバーンレート",
+      "en": "Startup runway",
+      "id": "Runway startup",
+      "ja": "スタートアップ資金",
       "zh": "初创公司跑道与烧钱率"
     },
     "description": {
@@ -660,9 +660,9 @@ MBALAB.data.simulations = [
     "icon": "📊",
     "category": "strategy-finance",
     "name": {
-      "en": "Financial ratio detective",
-      "id": "Detektif rasio keuangan",
-      "ja": "財務比率ディテクティブ",
+      "en": "Financial ratios",
+      "id": "Rasio keuangan",
+      "ja": "財務比率",
       "zh": "财务比率侦探"
     },
     "description": {
@@ -678,8 +678,8 @@ MBALAB.data.simulations = [
     "icon": "🧬",
     "category": "strategy-finance",
     "name": {
-      "en": "DuPont ROE breakdown",
-      "id": "Dekomposisi ROE DuPont",
+      "en": "DuPont ROE",
+      "id": "ROE DuPont",
       "ja": "デュポン分解ROE",
       "zh": "杜邦分析ROE"
     },
@@ -696,10 +696,10 @@ MBALAB.data.simulations = [
     "icon": "🧾",
     "category": "strategy-finance",
     "name": {
-      "en": "Cost-volume-profit (CVP)",
-      "id": "Biaya-volume-laba (CVP)",
+      "en": "CVP analysis",
+      "id": "Analisis CVP",
       "ja": "CVP分析",
-      "zh": "本量利分析"
+      "zh": "CVP分析"
     },
     "description": {
       "en": "Test how volume and mix move profit.",
@@ -714,8 +714,8 @@ MBALAB.data.simulations = [
     "icon": "🧱",
     "category": "strategy-finance",
     "name": {
-      "en": "Activity-based costing",
-      "id": "Activity-based costing",
+      "en": "ABC costing",
+      "id": "Costing ABC",
       "ja": "活動基準原価計算",
       "zh": "作业成本法"
     },
@@ -732,8 +732,8 @@ MBALAB.data.simulations = [
     "icon": "📑",
     "category": "strategy-finance",
     "name": {
-      "en": "Budgeting & variance analysis",
-      "id": "Penganggaran & analisis varians",
+      "en": "Budget variance",
+      "id": "Varians anggaran",
       "ja": "予算管理と差異分析",
       "zh": "预算与差异分析"
     },
@@ -768,8 +768,8 @@ MBALAB.data.simulations = [
     "icon": "🔍",
     "category": "strategy-finance",
     "name": {
-      "en": "Earnings quality & red flags",
-      "id": "Kualitas laba & tanda bahaya",
+      "en": "Earnings quality",
+      "id": "Kualitas laba",
       "ja": "利益の質と危険信号",
       "zh": "盈利质量与预警信号"
     },
@@ -786,9 +786,9 @@ MBALAB.data.simulations = [
     "icon": "🛍️",
     "category": "marketing",
     "name": {
-      "en": "Marketing mix (4P / 7P)",
-      "id": "Bauran pemasaran (4P / 7P)",
-      "ja": "マーケティングミックス(4P/7P)",
+      "en": "Marketing mix 4P/7P",
+      "id": "Bauran 4P / 7P",
+      "ja": "マーケティングミックス",
       "zh": "营销组合(4P/7P)"
     },
     "description": {
@@ -804,9 +804,9 @@ MBALAB.data.simulations = [
     "icon": "📍",
     "category": "marketing",
     "name": {
-      "en": "STP & brand positioning",
-      "id": "STP & positioning merek",
-      "ja": "STPとブランドポジショニング",
+      "en": "STP & positioning",
+      "id": "STP & positioning",
+      "ja": "STPとポジショニング",
       "zh": "STP与品牌定位"
     },
     "description": {
@@ -822,10 +822,10 @@ MBALAB.data.simulations = [
     "icon": "👥",
     "category": "marketing",
     "name": {
-      "en": "Unit economics: CAC & LTV",
-      "id": "Unit economics: CAC & LTV",
-      "ja": "ユニットエコノミクス:CACとLTV",
-      "zh": "单位经济：CAC与LTV"
+      "en": "CAC & LTV",
+      "id": "CAC & LTV",
+      "ja": "CACとLTV",
+      "zh": "CAC与LTV"
     },
     "description": {
       "en": "Know what a customer costs and what they are worth.",
@@ -840,9 +840,9 @@ MBALAB.data.simulations = [
     "icon": "🪣",
     "category": "marketing",
     "name": {
-      "en": "Funnel & conversion optimization",
-      "id": "Corong & optimasi konversi",
-      "ja": "ファネルとコンバージョン最適化",
+      "en": "Marketing funnel",
+      "id": "Corong pemasaran",
+      "ja": "マーケティングファネル",
       "zh": "漏斗与转化优化"
     },
     "description": {
@@ -894,9 +894,9 @@ MBALAB.data.simulations = [
     "icon": "♟️",
     "category": "decision-negotiation",
     "name": {
-      "en": "Game theory: price war",
-      "id": "Teori permainan: perang harga",
-      "ja": "ゲーム理論:価格競争",
+      "en": "Price war game",
+      "id": "Perang harga",
+      "ja": "価格競争ゲーム",
       "zh": "博弈论：价格战"
     },
     "description": {
@@ -912,8 +912,8 @@ MBALAB.data.simulations = [
     "icon": "🔨",
     "category": "decision-negotiation",
     "name": {
-      "en": "Auctions & bidding strategy",
-      "id": "Lelang & strategi menawar",
+      "en": "Auction bidding",
+      "id": "Strategi lelang",
       "ja": "オークションと入札戦略",
       "zh": "拍卖与竞标策略"
     },
@@ -930,8 +930,8 @@ MBALAB.data.simulations = [
     "icon": "🧠",
     "category": "decision-negotiation",
     "name": {
-      "en": "Cognitive bias lab",
-      "id": "Laboratorium bias kognitif",
+      "en": "Cognitive biases",
+      "id": "Bias kognitif",
       "ja": "認知バイアス・ラボ",
       "zh": "认知偏差实验室"
     },
@@ -948,9 +948,9 @@ MBALAB.data.simulations = [
     "icon": "🗂️",
     "category": "decision-negotiation",
     "name": {
-      "en": "Weighted decision matrix & AHP",
-      "id": "Matriks keputusan berbobot & AHP",
-      "ja": "重み付け意思決定マトリクスとAHP",
+      "en": "Decision matrix",
+      "id": "Matriks keputusan",
+      "ja": "意思決定マトリクス",
       "zh": "加权决策矩阵与AHP"
     },
     "description": {
@@ -966,10 +966,10 @@ MBALAB.data.simulations = [
     "icon": "🕊️",
     "category": "decision-negotiation",
     "name": {
-      "en": "Conflict styles (Thomas-Kilmann)",
-      "id": "Gaya konflik (Thomas-Kilmann)",
-      "ja": "対立処理スタイル(トーマス・キルマン)",
-      "zh": "冲突风格(托马斯-基尔曼)"
+      "en": "Conflict styles",
+      "id": "Gaya konflik",
+      "ja": "対立処理スタイル",
+      "zh": "冲突风格"
     },
     "description": {
       "en": "Choose when to compete, collaborate or compromise.",
@@ -1020,8 +1020,8 @@ MBALAB.data.simulations = [
     "icon": "🚦",
     "category": "operations",
     "name": {
-      "en": "Queueing & capacity planning",
-      "id": "Antrean & perencanaan kapasitas",
+      "en": "Queueing & capacity",
+      "id": "Antrean & kapasitas",
       "ja": "待ち行列とキャパシティ計画",
       "zh": "排队与产能规划"
     },
@@ -1038,8 +1038,8 @@ MBALAB.data.simulations = [
     "icon": "🚢",
     "category": "operations",
     "name": {
-      "en": "Supply chain disruption",
-      "id": "Gangguan rantai pasok",
+      "en": "Supply chain shocks",
+      "id": "Gangguan pasokan",
       "ja": "サプライチェーン寸断",
       "zh": "供应链中断"
     },
@@ -1056,10 +1056,10 @@ MBALAB.data.simulations = [
     "icon": "📆",
     "category": "operations",
     "name": {
-      "en": "Project management: CPM & PERT",
-      "id": "Manajemen proyek: CPM & PERT",
-      "ja": "プロジェクト管理:CPMとPERT",
-      "zh": "项目管理：CPM与PERT"
+      "en": "CPM & PERT",
+      "id": "CPM & PERT",
+      "ja": "CPMとPERT",
+      "zh": "CPM与PERT"
     },
     "description": {
       "en": "Find the critical path and decide where to crash.",
@@ -1074,8 +1074,8 @@ MBALAB.data.simulations = [
     "icon": "🧪",
     "category": "strategy-finance",
     "name": {
-      "en": "Lean Startup: build-measure-learn",
-      "id": "Lean Startup: bangun-ukur-pelajari",
+      "en": "Lean Startup",
+      "id": "Lean Startup",
       "ja": "リーンスタートアップ",
       "zh": "精益创业"
     },
@@ -1128,9 +1128,9 @@ MBALAB.data.simulations = [
     "icon": "📜",
     "category": "strategy-finance",
     "name": {
-      "en": "Venture funding & term sheets",
-      "id": "Pendanaan ventura & term sheet",
-      "ja": "ベンチャー資金調達とタームシート",
+      "en": "Venture term sheet",
+      "id": "Term sheet ventura",
+      "ja": "VCタームシート",
       "zh": "风险投资与投资条款清单"
     },
     "description": {
@@ -1146,8 +1146,8 @@ MBALAB.data.simulations = [
     "icon": "📐",
     "category": "strategy-finance",
     "name": {
-      "en": "Supply, demand & marginal analysis",
-      "id": "Penawaran, permintaan & analisis marjinal",
+      "en": "Marginal analysis",
+      "id": "Analisis marjinal",
       "ja": "需給と限界分析",
       "zh": "供需与边际分析"
     },
@@ -1164,8 +1164,8 @@ MBALAB.data.simulations = [
     "icon": "💱",
     "category": "strategy-finance",
     "name": {
-      "en": "Exchange-rate exposure & hedging",
-      "id": "Eksposur kurs & lindung nilai",
+      "en": "FX exposure",
+      "id": "Eksposur kurs",
       "ja": "為替リスクとヘッジ",
       "zh": "汇率风险与对冲"
     },
@@ -1182,8 +1182,8 @@ MBALAB.data.simulations = [
     "icon": "🛬",
     "category": "strategy-finance",
     "name": {
-      "en": "Global market entry modes",
-      "id": "Mode masuk pasar global",
+      "en": "Global market entry",
+      "id": "Masuk pasar global",
       "ja": "海外市場の参入方法",
       "zh": "全球市场进入模式"
     },
@@ -1200,8 +1200,8 @@ MBALAB.data.simulations = [
     "icon": "🗺️",
     "category": "strategy-finance",
     "name": {
-      "en": "Hofstede cultural dimensions",
-      "id": "Dimensi budaya Hofstede",
+      "en": "Hofstede culture",
+      "id": "Budaya Hofstede",
       "ja": "ホフステードの文化次元",
       "zh": "霍夫斯泰德文化维度"
     },
@@ -1218,8 +1218,8 @@ MBALAB.data.simulations = [
     "icon": "🔥",
     "category": "leadership",
     "name": {
-      "en": "Kotter's 8-step change",
-      "id": "8 langkah perubahan Kotter",
+      "en": "Kotter's 8 steps",
+      "id": "8 langkah Kotter",
       "ja": "コッターの変革8段階",
       "zh": "科特的变革八步法"
     },
@@ -1254,8 +1254,8 @@ MBALAB.data.simulations = [
     "icon": "🏕️",
     "category": "leadership",
     "name": {
-      "en": "Team development (Tuckman)",
-      "id": "Perkembangan tim (Tuckman)",
+      "en": "Tuckman team",
+      "id": "Tahap tim Tuckman",
       "ja": "チーム発達(タックマン)",
       "zh": "团队发展(塔克曼)"
     },
@@ -1272,8 +1272,8 @@ MBALAB.data.simulations = [
     "icon": "🏁",
     "category": "leadership",
     "name": {
-      "en": "OKR & performance management",
-      "id": "OKR & manajemen kinerja",
+      "en": "OKR & performance",
+      "id": "OKR & kinerja",
       "ja": "OKRとパフォーマンス管理",
       "zh": "OKR与绩效管理"
     },
@@ -1290,8 +1290,8 @@ MBALAB.data.simulations = [
     "icon": "🧲",
     "category": "leadership",
     "name": {
-      "en": "Hiring, turnover & retention",
-      "id": "Rekrutmen, turnover & retensi",
+      "en": "Talent retention",
+      "id": "Retensi talenta",
       "ja": "採用・離職・定着",
       "zh": "招聘、流失与留任"
     },
@@ -1308,8 +1308,8 @@ MBALAB.data.simulations = [
     "icon": "🌿",
     "category": "indonesia-business",
     "name": {
-      "en": "ESG & sustainable strategy",
-      "id": "ESG & strategi berkelanjutan",
+      "en": "ESG strategy",
+      "id": "Strategi ESG",
       "ja": "ESGとサステナブル戦略",
       "zh": "ESG与可持续战略"
     },
@@ -1344,8 +1344,8 @@ MBALAB.data.simulations = [
     "icon": "🔬",
     "category": "analytics",
     "name": {
-      "en": "A/B testing & significance",
-      "id": "Uji A/B & signifikansi",
+      "en": "A/B testing",
+      "id": "Uji A/B",
       "ja": "A/Bテストと有意性",
       "zh": "A/B测试与显著性"
     },
@@ -1362,8 +1362,8 @@ MBALAB.data.simulations = [
     "icon": "🎣",
     "category": "analytics",
     "name": {
-      "en": "Pareto & root-cause analysis",
-      "id": "Pareto & analisis akar masalah",
+      "en": "Pareto & root cause",
+      "id": "Pareto & akar sebab",
       "ja": "パレート分析と根本原因分析",
       "zh": "帕累托与根因分析"
     },
@@ -1380,9 +1380,9 @@ MBALAB.data.simulations = [
     "icon": "📈",
     "category": "analytics",
     "name": {
-      "en": "Regression for managers",
-      "id": "Regresi untuk manajer",
-      "ja": "マネージャーのための回帰分析",
+      "en": "Regression basics",
+      "id": "Dasar regresi",
+      "ja": "回帰分析入門",
       "zh": "管理者回归分析"
     },
     "description": {
@@ -1398,9 +1398,9 @@ MBALAB.data.simulations = [
     "icon": "🎲",
     "category": "analytics",
     "name": {
-      "en": "Monte Carlo risk simulation",
-      "id": "Simulasi risiko Monte Carlo",
-      "ja": "モンテカルロ・リスクシミュレーション",
+      "en": "Monte Carlo risk",
+      "id": "Risiko Monte Carlo",
+      "ja": "モンテカルロ法",
       "zh": "蒙特卡洛风险模拟"
     },
     "description": {
@@ -1416,8 +1416,8 @@ MBALAB.data.simulations = [
     "icon": "⚖️",
     "category": "leadership",
     "name": {
-      "en": "Business ethics dilemmas",
-      "id": "Dilema etika bisnis",
+      "en": "Ethics dilemmas",
+      "id": "Dilema etika",
       "ja": "ビジネス倫理のジレンマ",
       "zh": "商业伦理困境"
     },
@@ -1434,8 +1434,8 @@ MBALAB.data.simulations = [
     "icon": "💬",
     "category": "leadership",
     "name": {
-      "en": "Emotional intelligence at work",
-      "id": "Kecerdasan emosional di tempat kerja",
+      "en": "Emotional IQ",
+      "id": "Kecerdasan emosi",
       "ja": "職場の感情知性",
       "zh": "职场情商"
     },
@@ -1452,8 +1452,8 @@ MBALAB.data.simulations = [
     "icon": "🏦",
     "category": "strategy-finance",
     "name": {
-      "en": "Financial management & objectives",
-      "id": "Fungsi & tujuan manajemen keuangan",
+      "en": "Finance objectives",
+      "id": "Tujuan keuangan",
       "ja": "財務管理の機能と目的",
       "zh": "财务管理的职能与目标"
     },
@@ -1470,8 +1470,8 @@ MBALAB.data.simulations = [
     "icon": "📒",
     "category": "strategy-finance",
     "name": {
-      "en": "Reading the three financial statements",
-      "id": "Membaca tiga laporan keuangan",
+      "en": "Financial statements",
+      "id": "Laporan keuangan",
       "ja": "財務三表の読み方",
       "zh": "解读三大财务报表"
     },
@@ -1488,8 +1488,8 @@ MBALAB.data.simulations = [
     "icon": "🔭",
     "category": "strategy-finance",
     "name": {
-      "en": "Pro forma financial projections",
-      "id": "Proyeksi laporan keuangan pro forma",
+      "en": "Pro forma",
+      "id": "Proyeksi pro forma",
       "ja": "予測財務諸表",
       "zh": "预测财务报表"
     },
@@ -1506,8 +1506,8 @@ MBALAB.data.simulations = [
     "icon": "🧮",
     "category": "strategy-finance",
     "name": {
-      "en": "Management accounting fundamentals",
-      "id": "Dasar akuntansi manajemen",
+      "en": "Management accounting",
+      "id": "Akuntansi manajemen",
       "ja": "管理会計の基礎",
       "zh": "管理会计基础"
     },
@@ -1542,9 +1542,9 @@ MBALAB.data.simulations = [
     "icon": "🏛️",
     "category": "strategy-finance",
     "name": {
-      "en": "Financing decisions & financial environment",
-      "id": "Keputusan pendanaan & lingkungan keuangan",
-      "ja": "資金調達の意思決定と金融環境",
+      "en": "Financing decisions",
+      "id": "Keputusan pendanaan",
+      "ja": "資金調達の意思決定",
       "zh": "融资决策与金融环境"
     },
     "description": {
@@ -1560,8 +1560,8 @@ MBALAB.data.simulations = [
     "icon": "🚰",
     "category": "strategy-finance",
     "name": {
-      "en": "Working capital management",
-      "id": "Manajemen modal kerja",
+      "en": "Working capital",
+      "id": "Modal kerja",
       "ja": "運転資本管理",
       "zh": "营运资本管理"
     },
@@ -1578,9 +1578,9 @@ MBALAB.data.simulations = [
     "icon": "🎢",
     "category": "strategy-finance",
     "name": {
-      "en": "Risk and the risk-return relationship",
-      "id": "Risiko & hubungan risiko-imbal hasil",
-      "ja": "リスクとリスク・リターンの関係",
+      "en": "Risk & return",
+      "id": "Risiko & imbal hasil",
+      "ja": "リスクとリターン",
       "zh": "风险与风险收益关系"
     },
     "description": {
@@ -1596,8 +1596,8 @@ MBALAB.data.simulations = [
     "icon": "🏭",
     "category": "strategy-finance",
     "name": {
-      "en": "Capital budgeting case lab",
-      "id": "Studi kasus penganggaran modal",
+      "en": "Budgeting cases",
+      "id": "Kasus anggaran modal",
       "ja": "資本予算ケースラボ",
       "zh": "资本预算案例实验室"
     },
@@ -1614,8 +1614,8 @@ MBALAB.data.simulations = [
     "icon": "💝",
     "category": "marketing",
     "name": {
-      "en": "Creating customer value",
-      "id": "Menciptakan nilai pelanggan",
+      "en": "Customer value",
+      "id": "Nilai pelanggan",
       "ja": "顧客価値の創造",
       "zh": "创造客户价值"
     },
@@ -1632,8 +1632,8 @@ MBALAB.data.simulations = [
     "icon": "🌦️",
     "category": "marketing",
     "name": {
-      "en": "Analyzing the marketing environment",
-      "id": "Menganalisis lingkungan pemasaran",
+      "en": "Marketing environment",
+      "id": "Lingkungan pemasaran",
       "ja": "マーケティング環境の分析",
       "zh": "分析营销环境"
     },
@@ -1650,9 +1650,9 @@ MBALAB.data.simulations = [
     "icon": "💡",
     "category": "marketing",
     "name": {
-      "en": "Marketing information & customer insights",
-      "id": "Informasi pemasaran & wawasan pelanggan",
-      "ja": "マーケティング情報と顧客インサイト",
+      "en": "Customer insights",
+      "id": "Wawasan pelanggan",
+      "ja": "顧客インサイト",
       "zh": "营销信息与客户洞察"
     },
     "description": {
@@ -1704,9 +1704,9 @@ MBALAB.data.simulations = [
     "icon": "📦",
     "category": "marketing",
     "name": {
-      "en": "Marketing mix: product & services",
-      "id": "Bauran pemasaran: produk & jasa",
-      "ja": "マーケティングミックス:製品とサービス",
+      "en": "Product & services",
+      "id": "Produk & jasa",
+      "ja": "製品とサービス",
       "zh": "营销组合：产品与服务"
     },
     "description": {
@@ -1722,9 +1722,9 @@ MBALAB.data.simulations = [
     "icon": "🏷️",
     "category": "marketing",
     "name": {
-      "en": "Marketing mix: price setting",
-      "id": "Bauran pemasaran: penetapan harga",
-      "ja": "マーケティングミックス:価格設定",
+      "en": "Price setting",
+      "id": "Penetapan harga",
+      "ja": "価格設定",
       "zh": "营销组合：定价"
     },
     "description": {
@@ -1740,9 +1740,9 @@ MBALAB.data.simulations = [
     "icon": "🛒",
     "category": "marketing",
     "name": {
-      "en": "Marketing mix: channels & digital marketing",
-      "id": "Bauran pemasaran: saluran & pemasaran digital",
-      "ja": "マーケティングミックス:流通とデジタル",
+      "en": "Channels & digital",
+      "id": "Saluran & digital",
+      "ja": "流通とデジタル",
       "zh": "营销组合：渠道与数字营销"
     },
     "description": {
@@ -1758,10 +1758,10 @@ MBALAB.data.simulations = [
     "icon": "📣",
     "category": "marketing",
     "name": {
-      "en": "Marketing mix: promotion & IMC",
-      "id": "Bauran pemasaran: promosi & IMC",
-      "ja": "マーケティングミックス:プロモーションとIMC",
-      "zh": "营销组合：促销与整合营销传播"
+      "en": "Promotion & IMC",
+      "id": "Promosi & IMC",
+      "ja": "プロモーションとIMC",
+      "zh": "促销与IMC"
     },
     "description": {
       "en": "Blend ads, PR, sales and social into one message.",
@@ -1812,8 +1812,8 @@ MBALAB.data.simulations = [
     "icon": "📐",
     "category": "operations",
     "name": {
-      "en": "Product & service design",
-      "id": "Desain produk & jasa",
+      "en": "Product design",
+      "id": "Desain produk",
       "ja": "製品・サービス設計",
       "zh": "产品与服务设计"
     },
@@ -1830,8 +1830,8 @@ MBALAB.data.simulations = [
     "icon": "🗓️",
     "category": "operations",
     "name": {
-      "en": "Project management basics",
-      "id": "Dasar manajemen proyek",
+      "en": "Project management",
+      "id": "Manajemen proyek",
       "ja": "プロジェクト管理の基礎",
       "zh": "项目管理基础"
     },
@@ -1848,8 +1848,8 @@ MBALAB.data.simulations = [
     "icon": "🏗️",
     "category": "operations",
     "name": {
-      "en": "Strategic capacity planning",
-      "id": "Perencanaan kapasitas strategis",
+      "en": "Capacity strategy",
+      "id": "Kapasitas strategis",
       "ja": "戦略的キャパシティ計画",
       "zh": "战略产能规划"
     },
@@ -1866,8 +1866,8 @@ MBALAB.data.simulations = [
     "icon": "⚙️",
     "category": "operations",
     "name": {
-      "en": "Process design & analysis",
-      "id": "Desain & analisis proses",
+      "en": "Process design",
+      "id": "Desain proses",
       "ja": "プロセス設計と分析",
       "zh": "流程设计与分析"
     },
@@ -1902,8 +1902,8 @@ MBALAB.data.simulations = [
     "icon": "📉",
     "category": "operations",
     "name": {
-      "en": "Statistical quality control",
-      "id": "Pengendalian mutu statistik",
+      "en": "Quality control",
+      "id": "Kontrol kualitas",
       "ja": "統計的品質管理",
       "zh": "统计质量控制"
     },
@@ -1920,10 +1920,10 @@ MBALAB.data.simulations = [
     "icon": "🔁",
     "category": "operations",
     "name": {
-      "en": "Sales & operations planning (S&OP)",
-      "id": "Perencanaan penjualan & operasi (S&OP)",
+      "en": "S&OP planning",
+      "id": "Perencanaan S&OP",
       "ja": "販売・生産計画(S&OP)",
-      "zh": "销售与运营计划(S&OP)"
+      "zh": "S&OP计划"
     },
     "description": {
       "en": "Align demand, supply and finance in one monthly plan.",
@@ -1956,8 +1956,8 @@ MBALAB.data.simulations = [
     "icon": "🧭",
     "category": "decision-negotiation",
     "name": {
-      "en": "Rational framework of decision making",
-      "id": "Kerangka rasional pengambilan keputusan",
+      "en": "Rational decisions",
+      "id": "Keputusan rasional",
       "ja": "合理的意思決定の枠組み",
       "zh": "理性决策框架"
     },
@@ -1974,9 +1974,9 @@ MBALAB.data.simulations = [
     "icon": "🔦",
     "category": "decision-negotiation",
     "name": {
-      "en": "Kepner-Tregoe analysis",
-      "id": "Analisis Kepner-Tregoe",
-      "ja": "ケプナー・トリゴー分析",
+      "en": "Kepner-Tregoe",
+      "id": "Kepner-Tregoe",
+      "ja": "ケプナー・トリゴー",
       "zh": "凯普纳-特雷戈分析"
     },
     "description": {
@@ -1992,8 +1992,8 @@ MBALAB.data.simulations = [
     "icon": "🎯",
     "category": "decision-negotiation",
     "name": {
-      "en": "Decision analysis: SMART",
-      "id": "Analisis keputusan: SMART",
+      "en": "SMART method",
+      "id": "Metode SMART",
       "ja": "意思決定分析:SMART",
       "zh": "决策分析：SMART"
     },
@@ -2010,8 +2010,8 @@ MBALAB.data.simulations = [
     "icon": "🌳",
     "category": "decision-negotiation",
     "name": {
-      "en": "Decision tree & expected value",
-      "id": "Pohon keputusan & nilai harapan",
+      "en": "Decision tree",
+      "id": "Pohon keputusan",
       "ja": "決定木と期待値",
       "zh": "决策树与期望值"
     },
@@ -2064,7 +2064,7 @@ MBALAB.data.simulations = [
     "icon": "🪤",
     "category": "decision-negotiation",
     "name": {
-      "en": "The negotiator's dilemma",
+      "en": "Negotiator's dilemma",
       "id": "Dilema negosiator",
       "ja": "交渉者のジレンマ",
       "zh": "谈判者的困境"
@@ -2082,8 +2082,8 @@ MBALAB.data.simulations = [
     "icon": "🦊",
     "category": "decision-negotiation",
     "name": {
-      "en": "Know your negotiation style",
-      "id": "Kenali gaya negosiasi Anda",
+      "en": "Negotiation style",
+      "id": "Gaya negosiasi",
       "ja": "自分の交渉スタイルを知る",
       "zh": "了解你的谈判风格"
     },
@@ -2100,8 +2100,8 @@ MBALAB.data.simulations = [
     "icon": "🍰",
     "category": "decision-negotiation",
     "name": {
-      "en": "Claiming value: slicing the pie",
-      "id": "Mengklaim nilai: membagi kue",
+      "en": "Slicing the pie",
+      "id": "Membagi kue",
       "ja": "価値の獲得:パイの分け方",
       "zh": "价值分配：分蛋糕"
     },
@@ -2118,8 +2118,8 @@ MBALAB.data.simulations = [
     "icon": "🔀",
     "category": "decision-negotiation",
     "name": {
-      "en": "From distributive to integrative negotiation",
-      "id": "Dari negosiasi distributif ke integratif",
+      "en": "Win-win negotiation",
+      "id": "Negosiasi win-win",
       "ja": "分配型から統合型交渉へ",
       "zh": "从分配型到整合型谈判"
     },
@@ -2136,8 +2136,8 @@ MBALAB.data.simulations = [
     "icon": "🧩",
     "category": "decision-negotiation",
     "name": {
-      "en": "Integrative negotiation techniques",
-      "id": "Teknik negosiasi integratif",
+      "en": "Integrative deals",
+      "id": "Negosiasi integratif",
       "ja": "統合型交渉のテクニック",
       "zh": "整合型谈判技巧"
     },
@@ -2154,7 +2154,7 @@ MBALAB.data.simulations = [
     "icon": "👥",
     "category": "decision-negotiation",
     "name": {
-      "en": "Multiparty negotiation",
+      "en": "Multiparty deals",
       "id": "Negosiasi multipihak",
       "ja": "多者間交渉",
       "zh": "多方谈判"
@@ -2172,8 +2172,8 @@ MBALAB.data.simulations = [
     "icon": "🗂️",
     "category": "analytics",
     "name": {
-      "en": "How to deal with data",
-      "id": "Cara menghadapi data",
+      "en": "Data literacy",
+      "id": "Literasi data",
       "ja": "データとの付き合い方",
       "zh": "如何处理数据"
     },
@@ -2190,9 +2190,9 @@ MBALAB.data.simulations = [
     "icon": "🔎",
     "category": "analytics",
     "name": {
-      "en": "Descriptive & diagnostic analytics",
-      "id": "Analitik deskriptif & diagnostik",
-      "ja": "記述的・診断的アナリティクス",
+      "en": "Descriptive analytics",
+      "id": "Analitik deskriptif",
+      "ja": "記述・診断分析",
       "zh": "描述性与诊断性分析"
     },
     "description": {
@@ -2226,7 +2226,7 @@ MBALAB.data.simulations = [
     "icon": "💊",
     "category": "analytics",
     "name": {
-      "en": "Prescriptive analytics",
+      "en": "Prescriptive models",
       "id": "Analitik preskriptif",
       "ja": "処方的アナリティクス",
       "zh": "规范性分析"
@@ -2246,7 +2246,7 @@ MBALAB.data.simulations = [
     "name": {
       "en": "Marketing analytics",
       "id": "Analitik pemasaran",
-      "ja": "マーケティングアナリティクス",
+      "ja": "マーケ分析",
       "zh": "营销分析"
     },
     "description": {
@@ -2264,7 +2264,7 @@ MBALAB.data.simulations = [
     "name": {
       "en": "Finance analytics",
       "id": "Analitik keuangan",
-      "ja": "ファイナンス・アナリティクス",
+      "ja": "財務分析",
       "zh": "金融分析"
     },
     "description": {
@@ -2282,7 +2282,7 @@ MBALAB.data.simulations = [
     "name": {
       "en": "Operations analytics",
       "id": "Analitik operasi",
-      "ja": "オペレーション・アナリティクス",
+      "ja": "オペレーション分析",
       "zh": "运营分析"
     },
     "description": {
@@ -2334,9 +2334,9 @@ MBALAB.data.simulations = [
     "icon": "🧠",
     "category": "analytics",
     "name": {
-      "en": "Deep learning for business",
-      "id": "Deep learning untuk bisnis",
-      "ja": "ビジネスのためのディープラーニング",
+      "en": "Deep learning",
+      "id": "Deep learning",
+      "ja": "ディープラーニング",
       "zh": "商业深度学习"
     },
     "description": {
@@ -2352,9 +2352,9 @@ MBALAB.data.simulations = [
     "icon": "✨",
     "category": "analytics",
     "name": {
-      "en": "Generative AI for managers",
-      "id": "AI generatif untuk manajer",
-      "ja": "マネージャーのための生成AI",
+      "en": "Generative AI",
+      "id": "AI generatif",
+      "ja": "生成AI活用",
       "zh": "管理者的生成式AI"
     },
     "description": {
@@ -2370,9 +2370,9 @@ MBALAB.data.simulations = [
     "icon": "🛡️",
     "category": "analytics",
     "name": {
-      "en": "AI ethics, regulation & data governance",
-      "id": "Etika AI, regulasi & tata kelola data",
-      "ja": "AI倫理・規制・データガバナンス",
+      "en": "AI governance",
+      "id": "Tata kelola AI",
+      "ja": "AI倫理とガバナンス",
       "zh": "AI伦理、监管与数据治理"
     },
     "description": {
