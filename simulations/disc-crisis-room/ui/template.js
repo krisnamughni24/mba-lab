@@ -8,6 +8,7 @@ MBALAB.sims.define('disc-crisis-room', {
   <div class="dc-scroll" id="dcScroll">
   <section class="dc-start" id="dcStart">
     <div class="dc-hero"><h2 data-i18n="dc_startT"></h2><p data-i18n="dc_startSub"></p>
+      <div class="dc-exp" id="dcExp"></div><div class="dc-styles" id="dcStyles" role="list"></div>
       <button type="button" class="dc-main" id="dcGo"><span data-i18n="dc_startBtn"></span></button><span class="dc-last" id="dcLast"></span></div>
     <div class="dc-how" id="dcHow"></div>
   </section>

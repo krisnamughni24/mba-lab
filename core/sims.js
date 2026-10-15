@@ -130,7 +130,7 @@
     if (sim && sim.onHide) sim.onHide();
   };
 
-  MBALAB.sims = { define, files: filesFor, open, close, manifest, isOpen: () => host().classList.contains('on') };
+  MBALAB.sims = { define, files: filesFor, open, close, manifest, isOpen: () => host().classList.contains('on'), current: () => (host().classList.contains('on') ? owner : null) };
   MBALAB.actions['open-sim'] = el => open(el.dataset.sim);
 
   /* back buttons inside a simulation, and the brand link in the top bar */

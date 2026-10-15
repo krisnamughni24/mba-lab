@@ -113,6 +113,8 @@
     gdTip2: ['This is a self-reflection game, not a clinical test or a hiring tool. Bit gives tips when you pause. Inside the game, the info button shows this again.', 'Ini permainan refleksi diri, bukan tes klinis atau alat rekrutmen. Bit memberi tips saat Anda berhenti. Di dalam game, tombol info menampilkan ini lagi.', 'これは自己内省のゲームで、臨床検査や採用ツールではありません。手が止まるとビットがヒントをくれ、ゲーム中は情報ボタンでこの説明を再表示できます。', '这是自我反思游戏，不是临床测试或招聘工具。你停顿时比特会给出提示，游戏中可点信息按钮再次查看。'],
     infoTip: ['Mission and how to play', 'Misi dan cara bermain', 'ミッションと遊び方', '任务与玩法'],
     close: ['Close', 'Tutup', '閉じる', '关闭'], gotIt: ['Got it', 'Mengerti', 'わかりました', '明白了'], tipLbl: ['Tip', 'Tips', 'ヒント', '提示'],
+    exp1: ['6 crises', '6 krisis', '6つの危機', '6 场危机'], exp2: ['2 decisions each', '2 keputusan tiap krisis', '各2回の判断', '每场 2 个决定'], exp3: ['about 5 minutes', 'sekitar 5 menit', '約5分', '约 5 分钟'], exp4: ['DISC radar at the end', 'Radar DISC di akhir', '最後にDISCレーダー', '结尾有 DISC 雷达图'],
+    meet: ['Meet the four styles', 'Kenali empat gaya', '4つのスタイルを知る', '认识四种风格'],
     restart: ['← Start over', '← Mulai ulang', '← やり直す', '← 重新开始'],
     crisisN: ['Crisis {n}/{m}', 'Krisis {n}/{m}', '危機 {n}/{m}', '危机 {n}/{m}'],
     moveN: ['Decision {n}/2', 'Keputusan {n}/2', '判断 {n}/2', '决定 {n}/2'],

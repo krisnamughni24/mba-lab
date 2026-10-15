@@ -14,6 +14,8 @@ MBALAB.sims.define('disc-crisis-room', {
 
     /* ---------- start screen ---------- */
     function how() {
+      $('#dcExp').innerHTML = [1, 2, 3, 4].map(i => `<span>${T('exp' + i)}</span>`).join('');
+      $('#dcStyles').innerHTML = S.map((k, i) => `<div class="dc-sty dc-sty-${k}" role="listitem" style="--i:${i}"><span class="dc-sl" aria-hidden="true">${k}</span><b>${sn(k)}</b><small>${t('st' + k + 'tag')}</small></div>`).join('');
       $('#dcHow').innerHTML = `<h3>${T('howT')}</h3><ol><li>${T('how1')}</li><li>${T('how2')}</li><li>${T('how3')}</li><li>${T('how4')}</li></ol><p class="dc-hn">💡 ${T('gdTip2')}</p>`;
       let last = ''; try { last = localStorage.getItem(KEY) || ''; } catch (e) {}
       $('#dcLast').textContent = last ? T('last', { code: last }) : '';

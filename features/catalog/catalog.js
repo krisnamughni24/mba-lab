@@ -23,7 +23,7 @@ MBALAB.feature('catalog', () => {
     const dev = s.developer ? tr(s.developer) : (A.developer || '');   // just the name; the Info window explains who built what
     const by = dev ? '<span class="by">' + dev + '</span>' : '';
     return live
-      ? '<div class="sim live">' + head + '<div class="ft"><button type="button" data-action="open-sim" data-sim="' + s.id + '" data-sfx="open">' + t('open') + '</button>' + by + '</div></div>'
+      ? '<div class="sim live">' + (MBALAB.passport && MBALAB.passport.done(s.id) ? '<span class="stamp" title="MBA insight">🎓</span>' : '') + head + '<div class="ft"><button type="button" data-action="open-sim" data-sim="' + s.id + '" data-sfx="open">' + t('open') + '</button>' + by + '</div></div>'
       : '<div class="sim soon" aria-disabled="true">' + head + '</div>';   // coming soon: no developer line yet
   };
 
@@ -49,6 +49,6 @@ MBALAB.feature('catalog', () => {
   };
 
   MBALAB.actions['open-catalog'] = () => MBALAB.overlay.open(modal);
-  MBALAB.on('lang', render);
+  MBALAB.on('lang', render); MBALAB.on('passport', render);
   render();
 });

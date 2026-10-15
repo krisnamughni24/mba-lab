@@ -1,0 +1,25 @@
+/* Insight feature */
+#btnInsight{display:inline-flex;align-items:center;gap:6px}
+#btnInsight[hidden]{display:none}
+#btnInsight.new{animation:insPulse 1.6s infinite}
+@keyframes insPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,209,102,.7)}50%{box-shadow:0 0 0 8px rgba(255,209,102,0)}}
+body.still #btnInsight.new{animation:none}
+#insBody h4{margin:14px 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--cy)}
+#insBody p{margin:0 0 6px;line-height:1.5}
+.ins-fw{display:inline-block;padding:4px 12px;border-radius:999px;background:var(--panel2);border:1px solid var(--edge);font-weight:800;color:var(--am)}
+.ins-do,.ins-trap{margin:0;padding-left:0;list-style:none;display:grid;gap:6px}
+.ins-do label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:8px 10px;border-radius:12px;background:var(--panel2)}
+.ins-do input{margin-top:3px;accent-color:var(--gn);width:18px;height:18px;flex:none}
+.ins-do input:checked+span{color:var(--gn)}
+.ins-trap li{padding:8px 10px 8px 34px;border-radius:12px;background:color-mix(in srgb,var(--rd) 12%,transparent);position:relative}
+.ins-trap li::before{content:"⚠";position:absolute;left:10px;top:7px}
+.ins-quiz{margin-top:6px;padding:12px;border-radius:16px;border:1px solid var(--edge);background:var(--panel2)}
+.ins-q{font-weight:700}
+.ins-opts{display:grid;gap:8px;margin:8px 0}
+.ins-opts button{text-align:left;text-transform:none;font-weight:600;border-radius:12px;padding:10px 12px}
+.ins-opts button.ok{border-color:var(--gn);background:color-mix(in srgb,var(--gn) 22%,transparent)}
+.ins-opts button.no{border-color:var(--rd);background:color-mix(in srgb,var(--rd) 18%,transparent)}
+.ins-fb.ok b{color:var(--gn)}.ins-fb.no b{color:var(--rd)}.ins-fb span{color:var(--txt2)}
+.ins-pass{margin-top:12px!important;font-weight:700;color:var(--am)}
+.sim .stamp{position:absolute;top:8px;right:8px;font-size:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.ins-do label{text-transform:none;letter-spacing:0;font:inherit}
