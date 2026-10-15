@@ -7,7 +7,7 @@
 .sim{position:relative;display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:14px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3)}
 .sim.live{background:var(--live-bg);border-color:rgba(110,231,183,.7)}
 .sim.soon{opacity:.8}
-.bd{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.25);padding:1px 8px;border-radius:999px}
+.bd{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,255,255,.25);padding:1px 8px;border-radius:999px}
 #modal.on{animation:fade .2s}
 #modal.on .mw{animation:pop .3s cubic-bezier(.2,.9,.3,1.2)}
 #modal.on .sim{animation:up .4s backwards}
@@ -23,15 +23,15 @@
 .sim.live:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(0,0,0,.3)}
 #modal{z-index:60}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
-.chip{border-radius:999px;padding:4px 12px;font-size:12px;text-transform:none}
+.chip{border-radius:999px;padding:4px 12px;font-size:14px;text-transform:none}
 .chip[aria-pressed=true]{background:rgba(255,255,255,.38);font-weight:700;border-color:rgba(255,255,255,.8)}
-.cat{font-size:11px;opacity:.75}
+.cat{font-size:13px;opacity:.75}
 .sim.soon{cursor:default}
 }
 
 /* footer row pinned to the bottom of every square, so the Open buttons line up across a row */
 .sim .ft{margin-top:auto;padding-top:8px;display:flex;align-items:center;gap:10px;width:100%;min-height:34px}
-.sim .by{font-size:11px;line-height:1.25;color:var(--txt2);opacity:.9;min-width:0;overflow-wrap:anywhere}
+.sim .by{font-size:13px;line-height:1.25;color:var(--txt2);opacity:.9;min-width:0;overflow-wrap:anywhere}
 .sim .ft button{flex:none;white-space:nowrap}
 
 /* wider window, always four squares per row on desktop, each with a small picture of what the simulation is about */

@@ -85,7 +85,7 @@
       const bx = X - 56, by = Y - 160; c.strokeStyle = '#6a4630'; c.lineWidth = 2; c.beginPath(); c.moveTo(bx + 20, by); c.lineTo(bx + 20, by - 12); c.moveTo(bx + 92, by); c.lineTo(bx + 92, by - 12); c.stroke();
       c.fillStyle = p.board; c.strokeStyle = '#6a4630'; c.lineWidth = 3; rr(c, bx, by, 112, 44, 8); c.fill(); c.stroke();
       c.fillStyle = day ? '#1a2342' : '#ffd166'; c.font = '800 17px system-ui,sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(priceTxt, bx + 56, by + 23);
-      c.fillStyle = day ? '#6a7690' : '#9fb4d8'; c.font = '700 10px system-ui'; c.fillText(owner.toUpperCase(), X - 8, Y - 175 + 52);
+      c.fillStyle = day ? '#6a7690' : '#9fb4d8'; c.font = '700 12px system-ui'; c.fillText(owner.toUpperCase(), X - 8, Y - 175 + 52);
       if (!day) { const g = c.createRadialGradient(X, Y - 130, 10, X, Y - 130, 230); g.addColorStop(0, 'rgba(255,220,140,.28)'); g.addColorStop(1, 'rgba(255,220,140,0)'); c.fillStyle = g; c.fillRect(X - 240, Y - 360, 480, 420); }
     }
 

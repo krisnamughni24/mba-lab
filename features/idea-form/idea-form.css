@@ -6,10 +6,10 @@
 .fld input,.fld select,.fld textarea{width:100%;padding:8px 10px;font:inherit;border-radius:8px}
 .fld textarea{min-height:110px;resize:vertical;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:inherit}
 .fld [aria-invalid=true]{border-color:#fb7185!important}
-.err{color:var(--err);font-size:12px;min-height:16px}
+.err{color:var(--err);font-size:14px;min-height:16px}
 .sbm{padding:8px 20px;font-weight:700}
 .sbm:disabled{opacity:.55;cursor:not-allowed}
-#fStatus{font-size:12px;flex:1}
+#fStatus{font-size:14px;flex:1}
 #fStatus.ok{color:var(--ok)}
 #fStatus.err{color:var(--err)}
 .unav:empty{display:none}

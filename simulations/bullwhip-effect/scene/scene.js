@@ -231,7 +231,7 @@
         if (s !== txt) s = s.replace(/\s+$/, '') + '…';
         pill(s, x, y, { size: 15, stroke: t != null ? acc[t] : null, pad: 16 });
         if (t != null && v.live) pill(t === v.role ? (names.you || 'YOU') : '🤖', x, y + 22, { size: 13, bg: t === v.role ? acc[t] : pal.pill, fg: t === v.role ? '#10142e' : pal.sub, pad: 12 });
-        if (t != null) { ctx.font = '700 12px system-ui,sans-serif'; ctx.fillStyle = pal.sub; ctx.textAlign = 'center'; ctx.fillText(names['tr' + t] || '', x, y - 21); }
+        if (t != null) { ctx.font = '700 14px system-ui,sans-serif'; ctx.fillStyle = pal.sub; ctx.textAlign = 'center'; ctx.fillText(names['tr' + t] || '', x, y - 21); }
       }
       ctx.font = '800 14px system-ui,sans-serif'; ctx.fillStyle = pal.sub; ctx.textAlign = 'left'; ctx.fillText('◀ ' + (names.hulu || ''), 12, 28); ctx.textAlign = 'right'; ctx.fillText((names.hilir || '') + ' ▶', WW - 12, 28);
     }

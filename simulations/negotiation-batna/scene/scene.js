@@ -238,7 +238,7 @@
       ctx.save(); ctx.translate(x, y + bob);
       glow(pal.glow, 22, () => { rr(-w / 2, -h / 2, w, h, 14); ctx.fillStyle = pal.panel; ctx.fill(); ctx.strokeStyle = pal.glow; ctx.lineWidth = 2; ctx.stroke(); });
       ctx.beginPath(); ctx.moveTo(-18, h / 2); ctx.lineTo(18, h / 2); ctx.lineTo(0, h / 2 + 18); ctx.closePath(); ctx.fillStyle = pal.panel; ctx.fill();
-      ctx.textAlign = 'center'; ctx.font = '600 13px system-ui,sans-serif';
+      ctx.textAlign = 'center'; ctx.font = '600 14px system-ui,sans-serif';
       ctx.fillStyle = pal.pink; ctx.fillText(L('askLbl'), -w / 4, -22); ctx.fillStyle = pal.glow; ctx.fillText(L('youLbl'), w / 4, -22);
       ctx.font = '800 38px system-ui,sans-serif';
       glow(pal.pink, 10, () => { ctx.fillStyle = pal.ink; ctx.fillText(Math.round(cur.ask) + 'k', -w / 4, 22); });
@@ -256,18 +256,18 @@
       v.hist.forEach(h => { ctx.fillStyle = pal.glow; ctx.globalAlpha = .55; ctx.beginPath(); ctx.arc(X(h.you), y, 4, 0, TAU); ctx.fill(); ctx.globalAlpha = 1; });
       /* BATNA flag */
       const bx = X(v.batna); glow(pal.gold, 8, () => { ctx.strokeStyle = pal.gold; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(bx, y + 14); ctx.lineTo(bx, y - 16); ctx.stroke(); ctx.fillStyle = pal.gold; ctx.beginPath(); ctx.moveTo(bx, y - 16); ctx.lineTo(bx + 24, y - 11); ctx.lineTo(bx, y - 6); ctx.fill(); });
-      ctx.font = '700 10px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = pal.ink; ctx.fillText(L('tkBatna'), bx + 4, y + 16);
-      if (v.intel != null) { const ix = X(v.intel); glow('#7df3ff', 8, () => { ctx.fillStyle = '#7df3ff'; ctx.beginPath(); ctx.moveTo(ix, y - 10); ctx.lineTo(ix + 6, y - 4); ctx.lineTo(ix, y + 2); ctx.lineTo(ix - 6, y - 4); ctx.closePath(); ctx.fill(); }); ctx.font = '700 10px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#7df3ff'; ctx.fillText('💡 ' + v.intel + 'k', ix, y - 16); }
+      ctx.font = '700 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = pal.ink; ctx.fillText(L('tkBatna'), bx + 4, y + 16);
+      if (v.intel != null) { const ix = X(v.intel); glow('#7df3ff', 8, () => { ctx.fillStyle = '#7df3ff'; ctx.beginPath(); ctx.moveTo(ix, y - 10); ctx.lineTo(ix + 6, y - 4); ctx.lineTo(ix, y + 2); ctx.lineTo(ix - 6, y - 4); ctx.closePath(); ctx.fill(); }); ctx.font = '700 12px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#7df3ff'; ctx.fillText('💡 ' + v.intel + 'k', ix, y - 16); }
       /* ask + your offer markers */
       const ax = X(cur.ask); glow(pal.pink, 10, () => { ctx.fillStyle = pal.pink; ctx.beginPath(); ctx.moveTo(ax, y + 2); ctx.lineTo(ax - 8, y - 12); ctx.lineTo(ax + 8, y - 12); ctx.closePath(); ctx.fill(); });
       const yx = X(cur.you); glow(pal.glow, 10, () => { ctx.fillStyle = pal.glow; ctx.beginPath(); ctx.moveTo(yx, y - 2); ctx.lineTo(yx - 8, y + 12); ctx.lineTo(yx + 8, y + 12); ctx.closePath(); ctx.fill(); });
-      if (v.r != null) { const rx = X(v.r); ctx.strokeStyle = pal.bad; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(rx, y - 14); ctx.lineTo(rx, y + 14); ctx.stroke(); ctx.fillStyle = pal.bad; ctx.font = '700 10px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('min', rx, y - 17); }
+      if (v.r != null) { const rx = X(v.r); ctx.strokeStyle = pal.bad; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(rx, y - 14); ctx.lineTo(rx, y + 14); ctx.stroke(); ctx.fillStyle = pal.bad; ctx.font = '700 12px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillText('min', rx, y - 17); }
       ctx.restore();
     }
 
     function patience(x, y, k, name) {
       const o = v.opps[k] || { max: 1 }, n = Math.max(1, Math.round(o.max)), f = cur.pat[k] * n, pv = cur.pat[k];
-      ctx.save(); ctx.translate(x, y); ctx.font = '700 10.5px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = pal.ink2; ctx.fillText(L('patience'), 0, -8);
+      ctx.save(); ctx.translate(x, y); ctx.font = '700 12.5px system-ui,sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = pal.ink2; ctx.fillText(L('patience'), 0, -8);
       const w = Math.min(12, 84 / n), gap = 3, tot = n * (w + gap) - gap;
       for (let i = 0; i < n; i++) { const fill = Math.max(0, Math.min(1, f - i)); const c = pv > .5 ? pal.ok : pv > .25 ? pal.gold : pal.bad; const px = -tot / 2 + i * (w + gap); ctx.fillStyle = pal.track; rr(px, 0, w, 7, 3); ctx.fill(); if (fill > 0) { glow(c, 6, () => { ctx.fillStyle = c; rr(px, 0, w * fill, 7, 3); ctx.fill(); }); } }
       ctx.restore();
