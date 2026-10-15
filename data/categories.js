@@ -71,50 +71,5 @@ MBALAB.data.categories = [
       "ja": "リーダーシップと組織行動",
       "zh": "领导力与组织行为"
     }
-  },
-  {
-    "id": "corporate-strategy",
-    "name": {
-      "en": "Corporate strategy",
-      "id": "Strategi korporat",
-      "ja": "企業戦略",
-      "zh": "公司战略"
-}
-  },
-  {
-    "id": "accounting",
-    "name": {
-      "en": "Accounting & reporting",
-      "id": "Akuntansi & pelaporan",
-      "ja": "会計と財務報告",
-      "zh": "会计与报告"
-}
-  },
-  {
-    "id": "entrepreneurship",
-    "name": {
-      "en": "Entrepreneurship & innovation",
-      "id": "Kewirausahaan & inovasi",
-      "ja": "起業とイノベーション",
-      "zh": "创业与创新"
-}
-  },
-  {
-    "id": "economics",
-    "name": {
-      "en": "Economics & global business",
-      "id": "Ekonomi & bisnis global",
-      "ja": "経済とグローバルビジネス",
-      "zh": "经济与全球商业"
-}
-  },
-  {
-    "id": "people-change",
-    "name": {
-      "en": "HR & change management",
-      "id": "SDM & manajemen perubahan",
-      "ja": "人事と変革マネジメント",
-      "zh": "人力资源与变革管理"
-}
   }
 ];

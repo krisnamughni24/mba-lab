@@ -352,7 +352,7 @@ MBALAB.data.simulations = [
     "id": "swot-tows",
     "status": "soon",
     "icon": "🧭",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "SWOT & TOWS matrix",
       "id": "Matriks SWOT & TOWS",
@@ -370,7 +370,7 @@ MBALAB.data.simulations = [
     "id": "bcg-matrix",
     "status": "soon",
     "icon": "⭐",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "BCG growth-share matrix",
       "id": "Matriks BCG",
@@ -388,7 +388,7 @@ MBALAB.data.simulations = [
     "id": "ansoff-matrix",
     "status": "soon",
     "icon": "🧩",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "Ansoff growth matrix",
       "id": "Matriks pertumbuhan Ansoff",
@@ -406,7 +406,7 @@ MBALAB.data.simulations = [
     "id": "blue-ocean",
     "status": "soon",
     "icon": "🌊",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "Blue Ocean strategy canvas",
       "id": "Kanvas strategi Blue Ocean",
@@ -424,7 +424,7 @@ MBALAB.data.simulations = [
     "id": "vrio-resource-based",
     "status": "soon",
     "icon": "💎",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "VRIO & resource-based view",
       "id": "VRIO & pandangan berbasis sumber daya",
@@ -442,7 +442,7 @@ MBALAB.data.simulations = [
     "id": "pestel-scan",
     "status": "soon",
     "icon": "🌍",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "PESTEL environment scan",
       "id": "Pemindaian lingkungan PESTEL",
@@ -460,7 +460,7 @@ MBALAB.data.simulations = [
     "id": "value-chain",
     "status": "soon",
     "icon": "🔗",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "Value chain analysis",
       "id": "Analisis rantai nilai",
@@ -478,7 +478,7 @@ MBALAB.data.simulations = [
     "id": "balanced-scorecard",
     "status": "soon",
     "icon": "🎯",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "Balanced Scorecard",
       "id": "Balanced Scorecard",
@@ -496,7 +496,7 @@ MBALAB.data.simulations = [
     "id": "ma-synergy",
     "status": "soon",
     "icon": "🤝",
-    "category": "corporate-strategy",
+    "category": "strategy-finance",
     "name": {
       "en": "M&A synergy valuation",
       "id": "Valuasi sinergi M&A",
@@ -658,7 +658,7 @@ MBALAB.data.simulations = [
     "id": "financial-ratios",
     "status": "soon",
     "icon": "📊",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "Financial ratio detective",
       "id": "Detektif rasio keuangan",
@@ -676,7 +676,7 @@ MBALAB.data.simulations = [
     "id": "dupont-roe",
     "status": "soon",
     "icon": "🧬",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "DuPont ROE breakdown",
       "id": "Dekomposisi ROE DuPont",
@@ -694,7 +694,7 @@ MBALAB.data.simulations = [
     "id": "cost-volume-profit",
     "status": "soon",
     "icon": "🧾",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "Cost-volume-profit (CVP)",
       "id": "Biaya-volume-laba (CVP)",
@@ -712,7 +712,7 @@ MBALAB.data.simulations = [
     "id": "activity-based-costing",
     "status": "soon",
     "icon": "🧱",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "Activity-based costing",
       "id": "Activity-based costing",
@@ -730,7 +730,7 @@ MBALAB.data.simulations = [
     "id": "budget-variance",
     "status": "soon",
     "icon": "📑",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "Budgeting & variance analysis",
       "id": "Penganggaran & analisis varians",
@@ -748,7 +748,7 @@ MBALAB.data.simulations = [
     "id": "transfer-pricing",
     "status": "soon",
     "icon": "🏷️",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "Transfer pricing",
       "id": "Harga transfer",
@@ -766,7 +766,7 @@ MBALAB.data.simulations = [
     "id": "earnings-quality",
     "status": "soon",
     "icon": "🔍",
-    "category": "accounting",
+    "category": "strategy-finance",
     "name": {
       "en": "Earnings quality & red flags",
       "id": "Kualitas laba & tanda bahaya",
@@ -1072,7 +1072,7 @@ MBALAB.data.simulations = [
     "id": "lean-startup",
     "status": "soon",
     "icon": "🧪",
-    "category": "entrepreneurship",
+    "category": "strategy-finance",
     "name": {
       "en": "Lean Startup: build-measure-learn",
       "id": "Lean Startup: bangun-ukur-pelajari",
@@ -1090,7 +1090,7 @@ MBALAB.data.simulations = [
     "id": "business-model-canvas",
     "status": "soon",
     "icon": "🖼️",
-    "category": "entrepreneurship",
+    "category": "strategy-finance",
     "name": {
       "en": "Business Model Canvas",
       "id": "Business Model Canvas",
@@ -1108,7 +1108,7 @@ MBALAB.data.simulations = [
     "id": "disruptive-innovation",
     "status": "soon",
     "icon": "💥",
-    "category": "entrepreneurship",
+    "category": "strategy-finance",
     "name": {
       "en": "Disruptive innovation",
       "id": "Inovasi disruptif",
@@ -1126,7 +1126,7 @@ MBALAB.data.simulations = [
     "id": "venture-term-sheet",
     "status": "soon",
     "icon": "📜",
-    "category": "entrepreneurship",
+    "category": "strategy-finance",
     "name": {
       "en": "Venture funding & term sheets",
       "id": "Pendanaan ventura & term sheet",
@@ -1144,7 +1144,7 @@ MBALAB.data.simulations = [
     "id": "marginal-analysis",
     "status": "soon",
     "icon": "📐",
-    "category": "economics",
+    "category": "strategy-finance",
     "name": {
       "en": "Supply, demand & marginal analysis",
       "id": "Penawaran, permintaan & analisis marjinal",
@@ -1162,7 +1162,7 @@ MBALAB.data.simulations = [
     "id": "exchange-rate-exposure",
     "status": "soon",
     "icon": "💱",
-    "category": "economics",
+    "category": "strategy-finance",
     "name": {
       "en": "Exchange-rate exposure & hedging",
       "id": "Eksposur kurs & lindung nilai",
@@ -1180,7 +1180,7 @@ MBALAB.data.simulations = [
     "id": "global-market-entry",
     "status": "soon",
     "icon": "🛬",
-    "category": "economics",
+    "category": "strategy-finance",
     "name": {
       "en": "Global market entry modes",
       "id": "Mode masuk pasar global",
@@ -1198,7 +1198,7 @@ MBALAB.data.simulations = [
     "id": "hofstede-culture",
     "status": "soon",
     "icon": "🗺️",
-    "category": "economics",
+    "category": "strategy-finance",
     "name": {
       "en": "Hofstede cultural dimensions",
       "id": "Dimensi budaya Hofstede",
@@ -1216,7 +1216,7 @@ MBALAB.data.simulations = [
     "id": "kotter-change",
     "status": "soon",
     "icon": "🔥",
-    "category": "people-change",
+    "category": "leadership",
     "name": {
       "en": "Kotter's 8-step change",
       "id": "8 langkah perubahan Kotter",
@@ -1234,7 +1234,7 @@ MBALAB.data.simulations = [
     "id": "motivation-theories",
     "status": "soon",
     "icon": "⚡",
-    "category": "people-change",
+    "category": "leadership",
     "name": {
       "en": "Motivation theories",
       "id": "Teori motivasi",
@@ -1252,7 +1252,7 @@ MBALAB.data.simulations = [
     "id": "tuckman-team",
     "status": "soon",
     "icon": "🏕️",
-    "category": "people-change",
+    "category": "leadership",
     "name": {
       "en": "Team development (Tuckman)",
       "id": "Perkembangan tim (Tuckman)",
@@ -1270,7 +1270,7 @@ MBALAB.data.simulations = [
     "id": "performance-management-okr",
     "status": "soon",
     "icon": "🏁",
-    "category": "people-change",
+    "category": "leadership",
     "name": {
       "en": "OKR & performance management",
       "id": "OKR & manajemen kinerja",
@@ -1288,7 +1288,7 @@ MBALAB.data.simulations = [
     "id": "talent-retention",
     "status": "soon",
     "icon": "🧲",
-    "category": "people-change",
+    "category": "leadership",
     "name": {
       "en": "Hiring, turnover & retention",
       "id": "Rekrutmen, turnover & retensi",
