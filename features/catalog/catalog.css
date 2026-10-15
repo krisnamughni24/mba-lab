@@ -79,11 +79,17 @@ body.still .tb *{animation:none!important}
 .sim.live:hover .tb svg{transform:scale(1.08)}
 
 /* simulation picker: larger, easier-to-read type */
-#modal .sg{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+#modal .sg{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+#modal .mw{width:min(1760px,100%);max-width:none}
+@media(max-width:1100px){#modal .sg{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){#modal .sg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){#modal .sg{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+@media(max-width:440px){#modal .sg{grid-template-columns:1fr}}
 #modal .mw h3{font-size:clamp(1.3rem,1.1rem + 1vw,1.8rem)}
 #modal #mcount{font-size:16px}
 #modal .chip{font-size:16px;padding:7px 16px;min-height:40px;letter-spacing:.03em}
-#modal .sim{gap:8px;padding:16px}
+#modal .sim{gap:8px;padding:12px}
+#modal .sim .tb{width:100%}
 #modal .sim b{font-size:19px;line-height:1.3;letter-spacing:.03em}
 #modal .sim .cat{font-size:13.5px;line-height:1.35}
 #modal .sim .note{font-size:16px;line-height:1.5;color:var(--txt2);margin:0}

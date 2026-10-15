@@ -52,13 +52,13 @@
     scene.onTick(paint);
     const refresh = () => paint(scene.values(), scene.kept());
     const setF = (f, hard) => { scene.set(f, hard || snap()); refresh(); };
-    function say(txt) { const b = $('#fgSay'); b.innerHTML = `<b>${lv.owner}</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+    function say(txt) { const b = $('#fgSay'); b.innerHTML = `<b>${lv.owner}</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); fitStage(); }
     function pills() { $('#fgSteps').innerHTML = [1, 2, 3].map(i => `<li class="${step === i ? 'on' : step > i ? 'done' : ''}"><span>${step > i ? '✓' : i}</span>${T('st' + i)}</li>`).join(''); }
     function hud() { const r = rank(st.xp); $('#fgHud').innerHTML = `<button type="button" class="fg-back" data-a="menu">← ${T('toMenu')}</button><b class="fg-lt">${T('lvN', { n: li + 1 })} · ${lv.icon} ${T('ind_' + lv.id + '_n')}</b><span class="fg-chipx">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
 
     /* ---------- steps ---------- */
     function render() {
-      hud(); pills(); const P = $('#fgPanel');
+      hud(); pills(); const P = $('#fgPanel'); P.scrollTop = 0;
       if (step === 1 && !rev) {
         say(T('sayRead'));
         P.innerHTML = `<div class="fg-brief"><b>${lv.icon} ${T('ind_' + lv.id + '_n')}</b><p>${T('ind_' + lv.id + '_d')}</p><p class="fg-hint">${T('rateHint')}</p></div>` + FK.map((k, i) => rowHtml(i)).join('') + `<div class="fg-foot" id="fgFoot"></div>`; foot();
@@ -149,8 +149,14 @@
 
     /* ---------- loop ---------- */
     function loopCtl() { if (visible && lv && !document.hidden) scene.start(); else { scene.stop(); scene.draw(); } }
-    function fit() { const w = cv.clientWidth || 640, d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(w * 9 / 16 * d); scene.draw(); }
-    if (window.ResizeObserver) new ResizeObserver(() => fit()).observe(cv);
+    function fitStage() {
+      const L = $('#fgLevel'); if (!L || L.hidden) return; const col = $('.fg-left'), say = $('#fgSay'), st = $('#fgStage'), colW = col.clientWidth;
+      const mobile = window.matchMedia('(max-width:900px)').matches, availH = mobile ? Math.min(L.clientHeight * .4, colW * 9 / 16) : col.clientHeight - say.offsetHeight - 12;
+      const w = Math.max(220, Math.min(colW, availH * 16 / 9)); st.style.width = Math.floor(w) + 'px';
+    }
+    function fit() { fitStage(); const w = cv.clientWidth || 640, d = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(w * d); cv.height = Math.round(w * 9 / 16 * d); scene.draw(); }
+    if (window.ResizeObserver) { new ResizeObserver(() => fit()).observe(cv); new ResizeObserver(() => fitStage()).observe($('#fgLevel')); }
+    window.addEventListener('resize', fitStage);
     document.addEventListener('visibilitychange', loopCtl);
     menu();
     return { menu, fit, setVisible(v) { visible = v; loopCtl(); if (v && !lv) menu(); }, setTheme(d) { day = !!d; scene.setTheme(d); }, relabel() { if (lv) { labels(); render(); refresh(); } else menu(); }, get inLevel() { return !!lv; } };

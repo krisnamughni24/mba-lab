@@ -139,3 +139,37 @@ body.still .ff *{animation:none!important;transition:none!important}
   .fg-kept b{font-size:5.6cqw}.fg-kept small{display:none}
   .fg-kpis{grid-template-columns:repeat(3,1fr)}
 }
+
+/* ===== one-window level: the arena is as large as the window allows, the side panel scrolls inside itself ===== */
+.ff-scroll:has(.fg-level:not([hidden])){overflow:hidden;padding-bottom:0;display:flex;flex-direction:column}
+.ff-scroll:has(.fg-level:not([hidden])) .fg{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;padding-top:4px;padding-bottom:10px}
+.fg-level:not([hidden]){flex:1;min-height:0;display:flex;flex-direction:column}
+.fg-hud{margin-bottom:6px}.fg-steps{margin-bottom:8px}
+.fg-cols{flex:1;min-height:0;grid-template-columns:minmax(0,1.75fr) minmax(340px,1fr);align-items:stretch}
+.fg-left{position:static;min-height:0;align-items:center;justify-content:center;gap:10px}
+.fg-say{width:100%;padding:8px 14px}
+.fg-panel{min-height:0;overflow:auto;scrollbar-width:thin}
+.fg-r{gap:3px;padding:8px 11px}.fg-clue{font-size:15px}
+.fg-moves{gap:6px}.fg-mv{padding:8px 10px!important;gap:2px}.fg-mv small{display:none}.fg-mv:hover small,.fg-mv:focus-visible small,.fg-mv.on small{display:block}
+.fg-mv b{padding-right:48px}.fg-mvi{font-size:20px;position:absolute;right:10px;bottom:6px}
+@media(max-height:860px){.fg-q{display:none}}
+@media(min-height:900px){.fg-mv small{display:block}.fg-mvi{position:static;font-size:24px}.fg-mv b{padding-right:0}}
+@media(max-width:900px){
+  .fg-cols{display:flex;flex-direction:column;gap:8px}.fg-left{flex:none;gap:6px}.fg-panel{flex:1;padding:10px}
+  .fg-say{font-size:14.5px;padding:6px 10px}.fg-steps{margin-bottom:6px}.fg-q{display:none}
+}
+/* header on one row, sticky primary action, no overlap on move cards */
+.fg-level:not([hidden]){display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:6px 14px;align-items:center}
+.fg-level .fg-hud,.fg-level .fg-steps{margin:0}.fg-level .fg-cols{grid-column:1/-1;align-self:stretch}
+.fg-steps li{padding:6px 10px}
+.fg-foot{position:sticky;bottom:-14px;margin:0 -14px -14px;padding:10px 14px;background:linear-gradient(to top,var(--panel) 70%,transparent);z-index:2}
+.fg-cmp{position:sticky;top:-14px;z-index:2;background:var(--panel2)}
+.fg-mv b{padding-right:66px!important;font-size:15px}
+@media(min-height:900px){.fg-mv b{padding-right:66px!important}}
+@media(max-width:900px){
+  .fg-level:not([hidden]){display:flex;flex-direction:column;align-items:stretch;gap:6px}
+  .fg-chipx,.fg-hud .fg-lt{display:none}.fg-hud{justify-content:flex-start}
+  .fg-foot{bottom:-10px;margin:0 -10px -10px;padding:8px 10px}.fg-cmp{top:-10px}
+}
+
+.ff-scroll:has(.fg-level:not([hidden])) .fg{max-width:min(1760px,100%)}
