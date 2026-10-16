@@ -1,6 +1,7 @@
 /* UI strings: account (Google sign-in, profile, history) */
 MBALAB.i18n.add({
   "en": {
+    "acctOpenSim": "Open this simulation", "acctShowMe": "Show me on the board", "acctBoardStale": "You have finished plays but the board is empty. Your database setup may be outdated: run the latest supabase/schema.sql in the Supabase SQL editor.",
     "acctHist": "History",
     "acctOverview": "Overview", "acctTabSet": "Settings", "acctStatPlays": "Plays", "acctStatSims": "Simulations", "acctStatBest": "Best score", "acctStatPass": "Insight stamps", "acctRecent": "Recent activity", "acctSaved": "Saved", "acctDanger": "Danger zone", "acctDangerTxt": "Deleting removes your account and every synced score. This cannot be undone.", "acctOrMail": "or use email", "acctShowPw": "Show password", "acctPerk1": "Sync across devices", "acctPerk2": "Join the leaderboard", "acctPerk3": "Collect Insight stamps",
     "acctTabMe": "Profile", "acctTabBoard": "Leaderboard", "acctBoardFor": "Show", "acctAllSims": "All simulations", "acctPts": "pts", "acctNoBoard": "Nobody on the board yet. Switch it on in your profile and finish a simulation.", "acctBoardHow": "Points = the sum of your best score (0-100) in every level or scenario you have played. Scores are reported by the app, so treat the board as friendly competition.", "acctNotShown": "You are not visible to others yet. Turn on the leaderboard in your profile.", "acctBoardSet": "Leaderboard", "acctShow": "Show me on the leaderboard", "acctDname": "Display name (max 24)", "acctSave": "Save",
@@ -16,6 +17,7 @@ MBALAB.i18n.add({
     "acctBoardGuest": "Sign in to appear on the board yourself."
   },
   "id": {
+    "acctOpenSim": "Buka simulasi ini", "acctShowMe": "Tampilkan saya di papan", "acctBoardStale": "Anda sudah punya permainan selesai tetapi papan masih kosong. Pengaturan database mungkin belum terbaru: jalankan supabase/schema.sql versi terbaru di SQL editor Supabase.",
     "acctHist": "Riwayat",
     "acctOverview": "Ringkasan", "acctTabSet": "Pengaturan", "acctStatPlays": "Permainan", "acctStatSims": "Simulasi", "acctStatBest": "Skor terbaik", "acctStatPass": "Cap Insight", "acctRecent": "Aktivitas terbaru", "acctSaved": "Tersimpan", "acctDanger": "Zona berbahaya", "acctDangerTxt": "Menghapus akan menghapus akunmu dan semua skor yang tersinkron. Tindakan ini tidak bisa dibatalkan.", "acctOrMail": "atau pakai email", "acctShowPw": "Tampilkan kata sandi", "acctPerk1": "Sinkron di semua perangkat", "acctPerk2": "Ikut papan peringkat", "acctPerk3": "Kumpulkan cap Insight",
     "acctTabMe": "Profil", "acctTabBoard": "Papan peringkat", "acctBoardFor": "Tampilkan", "acctAllSims": "Semua simulasi", "acctPts": "poin", "acctNoBoard": "Belum ada peserta di papan. Aktifkan di profilmu dan selesaikan satu simulasi.", "acctBoardHow": "Poin = jumlah skor terbaikmu (0-100) di setiap level atau skenario yang pernah dimainkan. Skor dilaporkan oleh aplikasi, jadi anggap papan ini sebagai kompetisi persahabatan.", "acctNotShown": "Kamu belum terlihat oleh orang lain. Aktifkan papan peringkat di profilmu.", "acctBoardSet": "Papan peringkat", "acctShow": "Tampilkan saya di papan peringkat", "acctDname": "Nama tampilan (maks 24)", "acctSave": "Simpan",
@@ -31,6 +33,7 @@ MBALAB.i18n.add({
     "acctBoardGuest": "Masuk untuk tampil di papan peringkat."
   },
   "ja": {
+    "acctOpenSim": "このシミュレーションを開く", "acctShowMe": "ランキングに表示する", "acctBoardStale": "完了したプレイがありますがランキングが空です。データベース設定が古い可能性があります。最新の supabase/schema.sql を Supabase の SQL エディタで実行してください。",
     "acctHist": "履歴",
     "acctOverview": "概要", "acctTabSet": "設定", "acctStatPlays": "プレイ数", "acctStatSims": "シミュレーション", "acctStatBest": "ベストスコア", "acctStatPass": "Insightスタンプ", "acctRecent": "最近のアクティビティ", "acctSaved": "保存しました", "acctDanger": "危険ゾーン", "acctDangerTxt": "削除するとアカウントと同期済みのスコアがすべて消え、元に戻せません。", "acctOrMail": "またはメールで", "acctShowPw": "パスワードを表示", "acctPerk1": "全デバイスで同期", "acctPerk2": "ランキングに参加", "acctPerk3": "Insightスタンプを集める",
     "acctTabMe": "プロフィール", "acctTabBoard": "ランキング", "acctBoardFor": "表示", "acctAllSims": "すべてのシミュレーション", "acctPts": "pt", "acctNoBoard": "まだランキングに誰もいません。プロフィールで有効にして、シミュレーションを終えてください。", "acctBoardHow": "ポイント = これまでにプレイした各レベル・シナリオのベストスコア(0〜100)の合計。スコアはアプリが報告するため、ランキングは気軽な競争としてお楽しみください。", "acctNotShown": "まだ他の人には表示されていません。プロフィールでランキングを有効にしてください。", "acctBoardSet": "ランキング", "acctShow": "ランキングに表示する", "acctDname": "表示名(24文字まで)", "acctSave": "保存",
@@ -46,6 +49,7 @@ MBALAB.i18n.add({
     "acctBoardGuest": "ログインするとランキングに参加できます。"
   },
   "zh": {
+    "acctOpenSim": "打开此模拟", "acctShowMe": "让我显示在排行榜上", "acctBoardStale": "你已有完成的游玩记录，但排行榜为空。数据库设置可能已过期：请在 Supabase SQL 编辑器中运行最新的 supabase/schema.sql。",
     "acctHist": "历史记录",
     "acctOverview": "概览", "acctTabSet": "设置", "acctStatPlays": "游玩次数", "acctStatSims": "模拟数", "acctStatBest": "最高分", "acctStatPass": "Insight 印章", "acctRecent": "最近活动", "acctSaved": "已保存", "acctDanger": "危险区域", "acctDangerTxt": "删除将移除你的账户和所有已同步的分数，且无法恢复。", "acctOrMail": "或使用邮箱", "acctShowPw": "显示密码", "acctPerk1": "多设备同步", "acctPerk2": "加入排行榜", "acctPerk3": "收集 Insight 印章",
     "acctTabMe": "个人资料", "acctTabBoard": "排行榜", "acctBoardFor": "显示", "acctAllSims": "全部模拟", "acctPts": "分", "acctNoBoard": "排行榜上还没有人。请在个人资料中开启,并完成一次模拟。", "acctBoardHow": "积分 = 你玩过的每个关卡或场景的最高分(0-100)之和。分数由应用上报,请把排行榜当作友好的竞赛。", "acctNotShown": "其他人暂时看不到你。请在个人资料中开启排行榜。", "acctBoardSet": "排行榜", "acctShow": "在排行榜上显示我", "acctDname": "显示名称(最多 24 个字符)", "acctSave": "保存",

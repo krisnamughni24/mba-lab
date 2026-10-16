@@ -29,8 +29,8 @@
       const r = rank(st.xp), nx = RANKS[r + 1], pct = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
       $('#fgMenu').innerHTML = `<div class="sc-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
         <div class="sc-rank"><span class="sc-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sc-xp"><i style="width:${pct}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
-        <div class="fg-levels">${E.LEVELS.map((l, i) => { const ok = unlocked(i), n = st.stars[l.id] || 0, k = E.kept(l.f, l.w);
-          return `<button type="button" class="fg-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="fg-lvi" aria-hidden="true">${l.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('ind_' + l.id + '_n')}</b><em>${T('ind_' + l.id + '_d')}</em>${ok ? starsHtml(n) + `<span class="sc-go">${n ? '↻' : '▶'}</span>` : '<span class="sc-lock" aria-hidden="true">🔒</span>'}</button>`; }).join('')}</div>
+        <div class="sc-cards2">${E.LEVELS.map((l, i) => { const ok = unlocked(i), n = st.stars[l.id] || 0;
+          return MBALAB.cards.card({ kind: 'forces', icon: l.icon, f: l.f, i, badge: T('lvN', { n: i + 1 }), who: [l.icon], title: T('ind_' + l.id + '_n'), desc: T('ind_' + l.id + '_d'), diff: Math.ceil((i + 1) / E.LEVELS.length * 5), foot: ok ? starsHtml(n) : '', locked: !ok, lockTip: T('lvLock'), attrs: `data-lv="${i}"` }); }).join('')}</div>
         <h3 class="sc-h3">${T('bdT')}</h3><div class="sc-badges">${BADGES.map(b => `<div class="sc-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 

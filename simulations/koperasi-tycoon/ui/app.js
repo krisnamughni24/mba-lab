@@ -25,7 +25,7 @@ MBALAB.sims.define('koperasi-tycoon', {
 
     function bestLine() { const b = bests[mode]; $('#kpBest').textContent = b ? t('kpBest', { n: b }) : ''; }
     function picker() {
-      $('#kpPick').innerHTML = `<h3>${t('modePick')}</h3><p>${t('modeSub')}</p><div class="kp-modes" role="radiogroup">${MODES.map(m => `<button type="button" role="radio" aria-checked="${m === mode}" class="kp-mode kp-m-${m} ${m === mode ? 'on' : ''}" data-mode="${m}"><span class="kp-mi" aria-hidden="true"></span><b>${gt('mode_' + m + '_t')}</b><em>${gt('mode_' + m + '_lv')}</em><small>${gt('mode_' + m + '_d')}</small>${bests[m] ? `<i>★ ${bests[m]}</i>` : ''}</button>`).join('')}</div>`;
+      $('#kpPick').innerHTML = `<h3>${t('modePick')}</h3><p>${t('modeSub')}</p><div class="kp-modes sc-cards2" role="radiogroup">${MODES.map((m, i) => MBALAB.cards.card({ kind: 'coop', mode: m, icon: { village: '🏘️', remote: '⛰️', fishing: '🎣' }[m], i, badge: gt('mode_' + m + '_lv'), title: gt('mode_' + m + '_t'), desc: gt('mode_' + m + '_d'), diff: i + 2, foot: bests[m] ? '★ ' + bests[m] : '', cls: 'kp-mode kp-m-' + m + (m === mode ? ' on' : ''), attrs: `role="radio" aria-checked="${m === mode}" data-mode="${m}"` })).join('')}</div>`;
       $('#kpIntroT').textContent = t('kpIntroT'); $('#kpIntro').textContent = t('kpIntro'); $('#kpGo').textContent = gt('modeStart'); how(); bestLine();
     }
     function how() { $('#kpHow').innerHTML = `<h3>${t('howT')}</h3><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>`; }

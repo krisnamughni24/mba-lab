@@ -9,7 +9,7 @@ MBALAB.sims.define('bullwhip-effect', {
     <section class="sc-select bw-select" id="bwSelect">
       <h2 data-i18n="bwPick"></h2>
       <p class="sc-sub bw-sub" data-i18n="bwPickSub"></p>
-      <div class="sc-cards bw-cards" id="bwCards"></div>
+      <div class="sc-cards2 bw-cards" id="bwCards"></div>
       <div class="sc-how bw-how" id="bwHow"></div>
       <p class="sc-note bw-note" data-i18n="bwNote"></p>
     </section>

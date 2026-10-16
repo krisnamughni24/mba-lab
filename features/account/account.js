@@ -49,7 +49,7 @@ MBALAB.feature('account', () => {
     const li = (r, i) => (r.is_me && i > 0 && Number(r.rank) > Number(board[i - 1].rank) + 1 ? '<li class="gap" aria-hidden="true">⋯</li>' : '') +
       '<li class="' + (r.is_me ? 'me' : '') + '"><span class="rk">' + medal(r.rank) + '</span><span class="nm">' + esc(r.name) + '</span><span class="pt">' + esc(r.points) + ' <small>' + esc(t('acctPts')) + '</small></span></li>';
     const rows = board === null ? (boardErr ? '<p class="acct-st err">' + esc(t('acctLoadErr')) + '</p>' : '<p class="acct-st">…</p>') :
-      !board.length ? '<div class="acct-empty"><span>🏆</span><p>' + esc(t('acctNoBoard')) + '</p></div>' :
+      !board.length ? '<div class="acct-empty"><span>🏆</span><p>' + esc(t('acctNoBoard')) + '</p>' + (ready() && prof && !prof.show_on_board ? '<button type="button" class="acct-outbtn" data-acct="showme">' + esc(t('acctShowMe')) + '</button>' : '') + (ready() && hist && hist.some(h => h.score != null) ? '<p class="acct-note">' + esc(t('acctBoardStale')) + '</p>' : '') + '</div>' :
         '<ol class="acct-board">' + board.map(li).join('') + '</ol>';
     return sel + rows + '<p class="acct-note">' + esc(t('acctBoardHow')) + '</p>' + (!me() ? '<p class="acct-note">' + esc(t('acctBoardGuest')) + '</p>' : '') + (prof && !prof.show_on_board ? '<p class="acct-note acct-warn">' + esc(t('acctNotShown')) + '</p>' : '');
   }
@@ -92,9 +92,10 @@ MBALAB.feature('account', () => {
       '<span class="acct-sync ' + sync + '" role="status"><i></i>' + esc(stTxt) + '</span></div></div>';
     const TABS = [['me', 'acctTabMe', '🏠'], ['hist', 'acctHist', '🕘'], ['board', 'acctTabBoard', '🏆'], ['set', 'acctTabSet', '⚙️']];
     const tabs = '<div class="acct-tabs" role="tablist">' + TABS.map(k => '<button type="button" role="tab" aria-selected="' + (tab === k[0]) + '" data-acct="tab" data-tab="' + k[0] + '"><span aria-hidden="true">' + k[2] + '</span> ' + esc(t(k[1])) + '</button>').join('') + '</div>';
+    const histRow = h => '<li class="go"><button type="button" class="acct-hrow" data-acct="opensim" data-sim="' + esc(h.sim) + '" title="' + esc(t('acctOpenSim')) + '"><span><b>' + esc(simName(h.sim)) + '</b>' + (h.variant ? ' · ' + esc(h.variant) : '') + '<small>' + esc(fmt(h.at)) + '</small></span><span class="sc">' + (h.score == null ? '' : Math.round(h.score) + '%') + ' <i aria-hidden="true">›</i></span></button></li>';
     const histList = hist === null ? (histErr ? '<p class="acct-st err">' + esc(t('acctLoadErr')) + '</p>' : '<p class="acct-st">…</p>') :
       !hist.length ? '<div class="acct-empty"><span>🎮</span><p>' + esc(t('acctNoHist')) + '</p></div>' :
-        '<ul class="acct-hist">' + hist.map(h => '<li><span><b>' + esc(simName(h.sim)) + '</b>' + (h.variant ? ' · ' + esc(h.variant) : '') + '<small>' + esc(fmt(h.at)) + '</small></span><span class="sc">' + (h.score == null ? '' : Math.round(h.score) + '%') + '</span></li>').join('') + '</ul>';
+        '<ul class="acct-hist">' + hist.map(histRow).join('') + '</ul>';
     let main = '';
     if (tab === 'board') {
       main = boardHtml();
@@ -108,7 +109,7 @@ MBALAB.feature('account', () => {
         '<details class="acct-danger"><summary>' + esc(t('acctDanger')) + '</summary><p class="acct-note">' + esc(t('acctDangerTxt')) + '</p><button type="button" class="acct-del" data-acct="del">' + esc(t('acctDel')) + '</button></details>';
     } else {
       main = '<div class="acct-stats">' + stat(H.length, 'acctStatPlays') + stat(sims, 'acctStatSims') + stat(best ? Math.round(best) + '%' : '–', 'acctStatBest') + stat(pass, 'acctStatPass') + '</div>' +
-        '<h4>' + esc(t('acctRecent')) + '</h4>' + (hist && hist.length ? '<ul class="acct-hist">' + hist.slice(0, 4).map(h => '<li><span><b>' + esc(simName(h.sim)) + '</b>' + (h.variant ? ' · ' + esc(h.variant) : '') + '<small>' + esc(fmt(h.at)) + '</small></span><span class="sc">' + (h.score == null ? '' : Math.round(h.score) + '%') + '</span></li>').join('') + '</ul>' : histList);
+        '<h4>' + esc(t('acctRecent')) + '</h4>' + (hist && hist.length ? '<ul class="acct-hist">' + hist.slice(0, 4).map(histRow).join('') + '</ul>' : histList);
     }
     body.innerHTML = hero + tabs + '<div class="acct-pane" role="tabpanel">' + main + '</div>';
   }
@@ -242,6 +243,10 @@ MBALAB.feature('account', () => {
       const r = await sb.from('profiles').update({ display_name: name, show_on_board: show }).eq('id', session.user.id);
       if (!r.error) { prof = { display_name: name, show_on_board: show }; sync = 'ok'; syncedAt = Date.now(); b.textContent = '✓ ' + t('acctSaved'); setTimeout(paintDialog, 1200); return; } else sync = 'err';
       paintDialog();
+    } else if (act === 'opensim') { MBALAB.sims.open(b.dataset.sim); return;
+    } else if (act === 'showme' && ready()) {
+      const r = await sb.from('profiles').update({ show_on_board: true }).eq('id', session.user.id);
+      if (!r.error) { prof = Object.assign({}, prof, { show_on_board: true }); loadBoard(); } else { sync = 'err'; paintDialog(); }
     } else if (act === 'out') {
       await sb.auth.signOut();
     } else if (act === 'del' && confirm(t('acctDelAsk'))) {

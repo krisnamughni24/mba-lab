@@ -57,7 +57,7 @@ data/               content and config: catalog, categories, texts, form setting
 core/               small engine: namespace + events, i18n, loader, simulation host
 features/           site features, one folder each (landing, scene, theme, audio, account, …)
 simulations/<id>/   one microsite per simulation, loaded on demand
-shared/             code shared by simulations: simkit.css, studio.css, assistant.js, report.js
+shared/             code shared by simulations: simkit.css, studio.css, assistant.js, cards.js (animated case cards for scenario pickers), report.js
 css/                theme (cyber.css), layout, nav
 tools/              translate.js: fills missing id/ja/zh texts from your English via API
 tests/              structure.js, engines.js, smoke.js, shots.js + shotdiff.py (visual regression)

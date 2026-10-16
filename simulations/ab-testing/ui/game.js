@@ -31,8 +31,8 @@
       const r = rank(st.xp), nx = RANKS[r + 1], pc = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
       $('#agMenu').innerHTML = `<div class="sc-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
         <div class="sc-rank"><span class="sc-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sc-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
-        <div class="sc-levels">${E.CASES.map((c, i) => { const ok = unlocked(i), n = st.stars[c.id] || 0;
-          return `<button type="button" class="sc-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="sc-lvi" aria-hidden="true">${c.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('c_' + c.id + '_n')}</b><em>${T('c_' + c.id + '_d')}</em>${ok ? starsHtml(n) + `<span class="sc-go">${n ? '↻' : '▶'}</span>` : '<span class="sc-lock" aria-hidden="true">🔒</span>'}</button>`; }).join('')}</div>
+        <div class="sc-cards2">${E.CASES.map((c, i) => { const ok = unlocked(i), n = st.stars[c.id] || 0;
+          return MBALAB.cards.card({ kind: 'ab', icon: c.icon, lift: Math.max(...c.ideas.map(x => x.lift)), i, badge: T('lvN', { n: i + 1 }), title: T('c_' + c.id + '_n'), desc: T('c_' + c.id + '_d'), diff: Math.ceil((i + 1) / E.CASES.length * 5), foot: ok ? starsHtml(n) : '', locked: !ok, lockTip: T('lvLock'), attrs: `data-lv="${i}"` }); }).join('')}</div>
         <h3 class="sc-h3">${T('bdT')}</h3><div class="sc-badges">${BADGES.map(b => `<div class="sc-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 

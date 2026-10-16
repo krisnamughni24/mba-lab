@@ -19,7 +19,7 @@ features/<name>/      one folder per site feature (scripts, styles, strings)
 simulations/<id>/     one microsite per simulation, lazy-loaded: sim.js (file list) + i18n/ ui/ and optionally engine/ data/ scene/  tests/ (assertions) tools/ (balance and trace scripts, not run by CI)
                         (see ADDING-A-SIMULATION.md)
 docs/                 documentation, index in docs/README.md
-shared/               code shared by several simulations: simkit.css (game/lab UI kit), studio.css (calculator frame), assistant.js (Bit robot), report.js (PDF/HTML download)
+shared/               code shared by several simulations: simkit.css (game/lab UI kit), studio.css (calculator frame), assistant.js (Bit robot), cards.js (BATNA-style animated case cards for every scenario picker), report.js (PDF/HTML download)
 tools/                translate.js (fills missing translations via API)
 tests/                structure.js (repo integrity), engines.js (all engine tests), smoke.js (opens every live simulation), shots.js + shotdiff.py (visual regression)
 css/                  core.css (layout, dialogs, loader) · nav.css (top bar) · cyber.css (THE THEME: colours, fonts, type scale)

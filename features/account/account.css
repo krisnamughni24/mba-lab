@@ -93,3 +93,11 @@
 .acct-google svg{width:20px;height:20px;flex:none}
 .acct-gsi{display:flex;justify-content:center;align-items:center;min-height:44px;margin-top:14px}
 .acct-board li.gap{display:block;text-align:center;padding:0;line-height:1;color:var(--txt2);letter-spacing:.3em}
+/* History rows open their simulation */
+.acct-hist li.go{padding:0}
+.acct-hist .acct-hrow{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:8px 12px;font-size:15px;cursor:pointer;color:inherit}
+.acct-hist .acct-hrow:hover,.acct-hist .acct-hrow:focus-visible{background:rgba(var(--tint-rgb),.12)}
+.acct-hist .acct-hrow:focus-visible{outline:2px solid var(--cy);outline-offset:-2px}
+.acct-hist .acct-hrow i{font-style:normal;color:var(--txt2);margin-left:4px}
+.acct-hist .acct-hrow small{display:block;color:var(--txt2);font-size:13.5px}
+.acct-hist .acct-hrow .sc{font-weight:700;white-space:nowrap;color:var(--cy);font-size:16px}

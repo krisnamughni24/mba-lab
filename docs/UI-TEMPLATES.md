@@ -19,6 +19,16 @@ template lives in `templates/<type>/` (copy it to `simulations/<your-id>/`).
 4. Keep the required classes in `ui/template.js` (listed per template in `data/ui-templates.js`). Add your own prefixed classes *beside* the kit classes, never instead of them.
 5. Run `npm test`.
 
+## Scenario case picker
+
+Every scenario simulation picks its case with the BATNA card look: an animated SVG picture that matches the case, a number badge, emoji chips, title, short text, difficulty diamonds and a footer (stars). Build the cards with `shared/cards.js` (list it in `scripts` before `ui/template.js`) and put them in `<div class="sc-cards2">`:
+
+```js
+MBALAB.cards.card({ kind: 'forces', icon: '☕', f: [88, 90, 30, 60, 55], i, badge: 'Level 1', title, desc, diff: 3, foot: starsHtml(n), attrs: `data-lv="${i}"` })
+```
+
+`kind` picks the picture (`ab`, `forces`, `govern`, `disc`, `whip`, `coop`, `generic`); extra numbers on the same object shape it. Add a new kind in `shared/cards.js` (`KIND`) when a simulation needs its own picture. Animations stop under `body.still` and reduced motion.
+
 ## Catalog filters
 
 The "Choose a simulation" window filters by **type** (the four templates), **topic** (category) and **status** (live / coming soon).

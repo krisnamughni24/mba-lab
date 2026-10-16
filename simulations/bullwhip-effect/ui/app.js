@@ -58,14 +58,10 @@ MBALAB.sims.define('bullwhip-effect', {
 
     /* ---------- select screen ---------- */
     function cards() {
-      $('#bwCards').innerHTML = B.SCEN.map((s, i) => `<button type="button" class="bw-card" data-i="${i}">
-        <span class="bw-ci" aria-hidden="true">${s.icon}</span>
-        <span class="bw-ct"><b>${esc(t('sc_' + s.id))}</b><i>${esc(t('dm_' + s.id))}</i><small>${esc(t('sd_' + s.id))}</small>
-        <em>${s.chain.map(c => esc(t('n_' + c))).join(' → ')}</em></span>
-        <span class="bw-cs" aria-label="${esc(t('stars', { n: best[s.id] || 0 }))}">${stars(best[s.id] || 0)}</span></button>`).join('');
+      $('#bwCards').innerHTML = B.SCEN.map((s, i) => MBALAB.cards.card({ kind: 'whip', icon: s.icon, n: s.chain.length, i, badge: String(i + 1), who: [s.icon], title: t('sc_' + s.id), tag: t('dm_' + s.id), desc: t('sd_' + s.id), diff: Math.ceil((i + 1) / B.SCEN.length * 5), foot: `<span class="bw-cs" aria-label="${esc(t('stars', { n: best[s.id] || 0 }))}">${stars(best[s.id] || 0)}</span>`, attrs: `data-i="${i}"` })).join('');
       $('#bwHow').innerHTML = `<h3>${t('howT')}</h3><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li></ol>`;
     }
-    $('#bwCards').addEventListener('click', e => { const b = e.target.closest('.bw-card'); if (b) { sfx('open'); openScen(+b.dataset.i); } });
+    $('#bwCards').addEventListener('click', e => { const b = e.target.closest('.sc-card2'); if (b) { sfx('open'); openScen(+b.dataset.i); } });
 
     /* ---------- chain strip ---------- */
     function chainHtml(pick) {

@@ -30,8 +30,8 @@ MBALAB.sims.define('disc-crisis-room', {
       const pf = allDone() ? total() : null;
       $('#dcMenu').innerHTML = `<div class="sc-hero"><div><h2>${T('startT')}</h2><p>${T('startSub')}</p></div>
         <div class="sc-rank"><span class="sc-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sc-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
-        <div class="sc-levels dc-levels">${LEVELS.map((L, i) => { const ok = unlocked(i), d = st.done[i];
-          return `<button type="button" class="sc-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="sc-lvi" aria-hidden="true">${L.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('lv' + (i + 1) + 'n')}</b><em>${T('lv' + (i + 1) + 'd')}</em>${ok ? (d ? `<span class="dc-code">${T('lvRead', { code: d.code })}</span>` : '') + `<span class="sc-go">${d ? '↻' : '▶'}</span>` : '<span class="sc-lock" aria-hidden="true">🔒 ' + T('lvLock') + '</span>'}</button>`; }).join('')}</div>
+        <div class="sc-cards2 dc-levels">${LEVELS.map((L, i) => { const ok = unlocked(i), d = st.done[i];
+          return MBALAB.cards.card({ kind: 'disc', icon: L.icon, i, badge: T('lvN', { n: i + 1 }), title: T('lv' + (i + 1) + 'n'), desc: T('lv' + (i + 1) + 'd'), diff: Math.ceil((i + 1) / LEVELS.length * 5), foot: ok ? (d ? T('lvRead', { code: d.code }) + ' ↻' : '▶') : '', locked: !ok, lockTip: T('lvLock'), attrs: `data-lv="${i}"` }); }).join('')}</div>
         <div class="dc-pf">${pf ? `<h3 class="sc-h3">${T('pfT')}: <span class="dc-badge">${pf.code}</span></h3><button type="button" class="sc-btn" data-a="profile">${T('seeProfile')}</button>` : `<p class="sc-memo">${T('pfHint')}</p>`}</div>
         <h3 class="sc-h3">${T('bdT')}</h3><div class="sc-badges">${BADGES.map(b => `<div class="sc-bd ${st.badges[b] ? 'on' : ''}" title="${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}"><span>${BI[b]}</span><b>${b.length === 1 ? word(b) : T('bd_' + b)}</b><small>${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}</small></div>`).join('')}</div>`;
     }

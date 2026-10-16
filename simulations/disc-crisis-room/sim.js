@@ -2,6 +2,7 @@
 MBALAB.sims.files('disc-crisis-room', {
   scripts: [
     "i18n/strings.js",
+    "../../shared/cards.js",
     "ui/template.js",
     "engine/engine.js",
     "scene/scene.js",

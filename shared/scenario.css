@@ -336,3 +336,59 @@ body.still .sc-root *{animation:none!important}
 @media(max-width:900px){.sc-levels{grid-template-columns:repeat(2,1fr)}}
 .sc-root .sc-select,.sc-root .sc-play{padding:0;max-width:none;margin:0}
 .sc-root .sc-stage{box-shadow:none}
+
+/* ---- Case cards (the BATNA picker look, built by shared/cards.js): animated picture, badge, emoji chips, text, difficulty diamonds, footer ---- */
+.sc-cards2{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin:6px 0 16px}
+@media(min-width:1000px){.sc-cards2{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1640px){.sc-cards2{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.sk-root .sc-card2{--ac:var(--cy);position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;height:100%;overflow:hidden;border-radius:20px;border:2px solid color-mix(in srgb,var(--ac) 55%,var(--edge));background:var(--panel);color:var(--txt);text-align:left;cursor:pointer;animation:sc2up .5s calc(var(--i)*.045s) backwards;transition:transform .2s,box-shadow .25s,border-color .2s}
+.sk-root .sc-card2:hover:not(:disabled){transform:translateY(-6px);box-shadow:0 14px 30px color-mix(in srgb,var(--ac) 40%,transparent);border-color:var(--ac)}
+.sk-root .sc-card2:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+@keyframes sc2up{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.sc2-art{display:block;width:100%;height:150px;color:var(--txt)}
+.sc2-n{position:absolute;left:10px;top:10px;padding:3px 11px;border-radius:999px;background:color-mix(in srgb,var(--panel) 85%,transparent);border:1px solid var(--ac);font-size:13.5px;font-weight:800;letter-spacing:.04em;backdrop-filter:blur(4px)}
+.sc2-lock{position:absolute;right:10px;top:10px;font-size:20px}
+.sc2-body{display:flex;flex-direction:column;gap:4px;padding:0 14px 8px;flex:1}
+.sc2-who{display:flex;align-items:center;gap:6px;margin-top:-22px;margin-bottom:4px;position:relative}
+.sc2-av{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;font-size:24px;border:3px solid var(--ac);box-shadow:0 4px 12px color-mix(in srgb,var(--ac) 50%,transparent);background:var(--panel)}
+.sc2-tt{font-size:19px;line-height:1.25}
+.sc2-tg{font-style:normal;font-weight:800;font-size:14.5px;color:var(--ac)}
+.sc2-ds{font-size:15px;color:var(--txt2);line-height:1.45}
+.sc2-ft{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px 14px;border-top:1px dashed color-mix(in srgb,var(--ac) 35%,transparent)}
+.sc2-df{display:inline-flex;gap:4px}
+.sc2-df u{width:14px;height:14px;border-radius:4px;transform:rotate(45deg) scale(.75);background:color-mix(in srgb,var(--txt) 16%,transparent)}
+.sc2-df u.on{background:var(--ac);box-shadow:0 0 8px var(--ac)}
+.sc2-fx{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--txt2)}
+.sc2-fx .s,.sc2-fx .sc-stars{font-size:20px;letter-spacing:0}
+.sk-root .sc-card2.locked{opacity:.55;filter:grayscale(.6);cursor:not-allowed}
+/* picture animations, all inside the SVG */
+.sc2-em,.sc2-pu,.sc2-bob,.sc2-bt,.sc2-sun,.sc2-orb,.sc2-sw,.sc2-nd,.sc2-bar,.sc2-btn,.sc2-tr{transform-box:fill-box;transform-origin:center}
+.sc2-em{animation:sc2bob 2.6s ease-in-out infinite}
+.sc2-orb{animation:sc2orb 5s ease-in-out infinite}
+.sc2-pu{animation:sc2pu 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+.sc2-bob{animation:sc2bob 2.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+.sc2-bt{animation:sc2bt 3.2s ease-in-out infinite alternate}
+.sc2-sun{animation:sc2orb 4s ease-in-out infinite}
+.sc2-wv{animation:sc2wv 3s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+.sc2-tr{animation:sc2tr 4s ease-in-out infinite alternate}
+.sc2-sw{transform-origin:center bottom;animation:sc2sw 2.2s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+.sc2-bar{transform-origin:center bottom;animation:sc2bar 2.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+.sc2-btn{animation:sc2pu 1.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+.sc2-cur{animation:sc2cur 3.2s ease-in-out infinite}
+.sc2-nd{transform-origin:146px 70px;animation:sc2nd 3s ease-in-out infinite alternate}
+.sc2-ck{stroke-dasharray:1;stroke-dashoffset:1;animation:sc2ck 3s ease-in-out infinite}
+@keyframes sc2bob{50%{transform:translateY(-5px) rotate(-3deg)}}
+@keyframes sc2orb{50%{transform:scale(1.18)}}
+@keyframes sc2pu{50%{transform:scale(1.18)}}
+@keyframes sc2bt{from{transform:translateX(-8px) rotate(-3deg)}to{transform:translateX(8px) rotate(3deg)}}
+@keyframes sc2wv{to{transform:translateX(-12px)}}
+@keyframes sc2tr{from{transform:translateX(0)}to{transform:translateX(120px)}}
+@keyframes sc2sw{from{transform:scaleY(.55)}to{transform:scaleY(var(--h,1.2))}}
+@keyframes sc2bar{0%{transform:scaleY(.2)}60%,100%{transform:scaleY(1)}}
+@keyframes sc2cur{0%,15%{transform:translate(0,0)}55%,75%{transform:translate(126px,-4px) scale(1.25)}100%{transform:translate(0,0)}}
+@keyframes sc2nd{from{transform:rotate(-70deg)}to{transform:rotate(var(--a,0deg))}}
+@keyframes sc2ck{0%{stroke-dashoffset:1}35%,80%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+body.still .sc-card2,body.still .sc-card2 *{animation:none!important}
+body.still .sc2-ck{stroke-dashoffset:0}
+@media(max-width:640px){.sc2-art{height:118px}.sc2-tt{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.sc-card2,.sc-card2 *{animation:none!important}.sc2-ck{stroke-dashoffset:0}}

@@ -56,19 +56,12 @@ body.still .kp-panel{animation:none}
 .kp-pick h3{font-size:17px;margin:0}
 .kp-pick p{font-size:16px;margin:2px 0 8px}
 .kp-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.kp-mode{position:relative;display:flex;flex-direction:column;gap:4px;text-align:left;padding:12px;border-radius:14px;border:2px solid var(--edge);background:var(--bg2,transparent);color:var(--txt);cursor:pointer;font:inherit;overflow:hidden;min-height:150px;transition:transform .15s,border-color .15s}
-.kp-mode:hover{transform:translateY(-2px)}
-.kp-mode.on{border-color:var(--cy);box-shadow:0 0 0 3px color-mix(in srgb,var(--cy) 25%,transparent)}
-.kp-mode b{font-size:16.5px;padding-left:0;margin-top:34px}
-.kp-mode em{font-style:normal;font-size:14px;font-weight:700;color:var(--am)}
-.kp-mode small{font-size:15px;color:var(--txt2);line-height:1.35}
-.kp-mode i{position:absolute;right:10px;top:8px;font-style:normal;font-size:15px;font-weight:700;color:var(--am)}
-.kp-mi{position:absolute;left:0;right:0;top:0;height:34px;opacity:.9}
-.kp-m-village .kp-mi{background:linear-gradient(#9fd4ff 0 45%,#7cc34e 45%)}
-.kp-m-remote .kp-mi{background:linear-gradient(135deg,#a8b8d8 0 30%,#5a8a5a 30% 65%,#b8956a 65%)}
-.kp-m-fishing .kp-mi{background:linear-gradient(#9fd4ff 0 30%,#2a6cc0 30% 75%,#ead7a8 75%)}
 @media(max-width:700px){.kp-modes{grid-template-columns:1fr}.kp-mode{min-height:0}}
 .kp-stage{max-width:min(100%,calc(58vh * 16 / 9));margin:0 auto}
 .kp-note{color:var(--am)}
 .kp-pick{margin-top:4px}
 .kp-start .kp-main{margin-top:14px}
+/* mode cards use the shared case card (shared/cards.js); the chosen mode gets a ring */
+.kp-modes.sc-cards2{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sk-root .kp-mode.sc-card2.on{border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 30%,transparent),0 10px 26px color-mix(in srgb,var(--ac) 35%,transparent)}
+@media(max-width:700px){.kp-modes.sc-cards2{grid-template-columns:1fr}}
