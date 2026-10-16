@@ -70,7 +70,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--edge-hi)
 /* top bar + floating controls */
 .topnav{background:var(--nav-bg);border-bottom:1px solid var(--edge);box-shadow:0 1px 0 var(--nav-line),0 8px 30px var(--nav-drop);color:var(--txt)}
 .brand{font-family:var(--f-hd);font-weight:800;font-size:16px;letter-spacing:.16em;text-transform:uppercase;text-shadow:0 0 12px rgba(77,210,255,.7)}
-.logo{border-radius:3px;background:linear-gradient(135deg,var(--cy),var(--mg));box-shadow:0 0 16px rgba(77,210,255,.7);color:#04061a}
+.logo{border-radius:9px;background:none;box-shadow:0 0 16px rgba(77,210,255,.55);overflow:hidden}.logo img{width:100%;height:100%;display:block}
 .pill,.fab button{border-radius:3px;height:34px;padding:0 12px;text-transform:none;letter-spacing:.07em;font-size:13.5px}
 .camctl button,.fab button,.pill{text-transform:none;letter-spacing:.07em;font-size:13.5px}
 .fab button{height:40px;background:var(--panel)}

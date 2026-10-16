@@ -1,0 +1,16 @@
+{
+  "name": "MBA Lab · Mini Simulations",
+  "short_name": "MBA Lab",
+  "description": "Interactive mini simulations and calculators for business decisions.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070b24",
+  "theme_color": "#070b24",
+  "icons": [
+    { "src": "assets/logo/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/logo/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/logo/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/logo/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

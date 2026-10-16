@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="MBA Lab">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101a4a"/><stop offset="1" stop-color="#1a0b3a"/></linearGradient>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4dd2ff"/><stop offset="1" stop-color="#ff6ad5"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="9" y="9" width="494" height="494" rx="108" fill="none" stroke="url(#neon)" stroke-opacity=".55" stroke-width="6"/>
+  <path d="M120 384 L120 168 L256 318 L392 168 L392 384" fill="none" stroke="url(#neon)" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="120" cy="168" r="34" fill="#fff"/><circle cx="392" cy="168" r="34" fill="#fff"/><circle cx="256" cy="318" r="25" fill="#fff"/>
+</svg>
