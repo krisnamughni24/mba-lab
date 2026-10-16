@@ -25,10 +25,10 @@ Try Out MBA is wired in `simulations/tryout-mba/ui/app.js` (cloudSync / cloudPus
 - Guests keep working; progress stays in localStorage. On first sign-in the device progress is merged into the account.
 - Do not put the `service_role` key or the Google client secret anywhere in this repository.
 
-## Sinkron simulasi & leaderboard
+## Simulation sync and leaderboard
 
-- Setiap simulasi memakai `MBALAB.cloud(simId, {read, write, merge, refresh})`. Progress lokal digabung dengan data akun (nilai terbesar / gabungan), lalu disimpan ke `user_state`. `cloud.changed()` dipanggil saat progress berubah; `cloud.attempt({at, score 0-100, variant, detail})` mencatat satu percobaan.
-- Tersinkron: Try Out MBA, Bullwhip Effect, Life 40, BATNA, BUMN Explorer. DISC Crisis Room dan SMART Calculator tidak (tidak punya skor).
-- Leaderboard: opt-in (nama tampilan di dialog Akun). Poin = jumlah skor terbaik (0-100) per level/skenario. Skor dilaporkan klien, jadi hanya "friendly competition" (ada batas skor, cek waktu, dan rate limit di `attempts_guard`).
-- **Setelah update, jalankan ulang `supabase/schema.sql` di SQL Editor** (idempotent).
-- Error Google `redirect_uri_mismatch`: tambahkan `https://<project>.supabase.co/auth/v1/callback` ke Authorized redirect URIs di Google Cloud.
+- Each simulation uses `MBALAB.cloud(simId, {read, write, merge, refresh})`. Local progress is merged with the account data (highest score / union) and saved to `user_state`. Call `cloud.changed()` when progress changes; `cloud.attempt({at, score 0-100, variant, detail})` records one attempt.
+- Synced: Try Out MBA, Bullwhip Effect, Life 40, BATNA, BUMN Explorer. DISC Crisis Room and the calculators (SMART, Decision Tree) are not synced because they have no score.
+- Leaderboard: opt-in (display name in the Account dialog). Points = sum of best scores (0-100) per level or scenario. Scores are reported by the client, so it is only a friendly competition (score caps, time checks and a rate limit in `attempts_guard`).
+- **After every schema update, re-run `supabase/schema.sql` in the SQL Editor** (it is idempotent).
+- Google error `redirect_uri_mismatch`: add `https://<project>.supabase.co/auth/v1/callback` to the Authorized redirect URIs in Google Cloud.

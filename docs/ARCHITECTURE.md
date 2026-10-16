@@ -18,8 +18,9 @@ features/<name>/      one folder per site feature (scripts, styles, strings)
   landing scene theme camera language audio catalog about idea-form
 simulations/<id>/     one microsite per simulation, lazy-loaded: sim.js (file list) + i18n/ ui/ and optionally engine/ data/ scene/
                         (see ADDING-A-SIMULATION.md)
-shared/               code shared by several simulations: assistant.js (Bit robot), studio.css (base game UI theme)
-tests/                smoke.js: opens every live simulation and checks for errors
+docs/                 documentation, index in docs/README.md
+shared/               code shared by several simulations: simkit.css (game/lab UI kit), studio.css (calculator frame), assistant.js (Bit robot), report.js (PDF/HTML download)
+tests/                engines.js (all engine tests), smoke.js (opens every live simulation), shots.js + shotdiff.py (visual regression)
 css/                  core.css (layout, dialogs, loader) · nav.css (top bar) · cyber.css (THE THEME: colours, fonts, type scale)
 apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 ```
@@ -36,7 +37,10 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | Colours, fonts, night/day look | `css/cyber.css` (variables at the top; `body.day` block = day palette) |
 | Text animation (decode, glitch every 2 s) | `core/kinetic.js` (selector lists + timings at the top) |
 | Music, sounds, typing + loading sounds, volume mix | `features/audio/audio.js` (`MUSIC_LEVEL`, `SFX_LEVEL`) |
-| SMART tips from the robot (Bit) | `shared/assistant.js` |
+| Tips from the robot (Bit) | `shared/assistant.js` (texts in each simulation's strings) |
+| Report download (PDF, HTML) used by calculators | `shared/report.js` |
+| Decision Tree Calculator: maths (roll-back, EVPI, risk attitude, sensitivity), cases | `simulations/decision-tree-ev/engine/engine.js` (testable in node) |
+| Decision Tree Calculator: UI, report | `simulations/decision-tree-ev/ui/app.js` |
 | Negotiation & BATNA: levels, NPC rules, scoring | `simulations/negotiation-batna/engine/engine.js` (`LEVELS`; pure logic, testable in node) |
 | Negotiation & BATNA: isometric neon scene | `simulations/negotiation-batna/scene/scene.js` (canvas; palette `PAL.night` / `PAL.day`) |
 | Negotiation & BATNA: dialogue and lessons | `simulations/negotiation-batna/i18n/strings.js` |

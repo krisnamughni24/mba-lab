@@ -27,6 +27,6 @@ Engine and numbers, scene or canvas drawing (`scene/`), charts, strings, thumbna
 
 ## Migration status
 - On `simkit.css` (game family): AI Governance, A/B Testing, Five Forces, Van Westendorp.
-- Calculators use the SMART frame (`shared/studio.css`: connected stepper, required-to-continue checklist, guide pop-up, Bit assistant): SMART Calculator and Decision Tree Calculator. Name any calculation-type simulation "... Calculator".
-- Still on their own base CSS (same look, duplicated rules): Bullwhip, BUMN Explorer, DISC Crisis Room, Koperasi Tycoon, Life 40, Negotiation & BATNA, Try Out MBA, SMART Calculator (uses `studio.css`). They can move over class by class; compare `node tests/shots.js` before and after.
+- On the calculator frame (`shared/studio.css`, see `docs/CALCULATORS.md`): SMART Calculator and Decision Tree Calculator. Name any calculation-type simulation "... Calculator".
+- Still on their own base CSS (same look, duplicated rules): Bullwhip, BUMN Explorer, DISC Crisis Room, Koperasi Tycoon, Life 40, Negotiation & BATNA, Try Out MBA. They can move over class by class; compare `node tests/shots.js` before and after. Good first contributions.
 - Tools: `tests/shots.js` + `tests/shotdiff.py` for visual regression.
