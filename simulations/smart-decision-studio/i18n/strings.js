@@ -1,4 +1,4 @@
-/* SMART Decision Studio: UI strings */
+/* SMART Calculator: UI strings */
 MBALAB.sims.define('smart-decision-studio', {
   strings: {
     "en": {

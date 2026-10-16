@@ -1,4 +1,4 @@
-/* SMART Decision Studio: four guided parts.
+/* SMART Calculator: four guided parts.
    1 Build the model (table of alternatives x weighted attributes) -> 2 Ranking -> 3 Stress-test (sensitivity chart)
    -> 4 Conclusion written from the user's own model, with PDF / HTML / Markdown download.
    Deterministic math:  V_j = sum_i w_i v_ij ;  V_j(x) = (sum_{i!=k} W_i v_ij + x v_kj) / (S + x) ;
@@ -415,7 +415,7 @@ ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}
         const rank2 = `<table class="l2"><tr><th>${esc(t('rank'))}</th><th>${esc(t('thAlt'))}</th><th>${esc(t('score'))}</th><th>${esc(t('vsLeader'))}</th></tr>${A.r.map((x, i) => `<tr><td>${i + 1}</td><td>${esc(x.n)}</td><td>${f(x.V)}</td><td>${f(x.V - A.r[0].V)}</td></tr>`).join('')}</table>`;
         const sens3 = `<table><tr><th>${esc(t('thAttr'))}</th><th>${esc(t('thBase'))}</th><th>${esc(t('thSwitch'))}</th><th>${esc(t('thTakes'))}</th></tr>${SR.map(s => `<tr><td>${esc(s.name)}</td><td>${s.base}</td><td>${s.sw}</td><td>${esc(s.to)}</td></tr>`).join('')}</table>`;
         const svg = `<h3>${esc(t('chartTitle', { a: kName(k) }))}</h3><svg viewBox="0 0 700 352" xmlns="http://www.w3.org/2000/svg">${chartSVG(k, 200, false, null, 'report')}</svg>`;
-        return `<div class="blk"><h1>${esc(t('rTitle'))}</h1><p class="sub">SMART Decision Studio · MBA Lab · ${esc(t('rGen', { d: dateStr() }))}</p></div>
+        return `<div class="blk"><h1>${esc(t('rTitle'))}</h1><p class="sub">SMART Calculator · MBA Lab · ${esc(t('rGen', { d: dateStr() }))}</p></div>
 <div class="blk"><h2>${esc(t('r1'))}</h2>${model1}</div>
 <div class="blk"><h2>${esc(t('r2'))}</h2>${rank2}</div>
 <div class="blk"><h2>${esc(t('r3'))}</h2>${svg}</div>
@@ -427,7 +427,7 @@ ${S.alts.map((n, j) => `<tr><td>${esc(aName(j))}</td>${S.m[j].map(v => `<td>${v}
       }
       function reportMD() {
         const A = analyze(), SR = sensRows(A), T = totalW(), L = [];
-        L.push(`# ${t('rTitle')}`, '', `*SMART Decision Studio · MBA Lab · ${t('rGen', { d: dateStr() })}*`, '', `## ${t('r1')}`, '');
+        L.push(`# ${t('rTitle')}`, '', `*SMART Calculator · MBA Lab · ${t('rGen', { d: dateStr() })}*`, '', `## ${t('r1')}`, '');
         L.push('| ' + [t('tblCorner'), ...S.attrs.map((a, i) => kName(i))].map(mdc).join(' | ') + ' |', '|' + Array(S.attrs.length + 1).fill('---').join('|') + '|');
         L.push('| ' + [`**${t('rawW')}**`, ...S.attrs.map(a => a.w)].join(' | ') + ' |', '| ' + [t('normW'), ...S.attrs.map(a => f(a.w / T, 3))].join(' | ') + ' |');
         S.alts.forEach((n, j) => L.push('| ' + [mdc(aName(j)), ...S.m[j]].join(' | ') + ' |'));

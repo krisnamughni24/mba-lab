@@ -1,4 +1,4 @@
-/* SMART Decision Studio: 2D virtual assistant "Bit".
+/* SMART Calculator: 2D virtual assistant "Bit".
    Walks along the bottom of the simulation and, after 3 seconds without any activity, stops and says a tip that fits
    the current part and the state of the model. Click Bit for a tip any time; "Hide" in the bubble puts Bit away.
    app.js calls SmartAssistant.create(host, { stage(), hints() }). */

@@ -11,10 +11,10 @@ MBALAB.data.simulations = [
     "icon": "⚖️",
     "category": "decision-negotiation",
     "name": {
-      "en": "SMART Decision Studio",
-      "id": "SMART Decision Studio",
-      "ja": "SMART Decision Studio",
-      "zh": "SMART Decision Studio"
+      "en": "SMART Calculator",
+      "id": "Kalkulator SMART",
+      "ja": "SMARTカリキュレーター",
+      "zh": "SMART 计算器"
     },
     "description": {
       "en": "Multi-criteria decisions: weights, ranking, sensitivity.",
@@ -2010,10 +2010,10 @@ MBALAB.data.simulations = [
     "icon": "🌳",
     "category": "decision-negotiation",
     "name": {
-      "en": "Decision Tree Studio",
-      "id": "Studio Pohon Keputusan",
-      "ja": "決定木スタジオ",
-      "zh": "决策树工作室"
+      "en": "Decision Tree Calculator",
+      "id": "Kalkulator Pohon Keputusan",
+      "ja": "決定木カリキュレーター",
+      "zh": "决策树计算器"
     },
     "description": {
       "en": "Draw choices and chances, roll back the numbers, test the odds.",

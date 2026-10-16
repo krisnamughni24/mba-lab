@@ -6,7 +6,7 @@ Interactive business simulations over an animated 3D Jakarta (day/night), in Eng
 - Add a simulation (folder layout, `sim.js`, smoke test): [docs/ADDING-A-SIMULATION.md](docs/ADDING-A-SIMULATION.md)
 - Save submitted ideas to Google Drive: [docs/FORM-SETUP-GOOGLE-DRIVE.md](docs/FORM-SETUP-GOOGLE-DRIVE.md)
 
-Live simulation: **SMART Decision Studio** (multi-criteria decision analysis). Others are listed as coming soon in `data/simulations.js`.
+Live simulation: **SMART Calculator** (multi-criteria decision analysis). Others are listed as coming soon in `data/simulations.js`.
 
 ## Deploy on GitHub Pages
 1. Repo **Settings → Pages**.

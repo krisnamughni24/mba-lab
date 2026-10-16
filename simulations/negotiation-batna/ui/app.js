@@ -230,7 +230,7 @@ MBALAB.sims.define('negotiation-batna', {
     $('#nbInfo').addEventListener('click', () => { guide.hidden ? showGuide() : closeGuide(); });
     $('#nbMissions').addEventListener('click', () => { sfx('click'); toSelect(); });
 
-    /* ---------- assistant Bit (always present, like in SMART Decision Studio) ---------- */
+    /* ---------- assistant Bit (always present, like in SMART Calculator) ---------- */
     function hints() {
       if (!gs) return { state: [], generic: ['nbt_s1', 'nbt_s2'] };
       if (!$('#nbBrief').hidden) return { state: ['nbt_brief'], generic: ['nbt_p1'] };

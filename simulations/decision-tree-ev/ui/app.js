@@ -1,10 +1,10 @@
-/* Decision Tree Studio: case chips, tree drawing, editor, roll-back results, sensitivity chart, conclusion.
+/* Decision Tree Calculator: case chips, tree drawing, editor, roll-back results, sensitivity chart, conclusion.
    All maths is in engine/engine.js (MBALAB.dt). Labels coming from presets are {en,id,ja,zh}; labels typed by the player are plain strings. */
 MBALAB.sims.define('decision-tree-ev', {
   mount(host) {
     const E = MBALAB.dt, $ = s => host.querySelector(s), esc = MBALAB.util.esc, sfx = MBALAB.util.sfx;
     const RAV = [Infinity, 1500, 500], COLS = ['var(--cy)', 'var(--am)', 'var(--gn)', 'var(--mg)', 'var(--vi)', 'var(--rd)'];
-    let cur = 'cafe', T = null, S = null, sel = null, ra = 0, hunch = null, sensEdge = null, sensX = null;
+    let cur = 'cafe', T = null, S = null, sel = null, ra = 0, hunch = null, sensEdge = null, sensX = null, step = 0; const seen = {};
     const nm = x => { const s = x && typeof x === 'object' ? tr(x) : (x == null ? '' : String(x)); return s.trim() || '—'; };
     const loc = () => ({ en: 'en-US', id: 'id-ID', ja: 'ja-JP', zh: 'zh-CN' }[LANG] || 'en-US');
     const fmt = x => Math.round(x).toLocaleString(loc());
@@ -23,9 +23,11 @@ MBALAB.sims.define('decision-tree-ev', {
 
     /* ---------- chips and story ---------- */
     function renderCases() {
+      if (!$('#dtCases')) return;
       $('#dtCases').innerHTML = E.PRESETS.map(p => `<button type="button" role="radio" aria-checked="${p.id === cur}" class="dt-case ${p.id === cur ? 'on' : ''}" data-case="${p.id}"><span aria-hidden="true">${p.icon}</span>${esc(tr(p.name))}</button>`).join('');
     }
     function renderStory() {
+      if (!$('#dtStory')) return;
       const p = P(); let h = `<p>${esc(tr(p.story))}</p>`;
       if (T.k === 'd' && T.kids.length > 1) {
         h += `<div class="dt-hunch"><b>${esc(t('dtHunchQ'))}</b>` + T.kids.map((e, i) => `<button type="button" class="dt-chip ${hunch === i ? 'on' : ''}" data-hunch="${i}">${esc(nm(e.l))}</button>`).join('') + '</div>';
@@ -49,6 +51,7 @@ MBALAB.sims.define('decision-tree-ev', {
       return { pos, leaves: leaf, depth };
     }
     function renderTree() {
+      if (!$('#dtTree')) return;
       const { pos, leaves, depth } = layout(T), X0 = 40, CW = 214, RH = 70, Y0 = 46;
       const px = n => X0 + pos[n.id].x * CW, py = n => Y0 + pos[n.id].y * RH;
       const W = X0 + depth * CW + 180, H = Y0 + leaves * RH - 14, dim = new Set();
@@ -80,13 +83,14 @@ MBALAB.sims.define('decision-tree-ev', {
       $('#dtTree').innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:${Math.round(W * K)}px;height:${Math.round(H * K)}px" role="img" aria-label="${esc(nm(P().name))}">${ed}${nd}</svg>`;
     }
     function renderLegend() {
+      if (!$('#dtLegend')) return;
       const sh = { d: '<svg viewBox="0 0 18 18"><rect x="2" y="2" width="14" height="14" rx="3" class="dt-nd d"/></svg>', c: '<svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" class="dt-nd c"/></svg>', e: '<svg viewBox="0 0 18 18"><polygon points="3,2 16,9 3,16" class="dt-nd e"/></svg>' };
       $('#dtLegend').innerHTML = `<span>${sh.d}${esc(t('dtLegD'))}</span><span>${sh.c}${esc(t('dtLegC'))}</span><span>${sh.e}${esc(t('dtLegE'))}</span><span>${esc(t('dtLegB'))}</span>`;
     }
 
     /* ---------- editor ---------- */
     function renderInsp() {
-      const box = $('#dtInsp'), f = sel && E.find(T, sel);
+      const box = $('#dtInsp'); if (!box) return; const f = sel && E.find(T, sel);
       if (!f) { box.innerHTML = `<h3>${esc(t('dtInspH'))}</h3><p class="sk-sub">${esc(t('dtInspNone'))}</p><button type="button" data-reset>${esc(t('dtReset'))}</button>`; return; }
       const n = f.node, par = f.parent, e = f.edge; let h = `<h3>${esc(t('dtInspH'))}</h3>`;
       if (par) {
@@ -121,6 +125,7 @@ MBALAB.sims.define('decision-tree-ev', {
 
     /* ---------- results ---------- */
     function renderRes() {
+      if (!$('#dtRes')) return;
       const issues = E.validate(T), pr = E.profile(T, S), plan = E.plan(T, S), neutral = !isFinite(RAV[ra]);
       const ev = neutral ? E.evpi(T, S) : null;
       let h = `<h2 class="sk-h">${esc(t('dtRes'))}</h2>`;
@@ -141,7 +146,7 @@ MBALAB.sims.define('decision-tree-ev', {
 
     /* ---------- sensitivity ---------- */
     function renderSens() {
-      const box = $('#dtSens'), pes = E.probEdges(T); let h = `<h2 class="sk-h">${esc(t('dtSens'))}</h2>`;
+      const box = $('#dtSens'); if (!box) return; const pes = E.probEdges(T); let h = `<h2 class="sk-h">${esc(t('dtSens'))}</h2>`;
       if (!pes.length) { box.innerHTML = h + `<p class="sk-sub">${esc(t('dtSensNoC'))}</p>`; return; }
       if (!(T.k === 'd' && T.kids.length > 1)) { box.innerHTML = h + `<p class="sk-sub">${esc(t('dtSensNoD'))}</p>`; return; }
       if (!pes.some(x => x.edge.id === sensEdge)) sensEdge = pes[0].edge.id;
@@ -178,17 +183,48 @@ MBALAB.sims.define('decision-tree-ev', {
       if (ev != null && ev > 0.5) parts.push(t('dtConc3', { e: fmt(ev) }));
       parts.push(t('dtConc4')); return parts;
     }
-    function renderConc() { $('#dtConc').innerHTML = `<h2 class="sk-h">${esc(t('dtConc'))}</h2><div class="dt-conc">${summary().map(p => `<p>${esc(p)}</p>`).join('')}</div><button type="button" data-copy>${esc(t('dtCopy'))}</button>`; }
+    function renderConc() {
+      if (!$('#dtConc')) return; $('#dtConc').innerHTML = `<h2 class="sk-h">${esc(t('dtConc'))}</h2><div class="dt-conc">${summary().map(p => `<p>${esc(p)}</p>`).join('')}</div><button type="button" data-copy>${esc(t('dtCopy'))}</button>`; }
 
-    function refresh() { solve(); renderTree(); renderRes(); renderConc(); renderStory(); }
-    function renderAll() { solve(); renderCases(); renderLegend(); renderStory(); renderTree(); renderInsp(); renderRes(); renderSens(); renderConc(); }
+    const ready = () => T.kids.length > 0 && E.validate(T).length === 0;
+    function renderIssues() {
+      const box = $('#dtIssues'); if (!box) return; const is = E.validate(T);
+      box.innerHTML = is.length ? '<ul class="dt-issues">' + is.slice(0, 4).map(i => { const n = nm(E.find(T, i.id).node.n); return `<li>${esc(i.code === 'psum' ? t('dtIssP', { n, s: Math.round(i.s * 1000) / 10 }) : i.code === 'one' ? t('dtIssO', { n }) : t('dtIssE', { n }))}</li>`; }).join('') + '</ul>' : `<div class="sx-verdict v3">✓ ${esc(t('dtIssOk'))}</div>`;
+      const nx = $('[data-go="2"].dt-next'); if (nx) nx.classList.toggle('dt-off', is.length > 0);
+    }
+    const unlocked = n => n < 2 || ready();
+    function renderSteps() {
+      $('#dtSteps').innerHTML = [0, 1, 2, 3].map(n => `<li role="button" tabindex="0" data-go="${n}" class="${step === n ? 'on' : step > n ? 'done' : ''} ${unlocked(n) ? '' : 'locked'}" ${step === n ? 'aria-current="step"' : ''}><span>${step > n ? '✓' : n + 1}</span>${esc(t('dtStp' + (n + 1)))}</li>`).join('');
+    }
+    const guide = n => `<details class="sx-more dt-guide" ${seen[n] ? '' : 'open'}><summary>${esc(t('dtGuide'))}: ${esc(t('dtG' + (n + 1) + 't'))}</summary><ul><li>${esc(t('dtG' + (n + 1) + 'a'))}</li><li>${esc(t('dtG' + (n + 1) + 'b'))}</li></ul></details>`;
+    const nav = n => `<div class="dt-nav">${n > 0 ? `<button type="button" data-go="${n - 1}">← ${esc(t('dtPrev'))}</button>` : '<span></span>'}${n < 3 ? `<button type="button" class="sg-main inl dt-next ${n === 1 && !ready() ? 'dt-off' : ''}" data-go="${n + 1}">${esc(t('dtNext'))} →</button>` : `<button type="button" data-reset>${esc(t('dtReset'))}</button>`}</div>${n === 1 ? `<p class="sk-sub dt-lock" id="dtLock" hidden>${esc(t('dtLock'))}</p>` : ''}`;
+    function renderStage() {
+      const st = $('#dtStage'), n = step; let h = guide(n);
+      if (n === 0) h += `<div class="dt-cases" id="dtCases" role="radiogroup" aria-label="${esc(t('dtPick'))}"></div><section class="sx-card dt-story" id="dtStory"></section>`;
+      else if (n === 1) h += `<div class="dt-grid"><section class="sx-card dt-treebox"><div class="dt-legend" id="dtLegend"></div><div class="dt-tree" id="dtTree"></div></section><aside class="sx-card dt-insp" id="dtInsp" aria-live="polite"></aside></div><div id="dtIssues"></div>`;
+      else if (n === 2) h += `<section class="sx-card dt-treebox"><div class="dt-legend" id="dtLegend"></div><div class="dt-tree" id="dtTree"></div></section><section class="sx-card" id="dtRes"></section>`;
+      else h += `<section class="sx-card" id="dtSens"></section><section class="sx-card" id="dtConc"></section>`;
+      st.innerHTML = h + nav(n); seen[n] = 1;
+      renderCases(); renderStory(); renderLegend(); renderTree(); renderInsp(); renderIssues(); renderRes(); renderSens(); renderConc();
+    }
+    function go(n) {
+      if (n < 0 || n > 3) return;
+      if (n >= 2 && !ready()) {
+        if (step !== 1) n = 1;
+        else { const l = $('#dtLock'); if (l) { l.hidden = false; sfx('tick'); } renderIssues(); return; }
+      }
+      step = n; renderSteps(); renderStage(); const sc = $('#dtScroll'); if (sc) sc.scrollTop = 0; sfx('tick');
+    }
+    function refresh() { solve(); renderTree(); renderRes(); renderConc(); renderStory(); renderIssues(); renderSteps(); }
+    function renderAll() { solve(); renderSteps(); renderStage(); }
 
     host.addEventListener('click', ev => {
       const tg = ev.target, q = s => tg.closest(s);
       let b;
+      if ((b = q('[data-go]'))) { go(+b.dataset.go); return; }
       if ((b = q('[data-case]'))) { load(b.dataset.case); sfx('tick'); return; }
       if ((b = q('[data-hunch]'))) { hunch = +b.dataset.hunch; renderStory(); sfx('tick'); return; }
-      if ((b = q('[data-nid]'))) { sel = b.dataset.nid; renderTree(); renderInsp(); sfx('tick'); return; }
+      if (step === 1 && (b = q('[data-nid]'))) { sel = b.dataset.nid; renderTree(); renderInsp(); sfx('tick'); return; }
       if ((b = q('[data-ra]'))) { ra = +b.dataset.ra; sensX = null; refresh(); renderSens(); sfx('tick'); return; }
       if (q('[data-reset]')) { load(cur); return; }
       if (q('[data-copy]')) { const txt = '# ' + nm(P().name) + '\n\n' + summary().join('\n\n'); const done = () => { const c = $('[data-copy]'); if (c) { c.textContent = t('dtCopied'); setTimeout(() => { const c2 = $('[data-copy]'); if (c2) c2.textContent = t('dtCopy'); }, 1500); } }; try { navigator.clipboard.writeText(txt).then(done, done); } catch (e) { done(); } return; }
@@ -200,6 +236,7 @@ MBALAB.sims.define('decision-tree-ev', {
     });
     host.addEventListener('change', ev => { const s = ev.target.closest('[data-sens]'); if (s) { sensEdge = s.value; sensX = null; renderSens(); } });
     host.addEventListener('input', ev => { const r = ev.target.closest('[data-sx]'); if (r) { sensX = +r.value; sensDyn(); } });
+    host.addEventListener('keydown', ev => { const b = ev.target.closest && ev.target.closest('li[data-go]'); if (b && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); go(+b.dataset.go); } });
     this._dt = { relabel: renderAll }; load('cafe');
   },
   onLang() { const m = this._dt; if (m) m.relabel(); }

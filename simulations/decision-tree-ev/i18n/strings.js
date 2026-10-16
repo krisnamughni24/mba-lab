@@ -1,8 +1,25 @@
-/* Decision Tree Studio: texts. Each key lists [en, id, ja, zh]. Case texts live in engine/engine.js (PRESETS). */
+/* Decision Tree Calculator: texts. Each key lists [en, id, ja, zh]. Case texts live in engine/engine.js (PRESETS). */
 (() => {
   const K = {
+    dtStp1: ['Frame it', 'Rumuskan', '課題を定める', '界定问题'], dtStp2: ['Build the tree', 'Susun pohon', '木を作る', '搭建决策树'], dtStp3: ['Roll back', 'Hitung mundur', '巻き戻す', '倒推计算'], dtStp4: ['Stress-test', 'Uji & simpulkan', '検証と結論', '检验与结论'],
+    dtGuide: ['How this step works', 'Cara kerja langkah ini', 'このステップの進め方', '本步骤如何进行'],
+    dtG1t: ['Pick the decision', 'Pilih keputusannya', '意思決定を選ぶ', '选择决策'],
+    dtG1a: ['Choose one of the ready cases, or start from your own empty tree.', 'Pilih salah satu kasus siap pakai, atau mulai dari pohon kosong milik Anda.', '用意されたケースを選ぶか、空の木から始める。', '选择一个现成案例，或从你自己的空树开始。'],
+    dtG1b: ['Say which option you would pick before any maths. It is your gut check.', 'Sebutkan opsi yang akan Anda pilih sebelum menghitung. Itu uji naluri Anda.', '計算の前に選びたい案を決める。直感のチェック。', '在计算之前先说出你会选哪个，这是直觉检验。'],
+    dtG2t: ['Draw the tree and fill the numbers', 'Gambar pohon dan isi angkanya', '木を描き、数字を入れる', '画出树并填入数字'],
+    dtG2a: ['Squares are your choices, circles are chances, triangles are outcomes. Tap a shape to edit it.', 'Persegi adalah pilihan Anda, lingkaran adalah peluang, segitiga adalah hasil akhir. Ketuk bentuk untuk mengubahnya.', '四角は選択、丸は偶然、三角は結果。図形をタップして編集。', '方块是你的选择，圆圈是机会，三角形是结果。点击图形即可编辑。'],
+    dtG2b: ['Costs on a branch are negative. The probabilities leaving each circle must add up to 100%.', 'Biaya pada cabang bernilai negatif. Probabilitas yang keluar dari tiap lingkaran harus berjumlah 100%.', '枝の費用はマイナス。各丸から出る確率の合計は100%。', '分支上的成本为负。每个圆圈引出的概率之和必须为 100%。'],
+    dtG3t: ['Roll back from the outcomes', 'Hitung mundur dari hasil akhir', '結果から巻き戻す', '从结果倒推'],
+    dtG3a: ['At each circle the tree averages; at each square it keeps the best branch and drops the rest.', 'Di tiap lingkaran pohon merata-ratakan; di tiap persegi pohon mempertahankan cabang terbaik dan membuang sisanya.', '丸では平均し、四角では最良の枝を残して他を捨てる。', '在圆圈处取平均；在方块处保留最优分支，舍弃其余。'],
+    dtG3b: ['Look beyond the average: worst case, chance of loss and your own risk attitude.', 'Lihat lebih dari rata-rata: skenario terburuk, peluang rugi, dan sikap risiko Anda.', '平均だけでなく、最悪ケース、損失確率、自分のリスク姿勢も見る。', '不要只看平均值：看最坏情况、亏损概率和你自己的风险态度。'],
+    dtG4t: ['Test the odds, then conclude', 'Uji probabilitasnya, lalu simpulkan', '確率を試して結論へ', '检验概率并得出结论'],
+    dtG4a: ['Move one probability and see where the best option flips.', 'Geser satu probabilitas dan lihat di mana opsi terbaik berbalik.', '確率を一つ動かし、最良案が入れ替わる点を見る。', '调整一个概率，看最优选项在哪里翻转。'],
+    dtG4b: ['Copy the written conclusion into your memo or slide.', 'Salin kesimpulan tertulis ke memo atau slide Anda.', '文章の結論をメモやスライドにコピー。', '把文字结论复制到你的备忘录或幻灯片中。'],
+    dtNext: ['Next', 'Lanjut', '次へ', '下一步'], dtPrev: ['Back', 'Kembali', '戻る', '返回'],
+    dtLock: ['Fix the tree first: every shape needs branches and each circle\'s probabilities must add to 100%.', 'Perbaiki pohon dulu: setiap bentuk perlu cabang dan probabilitas tiap lingkaran harus berjumlah 100%.', 'まず木を直す：各図形に枝が必要で、丸の確率合計は100%。', '请先修正决策树：每个图形都需要分支，每个圆圈的概率之和须为 100%。'],
+    dtIssOk: ['The tree is consistent.', 'Pohon sudah konsisten.', '木に矛盾はない。', '决策树一致无误。'],
     dtBack: ['← Home', '← Beranda', '← ホーム', '← 首页'],
-    dtTitle: ['Decision Tree Studio', 'Studio Pohon Keputusan', '決定木スタジオ', '决策树工作室'],
+    dtTitle: ['Decision Tree Calculator', 'Kalkulator Pohon Keputusan', '決定木カリキュレーター', '决策树计算器'],
     dtSub: ['Draw the choices you control (squares) and the chances you do not (circles), put money on each branch, and let the tree tell you the best path. Edit anything: the answer updates live.', 'Gambarkan pilihan yang Anda kendalikan (persegi) dan peluang yang tidak (lingkaran), beri angka uang pada tiap cabang, lalu biarkan pohon menunjukkan jalur terbaik. Ubah apa saja: jawabannya ikut berubah langsung.', '自分で選べる選択（四角）と運任せの偶然（丸）を描き、各枝にお金を置けば、最良の道筋が分かる。何でも編集でき、結果は即座に更新される。', '画出你能控制的选择（方块）和无法控制的机会（圆圈），在每条分支上标注金额，让决策树告诉你最佳路径。随意修改，答案实时更新。'],
     dtPick: ['Choose a case', 'Pilih kasus', 'ケースを選ぶ', '选择案例'],
     dtHunchQ: ['Before any maths, which option would you pick?', 'Sebelum menghitung, opsi mana yang akan Anda pilih?', '計算する前に、どの案を選ぶ？', '先不算，你会选哪个方案？'],
