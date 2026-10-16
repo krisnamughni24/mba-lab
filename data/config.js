@@ -18,7 +18,7 @@ window.MBALAB_CONFIG = {
   supabaseKey: 'sb_publishable_mE3rqPpOqHD3ECR_mm9a-g_eDanzIPi',
   /* Optional: Google OAuth Web Client ID (public, ends in .apps.googleusercontent.com). With it, Google's sign-in button runs on this site and the account
      chooser names this site instead of <project>.supabase.co. Leave empty to keep the redirect sign-in. See docs/ACCOUNTS.md. */
-  googleClientId: '',
+  googleClientId: '159533012353-c6e1o2cvb88vsvv79pv18q1i902qckgc.apps.googleusercontent.com',
   formTransport: 'json',          /* 'apps-script' | 'json' */
   formEndpoint: 'https://api.web3forms.com/submit',  /* URL of the receiving service; empty = submissions disabled */
   formFields: { access_key: '7e679aea-7d8b-49d9-a1f4-4af3ec4d1f5d' }   /* Web3Forms public access key (safe in client code; the receiving email is not stored here) */
