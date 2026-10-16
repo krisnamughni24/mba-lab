@@ -4,7 +4,7 @@ MBALAB.sims.define('decision-tree-ev', {
   mount(host) {
     const E = MBALAB.dt, $ = s => host.querySelector(s), esc = MBALAB.util.esc, sfx = MBALAB.util.sfx;
     const RAV = [Infinity, 1500, 500], COLS = ['var(--cy)', 'var(--am)', 'var(--gn)', 'var(--mg)', 'var(--vi)', 'var(--rd)'];
-    let cur = 'cafe', T = null, S = null, sel = null, ra = 0, hunch = null, sensEdge = null, sensX = null, step = 0; const seen = {};
+    let cur = 'cafe', T = null, S = null, sel = null, ra = 0, hunch = null, sensEdge = null, sensX = null, step = 0, guideOpen = null; const seen = {};
     const nm = x => { const s = x && typeof x === 'object' ? tr(x) : (x == null ? '' : String(x)); return s.trim() || '—'; };
     const loc = () => ({ en: 'en-US', id: 'id-ID', ja: 'ja-JP', zh: 'zh-CN' }[LANG] || 'en-US');
     const fmt = x => Math.round(x).toLocaleString(loc());
@@ -33,7 +33,7 @@ MBALAB.sims.define('decision-tree-ev', {
         h += `<div class="dt-hunch"><b>${esc(t('dtHunchQ'))}</b>` + T.kids.map((e, i) => `<button type="button" class="dt-chip ${hunch === i ? 'on' : ''}" data-hunch="${i}">${esc(nm(e.l))}</button>`).join('') + '</div>';
         if (hunch != null && T.kids[hunch]) {
           const best = S.best[T.id], a = T.kids[hunch], b = T.kids[best], x = S.edge[a.id], y = S.edge[b.id];
-          h += `<div class="sx-verdict ${hunch === best ? 'v3' : 'v1'}">${esc(hunch === best ? t('dtHit', { a: nm(a.l), v: sm(y) }) : t('dtMiss', { a: nm(a.l), x: sm(x), b: nm(b.l), y: sm(y), d: fmt(y - x) }))}</div>`;
+          h += `<div class="dt-note ${hunch === best ? 'v3' : 'v1'}">${esc(hunch === best ? t('dtHit', { a: nm(a.l), v: sm(y) }) : t('dtMiss', { a: nm(a.l), x: sm(x), b: nm(b.l), y: sm(y), d: fmt(y - x) }))}</div>`;
         }
       }
       $('#dtStory').innerHTML = h;
@@ -91,7 +91,7 @@ MBALAB.sims.define('decision-tree-ev', {
     /* ---------- editor ---------- */
     function renderInsp() {
       const box = $('#dtInsp'); if (!box) return; const f = sel && E.find(T, sel);
-      if (!f) { box.innerHTML = `<h3>${esc(t('dtInspH'))}</h3><p class="sk-sub">${esc(t('dtInspNone'))}</p><button type="button" data-reset>${esc(t('dtReset'))}</button>`; return; }
+      if (!f) { box.innerHTML = `<h3>${esc(t('dtInspH'))}</h3><p class="note">${esc(t('dtInspNone'))}</p><button type="button" data-reset>${esc(t('dtReset'))}</button>`; return; }
       const n = f.node, par = f.parent, e = f.edge; let h = `<h3>${esc(t('dtInspH'))}</h3>`;
       if (par) {
         h += `<div class="dt-sec"><b>${esc(t('dtBranch'))}</b><label>${esc(t('dtBL'))}<input data-f="el" value="${esc(nm(e.l) === '—' ? '' : nm(e.l))}"></label>` +
@@ -128,31 +128,31 @@ MBALAB.sims.define('decision-tree-ev', {
       if (!$('#dtRes')) return;
       const issues = E.validate(T), pr = E.profile(T, S), plan = E.plan(T, S), neutral = !isFinite(RAV[ra]);
       const ev = neutral ? E.evpi(T, S) : null;
-      let h = `<h2 class="sk-h">${esc(t('dtRes'))}</h2>`;
+      let h = `<h2 class="dt-h">${esc(t('dtRes'))}</h2>`;
       if (issues.length) h += '<ul class="dt-issues">' + issues.slice(0, 4).map(i => { const f = E.find(T, i.id), n = nm(f.node.n); return `<li>${esc(i.code === 'psum' ? t('dtIssP', { n, s: Math.round(i.s * 1000) / 10 }) : i.code === 'one' ? t('dtIssO', { n }) : t('dtIssE', { n }))}</li>`; }).join('') + '</ul>';
       if (T.k === 'd' && T.kids.length) {
         const vals = T.kids.map(e => S.edge[e.id]), mx = Math.max(1, ...vals.map(Math.abs)), best = S.best[T.id];
-        h += `<h3 class="sk-h" style="font-size:15.5px">${esc(t(neutral ? 'dtOpt' : 'dtOptCE'))}</h3><div class="dt-bars">` + T.kids.map((e, i) => {
+        h += `<h3 class="dt-h" style="font-size:15.5px">${esc(t(neutral ? 'dtOpt' : 'dtOptCE'))}</h3><div class="dt-bars">` + T.kids.map((e, i) => {
           const v = vals[i], w = Math.abs(v) / mx * 50, left = v >= 0 ? 50 : 50 - w;
           return `<div class="dt-bar ${i === best ? 'best' : ''} ${v < 0 ? 'neg' : ''}"><span>${esc(nm(e.l))}${i === best ? ' ★' : ''}</span><div class="tr"><i class="z" style="left:50%"></i><i class="f" style="left:${left}%;width:${w}%"></i></div><b>${esc(fs(v))}</b></div>`;
         }).join('') + '</div>';
       }
       h += `<div class="dt-kpis"><div><small>${esc(t('dtVal'))}</small><b>${esc(t('dtMoney', { v: sm(S.ev[T.id]) }))}</b></div><div><small>${esc(t('dtWorst'))}</small><b class="${pr.min < 0 ? 'dt-neg' : ''}">${esc(fs(pr.min))}</b></div><div><small>${esc(t('dtBestC'))}</small><b>${esc(fs(pr.max))}</b></div><div><small>${esc(t('dtLoss'))}</small><b>${Math.round(pr.pLoss * 100)}%</b></div>` +
         (ev != null ? `<div title="${esc(t('dtEvpiH'))}"><small>${esc(t('dtEvpi'))}</small><b>${esc(t('dtMoney', { v: fmt(ev) }))}</b></div>` : '') + '</div>';
-      if (plan.length) h += `<div class="sx-verdict v3"><b>${esc(t('dtBestPlan'))}</b><br>` + plan.slice(0, 5).map(p => esc(t('dtAt', { d: nm(p.name), c: nm(p.choice) }))).join('<br>') + '</div>';
-      h += `<div class="dt-ra"><b>${esc(t('dtRA'))}:</b>` + [0, 1, 2].map(i => `<button type="button" data-ra="${i}" class="${ra === i ? 'on' : ''}">${esc(t('dtRA' + i))}</button>`).join('') + `</div><p class="sk-sub">${esc(t('dtRAh'))}</p>`;
+      if (plan.length) h += `<div class="dt-note v3"><b>${esc(t('dtBestPlan'))}</b><br>` + plan.slice(0, 5).map(p => esc(t('dtAt', { d: nm(p.name), c: nm(p.choice) }))).join('<br>') + '</div>';
+      h += `<div class="dt-ra"><b>${esc(t('dtRA'))}:</b>` + [0, 1, 2].map(i => `<button type="button" data-ra="${i}" class="${ra === i ? 'on' : ''}">${esc(t('dtRA' + i))}</button>`).join('') + `</div><p class="note">${esc(t('dtRAh'))}</p>`;
       $('#dtRes').innerHTML = h;
     }
 
     /* ---------- sensitivity ---------- */
     function renderSens() {
-      const box = $('#dtSens'); if (!box) return; const pes = E.probEdges(T); let h = `<h2 class="sk-h">${esc(t('dtSens'))}</h2>`;
-      if (!pes.length) { box.innerHTML = h + `<p class="sk-sub">${esc(t('dtSensNoC'))}</p>`; return; }
-      if (!(T.k === 'd' && T.kids.length > 1)) { box.innerHTML = h + `<p class="sk-sub">${esc(t('dtSensNoD'))}</p>`; return; }
+      const box = $('#dtSens'); if (!box) return; const pes = E.probEdges(T); let h = `<h2 class="dt-h">${esc(t('dtSens'))}</h2>`;
+      if (!pes.length) { box.innerHTML = h + `<p class="note">${esc(t('dtSensNoC'))}</p>`; return; }
+      if (!(T.k === 'd' && T.kids.length > 1)) { box.innerHTML = h + `<p class="note">${esc(t('dtSensNoD'))}</p>`; return; }
       if (!pes.some(x => x.edge.id === sensEdge)) sensEdge = pes[0].edge.id;
       const pe = pes.find(x => x.edge.id === sensEdge); if (sensX == null) sensX = Math.round(E.pOf(pe.parent)[pe.parent.kids.indexOf(pe.edge)] * 100);
-      h += `<label class="sx-f"><span>${esc(t('dtSensPick'))}</span><select data-sens>` + pes.map(x => `<option value="${x.edge.id}" ${x.edge.id === sensEdge ? 'selected' : ''}>${esc(nm(x.parent.n))} → ${esc(nm(x.edge.l))}</option>`).join('') + '</select></label>' +
-        `<div class="sx-f"><label><span id="dtSx1"></span><output id="dtSx2"></output></label><input type="range" min="0" max="100" step="1" value="${sensX}" data-sx></div><div id="dtSensDyn"></div>`;
+      h += `<label class="dt-f"><span>${esc(t('dtSensPick'))}</span><select data-sens>` + pes.map(x => `<option value="${x.edge.id}" ${x.edge.id === sensEdge ? 'selected' : ''}>${esc(nm(x.parent.n))} → ${esc(nm(x.edge.l))}</option>`).join('') + '</select></label>' +
+        `<div class="dt-f"><label><span id="dtSx1"></span><output id="dtSx2"></output></label><input type="range" min="0" max="100" step="1" value="${sensX}" data-sx></div><div id="dtSensDyn"></div>`;
       box.innerHTML = h; sensDyn();
     }
     function sensDyn() {
@@ -172,7 +172,7 @@ MBALAB.sims.define('decision-tree-ev', {
       const sx = E.withP(T, sensEdge, sensX / 100), SS = E.solveRA(sx, RAV[ra]);
       $('#dtSx1').textContent = t('dtSensX', { p: sensX }); $('#dtSx2').textContent = nm(T.kids[SS.best[sx.id]].l) + ' ★';
       $('#dtSensDyn').innerHTML = `<div class="dt-chart">${svg}</div><div class="dt-leg">` + T.kids.map((e, j) => `<span><i style="background:${COLS[j % 6]}"></i>${esc(nm(e.l))}: ${esc(fs(SS.edge[sx.kids[j].id]))}</span>`).join('') + '</div>' +
-        (sn.cross.length ? sn.cross.slice(0, 2).map(c => `<div class="sx-verdict v1">${esc(t('dtSensCross', { p: Math.round(c.x * 100), a: nm(T.kids[c.from].l), b: nm(T.kids[c.to].l) }))}</div>`).join('') : `<div class="sx-verdict v3">${esc(t('dtSensNone', { a: nm(T.kids[S.best[T.id]].l) }))}</div>`);
+        (sn.cross.length ? sn.cross.slice(0, 2).map(c => `<div class="dt-note v1">${esc(t('dtSensCross', { p: Math.round(c.x * 100), a: nm(T.kids[c.from].l), b: nm(T.kids[c.to].l) }))}</div>`).join('') : `<div class="dt-note v3">${esc(t('dtSensNone', { a: nm(T.kids[S.best[T.id]].l) }))}</div>`);
     }
     function summary() {
       const pr = E.profile(T, S), plan = E.plan(T, S), ev = !isFinite(RAV[ra]) ? E.evpi(T, S) : null, c = plan[0];
@@ -184,46 +184,85 @@ MBALAB.sims.define('decision-tree-ev', {
       parts.push(t('dtConc4')); return parts;
     }
     function renderConc() {
-      if (!$('#dtConc')) return; $('#dtConc').innerHTML = `<h2 class="sk-h">${esc(t('dtConc'))}</h2><div class="dt-conc">${summary().map(p => `<p>${esc(p)}</p>`).join('')}</div><button type="button" data-copy>${esc(t('dtCopy'))}</button>`; }
+      if (!$('#dtConc')) return; $('#dtConc').innerHTML = `<h2 class="dt-h">${esc(t('dtConc'))}</h2><div class="dt-conc">${summary().map(p => `<p>${esc(p)}</p>`).join('')}</div><button type="button" data-copy>${esc(t('dtCopy'))}</button>`; }
 
-    const ready = () => T.kids.length > 0 && E.validate(T).length === 0;
+    /* ---------- SMART-style frame: stepper, required-to-continue checklist, guide pop-up, toasts, assistant ---------- */
+    const checks = () => {
+      const is = E.validate(T);
+      return [
+        { ck1: true, ck2: !(T.k === 'd' && T.kids.length > 1) || hunch != null },
+        { ck3: T.k === 'd' && T.kids.length >= 2, ck4: !is.some(i => i.code === 'one' || i.code === 'empty'), ck5: !is.some(i => i.code === 'psum') }
+      ];
+    };
+    const done = n => Object.values(checks()[n]).every(Boolean);
+    const ready = () => done(0) && done(1);
+    const unlocked = n => n === 0 || (n === 1 ? done(0) : ready());
+    function toast(msg, kind) {
+      const el = document.createElement('div'); el.className = 'sd-toast ' + (kind || ''); el.innerHTML = '<span>' + esc(msg) + '</span>';
+      const box = $('#sdToasts'); if (!box) return; box.appendChild(el); while (box.children.length > 3) box.firstChild.remove();
+      setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 350); }, 2800);
+    }
+    function shake(el) { if (!el) return; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+    function renderSteps() {
+      $('#sdSteps').innerHTML = [0, 1, 2, 3].map(n => {
+        const st = step === n ? 'active' : (unlocked(n) ? (n < step ? 'done' : 'open') : 'locked');
+        return `<li class="st ${st}"><button type="button" data-go="${n}" ${unlocked(n) ? '' : 'aria-disabled="true"'} ${step === n ? 'aria-current="step"' : ''}><span class="n">${n < step && unlocked(n) ? '✓' : n + 1}</span><span class="l"><small>${esc(t('partN', { n: n + 1 }))}</small>${esc(t('dtStp' + (n + 1)))}</span></button></li>`;
+      }).join('');
+    }
+    function showGuide(n) {
+      guideOpen = n; let el = $('#sdGuide');
+      if (!el) { el = document.createElement('div'); el.id = 'sdGuide'; el.className = 'sd-guide'; $('#sd').appendChild(el); }
+      const k = 'dtG' + (n + 1);
+      el.innerHTML = `<div class="gd" role="dialog" aria-modal="true" aria-labelledby="gdT"><button type="button" class="gx" data-gclose aria-label="${esc(t('close'))}">✕</button><div class="gk">${esc(t('partN', { n: n + 1 }))} / 4</div><h3 id="gdT">${esc(t(k + 't'))}</h3><ul><li>${esc(t(k + 'a'))}</li><li>${esc(t(k + 'b'))}</li></ul><p class="gtip"><b>💡 ${esc(t('tipLbl'))}:</b> ${esc(t(k + 'c'))}</p><button type="button" class="sd-cta ready" data-gclose>${esc(t('gotIt'))}</button></div>`;
+      el.hidden = false; const b = el.querySelector('.sd-cta'); if (b) b.focus({ preventScroll: true });
+    }
+    function closeGuide() { const el = $('#sdGuide'); if (el) el.hidden = true; guideOpen = null; }
+    const head = (n, sub) => `<div class="sd-h"><h2>${esc(t('partN', { n: n + 1 }))} · ${esc(t('dtGh' + (n + 1)))}</h2><p>${esc(sub)}</p><button type="button" class="sd-info" data-info="${n}" title="${esc(t('infoTip'))}" aria-label="${esc(t('infoTip'))}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></button></div>`;
+    const quest = (n, keys, cta, goTo) => `<aside class="sd-card sd-quest"><h3>${esc(t('quest'))}</h3><ul id="ck">${keys.map(k => `<li data-c="${k}"><span class="bx">✓</span><span>${esc(t('dtQ_' + k))}</span></li>`).join('')}</ul><div class="sd-prog"><i id="ckBar"></i></div><button type="button" class="sd-cta" id="next1" data-go="${goTo}">${esc(t(cta))}</button><p class="note" id="lockHint">${esc(t('lockHint'))}</p></aside>`;
+    const foot = (n, last) => `<div class="sd-foot"><button type="button" data-go="${n - 1}">${esc(t('back'))}</button><span class="grow"></span>${last ? `<button type="button" data-reset>↺ ${esc(t('dtReset'))}</button>` : `<button type="button" class="sd-cta ready" data-go="${n + 1}">${esc(t(n === 2 ? 'dtNext3' : 'dtNext'))}</button>`}</div>`;
+    function renderStage(dir) {
+      const st = $('#sdStage'), n = step; let h;
+      if (n === 0) h = `<div class="sd-p1"><section class="sd-card">${head(0, t('dtSub'))}<div class="dt-cases" id="dtCases" role="radiogroup" aria-label="${esc(t('dtPick'))}"></div><div class="dt-story" id="dtStory"></div></section>${quest(0, ['ck1', 'ck2'], 'dtNext1', 1)}</div>`;
+      else if (n === 1) h = `<div class="sd-p1"><section class="sd-card">${head(1, t('dtG2a'))}<div class="dt-legend" id="dtLegend"></div><div class="dt-grid"><div class="dt-tree" id="dtTree"></div><aside class="dt-insp" id="dtInsp" aria-live="polite"></aside></div><div id="dtIssues"></div></section>${quest(1, ['ck3', 'ck4', 'ck5'], 'dtNext2', 2)}</div>`;
+      else if (n === 2) h = `<section class="sd-card">${head(2, t('dtG3a'))}<div class="dt-legend" id="dtLegend"></div><div class="dt-tree" id="dtTree"></div><div class="dt-sec" id="dtRes"></div>${foot(2)}</section>`;
+      else h = `<section class="sd-card">${head(3, t('dtG4a'))}<div class="dt-sec" id="dtSens"></div><div class="dt-sec dt-conc" id="dtConc"></div>${foot(3, true)}</section>`;
+      st.innerHTML = h; if (dir && !document.body.classList.contains('still')) st.firstElementChild.classList.add(dir > 0 ? 'in-r' : 'in-l');
+      renderCases(); renderStory(); renderLegend(); renderTree(); renderInsp(); renderIssues(); renderRes(); renderSens(); renderConc(); updQuest();
+      if (!seen[n]) { seen[n] = 1; showGuide(n); } else if (guideOpen != null) showGuide(guideOpen);
+    }
     function renderIssues() {
       const box = $('#dtIssues'); if (!box) return; const is = E.validate(T);
-      box.innerHTML = is.length ? '<ul class="dt-issues">' + is.slice(0, 4).map(i => { const n = nm(E.find(T, i.id).node.n); return `<li>${esc(i.code === 'psum' ? t('dtIssP', { n, s: Math.round(i.s * 1000) / 10 }) : i.code === 'one' ? t('dtIssO', { n }) : t('dtIssE', { n }))}</li>`; }).join('') + '</ul>' : `<div class="sx-verdict v3">✓ ${esc(t('dtIssOk'))}</div>`;
-      const nx = $('[data-go="2"].dt-next'); if (nx) nx.classList.toggle('dt-off', is.length > 0);
+      box.innerHTML = is.length ? '<ul class="dt-issues">' + is.slice(0, 4).map(i => { const n = nm(E.find(T, i.id).node.n); return `<li>${esc(i.code === 'psum' ? t('dtIssP', { n, s: Math.round(i.s * 1000) / 10 }) : i.code === 'one' ? t('dtIssO', { n }) : t('dtIssE', { n }))}</li>`; }).join('') + '</ul>' : `<p class="note">✓ ${esc(t('dtIssOk'))}</p>`;
     }
-    const unlocked = n => n < 2 || ready();
-    function renderSteps() {
-      $('#dtSteps').innerHTML = [0, 1, 2, 3].map(n => `<li role="button" tabindex="0" data-go="${n}" class="${step === n ? 'on' : step > n ? 'done' : ''} ${unlocked(n) ? '' : 'locked'}" ${step === n ? 'aria-current="step"' : ''}><span>${step > n ? '✓' : n + 1}</span>${esc(t('dtStp' + (n + 1)))}</li>`).join('');
-    }
-    const guide = n => `<details class="sx-more dt-guide" ${seen[n] ? '' : 'open'}><summary>${esc(t('dtGuide'))}: ${esc(t('dtG' + (n + 1) + 't'))}</summary><ul><li>${esc(t('dtG' + (n + 1) + 'a'))}</li><li>${esc(t('dtG' + (n + 1) + 'b'))}</li></ul></details>`;
-    const nav = n => `<div class="dt-nav">${n > 0 ? `<button type="button" data-go="${n - 1}">← ${esc(t('dtPrev'))}</button>` : '<span></span>'}${n < 3 ? `<button type="button" class="sg-main inl dt-next ${n === 1 && !ready() ? 'dt-off' : ''}" data-go="${n + 1}">${esc(t('dtNext'))} →</button>` : `<button type="button" data-reset>${esc(t('dtReset'))}</button>`}</div>${n === 1 ? `<p class="sk-sub dt-lock" id="dtLock" hidden>${esc(t('dtLock'))}</p>` : ''}`;
-    function renderStage() {
-      const st = $('#dtStage'), n = step; let h = guide(n);
-      if (n === 0) h += `<div class="dt-cases" id="dtCases" role="radiogroup" aria-label="${esc(t('dtPick'))}"></div><section class="sx-card dt-story" id="dtStory"></section>`;
-      else if (n === 1) h += `<div class="dt-grid"><section class="sx-card dt-treebox"><div class="dt-legend" id="dtLegend"></div><div class="dt-tree" id="dtTree"></div></section><aside class="sx-card dt-insp" id="dtInsp" aria-live="polite"></aside></div><div id="dtIssues"></div>`;
-      else if (n === 2) h += `<section class="sx-card dt-treebox"><div class="dt-legend" id="dtLegend"></div><div class="dt-tree" id="dtTree"></div></section><section class="sx-card" id="dtRes"></section>`;
-      else h += `<section class="sx-card" id="dtSens"></section><section class="sx-card" id="dtConc"></section>`;
-      st.innerHTML = h + nav(n); seen[n] = 1;
-      renderCases(); renderStory(); renderLegend(); renderTree(); renderInsp(); renderIssues(); renderRes(); renderSens(); renderConc();
+    function updQuest() {
+      if (!$('#ck')) { renderSteps(); return; }
+      const c = checks()[step], ks = Object.keys(c); let k = 0;
+      ks.forEach(key => { const li = $(`#ck [data-c="${key}"]`); if (!li) return; if (c[key]) k++; const was = li.classList.contains('ok'); li.classList.toggle('ok', c[key]); if (c[key] && !was) { li.classList.remove('pop'); void li.offsetWidth; li.classList.add('pop'); } });
+      $('#ckBar').style.width = k / ks.length * 100 + '%';
+      const b = $('#next1'); b.classList.toggle('ready', k === ks.length); b.setAttribute('aria-disabled', k === ks.length ? 'false' : 'true');
+      $('#lockHint').style.visibility = k === ks.length ? 'hidden' : 'visible'; renderSteps();
     }
     function go(n) {
       if (n < 0 || n > 3) return;
-      if (n >= 2 && !ready()) {
-        if (step !== 1) n = 1;
-        else { const l = $('#dtLock'); if (l) { l.hidden = false; sfx('tick'); } renderIssues(); return; }
-      }
-      step = n; renderSteps(); renderStage(); const sc = $('#dtScroll'); if (sc) sc.scrollTop = 0; sfx('tick');
+      if (!unlocked(n)) { toast(t('lockHint'), 'warn'); shake($('#next1')); return; }
+      const dir = n >= step ? 1 : -1; step = n; guideOpen = null; renderSteps(); renderStage(dir); const sc = $('#sdStage'); if (sc) sc.scrollTop = 0; sfx('tick');
     }
-    function refresh() { solve(); renderTree(); renderRes(); renderConc(); renderStory(); renderIssues(); renderSteps(); }
-    function renderAll() { solve(); renderSteps(); renderStage(); }
+    function refresh() { solve(); renderTree(); renderRes(); renderConc(); renderStory(); renderIssues(); updQuest(); }
+    function renderAll() { solve(); renderSteps(); renderStage(0); }
+    function hints() {
+      if (step === 0) return { state: [hunch == null && T.k === 'd' ? 'dtas_hunch' : 'dtas_ok0'], generic: ['dtas_0a', 'dtas_0b'] };
+      if (step === 1) return { state: [ready() ? 'dtas_ok1' : 'dtas_fix'], generic: ['dtas_1a', 'dtas_1b'] };
+      return { state: [], generic: step === 2 ? ['dtas_2a', 'dtas_2b'] : ['dtas_3a', 'dtas_3b'] };
+    }
 
     host.addEventListener('click', ev => {
       const tg = ev.target, q = s => tg.closest(s);
       let b;
+      if (q('[data-gclose]')) { closeGuide(); return; }
+      if ((b = q('[data-info]'))) { showGuide(+b.dataset.info); return; }
       if ((b = q('[data-go]'))) { go(+b.dataset.go); return; }
       if ((b = q('[data-case]'))) { load(b.dataset.case); sfx('tick'); return; }
-      if ((b = q('[data-hunch]'))) { hunch = +b.dataset.hunch; renderStory(); sfx('tick'); return; }
+      if ((b = q('[data-hunch]'))) { hunch = +b.dataset.hunch; renderStory(); updQuest(); sfx('tick'); return; }
       if (step === 1 && (b = q('[data-nid]'))) { sel = b.dataset.nid; renderTree(); renderInsp(); sfx('tick'); return; }
       if ((b = q('[data-ra]'))) { ra = +b.dataset.ra; sensX = null; refresh(); renderSens(); sfx('tick'); return; }
       if (q('[data-reset]')) { load(cur); return; }
@@ -236,8 +275,8 @@ MBALAB.sims.define('decision-tree-ev', {
     });
     host.addEventListener('change', ev => { const s = ev.target.closest('[data-sens]'); if (s) { sensEdge = s.value; sensX = null; renderSens(); } });
     host.addEventListener('input', ev => { const r = ev.target.closest('[data-sx]'); if (r) { sensX = +r.value; sensDyn(); } });
-    host.addEventListener('keydown', ev => { const b = ev.target.closest && ev.target.closest('li[data-go]'); if (b && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); go(+b.dataset.go); } });
-    this._dt = { relabel: renderAll }; load('cafe');
+    if (window.SmartAssistant) SmartAssistant.create(host, { hints });
+    this._dt = { relabel: renderAll, redraw() { renderSteps(); renderStage(0); } }; load('cafe');
   },
   onLang() { const m = this._dt; if (m) m.relabel(); }
 });

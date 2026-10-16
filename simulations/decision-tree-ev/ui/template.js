@@ -1,11 +1,12 @@
-/* Decision Tree Calculator: page skeleton. app.js draws the four guided steps (frame, build, roll back, stress-test). */
+/* Decision Tree Calculator: page skeleton. same frame as the SMART Calculator (shared/studio.css). app.js draws the four parts. */
 MBALAB.sims.define('decision-tree-ev', {
-  template: `<div class="sk-root dt" id="dt">
-  <header class="sk-top">
-    <button class="sk-back" data-sim-back><span data-i18n="dtBack">← Home</span></button>
+  template: `<div class="sd dt" id="sd">
+  <header class="sd-top">
+    <button class="sd-back" data-sim-back data-ia="title=dtBack"><span data-i18n="dtBack">← Home</span></button>
     <h1 data-i18n="dtTitle">Decision Tree Calculator</h1>
   </header>
-  <ol class="sg-steps dt-steps" id="dtSteps"></ol>
-  <div class="sk-scroll" id="dtScroll"><div class="sk-wrap" id="dtStage"></div></div>
+  <ol class="sd-steps" id="sdSteps"></ol>
+  <div class="sd-stage" id="sdStage"></div>
+  <div class="sd-toasts" id="sdToasts" role="status" aria-live="polite"></div>
 </div>`
 });

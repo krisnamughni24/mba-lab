@@ -4,7 +4,8 @@ MBALAB.sims.files('decision-tree-ev', {
     "i18n/strings.js",
     "ui/template.js",
     "engine/engine.js",
+    "../../shared/assistant.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/simkit.css", "ui/style.css"]
+  styles: ["../../shared/studio.css", "ui/style.css"]
 });
