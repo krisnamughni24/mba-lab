@@ -21,17 +21,17 @@
     const rank = xp => { let r = 0; RANKS.forEach((x, i) => { if (xp >= x) r = i; }); return r; };
     const stars = sc => sc >= 85 ? 3 : sc >= 70 ? 2 : sc >= 45 ? 1 : 0;
     const unlocked = i => i === 0 || (st.stars[V.LEVELS[i - 1].id] || 0) >= 1;
-    const starsHtml = n => `<span class="vg-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
+    const starsHtml = n => `<span class="sg-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
 
     /* ---------- menu ---------- */
     function menu() {
       lv = null; clearTimers(); scene.clear(); scene.stop(); $('#vgLevel').hidden = true; $('#vgMenu').hidden = false;
       const r = rank(st.xp), nx = RANKS[r + 1], pct = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
-      $('#vgMenu').innerHTML = `<div class="vg-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
-        <div class="vg-rank"><span class="vg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="vg-xp"><i style="width:${pct}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
+      $('#vgMenu').innerHTML = `<div class="sg-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
+        <div class="sg-rank"><span class="sg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sg-xp"><i style="width:${pct}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
         <div class="vg-levels">${V.LEVELS.map((l, i) => { const ok = unlocked(i), sc = V.SCEN.find(s => s.id === l.scen), n = st.stars[l.id] || 0;
-          return `<button type="button" class="vg-lv ${ok ? '' : 'locked'} vg-l-${l.id}" data-lv="${i}" ${ok ? '' : 'disabled'}><span class="vg-lvi" aria-hidden="true">${sc.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('sc_' + l.scen)}</b><em>${T('lv_' + l.id + '_tw')}</em>${ok ? starsHtml(n) + `<span class="vg-go">${T('lvGo')} ▶</span>` : `<span class="vg-lock">🔒 ${T('lvLock')}</span>`}</button>`; }).join('')}</div>
-        <h3 class="vg-h3">${T('bdT')}</h3><div class="vg-badges">${BADGES.map(b => `<div class="vg-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
+          return `<button type="button" class="vg-lv ${ok ? '' : 'locked'} vg-l-${l.id}" data-lv="${i}" ${ok ? '' : 'disabled'}><span class="vg-lvi" aria-hidden="true">${sc.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('sc_' + l.scen)}</b><em>${T('lv_' + l.id + '_tw')}</em>${ok ? starsHtml(n) + `<span class="sg-go">${T('lvGo')} ▶</span>` : `<span class="sg-lock">🔒 ${T('lvLock')}</span>`}</button>`; }).join('')}</div>
+        <h3 class="sg-h3">${T('bdT')}</h3><div class="sg-badges">${BADGES.map(b => `<div class="sg-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 
     /* ---------- level ---------- */
@@ -56,7 +56,7 @@
     function say(txt) { const b = $('#vgSay'); b.innerHTML = `<b>${lv.owner}</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
     function pills() { $('#vgSteps').innerHTML = [1, 2, 3, 4, 5].map(i => `<li class="${step === i || (step === 6 && i === 5) ? 'on' : step > i ? 'done' : ''}"><span>${step > i ? '✓' : i}</span>${T('st' + i)}</li>`).join(''); }
     function hud() {
-      const r = rank(st.xp); $('#vgTop').innerHTML = `<button type="button" class="vg-back" data-a="menu">← ${T('toMenu')}</button><b class="vg-lt">${T('lvN', { n: li + 1 })} · ${T('sc_' + lv.scen)}</b><span class="vg-chip">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`;
+      const r = rank(st.xp); $('#vgTop').innerHTML = `<button type="button" class="sg-back" data-a="menu">← ${T('toMenu')}</button><b class="vg-lt">${T('lvN', { n: li + 1 })} · ${T('sc_' + lv.scen)}</b><span class="vg-chip">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`;
     }
 
     /* ---------- steps ---------- */
@@ -65,29 +65,29 @@
       if (step === 1) {
         say(T('say1')); const cost = asked * m.ic, q = sample.length < 20 ? 'dqL' : sample.length < 60 ? 'dqF' : 'dqG', ready = res.valid && res.sane && res.n >= MIN_N;
         P.innerHTML = `<div class="vg-brief"><p>${T('lv_' + lv.id + '_b', { owner: lv.owner, c: money(m.cost), i: money(m.ic) })}</p><p class="vg-tw">${T('lv_' + lv.id + '_tw')}</p></div>
-          <div class="vg-row"><button type="button" class="vg-btn" data-a="ask" data-n="1" ${busy ? 'disabled' : ''}>${T('ask1')}</button><button type="button" class="vg-btn" data-a="ask" data-n="10" ${busy ? 'disabled' : ''}>${T('ask10')}</button><button type="button" class="vg-btn" data-a="ask" data-n="25" ${busy ? 'disabled' : ''}>${T('ask25')}</button></div>
+          <div class="sg-row"><button type="button" class="vg-btn" data-a="ask" data-n="1" ${busy ? 'disabled' : ''}>${T('ask1')}</button><button type="button" class="vg-btn" data-a="ask" data-n="10" ${busy ? 'disabled' : ''}>${T('ask10')}</button><button type="button" class="vg-btn" data-a="ask" data-n="25" ${busy ? 'disabled' : ''}>${T('ask25')}</button></div>
           <div class="vg-stat"><b>${T('intStat', { n: asked, c: money(cost) })}</b><span>${T(q)}</span></div>
-          ${bad ? `<p class="vg-warn">${T('wasted', { n: bad })}</p>` : ''}
-          ${ready ? `<button type="button" class="vg-main" data-a="s2" ${busy ? 'disabled' : ''}>${T('next1')}</button>` : `<p class="vg-note">${T('needMore', { n: MIN_N })}</p>`}`;
+          ${bad ? `<p class="sg-warn">${T('wasted', { n: bad })}</p>` : ''}
+          ${ready ? `<button type="button" class="vg-main" data-a="s2" ${busy ? 'disabled' : ''}>${T('next1')}</button>` : `<p class="sg-note">${T('needMore', { n: MIN_N })}</p>`}`;
       } else if (step === 2) {
         say(T('say2')); P.innerHTML = `<button type="button" class="vg-main" data-a="s3">${T('next2')}</button>`;
       } else if (step === 3) {
         const k = ['pmc', 'opp', 'ipp', 'pme'], cur = marks.length, done = cur >= 4;
         say(done ? T('say3done') : T('mk' + k[cur][0].toUpperCase() + k[cur].slice(1)));
-        P.innerHTML = `<div class="vg-marks">${k.map((x, i) => `<span class="vg-mk ${i < cur ? (marks[i].ok ? 'ok' : 'no') : i === cur ? 'cur' : ''}">${x.toUpperCase()}${i < cur ? (marks[i].xp ? ' +' + marks[i].xp : '') : ''}</span>`).join('')}</div><p class="vg-note" id="vgMsg" aria-live="polite">${marks.length ? marks[marks.length - 1].msg : ''}</p>
-          <div class="vg-row">${done ? `<button type="button" class="vg-main" data-a="s4">${T('next3')}</button>` : `<button type="button" class="vg-btn ghost" data-a="s4">${T('skip3')}</button>`}</div>`;
+        P.innerHTML = `<div class="vg-marks">${k.map((x, i) => `<span class="vg-mk ${i < cur ? (marks[i].ok ? 'ok' : 'no') : i === cur ? 'cur' : ''}">${x.toUpperCase()}${i < cur ? (marks[i].xp ? ' +' + marks[i].xp : '') : ''}</span>`).join('')}</div><p class="sg-note" id="vgMsg" aria-live="polite">${marks.length ? marks[marks.length - 1].msg : ''}</p>
+          <div class="sg-row">${done ? `<button type="button" class="vg-main" data-a="s4">${T('next3')}</button>` : `<button type="button" class="vg-btn ghost" data-a="s4">${T('skip3')}</button>`}</div>`;
       } else if (step === 4) {
         say(T('say4')); const q = res.pts, g = grid, snap = p => Math.round(p / g.step) * g.step, lo = Math.min(q.opp.x, q.ipp.x), hi = Math.max(q.opp.x, q.ipp.x);
         if (!price) price = snap((lo + hi) / 2);
         P.innerHTML = `<div class="vg-pr"><label for="vgPrice">${T('yourP')}</label><output id="vgPout"></output></div>
           <div class="vw-meterw"><div class="vw-meter" id="vgMeter"></div><input type="range" id="vgPrice" min="0" max="${g.max}" step="${g.step}" value="${price}"></div>
-          <div class="vg-row"><button type="button" class="vg-btn" data-p="${snap((q.pmc.x + lo) / 2)}">${T('qp1')}</button><button type="button" class="vg-btn" data-p="${snap((lo + hi) / 2)}">${T('qp2')}</button><button type="button" class="vg-btn" data-p="${snap((hi + q.pme.x) / 2)}">${T('qp3')}</button></div>
-          <p class="vw-zone" id="vgZone" aria-live="polite"></p><p class="vg-note" id="vgEst"></p>
+          <div class="sg-row"><button type="button" class="vg-btn" data-p="${snap((q.pmc.x + lo) / 2)}">${T('qp1')}</button><button type="button" class="vg-btn" data-p="${snap((lo + hi) / 2)}">${T('qp2')}</button><button type="button" class="vg-btn" data-p="${snap((hi + q.pme.x) / 2)}">${T('qp3')}</button></div>
+          <p class="vw-zone" id="vgZone" aria-live="polite"></p><p class="sg-note" id="vgEst"></p>
           <button type="button" class="vg-main go" data-a="launch">${T('go')}</button>`;
         const a = q.pmc.x / g.max * 100, b = lo / g.max * 100, c2 = hi / g.max * 100, d = q.pme.x / g.max * 100;
         $('#vgMeter').style.background = `linear-gradient(90deg,var(--rd) 0 ${a}%,var(--am) ${a}% ${b}%,var(--gn) ${b}% ${c2}%,var(--am) ${c2}% ${d}%,var(--rd) ${d}% 100%)`; priceVals();
       } else if (step === 5) {
-        say(T('say5')); P.innerHTML = `<div class="vg-live" id="vgLive"></div><div class="vg-row"><button type="button" class="vg-btn ghost" data-a="skip">${T('skip5')}</button></div>`; live();
+        say(T('say5')); P.innerHTML = `<div class="vg-live" id="vgLive"></div><div class="sg-row"><button type="button" class="vg-btn ghost" data-a="skip">${T('skip5')}</button></div>`; live();
       } else if (step === 6) resultView();
     }
     function priceVals() {
@@ -136,14 +136,14 @@
       if (f.z === 4) fb.push('fbOver'); else if (f.z === 0 || f.z === 1) fb.push('fbUnder'); else if (f.z === 2) fb.push('fbSweet'); else if (f.z === 3) fb.push('fbPrem');
       if (bad / Math.max(1, asked) > .12) fb.push('fbNoisy');
       say(T('rsT'));
-      P.innerHTML = `<div class="vg-res"><div class="vg-big">${starsHtml(f.n)}<b>${T('rsScore', { s: f.score })}</b><em class="vg-xpg">${T('xpGain', { n: xpRun })}</em></div>
+      P.innerHTML = `<div class="sg-res"><div class="sg-big">${starsHtml(f.n)}<b>${T('rsScore', { s: f.score })}</b><em class="sg-xpg">${T('xpGain', { n: xpRun })}</em></div>
         <div class="vg-kpis"><div><small>${T('rsGross')}</small><b>${money(out.profit)}</b></div><div><small>${T('rsRes')}</small><b>−${money(f.research)}</b></div><div class="hi"><small>${T('rsNet')}</small><b>${money(f.net)}</b></div><div><small>${T('rsBest')}</small><b>${money(best.profit)}</b></div></div>
-        <p>${T('rsHind', { p: money(best.p), y: money(price) })}</p><p class="vg-note">${T('rsTruth')}</p>
-        <ul class="vg-fb">${fb.map(k => `<li>${T(k)}</li>`).join('')}</ul>
-        ${newBadges.length ? `<div class="vg-new">${newBadges.map(b => `<div class="vg-bd on pop"><span>${BI[b]}</span><b>${T('bdNew')}: ${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>` : ''}
-        <div class="vg-row"><button type="button" class="vg-btn" data-a="again">${T('again')}</button>${f.n >= 1 && li < V.LEVELS.length - 1 ? `<button type="button" class="vg-main inl" data-a="next">${T('nextLv')}</button>` : ''}<button type="button" class="vg-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
+        <p>${T('rsHind', { p: money(best.p), y: money(price) })}</p><p class="sg-note">${T('rsTruth')}</p>
+        <ul class="sg-fb">${fb.map(k => `<li>${T(k)}</li>`).join('')}</ul>
+        ${newBadges.length ? `<div class="sg-new">${newBadges.map(b => `<div class="sg-bd on pop"><span>${BI[b]}</span><b>${T('bdNew')}: ${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>` : ''}
+        <div class="sg-row"><button type="button" class="vg-btn" data-a="again">${T('again')}</button>${f.n >= 1 && li < V.LEVELS.length - 1 ? `<button type="button" class="vg-main inl" data-a="next">${T('nextLv')}</button>` : ''}<button type="button" class="vg-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
     }
-    function confetti() { const box = $('#vgLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'vg-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${(Math.random() - .5) * 200}px;--r:${Math.random() * 720}deg;animation-delay:${Math.random() * .4}s`; box.appendChild(e); setTimeout(() => e.remove(), 2600); } }
+    function confetti() { const box = $('#vgLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'sg-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${(Math.random() - .5) * 200}px;--r:${Math.random() * 720}deg;animation-delay:${Math.random() * .4}s`; box.appendChild(e); setTimeout(() => e.remove(), 2600); } }
 
     /* ---------- events ---------- */
     host.addEventListener('click', e => {
@@ -157,7 +157,7 @@
     });
     host.addEventListener('input', e => { if (e.target.id === 'vgPrice') { price = +e.target.value; priceVals(); } });
     let hover = null;
-    host.addEventListener('pointermove', e => { const s = e.target.closest && e.target.closest('#vgChart .vw-svg'); if (!s || step !== 3 || !res.valid) return; const x = C.x(s, e.clientX, res); if (x == null) return; let ln = s.querySelector('.vw-hov'); const px = 50 + x / grid.max * (C.W - 50 - 16); if (!ln) { ln = document.createElementNS('http://www.w3.org/2000/svg', 'line'); ln.setAttribute('class', 'vw-hov'); ln.setAttribute('y1', 16); ln.setAttribute('y2', C.H - 42); s.insertBefore(ln, s.querySelector('.vw-hit')); } ln.setAttribute('x1', px); ln.setAttribute('x2', px); });
+    host.addEventListener('pointermove', e => { const s = e.target.closest && e.target.closest('#vgChart .vw-svg'); if (!s || step !== 3 || !res.valid) return; const x = C.x(s, e.clientX, res); if (x == null) return; let ln = s.querySelector('.vw-hov'); const px = 50 + x / grid.max * (C.W - 50 - 16); if (!ln) { ln = document.createElementNS('http://www.w3.org/2000/svg', 'line'); ln.setAttribute('class', 'vw-hov'); ln.setAttribute('y1', 16); ln.setAttribute('y2', C.H - 42); s.insertBefore(ln, s.querySelector('.sk-hit')); } ln.setAttribute('x1', px); ln.setAttribute('x2', px); });
 
     /* ---------- loop ---------- */
     function loopCtl() { if (visible && lv && !document.hidden) scene.start(); else { scene.stop(); scene.draw(); } }

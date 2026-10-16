@@ -28,7 +28,7 @@
       s += `<line class="vw-mk-l" x1="${gx}" y1="${T0}" x2="${tx}" y2="${ty}"/><path class="vw-mk ${m.ok ? 'ok' : 'no'}" d="M${gx - 6} ${T0 + 2}l12 0-6 11z"/><circle class="vw-mk-t ${m.ok ? 'ok' : 'no'}" cx="${tx}" cy="${ty}" r="7"/><text class="vw-ptl" x="${tx}" y="${ty + 22}" text-anchor="middle">${m.k.toUpperCase()}</text>`; });
     if (o.price != null) s += `<line class="vw-you" x1="${X(o.price)}" x2="${X(o.price)}" y1="${T0}" y2="${H - B}"/><path class="vw-youm" d="M${X(o.price) - 6} ${T0 - 2}h12l-6 9z"/>`;
     if (o.hover != null) s += `<line class="vw-hov" x1="${X(o.hover)}" x2="${X(o.hover)}" y1="${T0}" y2="${H - B}"/>`;
-    return s + `<rect class="vw-hit" x="${L}" y="${T0}" width="${W - L - R}" height="${H - T0 - B}" fill="transparent"/></svg>`;
+    return s + `<rect class="sk-hit" x="${L}" y="${T0}" width="${W - L - R}" height="${H - T0 - B}" fill="transparent"/></svg>`;
   }
   /* pointer position -> price on the grid */
   function x(el, clientX, res) { const r = el.getBoundingClientRect(), px = (clientX - r.left) / r.width * W; if (px < L || px > W - R) return null; const g = res.grid; return Math.round((px - L) / (W - L - R) * g.max / g.step) * g.step; }

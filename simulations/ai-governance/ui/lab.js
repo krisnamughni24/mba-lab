@@ -31,18 +31,18 @@
       $('#glMet').innerHTML = `<div class="gl-mr two"><span>${T('ldAvg')}</span><b class="${d.avg >= .88 ? 'gn' : d.avg >= .78 ? 'am' : 'rd'}">${pc(d.avg)}</b></div><div class="gl-mr two"><span>${T('ldRe')}</span><b>${d.retrains}</b></div>`;
     }
     function build() {
-      root.innerHTML = `<div class="gl-wrap"><p class="gl-sub">${T('labSub')}</p>
+      root.innerHTML = `<div class="sx-wrap"><p class="sx-sub">${T('labSub')}</p>
         <div class="gl-pre" role="tablist"><button type="button" data-lt="fair" class="${tab === 'fair' ? 'on' : ''}">⚖️ ${T('lbFair')}</button><button type="button" data-lt="drift" class="${tab === 'drift' ? 'on' : ''}">📉 ${T('lbDrift')}</button></div>
-        ${tab === 'fair' ? `<section class="gl-card"><h3 class="gl-h">${T('lfT')}</h3><p class="gl-hint">${T('lfSub')}</p>
-          <div class="gl-main"><div><div class="gl-f"><label for="glT">${T('lfCut')}<output id="glCut"></output></label><input type="range" id="glT" min="30" max="75" step="1" value="${F.t}"></div>
+        ${tab === 'fair' ? `<section class="sx-card"><h3 class="sx-h">${T('lfT')}</h3><p class="sx-hint">${T('lfSub')}</p>
+          <div class="gl-main"><div><div class="sx-f"><label for="glT">${T('lfCut')}<output id="glCut"></output></label><input type="range" id="glT" min="30" max="75" step="1" value="${F.t}"></div>
           <div class="gl-pre vert">${['one', 'parity', 'opp'].map(m => `<button type="button" data-fm="${m}">${T('lfM_' + m)}</button>`).join('')}</div></div>
           <div class="gl-vis" id="glSvg"></div></div><div class="gl-met" id="glMet"></div><p class="gl-ver" id="glVer"></p></section>
-          <section class="gl-card"><ul class="gl-learn"><li>${T('lfL1')}</li><li>${T('lfL2')}</li><li>${T('lfL3')}</li></ul></section>`
-        : `<section class="gl-card"><h3 class="gl-h">${T('ldT')}</h3><p class="gl-hint">${T('ldSub')}</p>
-          <div class="gl-main"><div><div class="gl-f"><label for="glS">${T('ldSpeed')}<output id="glSp"></output></label><input type="range" id="glS" min="4" max="25" step="1" value="${D.speed}"></div>
-          <div class="gl-f"><label>${T('ldEvery')}</label></div><div class="gl-pre">${[0, 3, 6, 12].map(v => `<button type="button" data-ev="${v}">${v ? T('ldMonths', { n: v }) : T('ldNever')}</button>`).join('')}</div></div>
+          <section class="sx-card"><ul class="sx-learn"><li>${T('lfL1')}</li><li>${T('lfL2')}</li><li>${T('lfL3')}</li></ul></section>`
+        : `<section class="sx-card"><h3 class="sx-h">${T('ldT')}</h3><p class="sx-hint">${T('ldSub')}</p>
+          <div class="gl-main"><div><div class="sx-f"><label for="glS">${T('ldSpeed')}<output id="glSp"></output></label><input type="range" id="glS" min="4" max="25" step="1" value="${D.speed}"></div>
+          <div class="sx-f"><label>${T('ldEvery')}</label></div><div class="gl-pre">${[0, 3, 6, 12].map(v => `<button type="button" data-ev="${v}">${v ? T('ldMonths', { n: v }) : T('ldNever')}</button>`).join('')}</div></div>
           <div class="gl-vis" id="glSvg"></div></div><div class="gl-met" id="glMet"></div></section>
-          <section class="gl-card"><ul class="gl-learn"><li>${T('ldL1')}</li><li>${T('ldL2')}</li></ul></section>`}</div>`;
+          <section class="sx-card"><ul class="sx-learn"><li>${T('ldL1')}</li><li>${T('ldL2')}</li></ul></section>`}</div>`;
       tab === 'fair' ? fairUpd() : driftUpd();
     }
     root.addEventListener('input', e => { if (e.target.id === 'glT') { F.t = +e.target.value; fairUpd(); } else if (e.target.id === 'glS') { D.speed = +e.target.value; driftUpd(); } });
@@ -51,7 +51,7 @@
       const fm = e.target.closest('[data-fm]'); if (fm) { F.mode = fm.dataset.fm; MBALAB.util.sfx('tick'); fairUpd(); return; }
       const ev = e.target.closest('[data-ev]'); if (ev) { D.every = +ev.dataset.ev; MBALAB.util.sfx('tick'); driftUpd(); }
     });
-    return { show() { if (!$('.gl-wrap')) build(); }, relabel() { if ($('.gl-wrap')) build(); } };
+    return { show() { if (!$('.sx-wrap')) build(); }, relabel() { if ($('.sx-wrap')) build(); } };
   }
   window.MBALAB = window.MBALAB || {}; MBALAB.govLab = create;
 })();

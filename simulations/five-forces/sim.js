@@ -9,5 +9,5 @@ MBALAB.sims.files('five-forces', {
     "ui/lab.js",
     "ui/app.js"
   ],
-  styles: ["ui/style.css"]
+  styles: ["../../shared/simkit.css", "ui/style.css"]
 });

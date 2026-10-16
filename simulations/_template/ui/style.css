@@ -1,2 +1,1 @@
-/* Styles of this simulation. Scope everything under #app to avoid touching the rest of the site. */
-#app main section { padding: 20px 0; }
+/* Styles specific to this simulation, scoped under .ms. Everything generic (shell, menu, ranks, badges, results, lab cards) is in shared/simkit.css. */

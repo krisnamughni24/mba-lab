@@ -11,7 +11,7 @@ simulations/<id>/
   engine/         pure logic, no DOM, no MBALAB (testable in node)      — optional
   data/           content tables: questions, company facts, events …     — optional
   scene/          3D / canvas rendering                                  — optional
-shared/           code used by several simulations (Bit assistant, studio.css base theme)
+shared/           code used by several simulations (Bit assistant, simkit.css UI backbone, studio.css base theme)
 core/namespace.js MBALAB.util: esc, clamp, sfx
 ```
 Use only the subfolders you need. A small simulation is just `sim.js` + `i18n/` + `ui/`.
@@ -34,6 +34,9 @@ Use only the subfolders you need. A small simulation is just `sim.js` + `i18n/` 
    ```
    `category` must be an id from `data/categories.js`. Optional `developer: 'Name (Team)'` credits someone other than the main developer; the name appears on the card, the loading screen and, with the simulations it built, in the Info window automatically. Add a thumbnail in `features/catalog/thumbs.js` (optional).
 4. Run the smoke test (below). Open `index.html` – the catalog card becomes clickable.
+
+## Look and feel: use the sim kit
+Every simulation uses the same UI backbone, `shared/simkit.css` (add it first in `styles` in `sim.js`, as the template does). Put the class `sk-root` on your root element and use the shared classes: shell `sk-top` `sk-back` `sk-tabs` `sk-scroll` `sk-wrap`; game family `sg-*` (menu, hero, rank, levels, badges, steps, panel, results); lab primitives `sx-*`. Only what is truly specific (the scene, charts, unique widgets) goes in your own `ui/style.css`. See `docs/SIM-BLUEPRINT.md` for the contract and the visual size scale.
 
 ## Rules of thumb
 - Paths in `sim.js` are relative to the simulation folder; `../../shared/x.js` reaches shared code. Do not import from another simulation's folder: move the common part to `shared/`.

@@ -19,7 +19,7 @@
     const rank = xp => { let r = 0; RANKS.forEach((x, i) => { if (xp >= x) r = i; }); return r; };
     const stars = sc => sc >= 85 ? 3 : sc >= 70 ? 2 : sc >= 45 ? 1 : 0;
     const unlocked = i => i === 0 || (st.stars[E.LEVELS[i - 1].id] || 0) >= 1;
-    const starsHtml = n => `<span class="fg-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
+    const starsHtml = n => `<span class="sg-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
     const lvlWord = v => T('lvl' + E.bandOf(v));
     const snap = () => !scene.running;
 
@@ -27,11 +27,11 @@
     function menu() {
       lv = null; clearTimers(); scene.stop(); $('#fgLevel').hidden = true; $('#fgMenu').hidden = false;
       const r = rank(st.xp), nx = RANKS[r + 1], pct = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
-      $('#fgMenu').innerHTML = `<div class="fg-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
-        <div class="fg-rank"><span class="fg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="fg-xp"><i style="width:${pct}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
+      $('#fgMenu').innerHTML = `<div class="sg-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
+        <div class="sg-rank"><span class="sg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sg-xp"><i style="width:${pct}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
         <div class="fg-levels">${E.LEVELS.map((l, i) => { const ok = unlocked(i), n = st.stars[l.id] || 0, k = E.kept(l.f, l.w);
-          return `<button type="button" class="fg-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="fg-lvi" aria-hidden="true">${l.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('ind_' + l.id + '_n')}</b><em>${T('ind_' + l.id + '_d')}</em>${ok ? starsHtml(n) + `<span class="fg-go">${n ? '↻' : '▶'}</span>` : '<span class="fg-lock" aria-hidden="true">🔒</span>'}</button>`; }).join('')}</div>
-        <h3 class="fg-h3">${T('bdT')}</h3><div class="fg-badges">${BADGES.map(b => `<div class="fg-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
+          return `<button type="button" class="fg-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="fg-lvi" aria-hidden="true">${l.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('ind_' + l.id + '_n')}</b><em>${T('ind_' + l.id + '_d')}</em>${ok ? starsHtml(n) + `<span class="sg-go">${n ? '↻' : '▶'}</span>` : '<span class="sg-lock" aria-hidden="true">🔒</span>'}</button>`; }).join('')}</div>
+        <h3 class="sg-h3">${T('bdT')}</h3><div class="sg-badges">${BADGES.map(b => `<div class="sg-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 
     /* ---------- level ---------- */
@@ -41,63 +41,63 @@
       $('#fgMenu').hidden = true; $('#fgLevel').hidden = false; labels(); fit(); loopCtl(); render(); sfx('open');
     }
     function labels() {
-      $('#fgLabels').innerHTML = FK.map((k, i) => `<div class="fg-chip c${i}" style="left:${POS[i].x / 9.6}%;top:${POS[i].y / 5.4}%"><span class="n"><i aria-hidden="true">${EM[i]}</i>${T('fs_' + k)}</span><b class="v" id="fgv${i}"></b><span class="bar"><i id="fgb${i}"></i></span></div>`).join('');
+      $('#fgLabels').innerHTML = FK.map((k, i) => `<div class="sg-chip c${i}" style="left:${POS[i].x / 9.6}%;top:${POS[i].y / 5.4}%"><span class="n"><i aria-hidden="true">${EM[i]}</i>${T('fs_' + k)}</span><b class="v" id="fgv${i}"></b><span class="bar"><i id="fgb${i}"></i></span></div>`).join('');
       chip = FK.map((k, i) => ({ v: $('#fgv' + i), b: $('#fgb' + i) }));
     }
     function paint(d, k) {
       const known = step > 1 || rev || true;
       d.forEach((v, i) => { const un = step === 1 && !rev && !guess[i]; chip[i].v.textContent = un ? '?' : lvlWord(v); chip[i].b.style.width = (un ? 0 : v) + '%'; });
-      const kp = $('#fgKept'); if (kp) { const c = k < 30 ? 'k0' : k < 50 ? 'k1' : k < 70 ? 'k2' : 'k3'; kp.className = 'fg-kept ' + c; kp.innerHTML = `<b>${Math.round(k)}</b><small>${T('poolLbl')}</small>`; }
+      const kp = $('#fgKept'); if (kp) { const c = k < 30 ? 'k0' : k < 50 ? 'k1' : k < 70 ? 'k2' : 'k3'; kp.className = 'sg-kept ' + c; kp.innerHTML = `<b>${Math.round(k)}</b><small>${T('poolLbl')}</small>`; }
     }
     scene.onTick(paint);
     const refresh = () => paint(scene.values(), scene.kept());
     const setF = (f, hard) => { scene.set(f, hard || snap()); refresh(); };
     function say(txt) { const b = $('#fgSay'); b.innerHTML = `<b>${lv.owner}</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); fitStage(); }
     function pills() { $('#fgSteps').innerHTML = [1, 2, 3].map(i => `<li class="${step === i ? 'on' : step > i ? 'done' : ''}"><span>${step > i ? '✓' : i}</span>${T('st' + i)}</li>`).join(''); }
-    function hud() { const r = rank(st.xp); $('#fgHud').innerHTML = `<button type="button" class="fg-back" data-a="menu">← ${T('toMenu')}</button><b class="fg-lt">${T('lvN', { n: li + 1 })} · ${lv.icon} ${T('ind_' + lv.id + '_n')}</b><span class="fg-chipx">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
+    function hud() { const r = rank(st.xp); $('#fgHud').innerHTML = `<button type="button" class="sg-back" data-a="menu">← ${T('toMenu')}</button><b class="sg-lt">${T('lvN', { n: li + 1 })} · ${lv.icon} ${T('ind_' + lv.id + '_n')}</b><span class="sg-chipx">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
 
     /* ---------- steps ---------- */
     function render() {
       hud(); pills(); const P = $('#fgPanel'); P.scrollTop = 0;
       if (step === 1 && !rev) {
         say(T('sayRead'));
-        P.innerHTML = `<div class="fg-brief"><b>${lv.icon} ${T('ind_' + lv.id + '_n')}</b><p>${T('ind_' + lv.id + '_d')}</p><p class="fg-hint">${T('rateHint')}</p></div>` + FK.map((k, i) => rowHtml(i)).join('') + `<div class="fg-foot" id="fgFoot"></div>`; foot();
+        P.innerHTML = `<div class="sg-brief"><b>${lv.icon} ${T('ind_' + lv.id + '_n')}</b><p>${T('ind_' + lv.id + '_d')}</p><p class="sg-hint">${T('rateHint')}</p></div>` + FK.map((k, i) => rowHtml(i)).join('') + `<div class="sg-foot" id="fgFoot"></div>`; foot();
       } else if (step === 1) {
         say(T('sayReveal')); const rd = E.scoreRead(lv, guess);
-        P.innerHTML = `<div class="fg-brief"><b>${T('revT')}</b><p>${T('rdScore', { s: rd.score })} · ${T('rdExact', { n: rd.exact })}</p></div>` +
-          `<div class="fg-rev">${FK.map((k, i) => { const g = guess[i], tb = E.bandOf(lv.f[i]), d = Math.abs(g - tb), c = d === 0 ? 'ok' : d === 1 ? 'near' : 'no'; return `<div class="fg-rv ${c}"><i class="dot c${i}"></i><b>${T('fr_' + k)}</b><span>${T('yourCall')}: <em>${T('lvl' + g)}</em></span><span>${T('truthIs')}: <em>${T('lvl' + tb)}</em></span><strong>${T(d === 0 ? 'spot' : d === 1 ? 'close' : 'miss')}</strong></div>`; }).join('')}</div>
-          <p class="fg-tw">💡 ${T('ind_' + lv.id + '_tw')}</p><div class="fg-foot"><button type="button" class="fg-main" data-a="plan">${T('toPlan')} →</button></div>`;
+        P.innerHTML = `<div class="sg-brief"><b>${T('revT')}</b><p>${T('rdScore', { s: rd.score })} · ${T('rdExact', { n: rd.exact })}</p></div>` +
+          `<div class="sg-rev">${FK.map((k, i) => { const g = guess[i], tb = E.bandOf(lv.f[i]), d = Math.abs(g - tb), c = d === 0 ? 'ok' : d === 1 ? 'near' : 'no'; return `<div class="sg-rv ${c}"><i class="dot c${i}"></i><b>${T('fr_' + k)}</b><span>${T('yourCall')}: <em>${T('lvl' + g)}</em></span><span>${T('truthIs')}: <em>${T('lvl' + tb)}</em></span><strong>${T(d === 0 ? 'spot' : d === 1 ? 'close' : 'miss')}</strong></div>`; }).join('')}</div>
+          <p class="sg-tw">💡 ${T('ind_' + lv.id + '_tw')}</p><div class="sg-foot"><button type="button" class="sg-main" data-a="plan">${T('toPlan')} →</button></div>`;
       } else if (step === 2) {
         say(busy ? T('sayRun') : T('sayPlan'));
-        P.innerHTML = `<div class="fg-cmp" id="fgCmp"></div><p class="fg-hint" id="fgPick"></p><div class="fg-moves">${E.MOVES.map(m => moveHtml(m)).join('')}</div><div class="fg-foot"><button type="button" class="fg-main go" id="fgRun" data-a="run"></button><button type="button" class="fg-btn ghost" data-a="skip" id="fgSkip" hidden>${T('skip')}</button></div>`; plan();
+        P.innerHTML = `<div class="sg-cmp" id="fgCmp"></div><p class="sg-hint" id="fgPick"></p><div class="sg-moves">${E.MOVES.map(m => moveHtml(m)).join('')}</div><div class="sg-foot"><button type="button" class="sg-main go" id="fgRun" data-a="run"></button><button type="button" class="fg-btn ghost" data-a="skip" id="fgSkip" hidden>${T('skip')}</button></div>`; plan();
       } else resultView();
     }
     function rowHtml(i) {
       const k = FK[i], g = guess[i];
-      return `<div class="fg-r c${i}" data-f="${i}"><div class="fg-rh"><i class="dot c${i}"></i><b>${T('fr_' + k)}</b><span class="fg-rw" id="fgw${i}">${g ? T('lvl' + g) : ''}</span></div><p class="fg-q">${T('frq_' + k)}</p><p class="fg-clue">💬 ${T('ind_' + lv.id + '_c' + i)}</p>
-        <div class="fg-rate" role="radiogroup" aria-label="${T('fr_' + k)}">${[1, 2, 3, 4, 5].map(v => `<button type="button" role="radio" aria-checked="${g === v}" class="${g === v ? 'on' : ''}" data-rate="${i}" data-v="${v}" title="${T('lvl' + v)}">${v}</button>`).join('')}</div></div>`;
+      return `<div class="sg-r c${i}" data-f="${i}"><div class="sg-rh"><i class="dot c${i}"></i><b>${T('fr_' + k)}</b><span class="sg-rw" id="fgw${i}">${g ? T('lvl' + g) : ''}</span></div><p class="sg-q">${T('frq_' + k)}</p><p class="sg-clue">💬 ${T('ind_' + lv.id + '_c' + i)}</p>
+        <div class="sg-rate" role="radiogroup" aria-label="${T('fr_' + k)}">${[1, 2, 3, 4, 5].map(v => `<button type="button" role="radio" aria-checked="${g === v}" class="${g === v ? 'on' : ''}" data-rate="${i}" data-v="${v}" title="${T('lvl' + v)}">${v}</button>`).join('')}</div></div>`;
     }
     function foot() {
       const n = guess.filter(Boolean).length, F = $('#fgFoot'); if (!F) return;
-      F.innerHTML = `<span class="fg-cnt">${T('ratedN', { n })}</span><button type="button" class="fg-main" data-a="check" ${n < 5 ? 'disabled' : ''}>${T('check')}</button>`;
+      F.innerHTML = `<span class="sg-cnt">${T('ratedN', { n })}</span><button type="button" class="sg-main" data-a="check" ${n < 5 ? 'disabled' : ''}>${T('check')}</button>`;
     }
     function rate(i, v) {
       guess[i] = v; setF(guess.map((g, j) => g ? E.bandVal(g) : 50)); scene.fx(i, EM[i], 5); sfx('tick');
-      const row = $(`.fg-r[data-f="${i}"]`); row.querySelectorAll('[data-rate]').forEach(b => { const on = +b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
+      const row = $(`.sg-r[data-f="${i}"]`); row.querySelectorAll('[data-rate]').forEach(b => { const on = +b.dataset.v === v; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
       $('#fgw' + i).textContent = T('lvl' + v); foot();
     }
     function check() {
       rev = true; const rd = E.scoreRead(lv, guess); scene.ghost(guess.map(E.bandVal)); setF(lv.f); sfx(rd.score >= 70 ? 'win' : 'tick'); render();
     }
     function moveHtml(m) {
-      return `<button type="button" class="fg-mv" data-mv="${m.id}" aria-pressed="false"><span class="fg-mvi" aria-hidden="true">${MEM[m.id]}</span><b>${T('mv_' + m.id)}</b><small>${T('mvd_' + m.id)}</small><span class="fg-fx">${m.fx.map((d, i) => d ? `<em class="${d < 0 ? 'fdn' : 'fup'} c${i}">${d < 0 ? '▼' : '▲'} ${T('fs_' + FK[i])}</em>` : '').join('')}</span><span class="fg-cost">${T('mvCost')} ${m.cost}</span></button>`;
+      return `<button type="button" class="sg-mv" data-mv="${m.id}" aria-pressed="false"><span class="sg-mvi" aria-hidden="true">${MEM[m.id]}</span><b>${T('mv_' + m.id)}</b><small>${T('mvd_' + m.id)}</small><span class="fg-fx">${m.fx.map((d, i) => d ? `<em class="${d < 0 ? 'fdn' : 'fup'} c${i}">${d < 0 ? '▼' : '▲'} ${T('fs_' + FK[i])}</em>` : '').join('')}</span><span class="sg-cost">${T('mvCost')} ${m.cost}</span></button>`;
     }
     function plan() {
       const r = E.run(lv.f, lv.w, sel), base = E.kept(lv.f, lv.w);
       if (!busy) { scene.setCost(r.cost, snap()); setF(r.f); }
-      $('#fgCmp').innerHTML = `<div class="fg-cb"><small>${T('baseLbl')}</small><b>${Math.round(base)}</b></div><div class="fg-ca">→</div><div class="fg-cb hi ${r.net >= base ? 'gain' : 'loss'}"><small>${T('afterLbl')}</small><b>${Math.round(r.net)}</b></div><div class="fg-cc">${sel.length ? T('costLbl', { n: r.cost }) : ''}</div>`;
+      $('#fgCmp').innerHTML = `<div class="sg-cb"><small>${T('baseLbl')}</small><b>${Math.round(base)}</b></div><div class="sg-ca">→</div><div class="sg-cb hi ${r.net >= base ? 'gain' : 'loss'}"><small>${T('afterLbl')}</small><b>${Math.round(r.net)}</b></div><div class="sg-cc">${sel.length ? T('costLbl', { n: r.cost }) : ''}</div>`;
       $('#fgPick').textContent = T('pickHint', { n: E.PICKS, c: sel.length });
-      host.querySelectorAll('.fg-mv').forEach(b => { const on = sel.indexOf(b.dataset.mv) >= 0; b.setAttribute('aria-pressed', on); b.classList.toggle('on', on); b.disabled = busy || (!on && sel.length >= E.PICKS); });
+      host.querySelectorAll('.sg-mv').forEach(b => { const on = sel.indexOf(b.dataset.mv) >= 0; b.setAttribute('aria-pressed', on); b.classList.toggle('on', on); b.disabled = busy || (!on && sel.length >= E.PICKS); });
       const run = $('#fgRun'); run.disabled = busy || !sel.length; run.textContent = sel.length ? T('run') : T('runNone');
     }
     function toggle(id) {
@@ -105,7 +105,7 @@
       sfx('tick'); plan();
     }
     function execute() {
-      if (busy || !sel.length) return; busy = true; const r = E.run(lv.f, lv.w, sel); out = r; render(); $('#fgSkip').hidden = false; host.querySelectorAll('.fg-mv').forEach(b => { b.disabled = true; });
+      if (busy || !sel.length) return; busy = true; const r = E.run(lv.f, lv.w, sel); out = r; render(); $('#fgSkip').hidden = false; host.querySelectorAll('.sg-mv').forEach(b => { b.disabled = true; });
       r.steps.forEach((s, j) => later(() => { const m = E.byId(s.id); say(`${MEM[s.id]} ${T('mv_' + s.id)}`); scene.setCost(r.steps.slice(0, j + 1).reduce((a, x) => a + E.byId(x.id).cost, 0), snap()); scene.set(s.f, snap()); m.fx.forEach((d, i) => { if (d) scene.fx(i, MEM[s.id], 8); }); sfx(m.fx.some(d => d > 15) ? 'lose' : 'win'); refresh(); }, 600 + j * 1300));
       later(finish, 600 + r.steps.length * 1300 + 700);
     }
@@ -125,16 +125,16 @@
       mg.filter(x => x.d < -.2).forEach(x => fb.push(T('fbTrap', { m: T('mv_' + x.id) })));
       const top = mg.slice().sort((a, b) => b.d - a.d)[0]; if (top && top.d > .2) fb.push(T('fbGood', { m: T('mv_' + top.id), n: top.d.toFixed(1) }));
       if (rd.err[worst] > 25) fb.push(T('fbRead', { f: T('fr_' + FK[worst]) })); if (sel.length === 1) fb.push(T('fbFew'));
-      P.innerHTML = `<div class="fg-res"><div class="fg-big">${starsHtml(n)}<b>${T('rsScore', { s: total })}</b><em class="fg-xpg">${T('xpGain', { n: out.gain })}</em></div>
+      P.innerHTML = `<div class="sg-res"><div class="sg-big">${starsHtml(n)}<b>${T('rsScore', { s: total })}</b><em class="sg-xpg">${T('xpGain', { n: out.gain })}</em></div>
         <div class="fg-kpis"><div><small>${T('rsRead')}</small><b>${rd.score}</b></div><div><small>${T('rsStrat')}</small><b>${ss.score}</b></div><div class="hi"><small>${T('poolLbl')}</small><b>${Math.round(ss.base)} → ${Math.round(ss.net)}</b></div></div>
-        <p class="fg-vd v${vd}"><b>${T('vd' + vd)}</b> ${T('vdx' + vd)}</p>
-        <p class="fg-note">${T('rsBest', { m: ss.best.ids.map(id => T('mv_' + id)).join(' + '), n: Math.round(ss.best.net) })}</p>
-        <ul class="fg-fb">${fb.map(x => `<li>${x}</li>`).join('')}</ul>
-        <p class="fg-tw">💡 ${T('ind_' + lv.id + '_tw')}</p>
-        ${newBadges.length ? `<div class="fg-new">${newBadges.map(b => `<div class="fg-bd on pop"><span>${BI[b]}</span><b>${T('bdNew')}: ${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>` : ''}
-        <div class="fg-foot"><button type="button" class="fg-btn" data-a="again">${T('again')}</button>${n >= 1 && li < E.LEVELS.length - 1 ? `<button type="button" class="fg-main inl" data-a="next">${T('nextLv')}</button>` : ''}<button type="button" class="fg-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
+        <p class="sg-vd v${vd}"><b>${T('vd' + vd)}</b> ${T('vdx' + vd)}</p>
+        <p class="sg-note">${T('rsBest', { m: ss.best.ids.map(id => T('mv_' + id)).join(' + '), n: Math.round(ss.best.net) })}</p>
+        <ul class="sg-fb">${fb.map(x => `<li>${x}</li>`).join('')}</ul>
+        <p class="sg-tw">💡 ${T('ind_' + lv.id + '_tw')}</p>
+        ${newBadges.length ? `<div class="sg-new">${newBadges.map(b => `<div class="sg-bd on pop"><span>${BI[b]}</span><b>${T('bdNew')}: ${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>` : ''}
+        <div class="sg-foot"><button type="button" class="fg-btn" data-a="again">${T('again')}</button>${n >= 1 && li < E.LEVELS.length - 1 ? `<button type="button" class="sg-main inl" data-a="next">${T('nextLv')}</button>` : ''}<button type="button" class="fg-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
     }
-    function confetti() { const box = $('#fgLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'fg-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${(Math.random() - .5) * 200}px;--r:${Math.random() * 720}deg;animation-delay:${Math.random() * .3}s`; box.appendChild(e); setTimeout(() => e.remove(), 2200); } }
+    function confetti() { const box = $('#fgLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'sg-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${(Math.random() - .5) * 200}px;--r:${Math.random() * 720}deg;animation-delay:${Math.random() * .3}s`; box.appendChild(e); setTimeout(() => e.remove(), 2200); } }
 
     /* ---------- events ---------- */
     host.addEventListener('click', e => {
@@ -150,7 +150,7 @@
     /* ---------- loop ---------- */
     function loopCtl() { if (visible && lv && !document.hidden) scene.start(); else { scene.stop(); scene.draw(); } }
     function fitStage() {
-      const L = $('#fgLevel'); if (!L || L.hidden) return; const col = $('.fg-left'), say = $('#fgSay'), st = $('#fgStage'), colW = col.clientWidth;
+      const L = $('#fgLevel'); if (!L || L.hidden) return; const col = $('.sg-left'), say = $('#fgSay'), st = $('#fgStage'), colW = col.clientWidth;
       const mobile = window.matchMedia('(max-width:900px)').matches, availH = mobile ? Math.min(L.clientHeight * .4, colW * 9 / 16) : col.clientHeight - say.offsetHeight - 12;
       const w = Math.max(220, Math.min(colW, availH * 16 / 9)); st.style.width = Math.floor(w) + 'px';
     }

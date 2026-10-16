@@ -6,5 +6,5 @@ MBALAB.sims.files('my-simulation', {
     "ui/template.js",
     "ui/app.js"
   ],
-  styles: ["ui/style.css"]
+  styles: ["../../shared/simkit.css", "ui/style.css"]
 });

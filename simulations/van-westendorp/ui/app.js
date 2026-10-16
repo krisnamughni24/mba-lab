@@ -33,7 +33,7 @@ MBALAB.sims.define('van-westendorp', {
     function renderCtl() {
       const sl = (k, min, max, step, val, out, hint) => `<div class="vw-f"><label for="vwc_${k}"><span>${t('ct' + k[0].toUpperCase() + k.slice(1))}</span><output id="vwo_${k}">${out}</output></label><input type="range" id="vwc_${k}" min="${min}" max="${max}" step="${step}" value="${val}" aria-describedby="vwh_${k}"><small id="vwh_${k}">${t(hint)}</small></div>`;
       $('#vwCtl').innerHTML = sid === 'own' ? '' : sl('n', 30, 1000, 10, opts.n, opts.n, 'ctNHint') + sl('spread', .15, .7, .05, opts.spread, pct(opts.spread), 'ctSpreadHint') + sl('brand', -.3, .4, .05, opts.brand, (opts.brand > 0 ? '+' : '') + pct(opts.brand), 'ctBrandHint') + sl('noise', 0, 1, .05, opts.noise, pct(opts.noise), 'ctNoiseHint') + `<button type="button" class="vw-btn" id="vwNew">${t('ctNew')}</button>`;
-      $('.vw-side').classList.toggle('vw-hide', sid === 'own' && !ownRows.length && false);
+      $('.sk-side').classList.toggle('vw-hide', sid === 'own' && !ownRows.length && false);
     }
 
     /* ---------- chart ---------- */
@@ -58,7 +58,7 @@ MBALAB.sims.define('van-westendorp', {
       }
       s += `<line class="vw-you" x1="${X(price)}" x2="${X(price)}" y1="${T0}" y2="${H - B}"/><path class="vw-youm" d="M${X(price) - 6} ${T0 - 2}h12l-6 9z"/>`;
       if (hover != null) s += `<line class="vw-hov" x1="${X(hover)}" x2="${X(hover)}" y1="${T0}" y2="${H - B}"/>`;
-      s += `<rect class="vw-hit" x="${L}" y="${T0}" width="${W - L - R}" height="${H - T0 - B}" fill="transparent"/></svg>`;
+      s += `<rect class="sk-hit" x="${L}" y="${T0}" width="${W - L - R}" height="${H - T0 - B}" fill="transparent"/></svg>`;
       el.innerHTML = s;
       $('#vwLegend').innerHTML = CV.map(c => `<button type="button" class="vw-lg ${c[2]} ${off[c[0]] ? 'off' : ''}" data-cv="${c[0]}" aria-pressed="${!off[c[0]]}"><i></i>${t(c[1])}</button>`).join('');
       readout();

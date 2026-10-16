@@ -25,16 +25,16 @@
     }
     function build() {
       const b = bells();
-      root.innerHTML = `<div class="al-wrap"><p class="al-sub">${T('labSub')}</p>
-        <div class="al-main"><section class="al-card al-ctl">
-          <div class="al-f"><label for="alP">${T('labBase')}<output id="alPo"></output></label><input type="range" id="alP" min="1" max="40" step="1" value="${S.p0}"></div>
-          <div class="al-f"><label for="alL">${T('labLift')}<output id="alLo"></output></label><input type="range" id="alL" min="-20" max="40" step="1" value="${S.lift}"></div>
-          <div class="al-f"><label for="alN">${T('labN')}<output id="alNo"></output></label><input type="range" id="alN" min="0" max="${NS.length - 1}" step="1" value="${S.ni}"></div>
-          <label class="al-chk"><input type="checkbox" id="alK" ${S.peek ? 'checked' : ''}><span>${T('labPeek')}</span></label>
-          <div class="al-btns"><button type="button" class="al-go" data-run>${T('labRun')} ▶</button><button type="button" class="ghost" data-reset>${T('labReset')}</button></div></section>
-          <section class="al-card"><div class="al-bell" id="alBell">${b.svg}</div><div class="al-pw" id="alPw"></div></section></div>
-        <section class="al-card"><p class="al-hint">${T('labDots')}</p><div class="al-out" id="alOut" aria-live="polite"></div><div class="al-dots" id="alDots"></div></section>
-        <details class="al-card al-more" open><summary>${T('labLearn')}</summary><ul class="al-learn"><li>${T('lk1')}</li><li>${T('lk2')}</li><li>${T('lk3')}</li><li>${T('lk4')}</li></ul></details></div>`;
+      root.innerHTML = `<div class="sx-wrap"><p class="sx-sub">${T('labSub')}</p>
+        <div class="sx-main"><section class="sx-card sx-ctl">
+          <div class="sx-f"><label for="alP">${T('labBase')}<output id="alPo"></output></label><input type="range" id="alP" min="1" max="40" step="1" value="${S.p0}"></div>
+          <div class="sx-f"><label for="alL">${T('labLift')}<output id="alLo"></output></label><input type="range" id="alL" min="-20" max="40" step="1" value="${S.lift}"></div>
+          <div class="sx-f"><label for="alN">${T('labN')}<output id="alNo"></output></label><input type="range" id="alN" min="0" max="${NS.length - 1}" step="1" value="${S.ni}"></div>
+          <label class="sx-chk"><input type="checkbox" id="alK" ${S.peek ? 'checked' : ''}><span>${T('labPeek')}</span></label>
+          <div class="sx-btns"><button type="button" class="sx-go" data-run>${T('labRun')} ▶</button><button type="button" class="ghost" data-reset>${T('labReset')}</button></div></section>
+          <section class="sx-card"><div class="sx-bell" id="alBell">${b.svg}</div><div class="sx-pw" id="alPw"></div></section></div>
+        <section class="sx-card"><p class="sx-hint">${T('labDots')}</p><div class="sx-out" id="alOut" aria-live="polite"></div><div class="sx-dots" id="alDots"></div></section>
+        <details class="sx-card sx-more" open><summary>${T('labLearn')}</summary><ul class="sx-learn"><li>${T('lk1')}</li><li>${T('lk2')}</li><li>${T('lk3')}</li><li>${T('lk4')}</li></ul></details></div>`;
       draw(false); upd();
     }
     function upd() {
@@ -52,7 +52,7 @@
     }
     root.addEventListener('input', e => { const id = e.target.id; if (id === 'alP') S.p0 = +e.target.value; else if (id === 'alL') S.lift = +e.target.value; else if (id === 'alN') S.ni = +e.target.value; else if (id === 'alK') S.peek = e.target.checked; else return; res = null; draw(false); upd(); });
     root.addEventListener('click', e => { if (e.target.closest('[data-run]')) { MBALAB.util.sfx('tick'); run(); } else if (e.target.closest('[data-reset]')) { S = { p0: 10, lift: 10, ni: 3, peek: false }; res = null; build(); } });
-    return { show() { if (!$('.al-wrap')) build(); }, relabel() { if ($('.al-wrap')) { build(); if (res) draw(false); } } };
+    return { show() { if (!$('.sx-wrap')) build(); }, relabel() { if ($('.sx-wrap')) { build(); if (res) draw(false); } } };
   }
   window.MBALAB = window.MBALAB || {}; MBALAB.abLab = create;
 })();

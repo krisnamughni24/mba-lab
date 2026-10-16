@@ -9,5 +9,5 @@ MBALAB.sims.files('ab-testing', {
     "ui/lab.js",
     "ui/app.js"
   ],
-  styles: ["ui/style.css"]
+  styles: ["../../shared/simkit.css", "ui/style.css"]
 });

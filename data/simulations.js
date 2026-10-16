@@ -2006,20 +2006,20 @@ MBALAB.data.simulations = [
   },
   {
     "id": "decision-tree-ev",
-    "status": "soon",
+    "status": "live",
     "icon": "🌳",
     "category": "decision-negotiation",
     "name": {
-      "en": "Decision tree",
-      "id": "Pohon keputusan",
-      "ja": "決定木と期待値",
-      "zh": "决策树与期望值"
+      "en": "Decision Tree Studio",
+      "id": "Studio Pohon Keputusan",
+      "ja": "決定木スタジオ",
+      "zh": "决策树工作室"
     },
     "description": {
-      "en": "Branch choices and chances to find the best path.",
-      "id": "Cabangkan pilihan dan peluang untuk menemukan jalur terbaik.",
-      "ja": "選択と確率を枝分かれさせ最良の道を探す。",
-      "zh": "通过选择与概率分支找出最佳路径。"
+      "en": "Draw choices and chances, roll back the numbers, test the odds.",
+      "id": "Gambar pilihan dan peluang, hitung mundur angkanya, uji probabilitasnya.",
+      "ja": "選択と偶然を描き、数字を巻き戻して確率を試す。",
+      "zh": "绘制选择与机会，倒推数值，检验概率。"
     }
   },
   {

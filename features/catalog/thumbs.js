@@ -85,6 +85,13 @@
     '<path class="g" d="M76 38v10"/><circle class="fb k-bob" cx="124" cy="86" r="4"/><circle class="fc k-pulse" style="--d:.5s" cx="172" cy="40" r="3.5"/>' +
     '<circle class="fc k-ride" style="offset-path:path(\'M8 62L192 62\');--d:0s" cx="0" cy="0" r="3.5"/><circle class="fa k-ride" style="offset-path:path(\'M8 62L192 62\');--d:.9s" cx="0" cy="0" r="3.5"/>');
 
+  T['decision-tree-ev'] = S(
+    '<path class="g" d="M34 50C52 50 52 26 74 26M34 50C52 50 52 74 74 74M96 26C114 26 114 14 136 14M96 26C114 26 114 38 136 38M96 74C114 74 114 62 136 62M96 74C114 74 114 86 136 86"/>' +
+    '<path class="a k-draw" pathLength="1" d="M34 50C52 50 52 26 74 26M96 26C114 26 114 14 136 14"/>' +
+    '<rect class="fd o" x="22" y="40" width="20" height="20" rx="4"/><circle class="fb o k-pulse" cx="85" cy="26" r="10"/><circle class="fb o" cx="85" cy="74" r="10"/>' +
+    '<path class="fa" d="M138 6l16 8-16 8z"/><path class="fc" d="M138 30l16 8-16 8z"/><path class="fc" d="M138 54l16 8-16 8z"/><path class="fc" d="M138 78l16 8-16 8z"/>' +
+    '<circle class="fa k-ride" style="offset-path:path(\'M34 50C52 50 52 26 74 26\');--d:0s" cx="0" cy="0" r="3.5"/>');
+
   T['five-forces'] = S(
     '<rect class="fd o" x="78" y="34" width="44" height="32" rx="4"/><path class="fa" d="M74 36L100 22L126 36z"/>' +
     '<path class="a k-draw" pathLength="1" d="M100 10V20"/><path class="b k-draw" pathLength="1" d="M20 50H74"/><path class="c k-draw" pathLength="1" d="M180 50H126"/><path class="d k-draw" pathLength="1" d="M100 90V68"/>' +

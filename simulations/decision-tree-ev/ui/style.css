@@ -1,0 +1,64 @@
+/* Decision Tree Studio: styles specific to this simulation (shell and cards come from shared/simkit.css). */
+.dt-cases{display:flex;flex-wrap:wrap;gap:8px}
+.dt-case{display:flex;align-items:center;gap:8px;padding:9px 14px!important;border-radius:999px!important}
+.dt-case.on{background:var(--sk-grad)!important;color:#06122a!important;border-color:transparent!important}
+.dt-story{display:grid;gap:10px}
+.dt-story p{margin:0}
+.dt-hunch{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dt-hunch b{font-size:15.5px}
+.dt-chip.on{border-color:var(--cy)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--cy) 40%,transparent)}
+.dt-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
+.dt-treebox{padding:10px;min-width:0}
+.dt-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14.5px;color:var(--txt2);margin:2px 4px 8px}
+.dt-legend span{display:inline-flex;align-items:center;gap:6px}
+.dt-legend svg{width:18px;height:18px}
+.dt-tree{overflow:auto;max-height:70vh;border-radius:12px;background:var(--panel2);padding:6px}
+.dt-tree svg{display:block;min-width:100%;max-width:none!important}
+.dt-tree text{font-family:inherit;font-size:13px;fill:var(--txt)}
+.dt-nd{cursor:pointer;fill:var(--panel);stroke-width:2.5;transition:filter .2s}
+.dt-nd:hover{filter:drop-shadow(0 0 6px var(--cy))}
+.dt-nd.d{stroke:var(--cy)}.dt-nd.c{stroke:var(--am)}.dt-nd.e{stroke:var(--gn)}
+.dt-nd.sel{stroke-width:4;filter:drop-shadow(0 0 7px var(--mg))}
+.dt-ed{fill:none;stroke:var(--txt2);stroke-width:1.8;opacity:.8}
+.dt-ed.best{stroke:var(--gn);stroke-width:3.2;opacity:1}
+.dt-ed.dim,.dt-g.dim{opacity:.3}
+.dt-el{fill:var(--txt);font-weight:700;cursor:pointer}
+.dt-es{fill:var(--txt2)!important;font-size:12.5px!important}
+.dt-ev{fill:var(--gn)!important;font-weight:800}
+.dt-pay{font-weight:800}
+.dt-pay.neg,.dt-neg{fill:var(--rd)!important;color:var(--rd)}
+.dt-cut{fill:var(--rd)!important;font-weight:900}
+.dt-insp{display:grid;gap:10px;position:sticky;top:8px}
+.dt-insp h3{margin:0;font-size:16px}
+.dt-insp label{display:grid;gap:3px;font-size:14.5px;font-weight:700;text-transform:none;font-family:inherit;letter-spacing:0}
+.dt-insp input,.dt-insp select{font:inherit;color:var(--txt);background:var(--panel2);border:1px solid var(--edge);border-radius:10px;padding:7px 9px;width:100%}
+.dt-row{display:flex;gap:6px;flex-wrap:wrap}
+.dt-row button{flex:1;min-width:90px;padding:7px 10px!important}
+.dt-type{display:flex;gap:4px}
+.dt-type button{flex:1;padding:6px 4px!important;font-size:14px!important}
+.dt-type button.on{border-color:var(--cy)!important;color:var(--cy)!important}
+.dt-sec{border-top:1px dashed var(--edge);padding-top:8px;display:grid;gap:8px}
+.dt-bars{display:grid;gap:8px}
+.dt-bar{display:grid;grid-template-columns:minmax(90px,160px) minmax(0,1fr) 84px;gap:10px;align-items:center;font-size:15px}
+.dt-bar .tr{position:relative;height:16px;border-radius:8px;background:color-mix(in srgb,var(--txt) 10%,transparent)}
+.dt-bar .z{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--txt2)}
+.dt-bar .f{position:absolute;top:0;bottom:0;border-radius:8px;background:var(--cy)}
+.dt-bar.best .f{background:var(--gn)}
+.dt-bar.neg .f{background:var(--rd)}
+.dt-bar b{text-align:right;font-variant-numeric:tabular-nums}
+.dt-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.dt-kpis div{background:var(--panel2);border:1px solid var(--edge);border-radius:12px;padding:8px 10px}
+.dt-kpis small{display:block;color:var(--txt2);font-size:13.5px}
+.dt-kpis b{font-size:18px;font-variant-numeric:tabular-nums}
+.dt-ra{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.dt-ra button.on{border-color:var(--am)!important;color:var(--am)!important}
+.dt-issues{margin:0;padding-left:20px;color:var(--am)}
+.dt-chart svg{width:100%;height:auto;display:block}
+.dt-chart text{font-family:inherit;font-size:12px;fill:var(--txt2)}
+.dt-chart .ax{stroke:var(--edge);stroke-width:1}
+.dt-chart .ln{fill:none;stroke-width:2.6}
+.dt-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14.5px;color:var(--txt2)}
+.dt-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.dt-conc p{margin:6px 0}
+@media(max-width:900px){.dt-grid{grid-template-columns:1fr}.dt-insp{position:static}.dt-bar{grid-template-columns:90px minmax(0,1fr) 70px}}
+#dtRes,#dtSens,#dtConc{display:grid;gap:12px}
