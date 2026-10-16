@@ -13,9 +13,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: node tests/structure.js
       - run: node tests/engines.js
-      - run: node tests/starters.js
       - name: Smoke test (opens every live simulation)
         run: |
           python3 -m http.server 8099 &
           sleep 2
+          node tests/starters.js
           node tests/smoke.js
