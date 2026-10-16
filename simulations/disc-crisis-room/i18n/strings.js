@@ -136,9 +136,34 @@
     nbt_p3: ['Under real pressure, what do you do first? Trust that.', 'Di bawah tekanan nyata, apa yang pertama kali Anda lakukan? Percayai itu.', '本当にプレッシャーがかかったとき、まず何をする？それを信じて。', '真正有压力时你最先做什么？相信它。'],
     nbt_end: ['Read your radar, then try again and see if a different crisis brings out another side of you.', 'Baca radar Anda, lalu coba lagi dan lihat apakah krisis lain memunculkan sisi lain dari Anda.', 'レーダーを読んで、もう一度。別の状況で別の面が出るかもしれません。', '看看你的雷达图，再玩一次，看不同情境是否激发出另一面。']
   };
+  /* ---------- game layer (template "Game"): ranks, three levels, badges, coach lines ---------- */
+  const G = {
+    rk0: ['Rookie', 'Pemula', '新人', '新手'], rk1: ['Responder', 'Penanggap', '初動担当', '应急员'], rk2: ['Crisis lead', 'Pemimpin krisis', '危機リーダー', '危机负责人'], rk3: ['Crisis master', 'Master krisis', '危機のマスター', '危机大师'],
+    xpLbl: ['{n} XP', '{n} XP', '{n} XP', '{n} XP'], xpNext: ['Next rank at {n} XP', 'Peringkat berikutnya di {n} XP', '次のランクは {n} XP', '下一级需 {n} XP'], xpMax: ['Top rank reached', 'Peringkat tertinggi tercapai', '最高ランク到達', '已达最高等级'],
+    xpGain: ['+{n} XP', '+{n} XP', '+{n} XP', '+{n} XP'],
+    lvN: ['Level {n}', 'Level {n}', 'レベル {n}', '第 {n} 关'], lvLock: ['Finish the previous level to unlock', 'Selesaikan level sebelumnya untuk membuka', '前のレベルをクリアすると解放', '完成上一关后解锁'],
+    lv1n: ['Pressure warm-up', 'Pemanasan di bawah tekanan', 'プレッシャーのウォームアップ', '压力热身'], lv1d: ['A launch bug and an angry client. Two quick crises to find your first reflex.', 'Bug saat peluncuran dan klien yang marah. Dua krisis singkat untuk menemukan refleks pertama Anda.', '発売前のバグと怒れる顧客。2つの危機で最初の反射を探る。', '发布前的漏洞与愤怒的客户。两场短危机，找到你的第一反应。'],
+    lv2n: ['Team in tension', 'Tim yang tegang', '緊張するチーム', '紧张的团队'], lv2d: ['Conflict and doubt inside the team. See how you hold people together.', 'Konflik dan keraguan di dalam tim. Lihat cara Anda menjaga tim tetap utuh.', 'チーム内の対立と迷い。人をまとめるあなたの流儀を見る。', '团队内部的冲突与动摇。看你如何凝聚众人。'],
+    lv3n: ['High stakes', 'Taruhan besar', 'ハイステークス', '高风险'], lv3d: ['Big decisions with little time. The final two crises complete your profile.', 'Keputusan besar dengan waktu sempit. Dua krisis terakhir melengkapi profil Anda.', '時間のない大きな決断。最後の2つで全体像が完成。', '时间紧迫的重大决定。最后两场危机完成你的画像。'],
+    lvRead: ['Last read: {code}', 'Bacaan terakhir: {code}', '前回の判定：{code}', '上次判定：{code}'],
+    toMenu: ['Menu', 'Menu', 'メニュー', '菜单'], stCrisis: ['Crisis {n}', 'Krisis {n}', '危機 {n}', '危机 {n}'], stRead: ['Your read', 'Bacaan Anda', '判定', '你的结果'],
+    say1: ['Two crises in this level. Go with your gut: there is no right answer.', 'Ada dua krisis di level ini. Ikuti naluri: tidak ada jawaban benar.', 'このレベルは2つの危機。直感で選んで、正解はありません。', '本关有两场危机。跟随直觉，没有标准答案。'],
+    say2: ['One more crisis in this level. Same rule: pick what you would really do.', 'Satu krisis lagi di level ini. Aturan sama: pilih yang benar-benar Anda lakukan.', 'このレベル最後の危機。選ぶのは本当にやることです。', '本关最后一场危机。规则不变：选你真正会做的。'],
+    sayEnd: ['Level done. Here is what your decisions say.', 'Level selesai. Ini yang dikatakan keputusan Anda.', 'レベル完了。あなたの決断が示すものはこちら。', '本关完成。这是你的决定所反映的风格。'],
+    bdT: ['Style badges', 'Lencana gaya', 'スタイルバッジ', '风格徽章'],
+    bddStyle: ['Led with this style in a level', 'Memimpin dengan gaya ini di satu level', 'あるレベルでこのスタイルが先頭に', '在某一关以此风格为主'],
+    bd_mix: ['Balanced', 'Seimbang', 'バランス型', '均衡型'], bdd_mix: ['Two styles tied in one level', 'Dua gaya seimbang di satu level', '1つのレベルで2スタイルが同点', '某一关中两种风格并列'],
+    bd_full: ['Full profile', 'Profil lengkap', 'フルプロファイル', '完整画像'], bdd_full: ['Finish all three levels', 'Selesaikan ketiga level', '3つのレベルをクリア', '通关全部三关'],
+    rsLevel: ['Your read for this level', 'Bacaan Anda untuk level ini', 'このレベルでの判定', '本关的判定'],
+    lvNote: ['A short read from four decisions. The full profile combines all three levels.', 'Bacaan singkat dari empat keputusan. Profil lengkap menggabungkan ketiga level.', '4つの決断からの簡易判定。全体像は3レベルの合計です。', '基于四个决定的简短判断。完整画像综合三关。'],
+    again: ['Replay level', 'Ulangi level', 'もう一度', '重玩本关'], nextLv: ['Next level →', 'Level berikutnya →', '次のレベル →', '下一关 →'], seeProfile: ['See my full profile', 'Lihat profil lengkap saya', '全体プロファイルを見る', '查看完整画像'],
+    pfT: ['Your overall profile', 'Profil menyeluruh Anda', 'あなたの総合プロファイル', '你的整体画像'], pfHint: ['Play all three levels to unlock your full profile.', 'Mainkan ketiga level untuk membuka profil lengkap.', '3つのレベルを遊ぶと全体プロファイルが解放されます。', '玩完三关即可解锁完整画像。'],
+    toLevels: ['Back to levels', 'Kembali ke level', 'レベル一覧へ', '返回关卡']
+  };
   const strings = { en: {}, id: {}, ja: {}, zh: {} };
   const add = (k, arr) => L.forEach((l, i) => { strings[l][k] = arr[i]; });
   Object.keys(U).forEach(k => add('dc_' + k, U[k]));
+  Object.keys(G).forEach(k => add('dc_' + k, G[k]));
   add('dc_last', ['Your last result: {code}', 'Hasil terakhir Anda: {code}', '前回の結果：{code}', '你上次的结果：{code}']);
   SC.forEach((c, i) => { add('s' + i + 't', c.t); add('s' + i + 's', c.s); for (let k = 0; k < 4; k++) { add('s' + i + 'a' + k, c.a[k]); add('s' + i + 'b' + k, c.b[k]); } });
   Object.keys(ST).forEach(k => { const o = ST[k]; add('st' + k + 'n', o.n); add('st' + k + 'tag', o.tag); add('st' + k + 'str', o.str); add('st' + k + 'prs', o.prs); add('st' + k + 'bld', o.bld); add('st' + k + 'wrk', o.wrk); });
