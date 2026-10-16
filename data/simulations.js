@@ -17,8 +17,8 @@ MBALAB.data.simulations = [
       "zh": "SMART Decision Studio"
     },
     "description": {
-      "en": "Multi-criteria decision analysis: weights, ranking and sensitivity.",
-      "id": "Analisis keputusan multikriteria: bobot, peringkat, dan sensitivitas.",
+      "en": "Multi-criteria decisions: weights, ranking, sensitivity.",
+      "id": "Keputusan multikriteria: bobot, peringkat, sensitivitas.",
       "ja": "多基準意思決定分析：重み付け、ランキング、感度分析。",
       "zh": "多准则决策分析：权重、排名与敏感性分析。"
     }
@@ -35,8 +35,8 @@ MBALAB.data.simulations = [
       "zh": "DISC Crisis Room Test"
     },
     "description": {
-      "en": "Lead a team through six crises. Your choices reveal your DISC style.",
-      "id": "Pimpin tim melewati enam krisis. Pilihan Anda mengungkap gaya DISC Anda.",
+      "en": "Lead a team through six crises and reveal your DISC style.",
+      "id": "Pimpin tim lewati enam krisis, temukan gaya DISC Anda.",
       "ja": "6つの危機でチームを率いる。選択からあなたのDISCスタイルが見えてくる。",
       "zh": "带领团队度过六场危机，你的选择将揭示你的 DISC 风格。"
     }
@@ -53,7 +53,7 @@ MBALAB.data.simulations = [
       "zh": "印尼国企探索 BUMN"
     },
     "description": {
-      "en": "Explore Indonesia's state-owned companies in 3D, then take the quiz.",
+      "en": "Explore Indonesia's state-owned firms in 3D, then take a quiz.",
       "id": "Jelajahi BUMN Indonesia di dunia 3D, lalu uji lewat kuis.",
       "ja": "港・鉱山・発電所のある3Dの世界でインドネシアの国有企業を探索し、クイズに挑戦。",
       "zh": "在有港口、矿山和电厂的3D世界中探索印尼国有企业，再来一场测验。"
@@ -72,8 +72,8 @@ MBALAB.data.simulations = [
       "zh": "MBA 模拟考试"
     },
     "description": {
-      "en": "1,074 practice questions across 6 courses, timed or with instant feedback.",
-      "id": "1.074 soal latihan untuk 6 mata kuliah, berwaktu atau dengan umpan balik.",
+      "en": "1,074 practice questions across 6 courses, timed or instant.",
+      "id": "1.074 soal latihan 6 mata kuliah, berwaktu atau langsung.",
       "ja": "6科目1,074問の模擬試験。時間制限つき試験と即時フィードバック練習。",
       "zh": "6门课程1,074道模拟题，限时考试或即时反馈练习。"
     }
@@ -90,8 +90,8 @@ MBALAB.data.simulations = [
       "zh": "人生40年：金钱与时间"
     },
     "description": {
-      "en": "Live from 22 to 62 as rich, middle or poor. Save, borrow and invest.",
-      "id": "Jalani usia 22–62 sebagai kaya, biasa, atau miskin. Menabung dan berinvestasi.",
+      "en": "Live from 22 to 62 as rich, middle or poor. Save and invest.",
+      "id": "Jalani usia 22–62 sebagai kaya, biasa, atau miskin.",
       "ja": "22歳から62歳まで生きる。貯蓄・借入・投資で時間価値を体感。",
       "zh": "从22岁活到62岁，储蓄、借贷、投资，体会货币时间价值。"
     }
@@ -234,8 +234,8 @@ MBALAB.data.simulations = [
       "zh": "牛鞭效应"
     },
     "description": {
-      "en": "Run one firm in a state-owned supply chain and watch demand swings grow upstream.",
-      "id": "Jalankan satu perusahaan di rantai pasok BUMN, lihat fluktuasi permintaan membesar.",
+      "en": "Run one firm in a supply chain and watch demand swings grow.",
+      "id": "Jalankan satu perusahaan, lihat fluktuasi permintaan membesar.",
       "ja": "国有企業のサプライチェーンの1社を運営し、小さな需要変動が上流で膨らむ様子を体験。",
       "zh": "运营国企供应链中的一家公司，亲眼看小幅需求波动如何向上游放大。"
     }
@@ -252,8 +252,8 @@ MBALAB.data.simulations = [
       "zh": "波特五力模型"
     },
     "description": {
-      "en": "See how hard five forces squeeze an industry, then protect your profit.",
-      "id": "Lihat tekanan lima kekuatan pada industri, lalu lindungi labamu.",
+      "en": "See how hard five forces squeeze an industry. Protect profit.",
+      "id": "Lihat tekanan lima kekuatan pada industri. Lindungi laba.",
       "ja": "5つの力が業界をどれだけ締め付けるかを読み取り、利益を守る一手を選ぶ。",
       "zh": "读懂五种力量对行业的挤压程度，再选择保护利润的行动。"
     }
@@ -270,8 +270,8 @@ MBALAB.data.simulations = [
       "zh": "价格敏感度测试（PSM）"
     },
     "description": {
-      "en": "Four price questions, four curves: find the price range people accept.",
-      "id": "Empat pertanyaan harga, empat kurva: temukan rentang harga yang diterima.",
+      "en": "Four price questions, four curves: find the accepted price range.",
+      "id": "Empat pertanyaan harga: temukan rentang harga yang diterima.",
       "ja": "4つの価格質問と4本の曲線から受容価格帯を見つける。",
       "zh": "四个价格问题、四条曲线，找出可接受的价格区间。"
     }
@@ -288,8 +288,8 @@ MBALAB.data.simulations = [
       "zh": "BATNA：耐心的代价"
     },
     "description": {
-      "en": "12 negotiation missions: solo, teams or two sellers. Haggle, read, win or walk.",
-      "id": "12 misi negosiasi: sendiri, tim, atau dua penjual. Tawar, baca lawan, menang atau pergi.",
+      "en": "12 negotiation missions: haggle, read, win or walk away.",
+      "id": "12 misi negosiasi: tawar, baca lawan, menang atau pergi.",
       "ja": "12の交渉ミッション：単独、仲間と、売り手2人と。駆け引きし、読み、勝つか去るか。",
       "zh": "12 个谈判任务：单人、携队友或对战两位卖家。砍价、读人，赢下或离场。"
     }
@@ -306,8 +306,8 @@ MBALAB.data.simulations = [
       "zh": "合作社：四季经营"
     },
     "description": {
-      "en": "Run a village cooperative for 8 years: shop, rice, loans, rivals and trust.",
-      "id": "Kelola koperasi desa 8 tahun: toko, beras, pinjaman, pesaing, dan kepercayaan.",
+      "en": "Run a village cooperative for 8 years and keep members' trust.",
+      "id": "Kelola koperasi desa 8 tahun dan jaga kepercayaan anggota.",
       "ja": "村の協同組合を8年間運営。店、米、貸付、ライバル、組合員の信頼。",
       "zh": "经营村合作社8年：商店、大米、贷款、对手与社员的信任。"
     }
@@ -397,7 +397,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Pick penetration, new markets, new products or diversification.",
-      "id": "Pilih antara penetrasi, pasar baru, produk baru, atau diversifikasi.",
+      "id": "Pilih penetrasi, pasar baru, produk baru, atau diversifikasi.",
       "ja": "市場浸透・新市場・新製品・多角化から選ぶ。",
       "zh": "在渗透、新市场、新产品与多元化之间选择。"
     }
@@ -433,7 +433,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Test which resources really give a lasting edge.",
-      "id": "Uji sumber daya mana yang benar-benar memberi keunggulan jangka panjang.",
+      "id": "Uji sumber daya mana yang memberi keunggulan jangka panjang.",
       "ja": "どの資源が持続的優位をもたらすかを検証する。",
       "zh": "检验哪些资源能带来持久优势。"
     }
@@ -450,8 +450,8 @@ MBALAB.data.simulations = [
       "zh": "PESTEL环境扫描"
     },
     "description": {
-      "en": "Scan political, economic, social and legal forces before you enter.",
-      "id": "Pindai kekuatan politik, ekonomi, sosial, dan hukum sebelum masuk pasar.",
+      "en": "Scan political, economic, social and legal forces first.",
+      "id": "Pindai faktor politik, ekonomi, sosial, dan hukum.",
       "ja": "参入前に政治・経済・社会・法規制の要因を分析する。",
       "zh": "进入市场前扫描政治、经济、社会与法律因素。"
     }
@@ -486,8 +486,8 @@ MBALAB.data.simulations = [
       "zh": "平衡计分卡"
     },
     "description": {
-      "en": "Link strategy to finance, customer, process and learning metrics.",
-      "id": "Hubungkan strategi dengan metrik keuangan, pelanggan, proses, dan pembelajaran.",
+      "en": "Link strategy to finance, customer, process and learning.",
+      "id": "Hubungkan strategi ke keuangan, pelanggan, proses, belajar.",
       "ja": "戦略を財務・顧客・業務・学習の指標に結びつける。",
       "zh": "把战略与财务、客户、流程、学习指标联系起来。"
     }
@@ -541,7 +541,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "See why two good rules can rank projects differently.",
-      "id": "Pahami mengapa dua kriteria bisa mengurutkan proyek secara berbeda.",
+      "id": "Mengapa dua kriteria bisa mengurutkan proyek berbeda.",
       "ja": "二つの基準でプロジェクト順位が変わる理由を知る。",
       "zh": "理解为何两种准则会给项目不同排序。"
     }
@@ -666,8 +666,8 @@ MBALAB.data.simulations = [
       "zh": "财务比率侦探"
     },
     "description": {
-      "en": "Read liquidity, leverage and profitability from the statements.",
-      "id": "Baca likuiditas, leverage, dan profitabilitas dari laporan keuangan.",
+      "en": "Read liquidity, leverage and profitability from statements.",
+      "id": "Baca likuiditas, leverage, dan profitabilitas laporan.",
       "ja": "財務諸表から流動性・レバレッジ・収益性を読む。",
       "zh": "从报表中解读流动性、杠杆与盈利能力。"
     }
@@ -811,7 +811,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Segment, target, position: win a place in the mind.",
-      "id": "Segmentasi, targeting, positioning: rebut tempat di benak konsumen.",
+      "id": "Segmentasi, targeting, positioning: rebut benak konsumen.",
       "ja": "セグメント・ターゲット・ポジション：顧客の心の中に居場所を作る。",
       "zh": "细分、选择、定位：占据消费者心智。"
     }
@@ -936,8 +936,8 @@ MBALAB.data.simulations = [
       "zh": "认知偏差实验室"
     },
     "description": {
-      "en": "Catch anchoring, sunk cost and overconfidence in your own choices.",
-      "id": "Kenali anchoring, sunk cost, dan terlalu percaya diri dalam keputusan Anda.",
+      "en": "Catch anchoring, sunk cost and overconfidence in your choices.",
+      "id": "Kenali anchoring, sunk cost, dan terlalu percaya diri.",
       "ja": "自分の判断にあるアンカリングやサンクコストを見抜く。",
       "zh": "识别自己决策中的锚定、沉没成本与过度自信。"
     }
@@ -1153,7 +1153,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Set output where marginal cost meets marginal revenue.",
-      "id": "Tetapkan output saat biaya marjinal sama dengan pendapatan marjinal.",
+      "id": "Tetapkan output saat biaya marjinal sama pendapatan marjinal.",
       "ja": "限界費用と限界収入が等しい生産量を決める。",
       "zh": "在边际成本等于边际收益处确定产量。"
     }
@@ -1260,8 +1260,8 @@ MBALAB.data.simulations = [
       "zh": "团队发展(塔克曼)"
     },
     "description": {
-      "en": "Guide a team through forming, storming, norming and performing.",
-      "id": "Pandu tim melewati tahap forming, storming, norming, dan performing.",
+      "en": "Guide a team through forming, storming, norming, performing.",
+      "id": "Pandu tim: forming, storming, norming, performing.",
       "ja": "形成期から達成期までチームを導く。",
       "zh": "带领团队走过组建、激荡、规范与表现阶段。"
     }
@@ -1585,7 +1585,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Define risk and see why higher return needs higher risk.",
-      "id": "Definisikan risiko dan pahami mengapa imbal hasil tinggi butuh risiko tinggi.",
+      "id": "Pahami mengapa imbal hasil tinggi butuh risiko tinggi.",
       "ja": "リスクを定義し、高リターンに高リスクが伴う理由を知る。",
       "zh": "定义风险，理解高收益为何伴随高风险。"
     }
@@ -1801,7 +1801,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Choose cost, quality, speed or flexibility as the edge.",
-      "id": "Pilih biaya, kualitas, kecepatan, atau fleksibilitas sebagai keunggulan.",
+      "id": "Pilih biaya, kualitas, kecepatan, atau fleksibilitas.",
       "ja": "コスト・品質・速度・柔軟性のどれで勝つか選ぶ。",
       "zh": "选择成本、质量、速度或灵活性作为优势。"
     }
@@ -1927,7 +1927,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Align demand, supply and finance in one monthly plan.",
-      "id": "Selaraskan permintaan, pasokan, dan keuangan dalam satu rencana bulanan.",
+      "id": "Selaraskan permintaan, pasokan, dan keuangan sebulan.",
       "ja": "需要・供給・財務を一つの月次計画に揃える。",
       "zh": "把需求、供应与财务统一到月度计划中。"
     }
@@ -2143,7 +2143,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Logrolling, bridging and packaging for win-win deals.",
-      "id": "Logrolling, bridging, dan packaging untuk kesepakatan menang-menang.",
+      "id": "Logrolling, bridging, dan packaging untuk menang-menang.",
       "ja": "ログローリング等でWin-Winの合意を作る。",
       "zh": "互惠让步、搭桥与打包促成双赢。"
     }
@@ -2287,7 +2287,7 @@ MBALAB.data.simulations = [
     },
     "description": {
       "en": "Use data to cut delays, stockouts and downtime.",
-      "id": "Gunakan data untuk mengurangi keterlambatan, stok habis, dan downtime.",
+      "id": "Kurangi keterlambatan, stok habis, dan downtime dengan data.",
       "ja": "データで遅延・欠品・停止を減らす。",
       "zh": "用数据减少延误、缺货与停机。"
     }

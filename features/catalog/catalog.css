@@ -92,9 +92,9 @@ body.still .tb *{animation:none!important}
 #modal .sim .tb{width:100%}
 #modal .sim b{font-size:clamp(14.5px,1.12vw,17.5px);line-height:1.3;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 #modal .sim b>span{font-size:.82em;opacity:.55;filter:grayscale(.45) saturate(.8);margin-right:2px}
-#modal .sim .note{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+#modal .sim .note{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
 #modal .sim .cat{font-size:clamp(9px,.72vw,11.5px);line-height:1.35;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-#modal .sim .note{font-size:16px;line-height:1.5;color:var(--txt2);margin:0}
+#modal .sim .note{font-size:clamp(12.5px,.95vw,14.5px);line-height:1.45;color:var(--txt2);margin:0}
 #modal .sim .bd{font-size:13.5px;padding:3px 10px}
 #modal .sim .ft{min-height:44px;flex-wrap:wrap}
 #modal .sim .ft button{font-size:16px;min-height:42px;padding:0 20px;font-weight:700}
