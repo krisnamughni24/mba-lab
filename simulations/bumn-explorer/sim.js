@@ -7,6 +7,7 @@ MBALAB.sims.files('bumn-explorer', {
     "data/facts.js",
     "data/more.js",
     "data/guide.js",
+    "data/guide2.js",
     "data/danantara.js",
     "scene/world.js",
     "scene/buildings.js",
