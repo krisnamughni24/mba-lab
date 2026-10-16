@@ -37,11 +37,11 @@
   /* distribution of final outcomes when following the best policy */
   function profile(t, S) {
     const outs = [];
-    (function go(n, p, acc) {
-      if (n.k === 'e' || !n.kids.length) { outs.push({ p, val: acc + num(n.pay) }); return; }
-      if (n.k === 'd') { const e = n.kids[S.best[n.id]]; go(e.n, p, acc + num(e.v)); }
-      else { const ps = pOf(n); n.kids.forEach((e, i) => go(e.n, p * ps[i], acc + num(e.v))); }
-    })(t, 1, 0);
+    (function go(n, p, acc, path) {
+      if (n.k === 'e' || !n.kids.length) { outs.push({ p, val: acc + num(n.pay), path }); return; }
+      if (n.k === 'd') { const e = n.kids[S.best[n.id]]; go(e.n, p, acc + num(e.v), path.concat([e.l])); }
+      else { const ps = pOf(n); n.kids.forEach((e, i) => go(e.n, p * ps[i], acc + num(e.v), path.concat([e.l]))); }
+    })(t, 1, 0, []);
     const mean = sum(outs.map(o => o.p * o.val)), sd = Math.sqrt(sum(outs.map(o => o.p * (o.val - mean) ** 2)));
     return { outs, mean, sd, min: Math.min(...outs.map(o => o.val)), max: Math.max(...outs.map(o => o.val)), pLoss: sum(outs.filter(o => o.val < -1e-9).map(o => o.p)) };
   }

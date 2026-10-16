@@ -76,3 +76,9 @@
 .dt-sec.dt-conc{border-top:1px dashed var(--panel-b);padding-top:12px}
 .sd .dt-case.on{background:linear-gradient(135deg,var(--g1),var(--g2))!important;color:#06122a!important;border-color:transparent!important}
 .sd .dt-insp input,.sd .dt-insp select{width:100%}
+.dt-p2{display:grid;gap:16px}
+.dt-p2 .dt-grid{grid-template-columns:minmax(0,1fr) 320px}
+.dt-p2 .dt-tree{max-height:72vh}
+.dt-p2 .sd-quest ul{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.dt-p2 .sd-quest .sd-cta{max-width:340px}
+@media(max-width:900px){.dt-p2 .dt-grid{grid-template-columns:1fr}}

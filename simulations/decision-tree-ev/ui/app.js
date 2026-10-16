@@ -219,13 +219,13 @@ MBALAB.sims.define('decision-tree-ev', {
     function closeGuide() { const el = $('#sdGuide'); if (el) el.hidden = true; guideOpen = null; }
     const head = (n, sub) => `<div class="sd-h"><h2>${esc(t('partN', { n: n + 1 }))} · ${esc(t('dtGh' + (n + 1)))}</h2><p>${esc(sub)}</p><button type="button" class="sd-info" data-info="${n}" title="${esc(t('infoTip'))}" aria-label="${esc(t('infoTip'))}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></button></div>`;
     const quest = (n, keys, cta, goTo) => `<aside class="sd-card sd-quest"><h3>${esc(t('quest'))}</h3><ul id="ck">${keys.map(k => `<li data-c="${k}"><span class="bx">✓</span><span>${esc(t('dtQ_' + k))}</span></li>`).join('')}</ul><div class="sd-prog"><i id="ckBar"></i></div><button type="button" class="sd-cta" id="next1" data-go="${goTo}">${esc(t(cta))}</button><p class="note" id="lockHint">${esc(t('lockHint'))}</p></aside>`;
-    const foot = (n, last) => `<div class="sd-foot"><button type="button" data-go="${n - 1}">${esc(t('back'))}</button><span class="grow"></span>${last ? `<button type="button" data-reset>↺ ${esc(t('dtReset'))}</button>` : `<button type="button" class="sd-cta ready" data-go="${n + 1}">${esc(t(n === 2 ? 'dtNext3' : 'dtNext'))}</button>`}</div>`;
+    const foot = (n, last) => `<div class="sd-foot"><button type="button" data-go="${n - 1}">${esc(t('back'))}</button><span class="grow"></span>${last ? `<button type="button" data-reset>↺ ${esc(t('dtNew'))}</button>` : `<button type="button" class="sd-cta ready" data-go="${n + 1}">${esc(t(n === 2 ? 'dtNext3' : 'dtNext'))}</button>`}</div>`;
     function renderStage(dir) {
       const st = $('#sdStage'), n = step; let h;
       if (n === 0) h = `<div class="sd-p1"><section class="sd-card">${head(0, t('dtSub'))}<div class="dt-cases" id="dtCases" role="radiogroup" aria-label="${esc(t('dtPick'))}"></div><div class="dt-story" id="dtStory"></div></section>${quest(0, ['ck1', 'ck2'], 'dtNext1', 1)}</div>`;
-      else if (n === 1) h = `<div class="sd-p1"><section class="sd-card">${head(1, t('dtG2a'))}<div class="dt-legend" id="dtLegend"></div><div class="dt-grid"><div class="dt-tree" id="dtTree"></div><aside class="dt-insp" id="dtInsp" aria-live="polite"></aside></div><div id="dtIssues"></div></section>${quest(1, ['ck3', 'ck4', 'ck5'], 'dtNext2', 2)}</div>`;
+      else if (n === 1) h = `<div class="dt-p2"><section class="sd-card">${head(1, t('dtG2a'))}<div class="dt-legend" id="dtLegend"></div><div class="dt-grid"><div class="dt-tree" id="dtTree"></div><aside class="dt-insp" id="dtInsp" aria-live="polite"></aside></div><div id="dtIssues"></div></section>${quest(1, ['ck3', 'ck4', 'ck5'], 'dtNext2', 2)}</div>`;
       else if (n === 2) h = `<section class="sd-card">${head(2, t('dtG3a'))}<div class="dt-legend" id="dtLegend"></div><div class="dt-tree" id="dtTree"></div><div class="dt-sec" id="dtRes"></div>${foot(2)}</section>`;
-      else h = `<section class="sd-card">${head(3, t('dtG4a'))}<div class="dt-sec" id="dtSens"></div><div class="dt-sec dt-conc" id="dtConc"></div>${foot(3, true)}</section>`;
+      else h = `<section class="sd-card">${head(3, t('dtG4a'))}<div class="dt-sec" id="dtSens"></div><div class="dt-sec dt-conc" id="dtConc"></div><div class="sd-dl"><h4>⬇ ${esc(t('dtDl'))}</h4><div class="row"><button type="button" data-dl="pdf">PDF</button><button type="button" data-dl="html">HTML</button><button type="button" data-dl="md">Markdown</button></div></div>${foot(3, true)}</section>`;
       st.innerHTML = h; if (dir && !document.body.classList.contains('still')) st.firstElementChild.classList.add(dir > 0 ? 'in-r' : 'in-l');
       renderCases(); renderStory(); renderLegend(); renderTree(); renderInsp(); renderIssues(); renderRes(); renderSens(); renderConc(); updQuest();
       if (!seen[n]) { seen[n] = 1; showGuide(n); } else if (guideOpen != null) showGuide(guideOpen);
@@ -247,6 +247,75 @@ MBALAB.sims.define('decision-tree-ev', {
       if (!unlocked(n)) { toast(t('lockHint'), 'warn'); shake($('#next1')); return; }
       const dir = n >= step ? 1 : -1; step = n; guideOpen = null; renderSteps(); renderStage(dir); const sc = $('#sdStage'); if (sc) sc.scrollTop = 0; sfx('tick');
     }
+    /* ---------- report (HTML / Markdown / PDF), same as the SMART Calculator ---------- */
+    const dateStr = () => new Date().toLocaleDateString(MBALAB.i18n.get(), { year: 'numeric', month: 'long', day: 'numeric' });
+    const RC = ['#2563eb', '#d97706', '#059669', '#7c3aed', '#0e7490', '#dc2626'];
+    function treeSVGReport() {
+      const { pos, leaves, depth } = layout(T), X0 = 40, CW = 214, RH = 70, Y0 = 46, px = n => X0 + pos[n.id].x * CW, py = n => Y0 + pos[n.id].y * RH;
+      const W = X0 + depth * CW + 180, H = Y0 + leaves * RH - 14, dim = new Set();
+      (function mark(n, d) { if (d) dim.add(n.id); n.kids.forEach((e, i) => mark(e.n, d || (n.k === 'd' && S.best[n.id] !== i))); })(T, false);
+      let ed = '', nd = '';
+      E.walk(T, n => {
+        const x1 = px(n) + (n.k === 'd' ? 14 : 16), y1 = py(n);
+        n.kids.forEach((e, i) => {
+          const c = e.n, x2 = px(c) - 14, y2 = py(c), mx = (x1 + x2) / 2, best = n.k === 'd' && S.best[n.id] === i && !dim.has(n.id), op = dim.has(c.id) ? 0.35 : 1;
+          const sub = [n.k === 'c' ? Math.round(E.pOf(n)[i] * 1000) / 10 + '%' : '', +e.v ? fs(+e.v) : ''].filter(Boolean).join(' · ');
+          ed += `<g opacity="${op}"><path d="M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}" fill="none" stroke="${best ? '#059669' : '#94a3b8'}" stroke-width="${best ? 3.2 : 1.8}"/><text x="${x2 - 8}" y="${y2 - 8}" text-anchor="end" font-size="13" font-weight="700" fill="#0f172a">${esc(cut(nm(e.l), 22))}</text>${sub ? `<text x="${x2 - 8}" y="${y2 + 15}" text-anchor="end" font-size="12" fill="#64748b">${esc(sub)}</text>` : ''}${n.k === 'd' && S.best[n.id] !== i ? `<text x="${x2 - 8}" y="${y2 + 32}" text-anchor="end" font-size="13" font-weight="900" fill="#dc2626">✂</text>` : ''}</g>`;
+        });
+      });
+      E.walk(T, n => {
+        const x = px(n), y = py(n), col = n.k === 'd' ? '#2563eb' : n.k === 'c' ? '#d97706' : '#059669', st = `fill="#fff" stroke="${col}" stroke-width="2.5"`;
+        const shape = n.k === 'd' ? `<rect x="${x - 14}" y="${y - 14}" width="28" height="28" rx="5" ${st}/>` : n.k === 'c' ? `<circle cx="${x}" cy="${y}" r="16" ${st}/>` : `<polygon points="${x - 13},${y - 14} ${x + 15},${y} ${x - 13},${y + 14}" ${st}/>`;
+        const lab = n.k === 'e' ? `<text x="${x + 22}" y="${y + 5}" font-size="13" font-weight="800" fill="${+n.pay < 0 ? '#dc2626' : '#0f172a'}">${esc(fs(+n.pay || 0))}</text>` : `<text x="${x}" y="${y - 24}" text-anchor="middle" font-size="13" font-weight="800" fill="#059669">${esc(fmt(S.ev[n.id]))}</text><text x="${x}" y="${y + 33}" text-anchor="middle" font-size="12" fill="#64748b">${esc(cut(nm(n.n), 18))}</text>`;
+        nd += `<g opacity="${dim.has(n.id) ? 0.35 : 1}">${shape}${lab}</g>`;
+      });
+      return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit">${ed}${nd}</svg>`;
+    }
+    function sensSVGReport() {
+      const pes = E.probEdges(T); if (!(T.k === 'd' && T.kids.length > 1) || !pes.length) return null;
+      const pe = pes.find(x => x.edge.id === sensEdge) || pes[0], sn = E.sens(T, pe.edge.id, 50, RAV[ra]), W = 700, H = 260, L = 60, R = 16, Tp = 14, B = 34, base = E.pOf(pe.parent)[pe.parent.kids.indexOf(pe.edge)];
+      const all = sn.series.flat().concat([0]), lo = Math.min(...all), hi = Math.max(...all), span = hi - lo || 1, X = x => L + x * (W - L - R), Y = v => Tp + (1 - (v - lo) / span) * (H - Tp - B);
+      let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="font-family:inherit">` + [0, 0.25, 0.5, 0.75, 1].map(x => `<line x1="${X(x)}" x2="${X(x)}" y1="${Tp}" y2="${H - B}" stroke="#e2e8f0"/><text x="${X(x)}" y="${H - 14}" text-anchor="middle" font-size="12" fill="#64748b">${Math.round(x * 100)}%</text>`).join('') + [lo, (lo + hi) / 2, hi].map(v => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#e2e8f0"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="12" fill="#64748b">${fmt(v)}</text>`).join('');
+      sn.series.forEach((s2, j) => { svg += `<polyline fill="none" stroke="${RC[j % 6]}" stroke-width="2.6" points="${s2.map((v, i) => X(sn.xs[i]) + ',' + Y(v)).join(' ')}"/>`; });
+      svg += `<line x1="${X(base)}" x2="${X(base)}" y1="${Tp}" y2="${H - B}" stroke="#a21caf" stroke-dasharray="3 4"/>`;
+      sn.cross.forEach(c => { const k = Math.round(c.x * 50); svg += `<circle cx="${X(c.x)}" cy="${Y((sn.series[c.to][k] + sn.series[c.from][k]) / 2)}" r="5" fill="#dc2626"/>`; });
+      const leg = T.kids.map((e, j) => `<span style="color:${RC[j % 6]}">■</span> ${esc(nm(e.l))}`).join(' &nbsp; ');
+      const cr = sn.cross.length ? sn.cross.slice(0, 2).map(c => esc(t('dtSensCross', { p: Math.round(c.x * 100), a: nm(T.kids[c.from].l), b: nm(T.kids[c.to].l) }))).join(' ') : esc(t('dtSensNone', { a: nm(T.kids[S.best[T.id]].l) }));
+      return `<h3>${esc(nm(pe.parent.n))} → ${esc(nm(pe.edge.l))}</h3>${svg}</svg><p class="note">${leg}</p><p>${cr}</p>`.replace('</svg></svg>', '</svg>');
+    }
+    function reportBody() {
+      const pr = E.profile(T, S), plan = E.plan(T, S), ev = !isFinite(RAV[ra]) ? E.evpi(T, S) : null, rows = [[t('dtVal'), t('dtMoney', { v: sm(S.ev[T.id]) })], [t('dtWorst'), fs(pr.min)], [t('dtBestC'), fs(pr.max)], [t('dtLoss'), Math.round(pr.pLoss * 100) + '%']];
+      if (ev != null) rows.push([t('dtEvpi'), t('dtMoney', { v: fmt(ev) })]);
+      const opts = T.k === 'd' ? `<table><tr><th>${esc(t('dtThOpt'))}</th><th>${esc(t(isFinite(RAV[ra]) ? 'dtOptCE' : 'dtOpt'))}</th></tr>${T.kids.map((e, i) => `<tr><td>${esc(nm(e.l))}${i === S.best[T.id] ? ' ★' : ''}</td><td>${esc(fs(S.edge[e.id]))}</td></tr>`).join('')}</table>` : '';
+      const outs = `<table class="l2"><tr><th>${esc(t('dtThPath'))}</th><th>${esc(t('dtThProb'))}</th><th>${esc(t('dtThVal'))}</th></tr>${pr.outs.map(o => `<tr><td>${esc(o.path.map(nm).join(' → '))}</td><td>${Math.round(o.p * 1000) / 10}%</td><td>${esc(fs(o.val))}</td></tr>`).join('')}</table>`;
+      const sv = sensSVGReport();
+      return `<div class="blk"><h1>${esc(t('dtRTitle'))}</h1><p class="sub">${esc(nm(P().name))}</p><p class="sub">Decision Tree Calculator · MBA Lab · ${esc(t('dtGen', { d: dateStr() }))}</p></div>
+<div class="blk"><h2>${esc(t('dtR1'))}</h2>${treeSVGReport()}</div>
+<div class="blk"><h2>${esc(t('dtR2'))}</h2>${opts}<table>${rows.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('')}</table>${plan.length ? '<ul>' + plan.slice(0, 6).map(p => `<li>${esc(t('dtAt', { d: nm(p.name), c: nm(p.choice) }))}</li>`).join('') + '</ul>' : ''}</div>
+<div class="blk"><h2>${esc(t('dtR3'))}</h2>${outs}</div>
+${sv ? `<div class="blk"><h2>${esc(t('dtR4'))}</h2>${sv}</div>` : ''}
+<div class="blk"><h2>${esc(t('dtConc'))}</h2>${summary().map(p => `<p>${esc(p)}</p>`).join('')}</div>`;
+    }
+    function reportMD() {
+      const pr = E.profile(T, S), L = [`# ${t('dtRTitle')}`, '', `*${nm(P().name)} · Decision Tree Calculator · MBA Lab · ${t('dtGen', { d: dateStr() })}*`, ''];
+      if (T.k === 'd') { L.push(`## ${t('dtR2')}`, '', `| ${t('dtThOpt')} | ${t(isFinite(RAV[ra]) ? 'dtOptCE' : 'dtOpt')} |`, '|---|---|'); T.kids.forEach((e, i) => L.push(`| ${nm(e.l).replace(/\|/g, '\\|')}${i === S.best[T.id] ? ' ★' : ''} | ${fs(S.edge[e.id])} |`)); L.push(''); }
+      L.push(`## ${t('dtR3')}`, '', `| ${t('dtThPath')} | ${t('dtThProb')} | ${t('dtThVal')} |`, '|---|---|---|');
+      pr.outs.forEach(o => L.push(`| ${o.path.map(nm).join(' → ').replace(/\|/g, '\\|')} | ${Math.round(o.p * 1000) / 10}% | ${fs(o.val)} |`));
+      L.push('', `## ${t('dtConc')}`, '', ...summary().map(p => p + '\n')); return L.join('\n');
+    }
+    let busy = false;
+    async function download(kind, btn) {
+      if (busy || !MBALAB.report) return; busy = true; const label = btn.textContent; btn.textContent = t('dtBusy'); btn.disabled = true; const base = t('dtFile');
+      try {
+        let ok;
+        if (kind === 'html') ok = await MBALAB.report.save(base + '.html', MBALAB.report.html(t('dtRTitle'), reportBody()), 'text/html');
+        else if (kind === 'md') ok = await MBALAB.report.save(base + '.md', reportMD(), 'text/markdown');
+        else ok = await MBALAB.report.save(base + '.pdf', new Blob([await MBALAB.report.pdf(reportBody())], { type: 'application/pdf' }), 'application/pdf');
+        if (ok) toast(t('dtSaved'), 'xp');
+      } catch (e) { console.warn('download failed', e); toast(t('dtFail'), 'warn'); }
+      busy = false; btn.textContent = label; btn.disabled = false;
+    }
+
     function refresh() { solve(); renderTree(); renderRes(); renderConc(); renderStory(); renderIssues(); updQuest(); }
     function renderAll() { solve(); renderSteps(); renderStage(0); }
     function hints() {
@@ -258,6 +327,7 @@ MBALAB.sims.define('decision-tree-ev', {
     host.addEventListener('click', ev => {
       const tg = ev.target, q = s => tg.closest(s);
       let b;
+      if ((b = q('[data-dl]'))) { download(b.dataset.dl, b); return; }
       if (q('[data-gclose]')) { closeGuide(); return; }
       if ((b = q('[data-info]'))) { showGuide(+b.dataset.info); return; }
       if ((b = q('[data-go]'))) { go(+b.dataset.go); return; }

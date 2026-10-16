@@ -5,6 +5,7 @@ MBALAB.sims.files('decision-tree-ev', {
     "ui/template.js",
     "engine/engine.js",
     "../../shared/assistant.js",
+    "../../shared/report.js",
     "ui/app.js"
   ],
   styles: ["../../shared/studio.css", "ui/style.css"]
