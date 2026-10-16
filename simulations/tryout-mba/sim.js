@@ -11,5 +11,5 @@ MBALAB.sims.files('tryout-mba', {
     "engine/engine.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/simkit.css", "ui/style.css"]
+  styles: ["../../shared/simkit.css", "../../shared/exam.css"]
 });

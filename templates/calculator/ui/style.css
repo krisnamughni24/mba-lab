@@ -1,0 +1,11 @@
+/* Only your own widgets, prefixed (bc-). The frame comes from shared/studio.css under the .sd root. */
+.bc-cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px}
+.bc .bc-case{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:2px;padding:12px 14px}
+.bc .bc-case.on{border-color:var(--cy)}
+.bc-form{display:grid;gap:12px;margin-top:10px}
+.bc-form label{display:grid;gap:4px;font-weight:700}
+.bc-form input{font:inherit;padding:8px 10px;border-radius:10px}
+.bc-issue{color:var(--am);margin:6px 0 0}
+.bc-big{font-size:28px;font-weight:900;margin:6px 0}
+.bc-table{border-collapse:collapse;margin-top:8px;min-width:260px}
+.bc-table th,.bc-table td{padding:5px 18px 5px 0;text-align:left;font-variant-numeric:tabular-nums}

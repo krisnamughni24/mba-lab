@@ -67,7 +67,7 @@ docs/               documentation (start at docs/README.md)
 ```
 
 ## Build your own simulation
-1. Copy `simulations/_template/` to `simulations/<your-id>/`.
+1. Pick one of the five UI templates (game, scenario, explorer, calculator, exam; see [docs/UI-TEMPLATES.md](docs/UI-TEMPLATES.md)) and copy its starter `templates/<type>/` to `simulations/<your-id>/`.
 2. Write the engine, strings (4 languages) and UI.
 3. Add one entry to `data/simulations.js`.
 4. Run the tests and open a pull request.

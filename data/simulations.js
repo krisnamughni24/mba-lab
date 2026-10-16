@@ -1,6 +1,8 @@
 /* Simulation registry: one entry per simulation, shown in the catalog.
    status "live"  -> opens a microsite from simulations/<id>/ (its file list is simulations/<id>/sim.js; loaded on demand)
    status "soon"  -> shown as "Coming soon", no files needed yet.
+   template (required) -> one of the five UI templates in data/ui-templates.js (game, scenario, explorer, calculator, exam).
+                           Live: tests/structure.js checks that the simulation follows it. Soon: the planned type (used by the catalog filter). See docs/UI-TEMPLATES.md
    developer (optional) -> the credit on the card, the loading screen and the Info window. Without it the main developer
                            from data/about.js is used. A new name appears in Info automatically, listed with its simulations.
    To add a simulation see docs/ADDING-A-SIMULATION.md */
@@ -8,6 +10,7 @@ MBALAB.data.simulations = [
   {
     "id": "smart-decision-studio",
     "status": "live",
+    "template": "calculator",
     "icon": "⚖️",
     "category": "decision-negotiation",
     "name": {
@@ -26,6 +29,7 @@ MBALAB.data.simulations = [
   {
     "id": "disc-crisis-room",
     "status": "live",
+    "template": "game",
     "icon": "🎭",
     "category": "leadership",
     "name": {
@@ -44,6 +48,7 @@ MBALAB.data.simulations = [
   {
     "id": "bumn-explorer",
     "status": "live",
+    "template": "explorer",
     "icon": "🏙️",
     "category": "indonesia-business",
     "name": {
@@ -62,6 +67,7 @@ MBALAB.data.simulations = [
   {
     "id": "tryout-mba",
     "status": "live",
+    "template": "exam",
     "icon": "📝",
     "category": "exam-prep",
     "developer": "293 - M. Fauzan Ikromi",
@@ -81,6 +87,7 @@ MBALAB.data.simulations = [
   {
     "id": "life-40",
     "status": "live",
+    "template": "scenario",
     "icon": "⏳",
     "category": "strategy-finance",
     "name": {
@@ -99,6 +106,7 @@ MBALAB.data.simulations = [
   {
     "id": "break-even-analysis",
     "status": "soon",
+    "template": "calculator",
     "icon": "📈",
     "category": "strategy-finance",
     "name": {
@@ -117,6 +125,7 @@ MBALAB.data.simulations = [
   {
     "id": "npv-capital-budgeting",
     "status": "soon",
+    "template": "calculator",
     "icon": "💰",
     "category": "strategy-finance",
     "name": {
@@ -135,6 +144,7 @@ MBALAB.data.simulations = [
   {
     "id": "porter-s-five-forces",
     "status": "soon",
+    "template": "scenario",
     "icon": "🧭",
     "category": "strategy-finance",
     "name": {
@@ -153,6 +163,7 @@ MBALAB.data.simulations = [
   {
     "id": "portfolio-risk-return",
     "status": "soon",
+    "template": "calculator",
     "icon": "🎯",
     "category": "strategy-finance",
     "name": {
@@ -171,6 +182,7 @@ MBALAB.data.simulations = [
   {
     "id": "pricing-elasticity",
     "status": "soon",
+    "template": "calculator",
     "icon": "🏷️",
     "category": "marketing",
     "name": {
@@ -189,6 +201,7 @@ MBALAB.data.simulations = [
   {
     "id": "market-segmentation",
     "status": "soon",
+    "template": "explorer",
     "icon": "👥",
     "category": "marketing",
     "name": {
@@ -207,6 +220,7 @@ MBALAB.data.simulations = [
   {
     "id": "inventory-eoq",
     "status": "soon",
+    "template": "calculator",
     "icon": "📦",
     "category": "operations",
     "name": {
@@ -225,6 +239,7 @@ MBALAB.data.simulations = [
   {
     "id": "bullwhip-effect",
     "status": "live",
+    "template": "scenario",
     "icon": "🔗",
     "category": "operations",
     "name": {
@@ -243,6 +258,7 @@ MBALAB.data.simulations = [
   {
     "id": "five-forces",
     "status": "live",
+    "template": "game",
     "icon": "🛡️",
     "category": "strategy-finance",
     "name": {
@@ -261,6 +277,7 @@ MBALAB.data.simulations = [
   {
     "id": "van-westendorp",
     "status": "live",
+    "template": "game",
     "icon": "🏷️",
     "category": "marketing",
     "name": {
@@ -279,6 +296,7 @@ MBALAB.data.simulations = [
   {
     "id": "negotiation-batna",
     "status": "live",
+    "template": "scenario",
     "icon": "🤝",
     "category": "decision-negotiation",
     "name": {
@@ -297,6 +315,7 @@ MBALAB.data.simulations = [
   {
     "id": "koperasi-tycoon",
     "status": "live",
+    "template": "scenario",
     "icon": "🌾",
     "category": "indonesia-business",
     "name": {
@@ -315,6 +334,7 @@ MBALAB.data.simulations = [
   {
     "id": "demand-forecasting",
     "status": "soon",
+    "template": "calculator",
     "icon": "📊",
     "category": "analytics",
     "name": {
@@ -333,6 +353,7 @@ MBALAB.data.simulations = [
   {
     "id": "situational-leadership",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧭",
     "category": "leadership",
     "name": {
@@ -351,6 +372,7 @@ MBALAB.data.simulations = [
   {
     "id": "swot-tows",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧭",
     "category": "strategy-finance",
     "name": {
@@ -369,6 +391,7 @@ MBALAB.data.simulations = [
   {
     "id": "bcg-matrix",
     "status": "soon",
+    "template": "explorer",
     "icon": "⭐",
     "category": "strategy-finance",
     "name": {
@@ -387,6 +410,7 @@ MBALAB.data.simulations = [
   {
     "id": "ansoff-matrix",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧩",
     "category": "strategy-finance",
     "name": {
@@ -405,6 +429,7 @@ MBALAB.data.simulations = [
   {
     "id": "blue-ocean",
     "status": "soon",
+    "template": "explorer",
     "icon": "🌊",
     "category": "strategy-finance",
     "name": {
@@ -423,6 +448,7 @@ MBALAB.data.simulations = [
   {
     "id": "vrio-resource-based",
     "status": "soon",
+    "template": "explorer",
     "icon": "💎",
     "category": "strategy-finance",
     "name": {
@@ -441,6 +467,7 @@ MBALAB.data.simulations = [
   {
     "id": "pestel-scan",
     "status": "soon",
+    "template": "explorer",
     "icon": "🌍",
     "category": "strategy-finance",
     "name": {
@@ -459,6 +486,7 @@ MBALAB.data.simulations = [
   {
     "id": "value-chain",
     "status": "soon",
+    "template": "explorer",
     "icon": "🔗",
     "category": "strategy-finance",
     "name": {
@@ -477,6 +505,7 @@ MBALAB.data.simulations = [
   {
     "id": "balanced-scorecard",
     "status": "soon",
+    "template": "explorer",
     "icon": "🎯",
     "category": "strategy-finance",
     "name": {
@@ -495,6 +524,7 @@ MBALAB.data.simulations = [
   {
     "id": "ma-synergy",
     "status": "soon",
+    "template": "explorer",
     "icon": "🤝",
     "category": "strategy-finance",
     "name": {
@@ -513,6 +543,7 @@ MBALAB.data.simulations = [
   {
     "id": "dcf-wacc",
     "status": "soon",
+    "template": "calculator",
     "icon": "🧮",
     "category": "strategy-finance",
     "name": {
@@ -531,6 +562,7 @@ MBALAB.data.simulations = [
   {
     "id": "irr-vs-npv",
     "status": "soon",
+    "template": "calculator",
     "icon": "⚖️",
     "category": "strategy-finance",
     "name": {
@@ -549,6 +581,7 @@ MBALAB.data.simulations = [
   {
     "id": "capital-structure",
     "status": "soon",
+    "template": "calculator",
     "icon": "🏗️",
     "category": "strategy-finance",
     "name": {
@@ -567,6 +600,7 @@ MBALAB.data.simulations = [
   {
     "id": "capm-beta",
     "status": "soon",
+    "template": "calculator",
     "icon": "📉",
     "category": "strategy-finance",
     "name": {
@@ -585,6 +619,7 @@ MBALAB.data.simulations = [
   {
     "id": "real-options",
     "status": "soon",
+    "template": "calculator",
     "icon": "🔮",
     "category": "strategy-finance",
     "name": {
@@ -603,6 +638,7 @@ MBALAB.data.simulations = [
   {
     "id": "dividend-policy",
     "status": "soon",
+    "template": "calculator",
     "icon": "💸",
     "category": "strategy-finance",
     "name": {
@@ -621,6 +657,7 @@ MBALAB.data.simulations = [
   {
     "id": "cash-conversion-cycle",
     "status": "soon",
+    "template": "calculator",
     "icon": "🔄",
     "category": "strategy-finance",
     "name": {
@@ -639,6 +676,7 @@ MBALAB.data.simulations = [
   {
     "id": "startup-runway",
     "status": "soon",
+    "template": "calculator",
     "icon": "🛫",
     "category": "strategy-finance",
     "name": {
@@ -657,6 +695,7 @@ MBALAB.data.simulations = [
   {
     "id": "financial-ratios",
     "status": "soon",
+    "template": "calculator",
     "icon": "📊",
     "category": "strategy-finance",
     "name": {
@@ -675,6 +714,7 @@ MBALAB.data.simulations = [
   {
     "id": "dupont-roe",
     "status": "soon",
+    "template": "calculator",
     "icon": "🧬",
     "category": "strategy-finance",
     "name": {
@@ -693,6 +733,7 @@ MBALAB.data.simulations = [
   {
     "id": "cost-volume-profit",
     "status": "soon",
+    "template": "calculator",
     "icon": "🧾",
     "category": "strategy-finance",
     "name": {
@@ -711,6 +752,7 @@ MBALAB.data.simulations = [
   {
     "id": "activity-based-costing",
     "status": "soon",
+    "template": "calculator",
     "icon": "🧱",
     "category": "strategy-finance",
     "name": {
@@ -729,6 +771,7 @@ MBALAB.data.simulations = [
   {
     "id": "budget-variance",
     "status": "soon",
+    "template": "calculator",
     "icon": "📑",
     "category": "strategy-finance",
     "name": {
@@ -747,6 +790,7 @@ MBALAB.data.simulations = [
   {
     "id": "transfer-pricing",
     "status": "soon",
+    "template": "calculator",
     "icon": "🏷️",
     "category": "strategy-finance",
     "name": {
@@ -765,6 +809,7 @@ MBALAB.data.simulations = [
   {
     "id": "earnings-quality",
     "status": "soon",
+    "template": "calculator",
     "icon": "🔍",
     "category": "strategy-finance",
     "name": {
@@ -783,6 +828,7 @@ MBALAB.data.simulations = [
   {
     "id": "marketing-mix-4p",
     "status": "soon",
+    "template": "explorer",
     "icon": "🛍️",
     "category": "marketing",
     "name": {
@@ -801,6 +847,7 @@ MBALAB.data.simulations = [
   {
     "id": "stp-positioning",
     "status": "soon",
+    "template": "explorer",
     "icon": "📍",
     "category": "marketing",
     "name": {
@@ -819,6 +866,7 @@ MBALAB.data.simulations = [
   {
     "id": "customer-ltv-cac",
     "status": "soon",
+    "template": "calculator",
     "icon": "👥",
     "category": "marketing",
     "name": {
@@ -837,6 +885,7 @@ MBALAB.data.simulations = [
   {
     "id": "marketing-funnel",
     "status": "soon",
+    "template": "scenario",
     "icon": "🪣",
     "category": "marketing",
     "name": {
@@ -855,6 +904,7 @@ MBALAB.data.simulations = [
   {
     "id": "kano-model",
     "status": "soon",
+    "template": "explorer",
     "icon": "😊",
     "category": "marketing",
     "name": {
@@ -873,6 +923,7 @@ MBALAB.data.simulations = [
   {
     "id": "product-lifecycle",
     "status": "soon",
+    "template": "explorer",
     "icon": "🌱",
     "category": "marketing",
     "name": {
@@ -891,6 +942,7 @@ MBALAB.data.simulations = [
   {
     "id": "game-theory-price-war",
     "status": "soon",
+    "template": "game",
     "icon": "♟️",
     "category": "decision-negotiation",
     "name": {
@@ -909,6 +961,7 @@ MBALAB.data.simulations = [
   {
     "id": "auction-bidding",
     "status": "soon",
+    "template": "game",
     "icon": "🔨",
     "category": "decision-negotiation",
     "name": {
@@ -927,6 +980,7 @@ MBALAB.data.simulations = [
   {
     "id": "cognitive-biases",
     "status": "soon",
+    "template": "game",
     "icon": "🧠",
     "category": "decision-negotiation",
     "name": {
@@ -945,6 +999,7 @@ MBALAB.data.simulations = [
   {
     "id": "ahp-decision-matrix",
     "status": "soon",
+    "template": "calculator",
     "icon": "🗂️",
     "category": "decision-negotiation",
     "name": {
@@ -963,6 +1018,7 @@ MBALAB.data.simulations = [
   {
     "id": "conflict-resolution",
     "status": "soon",
+    "template": "scenario",
     "icon": "🕊️",
     "category": "decision-negotiation",
     "name": {
@@ -981,6 +1037,7 @@ MBALAB.data.simulations = [
   {
     "id": "theory-of-constraints",
     "status": "soon",
+    "template": "scenario",
     "icon": "⛓️",
     "category": "operations",
     "name": {
@@ -999,6 +1056,7 @@ MBALAB.data.simulations = [
   {
     "id": "lean-six-sigma",
     "status": "soon",
+    "template": "scenario",
     "icon": "🟢",
     "category": "operations",
     "name": {
@@ -1017,6 +1075,7 @@ MBALAB.data.simulations = [
   {
     "id": "queueing-capacity",
     "status": "soon",
+    "template": "calculator",
     "icon": "🚦",
     "category": "operations",
     "name": {
@@ -1035,6 +1094,7 @@ MBALAB.data.simulations = [
   {
     "id": "supply-chain-risk",
     "status": "soon",
+    "template": "scenario",
     "icon": "🚢",
     "category": "operations",
     "name": {
@@ -1053,6 +1113,7 @@ MBALAB.data.simulations = [
   {
     "id": "project-crashing-pert",
     "status": "soon",
+    "template": "calculator",
     "icon": "📆",
     "category": "operations",
     "name": {
@@ -1071,6 +1132,7 @@ MBALAB.data.simulations = [
   {
     "id": "lean-startup",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧪",
     "category": "strategy-finance",
     "name": {
@@ -1089,6 +1151,7 @@ MBALAB.data.simulations = [
   {
     "id": "business-model-canvas",
     "status": "soon",
+    "template": "explorer",
     "icon": "🖼️",
     "category": "strategy-finance",
     "name": {
@@ -1107,6 +1170,7 @@ MBALAB.data.simulations = [
   {
     "id": "disruptive-innovation",
     "status": "soon",
+    "template": "explorer",
     "icon": "💥",
     "category": "strategy-finance",
     "name": {
@@ -1125,6 +1189,7 @@ MBALAB.data.simulations = [
   {
     "id": "venture-term-sheet",
     "status": "soon",
+    "template": "explorer",
     "icon": "📜",
     "category": "strategy-finance",
     "name": {
@@ -1143,6 +1208,7 @@ MBALAB.data.simulations = [
   {
     "id": "marginal-analysis",
     "status": "soon",
+    "template": "calculator",
     "icon": "📐",
     "category": "strategy-finance",
     "name": {
@@ -1161,6 +1227,7 @@ MBALAB.data.simulations = [
   {
     "id": "exchange-rate-exposure",
     "status": "soon",
+    "template": "calculator",
     "icon": "💱",
     "category": "strategy-finance",
     "name": {
@@ -1179,6 +1246,7 @@ MBALAB.data.simulations = [
   {
     "id": "global-market-entry",
     "status": "soon",
+    "template": "explorer",
     "icon": "🛬",
     "category": "strategy-finance",
     "name": {
@@ -1197,6 +1265,7 @@ MBALAB.data.simulations = [
   {
     "id": "hofstede-culture",
     "status": "soon",
+    "template": "explorer",
     "icon": "🗺️",
     "category": "strategy-finance",
     "name": {
@@ -1215,6 +1284,7 @@ MBALAB.data.simulations = [
   {
     "id": "kotter-change",
     "status": "soon",
+    "template": "explorer",
     "icon": "🔥",
     "category": "leadership",
     "name": {
@@ -1233,6 +1303,7 @@ MBALAB.data.simulations = [
   {
     "id": "motivation-theories",
     "status": "soon",
+    "template": "explorer",
     "icon": "⚡",
     "category": "leadership",
     "name": {
@@ -1251,6 +1322,7 @@ MBALAB.data.simulations = [
   {
     "id": "tuckman-team",
     "status": "soon",
+    "template": "explorer",
     "icon": "🏕️",
     "category": "leadership",
     "name": {
@@ -1269,6 +1341,7 @@ MBALAB.data.simulations = [
   {
     "id": "performance-management-okr",
     "status": "soon",
+    "template": "explorer",
     "icon": "🏁",
     "category": "leadership",
     "name": {
@@ -1287,6 +1360,7 @@ MBALAB.data.simulations = [
   {
     "id": "talent-retention",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧲",
     "category": "leadership",
     "name": {
@@ -1305,6 +1379,7 @@ MBALAB.data.simulations = [
   {
     "id": "csr-esg",
     "status": "soon",
+    "template": "explorer",
     "icon": "🌿",
     "category": "indonesia-business",
     "name": {
@@ -1323,6 +1398,7 @@ MBALAB.data.simulations = [
   {
     "id": "umkm-digital",
     "status": "soon",
+    "template": "explorer",
     "icon": "📱",
     "category": "indonesia-business",
     "name": {
@@ -1341,6 +1417,7 @@ MBALAB.data.simulations = [
   {
     "id": "ab-testing",
     "status": "live",
+    "template": "game",
     "icon": "🔬",
     "category": "analytics",
     "name": {
@@ -1359,6 +1436,7 @@ MBALAB.data.simulations = [
   {
     "id": "pareto-root-cause",
     "status": "soon",
+    "template": "explorer",
     "icon": "🎣",
     "category": "analytics",
     "name": {
@@ -1377,6 +1455,7 @@ MBALAB.data.simulations = [
   {
     "id": "regression-for-managers",
     "status": "soon",
+    "template": "calculator",
     "icon": "📈",
     "category": "analytics",
     "name": {
@@ -1395,6 +1474,7 @@ MBALAB.data.simulations = [
   {
     "id": "monte-carlo-risk",
     "status": "soon",
+    "template": "calculator",
     "icon": "🎲",
     "category": "analytics",
     "name": {
@@ -1413,6 +1493,7 @@ MBALAB.data.simulations = [
   {
     "id": "ethical-dilemmas",
     "status": "soon",
+    "template": "scenario",
     "icon": "⚖️",
     "category": "leadership",
     "name": {
@@ -1431,6 +1512,7 @@ MBALAB.data.simulations = [
   {
     "id": "emotional-intelligence",
     "status": "soon",
+    "template": "explorer",
     "icon": "💬",
     "category": "leadership",
     "name": {
@@ -1449,6 +1531,7 @@ MBALAB.data.simulations = [
   {
     "id": "financial-mgmt-objectives",
     "status": "soon",
+    "template": "explorer",
     "icon": "🏦",
     "category": "strategy-finance",
     "name": {
@@ -1467,6 +1550,7 @@ MBALAB.data.simulations = [
   {
     "id": "financial-statement-analysis",
     "status": "soon",
+    "template": "calculator",
     "icon": "📒",
     "category": "strategy-finance",
     "name": {
@@ -1485,6 +1569,7 @@ MBALAB.data.simulations = [
   {
     "id": "financial-projections",
     "status": "soon",
+    "template": "calculator",
     "icon": "🔭",
     "category": "strategy-finance",
     "name": {
@@ -1503,6 +1588,7 @@ MBALAB.data.simulations = [
   {
     "id": "management-accounting",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧮",
     "category": "strategy-finance",
     "name": {
@@ -1521,6 +1607,7 @@ MBALAB.data.simulations = [
   {
     "id": "time-value-of-money",
     "status": "soon",
+    "template": "calculator",
     "icon": "⏳",
     "category": "strategy-finance",
     "name": {
@@ -1539,6 +1626,7 @@ MBALAB.data.simulations = [
   {
     "id": "financing-environment",
     "status": "soon",
+    "template": "explorer",
     "icon": "🏛️",
     "category": "strategy-finance",
     "name": {
@@ -1557,6 +1645,7 @@ MBALAB.data.simulations = [
   {
     "id": "working-capital",
     "status": "soon",
+    "template": "calculator",
     "icon": "🚰",
     "category": "strategy-finance",
     "name": {
@@ -1575,6 +1664,7 @@ MBALAB.data.simulations = [
   {
     "id": "risk-return-concepts",
     "status": "soon",
+    "template": "calculator",
     "icon": "🎢",
     "category": "strategy-finance",
     "name": {
@@ -1593,6 +1683,7 @@ MBALAB.data.simulations = [
   {
     "id": "capital-budgeting-cases",
     "status": "soon",
+    "template": "calculator",
     "icon": "🏭",
     "category": "strategy-finance",
     "name": {
@@ -1611,6 +1702,7 @@ MBALAB.data.simulations = [
   {
     "id": "creating-customer-value",
     "status": "soon",
+    "template": "explorer",
     "icon": "💝",
     "category": "marketing",
     "name": {
@@ -1629,6 +1721,7 @@ MBALAB.data.simulations = [
   {
     "id": "marketing-environment",
     "status": "soon",
+    "template": "explorer",
     "icon": "🌦️",
     "category": "marketing",
     "name": {
@@ -1647,6 +1740,7 @@ MBALAB.data.simulations = [
   {
     "id": "marketing-insights",
     "status": "soon",
+    "template": "explorer",
     "icon": "💡",
     "category": "marketing",
     "name": {
@@ -1665,6 +1759,7 @@ MBALAB.data.simulations = [
   {
     "id": "marketing-research",
     "status": "soon",
+    "template": "explorer",
     "icon": "📋",
     "category": "marketing",
     "name": {
@@ -1683,6 +1778,7 @@ MBALAB.data.simulations = [
   {
     "id": "selling-race",
     "status": "soon",
+    "template": "game",
     "icon": "🏁",
     "category": "marketing",
     "name": {
@@ -1701,6 +1797,7 @@ MBALAB.data.simulations = [
   {
     "id": "product-service-mix",
     "status": "soon",
+    "template": "explorer",
     "icon": "📦",
     "category": "marketing",
     "name": {
@@ -1719,6 +1816,7 @@ MBALAB.data.simulations = [
   {
     "id": "price-setting",
     "status": "soon",
+    "template": "calculator",
     "icon": "🏷️",
     "category": "marketing",
     "name": {
@@ -1737,6 +1835,7 @@ MBALAB.data.simulations = [
   {
     "id": "place-digital-channels",
     "status": "soon",
+    "template": "explorer",
     "icon": "🛒",
     "category": "marketing",
     "name": {
@@ -1755,6 +1854,7 @@ MBALAB.data.simulations = [
   {
     "id": "promotion-imc",
     "status": "soon",
+    "template": "explorer",
     "icon": "📣",
     "category": "marketing",
     "name": {
@@ -1773,6 +1873,7 @@ MBALAB.data.simulations = [
   {
     "id": "branding",
     "status": "soon",
+    "template": "explorer",
     "icon": "🎨",
     "category": "marketing",
     "name": {
@@ -1791,6 +1892,7 @@ MBALAB.data.simulations = [
   {
     "id": "operations-strategy",
     "status": "soon",
+    "template": "explorer",
     "icon": "♟️",
     "category": "operations",
     "name": {
@@ -1809,6 +1911,7 @@ MBALAB.data.simulations = [
   {
     "id": "product-service-design",
     "status": "soon",
+    "template": "explorer",
     "icon": "📐",
     "category": "operations",
     "name": {
@@ -1827,6 +1930,7 @@ MBALAB.data.simulations = [
   {
     "id": "project-management",
     "status": "soon",
+    "template": "explorer",
     "icon": "🗓️",
     "category": "operations",
     "name": {
@@ -1845,6 +1949,7 @@ MBALAB.data.simulations = [
   {
     "id": "strategic-capacity",
     "status": "soon",
+    "template": "explorer",
     "icon": "🏗️",
     "category": "operations",
     "name": {
@@ -1863,6 +1968,7 @@ MBALAB.data.simulations = [
   {
     "id": "process-design",
     "status": "soon",
+    "template": "explorer",
     "icon": "⚙️",
     "category": "operations",
     "name": {
@@ -1881,6 +1987,7 @@ MBALAB.data.simulations = [
   {
     "id": "lean-operations",
     "status": "soon",
+    "template": "explorer",
     "icon": "🍃",
     "category": "operations",
     "name": {
@@ -1899,6 +2006,7 @@ MBALAB.data.simulations = [
   {
     "id": "statistical-quality-control",
     "status": "soon",
+    "template": "calculator",
     "icon": "📉",
     "category": "operations",
     "name": {
@@ -1917,6 +2025,7 @@ MBALAB.data.simulations = [
   {
     "id": "sales-operations-planning",
     "status": "soon",
+    "template": "calculator",
     "icon": "🔁",
     "category": "operations",
     "name": {
@@ -1935,6 +2044,7 @@ MBALAB.data.simulations = [
   {
     "id": "mrp-erp",
     "status": "soon",
+    "template": "calculator",
     "icon": "🗃️",
     "category": "operations",
     "name": {
@@ -1953,6 +2063,7 @@ MBALAB.data.simulations = [
   {
     "id": "rational-decision-framework",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧭",
     "category": "decision-negotiation",
     "name": {
@@ -1971,6 +2082,7 @@ MBALAB.data.simulations = [
   {
     "id": "kepner-tregoe",
     "status": "soon",
+    "template": "explorer",
     "icon": "🔦",
     "category": "decision-negotiation",
     "name": {
@@ -1989,6 +2101,7 @@ MBALAB.data.simulations = [
   {
     "id": "smart-method",
     "status": "soon",
+    "template": "calculator",
     "icon": "🎯",
     "category": "decision-negotiation",
     "name": {
@@ -2007,6 +2120,7 @@ MBALAB.data.simulations = [
   {
     "id": "decision-tree-ev",
     "status": "live",
+    "template": "calculator",
     "icon": "🌳",
     "category": "decision-negotiation",
     "name": {
@@ -2025,6 +2139,7 @@ MBALAB.data.simulations = [
   {
     "id": "scenario-planning",
     "status": "soon",
+    "template": "scenario",
     "icon": "🌅",
     "category": "decision-negotiation",
     "name": {
@@ -2043,6 +2158,7 @@ MBALAB.data.simulations = [
   {
     "id": "systems-thinking",
     "status": "soon",
+    "template": "scenario",
     "icon": "🕸️",
     "category": "decision-negotiation",
     "name": {
@@ -2061,6 +2177,7 @@ MBALAB.data.simulations = [
   {
     "id": "negotiation-dilemma",
     "status": "soon",
+    "template": "scenario",
     "icon": "🪤",
     "category": "decision-negotiation",
     "name": {
@@ -2079,6 +2196,7 @@ MBALAB.data.simulations = [
   {
     "id": "negotiation-style",
     "status": "soon",
+    "template": "scenario",
     "icon": "🦊",
     "category": "decision-negotiation",
     "name": {
@@ -2097,6 +2215,7 @@ MBALAB.data.simulations = [
   {
     "id": "claiming-value",
     "status": "soon",
+    "template": "scenario",
     "icon": "🍰",
     "category": "decision-negotiation",
     "name": {
@@ -2115,6 +2234,7 @@ MBALAB.data.simulations = [
   {
     "id": "distributive-integrative",
     "status": "soon",
+    "template": "scenario",
     "icon": "🔀",
     "category": "decision-negotiation",
     "name": {
@@ -2133,6 +2253,7 @@ MBALAB.data.simulations = [
   {
     "id": "integrative-negotiation-technique",
     "status": "soon",
+    "template": "scenario",
     "icon": "🧩",
     "category": "decision-negotiation",
     "name": {
@@ -2151,6 +2272,7 @@ MBALAB.data.simulations = [
   {
     "id": "multiparty-negotiation",
     "status": "soon",
+    "template": "scenario",
     "icon": "👥",
     "category": "decision-negotiation",
     "name": {
@@ -2169,6 +2291,7 @@ MBALAB.data.simulations = [
   {
     "id": "data-literacy",
     "status": "soon",
+    "template": "explorer",
     "icon": "🗂️",
     "category": "analytics",
     "name": {
@@ -2187,6 +2310,7 @@ MBALAB.data.simulations = [
   {
     "id": "descriptive-diagnostic",
     "status": "soon",
+    "template": "explorer",
     "icon": "🔎",
     "category": "analytics",
     "name": {
@@ -2205,6 +2329,7 @@ MBALAB.data.simulations = [
   {
     "id": "predictive-analytics",
     "status": "soon",
+    "template": "explorer",
     "icon": "🔮",
     "category": "analytics",
     "name": {
@@ -2223,6 +2348,7 @@ MBALAB.data.simulations = [
   {
     "id": "prescriptive-analytics",
     "status": "soon",
+    "template": "explorer",
     "icon": "💊",
     "category": "analytics",
     "name": {
@@ -2241,6 +2367,7 @@ MBALAB.data.simulations = [
   {
     "id": "marketing-analytics",
     "status": "soon",
+    "template": "explorer",
     "icon": "📱",
     "category": "analytics",
     "name": {
@@ -2259,6 +2386,7 @@ MBALAB.data.simulations = [
   {
     "id": "finance-analytics",
     "status": "soon",
+    "template": "calculator",
     "icon": "💹",
     "category": "analytics",
     "name": {
@@ -2277,6 +2405,7 @@ MBALAB.data.simulations = [
   {
     "id": "operations-analytics",
     "status": "soon",
+    "template": "calculator",
     "icon": "🏗️",
     "category": "analytics",
     "name": {
@@ -2295,6 +2424,7 @@ MBALAB.data.simulations = [
   {
     "id": "people-analytics",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧑‍💼",
     "category": "analytics",
     "name": {
@@ -2313,6 +2443,7 @@ MBALAB.data.simulations = [
   {
     "id": "big-data-analytics",
     "status": "soon",
+    "template": "explorer",
     "icon": "🛰️",
     "category": "analytics",
     "name": {
@@ -2331,6 +2462,7 @@ MBALAB.data.simulations = [
   {
     "id": "deep-learning",
     "status": "soon",
+    "template": "explorer",
     "icon": "🧠",
     "category": "analytics",
     "name": {
@@ -2349,6 +2481,7 @@ MBALAB.data.simulations = [
   {
     "id": "generative-ai-business",
     "status": "soon",
+    "template": "explorer",
     "icon": "✨",
     "category": "analytics",
     "name": {
@@ -2367,6 +2500,7 @@ MBALAB.data.simulations = [
   {
     "id": "ai-governance",
     "status": "live",
+    "template": "game",
     "icon": "🛡️",
     "category": "analytics",
     "name": {
@@ -2380,6 +2514,1374 @@ MBALAB.data.simulations = [
       "id": "8 kasus AI: nilai risiko, pilih kontrol, jalankan 12 bulan.",
       "ja": "AI 8ケース：リスク評価、対策選択、12か月を実行。",
       "zh": "8 个 AI 案例：评估风险、选择措施、运行 12 个月。"
+    }
+  },
+  {
+    "id": "self-awareness-values-purpose",
+    "status": "soon",
+    "template": "game",
+    "icon": "🧭",
+    "category": "leadership",
+    "name": {
+      "en": "Self-awareness, values & purpose",
+      "id": "Kesadaran diri, nilai & tujuan",
+      "ja": "自己認識・価値観・パーパス",
+      "zh": "自我认知、价值观与使命"
+    },
+    "description": {
+      "en": "Clarify who you are, what you value and what you are here to do.",
+      "id": "Pahami siapa Anda, apa yang Anda nilai, dan untuk apa Anda berkarya.",
+      "ja": "自分は誰で、何を大切にし、何のために働くのかを明確にする。",
+      "zh": "厘清你是谁、看重什么、为何而做。"
+    }
+  },
+  {
+    "id": "inner-outer-mirror",
+    "status": "soon",
+    "template": "game",
+    "icon": "🪞",
+    "category": "leadership",
+    "name": {
+      "en": "Inner & outer mirror",
+      "id": "Cermin dalam & luar",
+      "ja": "インナーミラーとアウターミラー",
+      "zh": "内在镜与外在镜"
+    },
+    "description": {
+      "en": "Compare how you see yourself with how others see you.",
+      "id": "Bandingkan cara Anda melihat diri dengan cara orang lain melihat Anda.",
+      "ja": "自分から見た自分と、他者から見た自分を比べる。",
+      "zh": "对比你眼中的自己与他人眼中的你。"
+    }
+  },
+  {
+    "id": "ikigai",
+    "status": "soon",
+    "template": "game",
+    "icon": "🌸",
+    "category": "leadership",
+    "name": {
+      "en": "Ikigai",
+      "id": "Ikigai",
+      "ja": "生きがい",
+      "zh": "Ikigai 生活意义"
+    },
+    "description": {
+      "en": "Find where what you love, what you are good at, what the world needs and what pays meet.",
+      "id": "Temukan titik temu antara yang Anda cintai, kuasai, dibutuhkan dunia, dan menghasilkan uang.",
+      "ja": "好きなこと・得意なこと・世の中が求めること・お金になることの交点を探す。",
+      "zh": "找到热爱、擅长、世界所需与可获报酬的交汇点。"
+    }
+  },
+  {
+    "id": "mbti-types",
+    "status": "soon",
+    "template": "game",
+    "icon": "🧩",
+    "category": "leadership",
+    "name": {
+      "en": "MBTI types",
+      "id": "Tipe MBTI",
+      "ja": "MBTIタイプ",
+      "zh": "MBTI 类型"
+    },
+    "description": {
+      "en": "Explore the four MBTI preference pairs and what they mean for teamwork.",
+      "id": "Jelajahi empat pasang preferensi MBTI dan artinya bagi kerja tim.",
+      "ja": "MBTIの4つの指向ペアとチームワークへの意味を探る。",
+      "zh": "探索 MBTI 的四组偏好及其对团队合作的意义。"
+    }
+  },
+  {
+    "id": "enneagram",
+    "status": "soon",
+    "template": "game",
+    "icon": "🔯",
+    "category": "leadership",
+    "name": {
+      "en": "Enneagram",
+      "id": "Enneagram",
+      "ja": "エニアグラム",
+      "zh": "九型人格"
+    },
+    "description": {
+      "en": "Discover your core motivation among the nine Enneagram types.",
+      "id": "Temukan motivasi inti Anda di antara sembilan tipe Enneagram.",
+      "ja": "9つのタイプから自分の中核的な動機を見つける。",
+      "zh": "在九种类型中发现你的核心动机。"
+    }
+  },
+  {
+    "id": "strengthsfinder",
+    "status": "soon",
+    "template": "game",
+    "icon": "💪",
+    "category": "leadership",
+    "name": {
+      "en": "StrengthsFinder",
+      "id": "StrengthsFinder",
+      "ja": "ストレングスファインダー",
+      "zh": "优势识别器"
+    },
+    "description": {
+      "en": "Name your top talents and learn to build a role around them.",
+      "id": "Kenali bakat utama Anda dan rancang peran di sekitarnya.",
+      "ja": "自分の強みを知り、それを活かす役割を設計する。",
+      "zh": "识别你的核心天赋，并围绕它设计角色。"
+    }
+  },
+  {
+    "id": "big-five-ocean",
+    "status": "soon",
+    "template": "game",
+    "icon": "🌊",
+    "category": "leadership",
+    "name": {
+      "en": "Big Five (OCEAN)",
+      "id": "Big Five (OCEAN)",
+      "ja": "ビッグファイブ（OCEAN）",
+      "zh": "大五人格（OCEAN）"
+    },
+    "description": {
+      "en": "Place yourself on five personality dimensions and see how they shape work.",
+      "id": "Tempatkan diri pada lima dimensi kepribadian dan lihat pengaruhnya pada pekerjaan.",
+      "ja": "5つの性格次元で自分を位置づけ、仕事への影響を見る。",
+      "zh": "在五个人格维度上定位自己，看其如何影响工作。"
+    }
+  },
+  {
+    "id": "four-drives-motivation",
+    "status": "soon",
+    "template": "game",
+    "icon": "🔥",
+    "category": "leadership",
+    "name": {
+      "en": "Four drives of motivation",
+      "id": "Empat dorongan motivasi",
+      "ja": "動機づけの4つのドライブ",
+      "zh": "四大动机驱力"
+    },
+    "description": {
+      "en": "Balance the drives to acquire, bond, comprehend and defend at work.",
+      "id": "Seimbangkan dorongan untuk memperoleh, terikat, memahami, dan bertahan di tempat kerja.",
+      "ja": "獲得・絆・理解・防衛の4つの欲求を職場でバランスさせる。",
+      "zh": "在工作中平衡获取、联结、理解与防御四种驱力。"
+    }
+  },
+  {
+    "id": "ceo-excellence",
+    "status": "soon",
+    "template": "game",
+    "icon": "👑",
+    "category": "leadership",
+    "name": {
+      "en": "CEO excellence",
+      "id": "Keunggulan CEO",
+      "ja": "CEOの卓越性",
+      "zh": "CEO 卓越之道"
+    },
+    "description": {
+      "en": "Make the decisions that separate great CEOs from average ones.",
+      "id": "Ambil keputusan yang membedakan CEO hebat dari yang biasa.",
+      "ja": "優れたCEOと平均的なCEOを分ける意思決定を体験する。",
+      "zh": "做出区分优秀 CEO 与普通 CEO 的关键决策。"
+    }
+  },
+  {
+    "id": "psychological-safety",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🛟",
+    "category": "leadership",
+    "name": {
+      "en": "Psychological safety",
+      "id": "Keamanan psikologis",
+      "ja": "心理的安全性",
+      "zh": "心理安全"
+    },
+    "description": {
+      "en": "Lead a team where people dare to speak up, and watch what changes.",
+      "id": "Pimpin tim yang berani bersuara dan lihat apa yang berubah.",
+      "ja": "発言できるチームをつくり、何が変わるかを見る。",
+      "zh": "带领一个敢于发声的团队，观察会发生什么变化。"
+    }
+  },
+  {
+    "id": "lcop-framework",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🧱",
+    "category": "leadership",
+    "name": {
+      "en": "LCOP framework",
+      "id": "Kerangka LCOP",
+      "ja": "LCOPフレームワーク",
+      "zh": "LCOP 框架"
+    },
+    "description": {
+      "en": "Walk through the LCOP leadership framework and test your understanding.",
+      "id": "Telusuri kerangka kepemimpinan LCOP dan uji pemahaman Anda.",
+      "ja": "LCOPリーダーシップ枠組みをたどり、理解度を確かめる。",
+      "zh": "梳理 LCOP 领导力框架并检验理解。"
+    }
+  },
+  {
+    "id": "organizational-capabilities-audit",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🏢",
+    "category": "leadership",
+    "name": {
+      "en": "Organizational capabilities audit",
+      "id": "Audit kapabilitas organisasi",
+      "ja": "組織能力の監査",
+      "zh": "组织能力审计"
+    },
+    "description": {
+      "en": "Score your organisation's capabilities and find the gaps that matter most.",
+      "id": "Nilai kapabilitas organisasi Anda dan temukan celah terpenting.",
+      "ja": "組織の能力を採点し、最も重要なギャップを見つける。",
+      "zh": "为组织能力打分，找出最关键的差距。"
+    }
+  },
+  {
+    "id": "agency-problem",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🕴️",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Agency problem",
+      "id": "Masalah keagenan",
+      "ja": "エージェンシー問題",
+      "zh": "代理问题"
+    },
+    "description": {
+      "en": "See how managers and owners pull apart, and design contracts that realign them.",
+      "id": "Lihat bagaimana manajer dan pemilik berbeda kepentingan, lalu rancang kontrak yang menyelaraskannya.",
+      "ja": "経営者と株主の利害のずれと、それを揃える契約設計を学ぶ。",
+      "zh": "看经理与所有者如何利益分歧，并设计使其一致的合同。"
+    }
+  },
+  {
+    "id": "common-size-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "📏",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Common-size analysis",
+      "id": "Analisis common-size",
+      "ja": "コモンサイズ分析",
+      "zh": "共同比分析"
+    },
+    "description": {
+      "en": "Turn statements into percentages to compare firms of any size.",
+      "id": "Ubah laporan menjadi persentase untuk membandingkan perusahaan dari ukuran apa pun.",
+      "ja": "財務諸表を百分率にして、規模の違う企業を比較する。",
+      "zh": "把报表转为百分比，比较任何规模的公司。"
+    }
+  },
+  {
+    "id": "trend-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "📈",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Trend analysis",
+      "id": "Analisis tren",
+      "ja": "トレンド分析",
+      "zh": "趋势分析"
+    },
+    "description": {
+      "en": "Read years of figures as an index and spot where a business is heading.",
+      "id": "Baca angka bertahun-tahun sebagai indeks dan lihat arah bisnis.",
+      "ja": "数年分の数値を指数で読み、事業の方向を見極める。",
+      "zh": "把多年数据读成指数，判断业务走向。"
+    }
+  },
+  {
+    "id": "variable-costing",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🧮",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Variable costing",
+      "id": "Biaya variabel (variable costing)",
+      "ja": "変動原価計算",
+      "zh": "变动成本法"
+    },
+    "description": {
+      "en": "Report profit with only variable costs in the product cost.",
+      "id": "Laporkan laba dengan hanya biaya variabel dalam biaya produk.",
+      "ja": "製品原価に変動費のみを含めて利益を報告する。",
+      "zh": "仅把变动成本计入产品成本来报告利润。"
+    }
+  },
+  {
+    "id": "absorption-costing",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🧾",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Absorption costing",
+      "id": "Biaya penyerapan (absorption costing)",
+      "ja": "全部原価計算",
+      "zh": "完全成本法"
+    },
+    "description": {
+      "en": "Spread fixed overhead over units and see how it moves reported profit.",
+      "id": "Bebankan overhead tetap ke unit dan lihat dampaknya pada laba.",
+      "ja": "固定費を製品に配賦し、報告利益への影響を見る。",
+      "zh": "把固定制造费用分摊到产品，看其如何影响账面利润。"
+    }
+  },
+  {
+    "id": "segment-profitability",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🥧",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Segment profitability",
+      "id": "Profitabilitas segmen",
+      "ja": "セグメント別収益性",
+      "zh": "分部盈利能力"
+    },
+    "description": {
+      "en": "Split profit by product or customer and decide which segments to keep.",
+      "id": "Pecah laba per produk atau pelanggan dan putuskan segmen mana yang dipertahankan.",
+      "ja": "製品や顧客ごとに利益を分け、どのセグメントを残すか決める。",
+      "zh": "按产品或客户拆分利润，决定保留哪些分部。"
+    }
+  },
+  {
+    "id": "present-value-future-value",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "⏳",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Present & future value",
+      "id": "Nilai kini & nilai masa depan",
+      "ja": "現在価値と将来価値",
+      "zh": "现值与终值"
+    },
+    "description": {
+      "en": "Move a sum of money forward and backward in time at a chosen rate.",
+      "id": "Pindahkan sejumlah uang maju dan mundur dalam waktu pada tingkat bunga tertentu.",
+      "ja": "お金を選んだ利率で過去・未来に動かして価値を比べる。",
+      "zh": "按选定利率把一笔钱在时间上前后移动。"
+    }
+  },
+  {
+    "id": "annuity",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🔁",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Annuity",
+      "id": "Anuitas",
+      "ja": "年金（アニュイティ）",
+      "zh": "年金"
+    },
+    "description": {
+      "en": "Value a steady stream of payments made at the end of each period.",
+      "id": "Nilai aliran pembayaran tetap yang dibayar di akhir tiap periode.",
+      "ja": "各期末に支払われる一定額の現在価値を求める。",
+      "zh": "为每期期末支付的等额现金流估值。"
+    }
+  },
+  {
+    "id": "annuity-due",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "⏰",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Annuity due",
+      "id": "Anuitas di muka",
+      "ja": "期首年金",
+      "zh": "先付年金"
+    },
+    "description": {
+      "en": "Value payments made at the start of each period, such as rent.",
+      "id": "Nilai pembayaran di awal tiap periode, seperti sewa.",
+      "ja": "家賃のように期首に支払われる一定額を評価する。",
+      "zh": "为每期期初支付的款项（如房租）估值。"
+    }
+  },
+  {
+    "id": "perpetuity",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "♾️",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Perpetuity",
+      "id": "Perpetuitas",
+      "ja": "永久年金",
+      "zh": "永续年金"
+    },
+    "description": {
+      "en": "Value a payment that never ends, from a bond to a dividend.",
+      "id": "Nilai pembayaran yang tidak pernah berakhir, dari obligasi sampai dividen.",
+      "ja": "債券や配当のように終わりのない支払いを評価する。",
+      "zh": "为永不终止的支付（债券、股息）估值。"
+    }
+  },
+  {
+    "id": "retirement-planning",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🏖️",
+    "category": "strategy-finance",
+    "name": {
+      "en": "Retirement planning",
+      "id": "Perencanaan pensiun",
+      "ja": "退職後の資金計画",
+      "zh": "退休规划"
+    },
+    "description": {
+      "en": "Work out how much to save each month for the retirement you want.",
+      "id": "Hitung berapa yang perlu ditabung tiap bulan untuk pensiun yang Anda inginkan.",
+      "ja": "望む老後のために毎月いくら貯めるかを計算する。",
+      "zh": "算出为理想退休每月需储蓄多少。"
+    }
+  },
+  {
+    "id": "bain-value-pyramid",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🔺",
+    "category": "marketing",
+    "name": {
+      "en": "Bain value pyramid",
+      "id": "Piramida nilai Bain",
+      "ja": "ベインの価値ピラミッド",
+      "zh": "贝恩价值要素金字塔"
+    },
+    "description": {
+      "en": "Explore the 30 elements of value customers look for, from functional to life-changing.",
+      "id": "Jelajahi 30 elemen nilai yang dicari pelanggan, dari fungsional hingga mengubah hidup.",
+      "ja": "顧客が求める30の価値要素を、機能面から人生を変えるものまで探る。",
+      "zh": "探索客户追求的 30 种价值要素，从功能到改变人生。"
+    }
+  },
+  {
+    "id": "marketing-orientations",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🧭",
+    "category": "marketing",
+    "name": {
+      "en": "Marketing management orientations",
+      "id": "Orientasi manajemen pemasaran",
+      "ja": "マーケティング・マネジメントの志向",
+      "zh": "营销管理导向"
+    },
+    "description": {
+      "en": "Compare production, product, selling, marketing and societal orientations.",
+      "id": "Bandingkan orientasi produksi, produk, penjualan, pemasaran, dan masyarakat.",
+      "ja": "生産・製品・販売・マーケティング・社会志向を比べる。",
+      "zh": "比较生产、产品、推销、营销与社会导向。"
+    }
+  },
+  {
+    "id": "five-c-analysis",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "5️⃣",
+    "category": "marketing",
+    "name": {
+      "en": "5C analysis",
+      "id": "Analisis 5C",
+      "ja": "5C分析",
+      "zh": "5C 分析"
+    },
+    "description": {
+      "en": "Scan company, customers, competitors, collaborators and context.",
+      "id": "Pindai perusahaan, pelanggan, pesaing, kolaborator, dan konteks.",
+      "ja": "自社・顧客・競合・協力者・環境を整理する。",
+      "zh": "扫描公司、客户、竞争者、合作者与环境。"
+    }
+  },
+  {
+    "id": "theory-of-choice",
+    "status": "soon",
+    "template": "game",
+    "icon": "🎯",
+    "category": "marketing",
+    "name": {
+      "en": "Theory of choice",
+      "id": "Teori pilihan",
+      "ja": "選択の理論",
+      "zh": "选择理论"
+    },
+    "description": {
+      "en": "Predict which option a customer picks when several fit their needs.",
+      "id": "Prediksi pilihan pelanggan ketika beberapa opsi sesuai kebutuhan.",
+      "ja": "複数の選択肢が合うとき、顧客が何を選ぶかを予測する。",
+      "zh": "预测多个选项都合适时客户会选哪个。"
+    }
+  },
+  {
+    "id": "theory-of-use",
+    "status": "soon",
+    "template": "game",
+    "icon": "🛠️",
+    "category": "marketing",
+    "name": {
+      "en": "Theory of use",
+      "id": "Teori penggunaan",
+      "ja": "使用の理論",
+      "zh": "使用理论"
+    },
+    "description": {
+      "en": "Understand how people actually use a product and what that means for design.",
+      "id": "Pahami bagaimana orang benar-benar memakai produk dan artinya bagi desain.",
+      "ja": "人が実際に製品をどう使うかを理解し、設計に活かす。",
+      "zh": "理解人们实际如何使用产品及其对设计的意义。"
+    }
+  },
+  {
+    "id": "consumer-decision-process",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🛒",
+    "category": "marketing",
+    "name": {
+      "en": "Consumer decision process",
+      "id": "Proses keputusan konsumen",
+      "ja": "消費者の意思決定プロセス",
+      "zh": "消费者决策过程"
+    },
+    "description": {
+      "en": "Follow a buyer from need recognition to post-purchase feelings.",
+      "id": "Ikuti pembeli dari kesadaran kebutuhan hingga perasaan pasca pembelian.",
+      "ja": "ニーズの認識から購入後の感情まで、買い手を追う。",
+      "zh": "跟随买家从需求识别到购后感受。"
+    }
+  },
+  {
+    "id": "b2b-buying-process",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🏭",
+    "category": "marketing",
+    "name": {
+      "en": "B2B buying process",
+      "id": "Proses pembelian B2B",
+      "ja": "B2B購買プロセス",
+      "zh": "B2B 采购流程"
+    },
+    "description": {
+      "en": "Sell to a buying committee and win each stage of a long deal.",
+      "id": "Jual ke komite pembelian dan menangkan tiap tahap kesepakatan panjang.",
+      "ja": "購買委員会に売り込み、長い商談の各段階を勝ち抜く。",
+      "zh": "面向采购委员会销售，赢下长周期交易的每个阶段。"
+    }
+  },
+  {
+    "id": "segmentation-criteria",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "✅",
+    "category": "marketing",
+    "name": {
+      "en": "Segmentation effectiveness criteria",
+      "id": "Kriteria efektivitas segmentasi",
+      "ja": "セグメンテーションの有効性基準",
+      "zh": "细分有效性标准"
+    },
+    "description": {
+      "en": "Test whether a segment is measurable, substantial, accessible and actionable.",
+      "id": "Uji apakah segmen terukur, cukup besar, terjangkau, dan dapat ditindaklanjuti.",
+      "ja": "セグメントが測定可能・十分な規模・到達可能・実行可能かを検証する。",
+      "zh": "检验细分是否可衡量、足够大、可触达、可执行。"
+    }
+  },
+  {
+    "id": "tam-sam-som",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🎯",
+    "category": "marketing",
+    "name": {
+      "en": "TAM, SAM & SOM",
+      "id": "TAM, SAM & SOM",
+      "ja": "TAM・SAM・SOM",
+      "zh": "TAM、SAM 与 SOM"
+    },
+    "description": {
+      "en": "Size a market from the whole opportunity down to what you can win.",
+      "id": "Hitung ukuran pasar dari seluruh peluang hingga bagian yang bisa Anda raih.",
+      "ja": "市場全体から獲得可能な部分まで、規模を見積もる。",
+      "zh": "从整体机会到可赢得的份额逐层估算市场。"
+    }
+  },
+  {
+    "id": "customer-persona",
+    "status": "soon",
+    "template": "game",
+    "icon": "🧑‍🤝‍🧑",
+    "category": "marketing",
+    "name": {
+      "en": "Customer persona",
+      "id": "Persona pelanggan",
+      "ja": "カスタマーペルソナ",
+      "zh": "客户画像"
+    },
+    "description": {
+      "en": "Build a persona from evidence and use it to make a better offer.",
+      "id": "Susun persona dari bukti dan gunakan untuk membuat penawaran lebih baik.",
+      "ja": "根拠からペルソナを作り、より良い提案に活かす。",
+      "zh": "基于证据构建画像，并用它改进产品方案。"
+    }
+  },
+  {
+    "id": "jobs-to-be-done",
+    "status": "soon",
+    "template": "game",
+    "icon": "🔧",
+    "category": "marketing",
+    "name": {
+      "en": "Jobs-to-be-Done",
+      "id": "Jobs-to-be-Done",
+      "ja": "ジョブ理論（JTBD）",
+      "zh": "待完成的任务（JTBD）"
+    },
+    "description": {
+      "en": "Find the job customers hire a product to do, beyond what they say.",
+      "id": "Temukan tugas yang diharapkan pelanggan dari produk, di balik ucapan mereka.",
+      "ja": "顧客が言葉の裏で製品に任せている「仕事」を見つける。",
+      "zh": "找出客户雇用产品去完成的任务，而非只听其所言。"
+    }
+  },
+  {
+    "id": "points-of-parity",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🤝",
+    "category": "marketing",
+    "name": {
+      "en": "Points of parity",
+      "id": "Points of parity (kesetaraan)",
+      "ja": "共通点（POP）",
+      "zh": "相同点（POP）"
+    },
+    "description": {
+      "en": "Decide which things you must match competitors on to be considered.",
+      "id": "Tentukan hal yang harus setara dengan pesaing agar dipertimbangkan.",
+      "ja": "検討対象になるために競合と同等にすべき点を決める。",
+      "zh": "确定为了入选必须与竞争者持平的方面。"
+    }
+  },
+  {
+    "id": "points-of-difference",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "⭐",
+    "category": "marketing",
+    "name": {
+      "en": "Points of difference",
+      "id": "Points of difference (pembeda)",
+      "ja": "差別化ポイント（POD）",
+      "zh": "差异点（POD）"
+    },
+    "description": {
+      "en": "Choose the few things that make customers pick you over rivals.",
+      "id": "Pilih sedikit hal yang membuat pelanggan memilih Anda dibanding pesaing.",
+      "ja": "顧客が競合でなく自社を選ぶ少数の理由を選ぶ。",
+      "zh": "选出让客户选择你而非对手的少数要点。"
+    }
+  },
+  {
+    "id": "perceptual-mapping",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🗺️",
+    "category": "marketing",
+    "name": {
+      "en": "Perceptual mapping",
+      "id": "Pemetaan persepsi",
+      "ja": "知覚マップ",
+      "zh": "感知图"
+    },
+    "description": {
+      "en": "Place brands on a map of customer perceptions and find the open gap.",
+      "id": "Tempatkan merek pada peta persepsi pelanggan dan temukan celah kosong.",
+      "ja": "ブランドを知覚マップに置き、空いた領域を探す。",
+      "zh": "把品牌放到感知图上，找到空白机会。"
+    }
+  },
+  {
+    "id": "competitor-analysis",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🔍",
+    "category": "marketing",
+    "name": {
+      "en": "Competitor analysis",
+      "id": "Analisis pesaing",
+      "ja": "競合分析",
+      "zh": "竞争对手分析"
+    },
+    "description": {
+      "en": "Profile rivals' strategies, strengths and likely next moves.",
+      "id": "Profilkan strategi, kekuatan, dan langkah berikutnya dari pesaing.",
+      "ja": "競合の戦略・強み・次の一手をプロファイルする。",
+      "zh": "剖析对手的策略、优势与可能的下一步。"
+    }
+  },
+  {
+    "id": "transformation-process-model",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "⚙️",
+    "category": "operations",
+    "name": {
+      "en": "Transformation process model",
+      "id": "Model proses transformasi",
+      "ja": "変換プロセスモデル",
+      "zh": "转换过程模型"
+    },
+    "description": {
+      "en": "Trace inputs through transformation to outputs in any operation.",
+      "id": "Telusuri input melalui transformasi hingga output pada operasi apa pun.",
+      "ja": "あらゆるオペレーションで、インプットが変換されアウトプットになる流れを追う。",
+      "zh": "追踪任何运营中投入经转换变为产出的过程。"
+    }
+  },
+  {
+    "id": "bottleneck-analysis",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🚧",
+    "category": "operations",
+    "name": {
+      "en": "Bottleneck analysis",
+      "id": "Analisis hambatan (bottleneck)",
+      "ja": "ボトルネック分析",
+      "zh": "瓶颈分析"
+    },
+    "description": {
+      "en": "Find the slowest step and see how fixing it lifts the whole line.",
+      "id": "Temukan langkah paling lambat dan lihat bagaimana memperbaikinya menaikkan seluruh lini.",
+      "ja": "最も遅い工程を見つけ、改善でライン全体が上がる様子を見る。",
+      "zh": "找出最慢的环节，看改善它如何提升整条产线。"
+    }
+  },
+  {
+    "id": "facility-layout",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🏗️",
+    "category": "operations",
+    "name": {
+      "en": "Facility layout models",
+      "id": "Model tata letak fasilitas",
+      "ja": "設備レイアウトモデル",
+      "zh": "设施布局模型"
+    },
+    "description": {
+      "en": "Arrange departments to cut travel and waiting.",
+      "id": "Atur departemen untuk memangkas perjalanan dan waktu tunggu.",
+      "ja": "部門を配置して移動と待ち時間を減らす。",
+      "zh": "布置部门以减少移动与等待。"
+    }
+  },
+  {
+    "id": "product-process-matrix",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🔲",
+    "category": "operations",
+    "name": {
+      "en": "Product–process matrix",
+      "id": "Matriks produk–proses",
+      "ja": "製品・プロセスマトリクス",
+      "zh": "产品—流程矩阵"
+    },
+    "description": {
+      "en": "Match the process type to the product volume and variety.",
+      "id": "Cocokkan jenis proses dengan volume dan ragam produk.",
+      "ja": "製品の量と多様性に合うプロセス型を選ぶ。",
+      "zh": "让流程类型匹配产品的产量与品种。"
+    }
+  },
+  {
+    "id": "service-system-design-matrix",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🧑‍🍳",
+    "category": "operations",
+    "name": {
+      "en": "Service-system design matrix",
+      "id": "Matriks desain sistem layanan",
+      "ja": "サービスシステム設計マトリクス",
+      "zh": "服务系统设计矩阵"
+    },
+    "description": {
+      "en": "Choose how much customer contact a service can bear and stay efficient.",
+      "id": "Pilih seberapa banyak kontak pelanggan yang bisa ditanggung layanan agar tetap efisien.",
+      "ja": "サービスが効率を保てる顧客接点の度合いを決める。",
+      "zh": "决定服务在保持效率下能承受多少客户接触。"
+    }
+  },
+  {
+    "id": "codp",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "✂️",
+    "category": "operations",
+    "name": {
+      "en": "Customer order decoupling point",
+      "id": "Titik pemisah pesanan pelanggan (CODP)",
+      "ja": "顧客注文分離点（CODP）",
+      "zh": "客户订单分离点（CODP）"
+    },
+    "description": {
+      "en": "Choose where in the chain the customer order starts to drive work.",
+      "id": "Pilih di titik mana rantai pasok pesanan pelanggan mulai menggerakkan pekerjaan.",
+      "ja": "サプライチェーンのどこから顧客注文で動くかを決める。",
+      "zh": "选择供应链中从哪一点起由客户订单驱动。"
+    }
+  },
+  {
+    "id": "postponement",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "⏸️",
+    "category": "operations",
+    "name": {
+      "en": "Postponement",
+      "id": "Penundaan (postponement)",
+      "ja": "ポストポーンメント（延期）",
+      "zh": "延迟策略"
+    },
+    "description": {
+      "en": "Delay customising a product until demand is known.",
+      "id": "Tunda kustomisasi produk sampai permintaan diketahui.",
+      "ja": "需要が見えるまで製品のカスタマイズを遅らせる。",
+      "zh": "在需求明朗前推迟产品定制。"
+    }
+  },
+  {
+    "id": "poka-yoke",
+    "status": "soon",
+    "template": "game",
+    "icon": "🛡️",
+    "category": "operations",
+    "name": {
+      "en": "Poka-yoke",
+      "id": "Poka-yoke",
+      "ja": "ポカヨケ",
+      "zh": "防错（Poka-yoke）"
+    },
+    "description": {
+      "en": "Design mistake-proofing so errors cannot happen or show up at once.",
+      "id": "Rancang pencegah kesalahan agar error tak terjadi atau langsung terlihat.",
+      "ja": "ミスが起きない・すぐ分かる仕組みを設計する。",
+      "zh": "设计防错机制，使错误无法发生或立刻显现。"
+    }
+  },
+  {
+    "id": "service-blueprint",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "📐",
+    "category": "operations",
+    "name": {
+      "en": "Service blueprint",
+      "id": "Cetak biru layanan",
+      "ja": "サービスブループリント",
+      "zh": "服务蓝图"
+    },
+    "description": {
+      "en": "Map every step, touchpoint and backstage action of a service.",
+      "id": "Petakan setiap langkah, titik sentuh, dan aktivitas di balik layar layanan.",
+      "ja": "サービスの各ステップ・接点・バックステージ作業を描く。",
+      "zh": "描绘服务的每个步骤、触点与后台动作。"
+    }
+  },
+  {
+    "id": "bpmn-2",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🔀",
+    "category": "operations",
+    "name": {
+      "en": "BPMN 2.0",
+      "id": "BPMN 2.0",
+      "ja": "BPMN 2.0",
+      "zh": "BPMN 2.0"
+    },
+    "description": {
+      "en": "Read and draw business processes with standard BPMN symbols.",
+      "id": "Baca dan gambar proses bisnis dengan simbol standar BPMN.",
+      "ja": "標準のBPMN記号で業務プロセスを読み書きする。",
+      "zh": "用标准 BPMN 符号阅读和绘制业务流程。"
+    }
+  },
+  {
+    "id": "apqc-pcf",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🗂️",
+    "category": "operations",
+    "name": {
+      "en": "APQC process classification framework",
+      "id": "Kerangka klasifikasi proses APQC",
+      "ja": "APQCプロセス分類フレームワーク",
+      "zh": "APQC 流程分类框架"
+    },
+    "description": {
+      "en": "Browse the standard map of business processes and locate your own.",
+      "id": "Telusuri peta standar proses bisnis dan temukan posisi proses Anda.",
+      "ja": "標準的な業務プロセスの地図をたどり、自社の位置を探す。",
+      "zh": "浏览标准业务流程地图，找到自己的流程位置。"
+    }
+  },
+  {
+    "id": "situation-appraisal",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🌐",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Situation appraisal",
+      "id": "Penilaian situasi",
+      "ja": "状況把握（SA）",
+      "zh": "情境评估"
+    },
+    "description": {
+      "en": "Sort a messy situation into concerns, priorities and next steps.",
+      "id": "Pilah situasi kacau menjadi kekhawatiran, prioritas, dan langkah berikutnya.",
+      "ja": "混沌とした状況を懸念・優先順位・次の一手に整理する。",
+      "zh": "把混乱局面整理为关注点、优先级与下一步。"
+    }
+  },
+  {
+    "id": "problem-analysis",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🔬",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Problem analysis",
+      "id": "Analisis masalah",
+      "ja": "問題分析（PA）",
+      "zh": "问题分析"
+    },
+    "description": {
+      "en": "Describe a deviation precisely to find its true cause.",
+      "id": "Gambarkan penyimpangan secara tepat untuk menemukan penyebab sebenarnya.",
+      "ja": "ずれを正確に記述して真の原因を特定する。",
+      "zh": "精确描述偏差以找到真正原因。"
+    }
+  },
+  {
+    "id": "decision-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "⚖️",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Decision analysis",
+      "id": "Analisis keputusan",
+      "ja": "意思決定分析（DA）",
+      "zh": "决策分析"
+    },
+    "description": {
+      "en": "Weigh objectives and options step by step to reach a defensible choice.",
+      "id": "Timbang tujuan dan opsi selangkah demi selangkah untuk pilihan yang bisa dipertanggungjawabkan.",
+      "ja": "目的と選択肢を段階的に比べ、説明できる選択に至る。",
+      "zh": "逐步权衡目标与方案，得出站得住脚的选择。"
+    }
+  },
+  {
+    "id": "potential-problem-analysis",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "⚠️",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Potential problem analysis",
+      "id": "Analisis masalah potensial",
+      "ja": "潜在的問題分析（PPA）",
+      "zh": "潜在问题分析"
+    },
+    "description": {
+      "en": "Foresee what could go wrong with a plan and prepare in advance.",
+      "id": "Antisipasi apa yang bisa salah dari rencana dan bersiaplah lebih dulu.",
+      "ja": "計画で起こりうる問題を予見し、事前に備える。",
+      "zh": "预见计划可能出的问题并提前准备。"
+    }
+  },
+  {
+    "id": "five-whys",
+    "status": "soon",
+    "template": "game",
+    "icon": "❓",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "5 Whys",
+      "id": "5 Whys (5 kali mengapa)",
+      "ja": "なぜなぜ分析（5 Whys）",
+      "zh": "五个为什么"
+    },
+    "description": {
+      "en": "Ask why again and again until you reach a cause you can fix.",
+      "id": "Tanyakan mengapa berulang kali sampai menemukan penyebab yang bisa diperbaiki.",
+      "ja": "「なぜ」を繰り返し、手が打てる原因にたどり着く。",
+      "zh": "不断追问为什么，直到找到可解决的原因。"
+    }
+  },
+  {
+    "id": "is-is-not-analysis",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🔎",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "IS / IS NOT analysis",
+      "id": "Analisis IS / IS NOT",
+      "ja": "IS／IS NOT分析",
+      "zh": "IS / IS NOT 分析"
+    },
+    "description": {
+      "en": "Contrast where a problem appears with where it does not.",
+      "id": "Bandingkan di mana masalah muncul dengan di mana tidak muncul.",
+      "ja": "問題が起きる所と起きない所を対比する。",
+      "zh": "对比问题出现与未出现的地方。"
+    }
+  },
+  {
+    "id": "swing-weighting",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🎚️",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Swing weighting",
+      "id": "Pembobotan swing",
+      "ja": "スイング・ウェイティング",
+      "zh": "摆动权重法"
+    },
+    "description": {
+      "en": "Weight criteria by how much improving each one matters.",
+      "id": "Beri bobot kriteria menurut seberapa penting perbaikannya.",
+      "ja": "各基準の改善がどれだけ重要かで重みを付ける。",
+      "zh": "按改善每个标准的重要程度来赋权。"
+    }
+  },
+  {
+    "id": "sensitivity-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🎛️",
+    "category": "decision-negotiation",
+    "name": {
+      "en": "Sensitivity analysis",
+      "id": "Analisis sensitivitas",
+      "ja": "感度分析",
+      "zh": "敏感性分析"
+    },
+    "description": {
+      "en": "Change one assumption at a time and see when the best choice flips.",
+      "id": "Ubah satu asumsi sekali waktu dan lihat kapan pilihan terbaik berubah.",
+      "ja": "前提を1つずつ変え、最良の選択が入れ替わる点を見る。",
+      "zh": "每次改变一个假设，看最佳选择何时翻转。"
+    }
+  },
+  {
+    "id": "dikw-pyramid",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🔼",
+    "category": "analytics",
+    "name": {
+      "en": "DIKW pyramid",
+      "id": "Piramida DIKW",
+      "ja": "DIKWピラミッド",
+      "zh": "DIKW 金字塔"
+    },
+    "description": {
+      "en": "Climb from data to information, knowledge and wisdom.",
+      "id": "Naik dari data ke informasi, pengetahuan, dan kebijaksanaan.",
+      "ja": "データから情報・知識・知恵へ登る。",
+      "zh": "从数据上升到信息、知识与智慧。"
+    }
+  },
+  {
+    "id": "four-levels-of-analytics",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🪜",
+    "category": "analytics",
+    "name": {
+      "en": "Four levels of analytics",
+      "id": "Empat level analitik",
+      "ja": "分析の4つのレベル",
+      "zh": "分析的四个层级"
+    },
+    "description": {
+      "en": "See what descriptive, diagnostic, predictive and prescriptive analytics each answer.",
+      "id": "Lihat pertanyaan yang dijawab analitik deskriptif, diagnostik, prediktif, dan preskriptif.",
+      "ja": "記述・診断・予測・処方の各分析が何に答えるかを見る。",
+      "zh": "了解描述、诊断、预测、处方分析各回答什么问题。"
+    }
+  },
+  {
+    "id": "descriptive-statistics",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "📊",
+    "category": "analytics",
+    "name": {
+      "en": "Descriptive statistics",
+      "id": "Statistik deskriptif",
+      "ja": "記述統計",
+      "zh": "描述统计"
+    },
+    "description": {
+      "en": "Summarise a dataset with mean, spread and shape.",
+      "id": "Ringkas data dengan rata-rata, sebaran, dan bentuk.",
+      "ja": "平均・ばらつき・分布の形でデータを要約する。",
+      "zh": "用均值、离散程度与分布形状概括数据。"
+    }
+  },
+  {
+    "id": "data-visualization",
+    "status": "soon",
+    "template": "game",
+    "icon": "🎨",
+    "category": "analytics",
+    "name": {
+      "en": "Data visualization",
+      "id": "Visualisasi data",
+      "ja": "データ可視化",
+      "zh": "数据可视化"
+    },
+    "description": {
+      "en": "Pick the chart that makes the message clear instead of confusing.",
+      "id": "Pilih grafik yang membuat pesan jelas, bukan membingungkan.",
+      "ja": "メッセージが明確に伝わるグラフを選ぶ。",
+      "zh": "选择能让信息清晰而非混乱的图表。"
+    }
+  },
+  {
+    "id": "optimization-model",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🎯",
+    "category": "analytics",
+    "name": {
+      "en": "Optimization model",
+      "id": "Model optimasi",
+      "ja": "最適化モデル",
+      "zh": "优化模型"
+    },
+    "description": {
+      "en": "Define an objective, decisions and constraints, then find the best plan.",
+      "id": "Tentukan tujuan, keputusan, dan kendala, lalu cari rencana terbaik.",
+      "ja": "目的・意思決定・制約を定め、最良の計画を求める。",
+      "zh": "定义目标、决策与约束，求出最佳方案。"
+    }
+  },
+  {
+    "id": "linear-programming",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "📐",
+    "category": "analytics",
+    "name": {
+      "en": "Linear programming",
+      "id": "Pemrograman linear",
+      "ja": "線形計画法",
+      "zh": "线性规划"
+    },
+    "description": {
+      "en": "Solve a product-mix problem graphically and see the corner solution.",
+      "id": "Selesaikan masalah bauran produk secara grafis dan lihat solusi sudutnya.",
+      "ja": "プロダクトミックス問題を図解し、頂点解を確かめる。",
+      "zh": "用图解法解产品组合问题，看顶点解。"
+    }
+  },
+  {
+    "id": "excel-solver",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🧮",
+    "category": "analytics",
+    "name": {
+      "en": "Excel Solver",
+      "id": "Excel Solver",
+      "ja": "Excelソルバー",
+      "zh": "Excel 规划求解"
+    },
+    "description": {
+      "en": "Set up a Solver model step by step and read its sensitivity report.",
+      "id": "Susun model Solver langkah demi langkah dan baca laporan sensitivitasnya.",
+      "ja": "ソルバーのモデルを段階的に組み、感度レポートを読む。",
+      "zh": "逐步建立规划求解模型并解读敏感性报告。"
+    }
+  },
+  {
+    "id": "kpi-tree",
+    "status": "soon",
+    "template": "explorer",
+    "icon": "🌳",
+    "category": "analytics",
+    "name": {
+      "en": "KPI tree",
+      "id": "Pohon KPI",
+      "ja": "KPIツリー",
+      "zh": "KPI 树"
+    },
+    "description": {
+      "en": "Break one headline metric into the drivers you can act on.",
+      "id": "Pecah satu metrik utama menjadi pendorong yang bisa Anda tindak.",
+      "ja": "1つの主要指標を、手を打てるドライバーに分解する。",
+      "zh": "把一个核心指标拆成可行动的驱动因素。"
+    }
+  },
+  {
+    "id": "cluster-analysis",
+    "status": "soon",
+    "template": "game",
+    "icon": "🫧",
+    "category": "analytics",
+    "name": {
+      "en": "Cluster analysis",
+      "id": "Analisis klaster",
+      "ja": "クラスター分析",
+      "zh": "聚类分析"
+    },
+    "description": {
+      "en": "Group similar customers and decide how many groups make sense.",
+      "id": "Kelompokkan pelanggan serupa dan putuskan berapa kelompok yang masuk akal.",
+      "ja": "似た顧客をグループ化し、いくつに分けるのが妥当かを決める。",
+      "zh": "把相似客户分组并决定分几组合适。"
+    }
+  },
+  {
+    "id": "rfm-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🏷️",
+    "category": "analytics",
+    "name": {
+      "en": "RFM analysis",
+      "id": "Analisis RFM",
+      "ja": "RFM分析",
+      "zh": "RFM 分析"
+    },
+    "description": {
+      "en": "Score customers on recency, frequency and money to target them.",
+      "id": "Beri skor pelanggan berdasarkan recency, frequency, dan monetary untuk menargetkan mereka.",
+      "ja": "直近・頻度・金額で顧客を採点し、施策の対象を絞る。",
+      "zh": "按最近、频率、金额给客户打分以精准营销。"
+    }
+  },
+  {
+    "id": "churn-analysis",
+    "status": "soon",
+    "template": "scenario",
+    "icon": "🚪",
+    "category": "analytics",
+    "name": {
+      "en": "Churn analysis",
+      "id": "Analisis churn",
+      "ja": "解約（チャーン）分析",
+      "zh": "流失分析"
+    },
+    "description": {
+      "en": "Find who leaves, why, and which fix keeps the most customers.",
+      "id": "Temukan siapa yang pergi, mengapa, dan perbaikan mana yang menahan paling banyak pelanggan.",
+      "ja": "誰がなぜ離れるのか、どの対策が最も顧客を残すかを探る。",
+      "zh": "找出谁在流失、为何流失，以及哪种对策留住最多客户。"
+    }
+  },
+  {
+    "id": "survival-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🩺",
+    "category": "analytics",
+    "name": {
+      "en": "Survival analysis",
+      "id": "Analisis survival",
+      "ja": "生存分析",
+      "zh": "生存分析"
+    },
+    "description": {
+      "en": "Estimate how long customers stay with a survival curve.",
+      "id": "Perkirakan berapa lama pelanggan bertahan dengan kurva survival.",
+      "ja": "生存曲線で顧客がどれだけ続くかを推定する。",
+      "zh": "用生存曲线估计客户能留存多久。"
+    }
+  },
+  {
+    "id": "conjoint-analysis",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "🧪",
+    "category": "analytics",
+    "name": {
+      "en": "Conjoint analysis",
+      "id": "Analisis konjoin",
+      "ja": "コンジョイント分析",
+      "zh": "联合分析"
+    },
+    "description": {
+      "en": "Learn what features customers trade off by asking them to choose.",
+      "id": "Pelajari fitur mana yang dikorbankan pelanggan lewat pilihan yang mereka buat.",
+      "ja": "選んでもらうことで、顧客が機能をどうトレードオフするかを知る。",
+      "zh": "通过让客户做选择，了解他们如何权衡功能。"
+    }
+  },
+  {
+    "id": "incrementality-testing",
+    "status": "soon",
+    "template": "game",
+    "icon": "🧲",
+    "category": "analytics",
+    "name": {
+      "en": "Incrementality & lift testing",
+      "id": "Uji inkrementalitas & lift",
+      "ja": "インクリメンタリティとリフト検証",
+      "zh": "增量与提升测试"
+    },
+    "description": {
+      "en": "Separate sales your campaign caused from sales that would happen anyway.",
+      "id": "Pisahkan penjualan yang disebabkan kampanye dari yang akan terjadi juga tanpa kampanye.",
+      "ja": "施策が生んだ売上と、放っても起きた売上を切り分ける。",
+      "zh": "区分活动带来的销售与本来就会发生的销售。"
+    }
+  },
+  {
+    "id": "marketing-mix-modeling",
+    "status": "soon",
+    "template": "calculator",
+    "icon": "📺",
+    "category": "analytics",
+    "name": {
+      "en": "Marketing mix modeling",
+      "id": "Pemodelan bauran pemasaran (MMM)",
+      "ja": "マーケティング・ミックス・モデリング",
+      "zh": "营销组合建模（MMM）"
+    },
+    "description": {
+      "en": "Estimate what each channel contributes and shift budget to the best one.",
+      "id": "Perkirakan kontribusi tiap kanal dan geser anggaran ke yang terbaik.",
+      "ja": "各チャネルの貢献を推定し、予算を最良の手段へ振り向ける。",
+      "zh": "估算各渠道的贡献并把预算移向最佳渠道。"
     }
   }
 ];

@@ -1,0 +1,11 @@
+/* Only what is specific to this simulation, scoped under .sn. The select/play sections, how-to box, chips, stage, info button, guide pop-up,
+   slider row and result header come from shared/scenario.css (sc-*): do not restyle them. */
+.sn{--sk-g1:var(--am);--sk-g2:var(--cy)}
+.sn .sn-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:16px;border-radius:18px;background:var(--panel);border:1px solid var(--edge)}
+.sn .sn-card small{color:var(--txt2);font-size:15px}
+.sn-ctl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}
+.sn-ctl .sc-row{flex:1 1 320px}
+.sn-val{min-width:64px;text-align:right;font-weight:800;font-size:20px;color:var(--cy)}
+.sn .sn-main{background:linear-gradient(135deg,var(--am),var(--cy));color:#06122a;border-color:transparent;font-weight:800}
+.sn-res{margin-top:12px;padding:16px 18px;border-radius:18px;background:var(--panel);border:1px solid var(--edge);box-shadow:var(--glow)}
+.sn-cash{border-color:var(--gn);color:var(--gn)}

@@ -1,10 +1,10 @@
-/* Runs every pure-logic engine test: simulations/<id>/tests/engine.js (plain node, no browser, no server).
+/* Runs every pure-logic engine test: simulations/<id>/tests/engine.js and templates/<id>/tests/engine.js (plain node, no browser, no server).
    Usage: node tests/engines.js        Exit code 1 if any test fails. */
 const fs = require('fs'), path = require('path'), { spawnSync } = require('child_process');
-const root = path.join(__dirname, '..', 'simulations');
+const root = path.join(__dirname, '..', 'simulations'), troot = path.join(__dirname, '..', 'templates');
 let fail = 0, n = 0;
-for (const id of fs.readdirSync(root).sort()) {
-  const f = path.join(root, id, 'tests', 'engine.js');
+const suites = fs.readdirSync(root).sort().map(id => [id, path.join(root, id, 'tests', 'engine.js')]).concat(fs.readdirSync(troot).sort().map(id => ['templates/' + id, path.join(troot, id, 'tests', 'engine.js')]));
+for (const [id, f] of suites) {
   if (!fs.existsSync(f)) continue;
   n++;
   const r = spawnSync(process.execPath, [f], { encoding: 'utf8' });

@@ -98,7 +98,7 @@ async function doSim(id) {
 }
 
 (async () => {
-  const ids = target === '--all' ? fs.readdirSync(path.join(root, 'simulations')).filter(d => d !== '_template' && fs.existsSync(path.join(root, 'simulations', d, 'i18n', 'strings.js'))) : [target];
+  const ids = target === '--all' ? fs.readdirSync(path.join(root, 'simulations')).filter(d => fs.existsSync(path.join(root, 'simulations', d, 'i18n', 'strings.js'))) : [target];
   let n = 0; for (const id of ids) n += await doSim(id);
   console.log(n ? 'Done. Review with: git diff' : 'Nothing changed.');
 })().catch(e => { console.error(e.message); process.exit(1); });

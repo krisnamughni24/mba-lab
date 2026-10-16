@@ -8,7 +8,19 @@ MBALAB.i18n.add({
     "count": "{l} live · {s} coming soon",
     "catTitle": "Choose a simulation",
     "catClose": "Close catalog",
-    "filterLbl": "Filter by learning area"
+    "filterLbl": "Filter by learning area",
+    "fType": "Type",
+    "fTopic": "Topic",
+    "fStatus": "Status",
+    "tpl_game": "Game",
+    "tpl_scenario": "Scenario",
+    "tpl_explorer": "Explorer",
+    "tpl_calculator": "Calculator",
+    "tpl_exam": "Exam",
+    "noMatch": "No simulation matches these filters.",
+    "reset": "Reset filters",
+    "showing": "{n} shown",
+    "search": "Search by keyword…"
   },
   "id": {
     "all": "Semua",
@@ -18,7 +30,19 @@ MBALAB.i18n.add({
     "count": "{l} aktif · {s} segera hadir",
     "catTitle": "Pilih simulasi",
     "catClose": "Tutup katalog",
-    "filterLbl": "Saring berdasarkan bidang belajar"
+    "filterLbl": "Saring berdasarkan bidang belajar",
+    "fType": "Tipe",
+    "fTopic": "Topik",
+    "fStatus": "Status",
+    "tpl_game": "Game",
+    "tpl_scenario": "Skenario",
+    "tpl_explorer": "Explorer",
+    "tpl_calculator": "Kalkulator",
+    "tpl_exam": "Ujian",
+    "noMatch": "Tidak ada simulasi yang cocok dengan filter ini.",
+    "reset": "Reset filter",
+    "showing": "{n} ditampilkan",
+    "search": "Cari dengan kata kunci…"
   },
   "ja": {
     "all": "すべて",
@@ -28,7 +52,19 @@ MBALAB.i18n.add({
     "count": "公開中 {l} · 近日公開 {s}",
     "catTitle": "シミュレーションを選ぶ",
     "catClose": "カタログを閉じる",
-    "filterLbl": "学習分野で絞り込み"
+    "filterLbl": "学習分野で絞り込み",
+    "fType": "タイプ",
+    "fTopic": "トピック",
+    "fStatus": "状態",
+    "tpl_game": "ゲーム",
+    "tpl_scenario": "シナリオ",
+    "tpl_explorer": "エクスプローラー",
+    "tpl_calculator": "計算機",
+    "tpl_exam": "試験",
+    "noMatch": "条件に合うシミュレーションはありません。",
+    "reset": "フィルターをリセット",
+    "showing": "{n} 件表示",
+    "search": "キーワードで検索…"
   },
   "zh": {
     "all": "全部",
@@ -38,6 +74,18 @@ MBALAB.i18n.add({
     "count": "{l} 个已上线 · {s} 个即将推出",
     "catTitle": "选择模拟",
     "catClose": "关闭目录",
-    "filterLbl": "按学习领域筛选"
+    "filterLbl": "按学习领域筛选",
+    "fType": "类型",
+    "fTopic": "主题",
+    "fStatus": "状态",
+    "tpl_game": "游戏",
+    "tpl_scenario": "情景",
+    "tpl_explorer": "探索器",
+    "tpl_calculator": "计算器",
+    "tpl_exam": "考试",
+    "noMatch": "没有符合这些筛选条件的模拟。",
+    "reset": "重置筛选",
+    "showing": "显示 {n} 个",
+    "search": "按关键词搜索…"
   }
 });

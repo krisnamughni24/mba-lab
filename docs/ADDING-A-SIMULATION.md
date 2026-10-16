@@ -17,7 +17,7 @@ core/namespace.js MBALAB.util: esc, clamp, sfx
 Use only the subfolders you need. A small simulation is just `sim.js` + `i18n/` + `ui/`.
 
 ## Steps
-1. Copy `simulations/_template/` to `simulations/<your-id>/` (lowercase, hyphens).
+1. Pick a UI template ([UI-TEMPLATES.md](UI-TEMPLATES.md)) and copy its starter `templates/<type>/` to `simulations/<your-id>/` (lowercase, hyphens).
 2. In every file replace `'my-simulation'` with `<your-id>`:
    - `i18n/strings.js` – texts in every language (`en`, `id`, `ja`, `zh`).
    - `ui/template.js` – the HTML of the page. `data-i18n="key"` = translated text, `data-sim-back` = back button.

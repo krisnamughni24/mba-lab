@@ -20,7 +20,7 @@ Small fixes (typos, a translation, a number in a case) can go straight to a pull
 
 ## Adding a simulation (short version)
 
-1. `cp -r simulations/_template simulations/<your-id>` (lowercase, hyphens), then replace `my-simulation` with your id in every file.
+1. `cp -r templates/<type> simulations/<your-id>` (type = game, scenario, explorer, calculator or exam; see docs/UI-TEMPLATES.md) (lowercase, hyphens), then replace `my-simulation` with your id in every file.
 2. Put the maths in `engine/engine.js`: pure functions, no DOM, no `MBALAB`. Write `tests/engine.js` for it (plain `node`, print `engine OK` on success, exit non-zero on failure). `npm run test:engines` picks it up automatically.
 3. Write every visible text in `i18n/strings.js` as `[en, id, ja, zh]`. No hard-coded words in the UI. **You only need to write the English**: add the key as `key: ['English text']`, then run `ANTHROPIC_API_KEY=… npm run translate -- <your-id>` (or `DEEPL_API_KEY=…`). It fills Indonesian, Japanese and Chinese, keeps `{placeholders}` and `<b>` tags, never overwrites existing translations, and you review the result with `git diff`. Machine translation is a draft: have a native speaker check important texts. API keys stay in your shell environment, never in a file.
 4. Build the UI on the shared kit:

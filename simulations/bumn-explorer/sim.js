@@ -13,5 +13,5 @@ MBALAB.sims.files('bumn-explorer', {
     "../../shared/assistant.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/simkit.css", "../../shared/studio.css", "ui/style.css"]
+  styles: ["../../shared/simkit.css", "../../shared/studio.css", "../../shared/explorer.css"]
 });

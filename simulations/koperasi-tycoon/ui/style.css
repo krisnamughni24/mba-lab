@@ -1,10 +1,6 @@
 /* Koperasi: UI. Scoped under .kp. Colours come only from the global theme tokens. */
 .kp{--sk-g1:var(--gn);--sk-g2:var(--cy);}
 .kp h3{margin:0}
-.kp-start,.kp-play{padding:8px clamp(12px,3vw,28px) 0;max-width:1040px;margin:0 auto}
-.kp-card{background:var(--panel);border:1px solid var(--edge);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
-.kp-card h2{font-size:21px}
-.kp-card p{margin:0;color:var(--txt2)}
 .kp .kp-main{background:linear-gradient(90deg,var(--cy),var(--mg));color:#07041c;border:0;font-weight:800;padding:11px 18px;align-self:flex-start}
 .kp .kp-main:hover:not(:disabled){color:#07041c;filter:brightness(1.1)}
 .kp-best{font-size:15.5px;color:var(--am)!important;font-weight:700}
@@ -74,3 +70,5 @@ body.still .kp-panel{animation:none}
 @media(max-width:700px){.kp-modes{grid-template-columns:1fr}.kp-mode{min-height:0}}
 .kp-stage{max-width:min(100%,calc(58vh * 16 / 9));margin:0 auto}
 .kp-note{color:var(--am)}
+.kp-pick{margin-top:4px}
+.kp-start .kp-main{margin-top:14px}

@@ -20,7 +20,7 @@ Engine and numbers, scene or canvas drawing (`scene/`), charts, strings, thumbna
 - Everything must still read at the 390 px phone width.
 
 ## Checklist for a new simulation
-1. Copy `simulations/_template`, keep `sk-root` on the root and the shell markup.
+1. Copy the starter `templates/<type>/` (see UI-TEMPLATES.md), keep `sk-root` on the root and the shell markup.
 2. Game style: reuse the `sg-*` menu, hud, steps, panel and result markup (see `ai-governance/ui/game.js`).
 3. Put only specific rules in your own `style.css`; never copy shared rules.
 4. Run `node tests/smoke.js`, your engine tests, and `node tests/shots.js` before and after changes (`python3 tests/shotdiff.py a b`).

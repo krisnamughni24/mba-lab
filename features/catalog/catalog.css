@@ -79,10 +79,10 @@ body.still .tb *{animation:none!important}
 .sim.live:hover .tb svg{transform:scale(1.08)}
 
 /* simulation picker: larger, easier-to-read type */
-#modal .sg{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+#modal .sg{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 #modal .mw{width:min(1760px,100%);max-width:none}
-@media(max-width:1100px){#modal .sg{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:860px){#modal .sg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1100px){#modal .sg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:860px){#modal .sg{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){#modal .sg{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 @media(max-width:440px){#modal .sg{grid-template-columns:1fr}}
 #modal .mw h3{font-size:clamp(1.3rem,1.1rem + 1vw,1.8rem)}
@@ -99,3 +99,25 @@ body.still .tb *{animation:none!important}
 #modal .sim .ft{min-height:44px;flex-wrap:wrap}
 #modal .sim .ft button{font-size:16px;min-height:42px;padding:0 20px;font-weight:700}
 #modal .sim .by{font-size:14px}
+
+/* filters: marketplace-style left column with collapsible groups (type, topic, status) */
+.cbody{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;align-items:start}
+.filters{position:sticky;top:0;align-self:start;display:flex;flex-direction:column;gap:8px;margin:0;max-height:calc(100vh - 150px);overflow:auto;padding-right:4px}
+.fg{border:1px solid var(--edge);border-radius:12px;background:rgba(255,255,255,.04)}
+.fl{cursor:pointer;list-style:none;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txt2);padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.fl::-webkit-details-marker{display:none}
+.fl::after{content:"▾";transition:transform .2s}
+.fg:not([open]) .fl::after{transform:rotate(-90deg)}
+.fo{display:flex;flex-direction:column;gap:2px;padding:0 6px 8px}
+#modal .fo .chip{display:flex;justify-content:space-between;gap:8px;align-items:center;width:100%;text-align:left;border-radius:8px;border-color:transparent;background:transparent;font-size:14px;padding:6px 8px;min-height:34px;letter-spacing:0}
+#modal .fo .chip:hover{background:rgba(255,255,255,.1)}
+#modal .fo .chip[aria-pressed=true]{background:rgba(77,210,255,.2);border-color:rgba(77,210,255,.6)}
+.fo .chip em{font-style:normal;font-size:12px;color:var(--txt2);font-variant-numeric:tabular-nums}
+.mshow{color:var(--cy);font-weight:700}
+.nomatch{grid-column:1/-1;text-align:center;padding:28px 12px;color:var(--txt2)}
+@media(max-width:760px){.cbody{grid-template-columns:1fr}.filters{position:static;max-height:none}.fg:not([data-g=status]){}}
+/* coming-soon thumbnails are static for now (no looping animation) */
+.sim.soon .tb *{animation:none!important}
+
+.msearch{width:100%;box-sizing:border-box;margin:0 0 12px;padding:10px 14px;border-radius:999px;border:1px solid var(--edge);background:rgba(255,255,255,.06);color:var(--txt);font:inherit;font-size:15px}
+.msearch:focus{outline:2px solid var(--cy);outline-offset:1px}

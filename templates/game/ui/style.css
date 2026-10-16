@@ -1,0 +1,5 @@
+/* Only what is specific to this simulation, scoped under .gm. The menu, level frame, panel, steps, badges and results all come from
+   shared/simkit.css (sg-*), so do not restyle them: a game should look like every other game. */
+.gm{--sk-g1:var(--gn);--sk-g2:var(--cy)}
+.gm .gm-price{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.gm .gm-price output{font-size:26px;font-weight:900;color:var(--cy)}
