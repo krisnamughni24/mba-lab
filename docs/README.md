@@ -10,3 +10,4 @@
 | [CALCULATORS.md](CALCULATORS.md) | build a calculator with the guided SMART frame (`studio.css`), the Bit assistant and report download |
 | [ACCOUNTS.md](ACCOUNTS.md) | set up Google sign-in, Supabase, progress sync and the leaderboard |
 | [FORM-SETUP-GOOGLE-DRIVE.md](FORM-SETUP-GOOGLE-DRIVE.md) | receive submitted ideas in Google Drive |
+| [BRAND.md](BRAND.md) | use the logo, colours, typography and voice consistently |

@@ -108,7 +108,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--edge-hi)
 
 /* loading screen */
 .simload{background:var(--load-bg);color:var(--txt);background-image:var(--load-bg),repeating-linear-gradient(0deg,var(--load-scan) 0 1px,transparent 1px 4px)}
-.sl-logo{border-radius:4px;background:linear-gradient(135deg,var(--cy),var(--mg));color:#04061a;box-shadow:0 0 40px rgba(77,210,255,.7),0 0 70px rgba(255,106,213,.35)}
+.sl-logo{border-radius:18px;background:none;overflow:hidden;box-shadow:0 0 40px rgba(77,210,255,.6),0 0 70px rgba(255,106,213,.3)}.sl-logo img{width:100%;height:100%;display:block}
 .sl-brand,.sl-name,.sl-pct{font-family:var(--f-hd);text-transform:uppercase;letter-spacing:.14em}
 .sl-name{font-size:19px;color:var(--cy);text-shadow:0 0 16px var(--tglow)}
 .sl-pct{font-size:28px}
@@ -208,3 +208,5 @@ button,[role=button],.pill,.cta,.chip,.fab button,.camctl button,.sd button,.sd-
 .fld input,.fld select,.fld textarea{padding:8px 10px}
 .sbm{font-weight:700}
 .about-topics li{line-height:1.3}
+
+.about-brand{display:flex;align-items:center;gap:12px;margin:2px 0 6px}.about-brand img{width:44px;height:44px;border-radius:12px;box-shadow:0 0 18px rgba(77,210,255,.45)}.about-brand b{font-family:var(--f-hd);font-size:var(--fs-sm,14px);letter-spacing:.12em;text-transform:uppercase;color:var(--txt2)}

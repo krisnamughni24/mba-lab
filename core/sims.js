@@ -46,7 +46,7 @@
     screen = document.createElement('div');
     screen.className = 'simload'; screen.id = 'simload'; screen.hidden = true;
     screen.setAttribute('role', 'status'); screen.setAttribute('aria-live', 'polite');
-    screen.innerHTML = '<div class="sl-box"><div class="sl-logo" aria-hidden="true">&#9670;</div><div class="sl-brand">MBA Lab</div>' +
+    screen.innerHTML = '<div class="sl-box"><div class="sl-logo" aria-hidden="true"><img src="assets/logo/icon.svg" alt="" width="64" height="64"></div><div class="sl-brand">MBA Lab</div>' +
       '<div class="sl-title" id="slTitle"></div><div class="sl-name" id="slName"></div>' +
       '<div class="sl-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="slFill"></i></div>' +
       '<div class="sl-pct" id="slPct">0%</div><div class="sl-dev" id="slDev"></div></div>';

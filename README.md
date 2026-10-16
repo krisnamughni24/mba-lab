@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/logo-horizontal-dark.png">
+    <img src="assets/logo/logo-horizontal-light.png" alt="MBA Lab · Mini simulations for business decisions" width="520">
+  </picture>
+</p>
+
 # MBA Lab · Mini Simulations
 
 Interactive business simulations over an animated 3D Jakarta (day and night), in **English, Bahasa Indonesia, 日本語 and 中文**. A static site: no build step, no framework. Open `index.html` or host the folder anywhere.
@@ -68,7 +75,7 @@ docs/               documentation (start at docs/README.md)
 Details: [CONTRIBUTING.md](CONTRIBUTING.md) · [docs/ADDING-A-SIMULATION.md](docs/ADDING-A-SIMULATION.md) · [docs/CALCULATORS.md](docs/CALCULATORS.md)
 
 ## Documentation
-[docs/README.md](docs/README.md) is the index: architecture, the UI kit, calculators, accounts (Supabase + Google sign-in), and the idea form.
+[docs/README.md](docs/README.md) is the index: brand identity, architecture, the UI kit, calculators, accounts (Supabase + Google sign-in), and the idea form.
 
 ## Deploy
 Any static host works. Production runs on **Vercel** (import the repo, framework preset "Other", no build command, output directory `/`). **GitHub Pages** also works: Settings → Pages → branch `main`, folder `/ (root)`. All paths are relative, so sub-paths and custom domains are fine; `.nojekyll` keeps Pages from processing files.

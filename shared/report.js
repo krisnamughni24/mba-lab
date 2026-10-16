@@ -9,10 +9,13 @@
 .rp .sub{color:#64748b;margin:0}.rp table{border-collapse:collapse;width:100%;font-size:12px}.rp th,.rp td{border:1px solid #cbd5e1;padding:5px 8px;text-align:right}.rp th:first-child,.rp td:first-child{text-align:left}
 .rp th{background:#eef2ff}.rp tr.sec th{background:#f8fafc;text-align:left;color:#475569;font-weight:600}.rp p{margin:6px 0}.rp .win{background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:8px 12px;margin:8px 0}
 .rp .l2 th:nth-child(2),.rp .l2 td:nth-child(2){text-align:left}.rp ul{margin:6px 0 6px 18px;padding:0}.rp li{margin:3px 0}.rp .note{color:#64748b;font-size:11px}.rp svg{width:100%;height:auto;display:block;font-family:inherit}.rp h3{font-size:13px;margin:8px 0 4px}`;
+  /* Brand strip at the top of every report (inline SVG: it must work inside the PDF renderer and in a saved HTML file) */
+  const BRAND = `<div class="blk brand"><svg viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="bgR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101a4a"/><stop offset="1" stop-color="#1a0b3a"/></linearGradient><linearGradient id="nR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4dd2ff"/><stop offset="1" stop-color="#ff6ad5"/></linearGradient></defs><rect width="512" height="512" rx="116" fill="url(#bgR)"/><path d="M120 384 L120 168 L256 318 L392 168 L392 384" fill="none" stroke="url(#nR)" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"/><circle cx="120" cy="168" r="34" fill="#fff"/><circle cx="392" cy="168" r="34" fill="#fff"/><circle cx="256" cy="318" r="25" fill="#fff"/></svg><b>MBA Lab</b><span>mba-lab.vercel.app</span></div>`;
+  const BRAND_CSS = `.rp .brand{display:flex;align-items:center;gap:10px;padding:18px 0 14px;margin-bottom:6px;border-bottom:3px solid #a5b4fc}.rp .brand svg{width:30px;height:30px;flex:none}.rp .brand b{font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:#1e3a8a}.rp .brand span{margin-left:auto;color:#64748b;font-size:11px}`;
   async function pdf(bodyHtml) {
     const W = 794, PH = 1123, M = 44, SC = 2, box = document.createElement('div');
     box.style.cssText = `position:fixed;left:-10000px;top:0;width:${W}px;pointer-events:none`;
-    box.innerHTML = `<style>${REPORT_CSS}</style><div class="rp">${bodyHtml}</div>`;
+    box.innerHTML = `<style>${REPORT_CSS}${BRAND_CSS}</style><div class="rp">${BRAND}${bodyHtml}</div>`;
     document.body.appendChild(box);
     try {
       const rp = box.querySelector('.rp'); if (document.fonts && document.fonts.ready) await document.fonts.ready;
@@ -63,7 +66,7 @@
 
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   function html(title, bodyHtml) {
-    return `<!doctype html><html lang="${MBALAB.i18n.get()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>body{margin:0;background:#f1f5f9}.rp{margin:0 auto;box-shadow:0 0 0 1px #e2e8f0}@media print{body{background:#fff}.rp{box-shadow:none;width:auto}}${REPORT_CSS}</style></head><body><div class="rp">${bodyHtml}</div></body></html>`;
+    return `<!doctype html><html lang="${MBALAB.i18n.get()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>body{margin:0;background:#f1f5f9}.rp{margin:0 auto;box-shadow:0 0 0 1px #e2e8f0}@media print{body{background:#fff}.rp{box-shadow:none;width:auto}}${REPORT_CSS}${BRAND_CSS}</style></head><body><div class="rp">${BRAND}${bodyHtml}</div></body></html>`;
   }
   async function save(name, data, mime) {
     try {
@@ -74,5 +77,5 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); return true;
   }
-  MBALAB.report = { css: REPORT_CSS, html, pdf, save };
+  MBALAB.report = { css: REPORT_CSS + BRAND_CSS, html, pdf, save };
 })();

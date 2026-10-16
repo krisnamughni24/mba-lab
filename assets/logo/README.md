@@ -12,3 +12,5 @@ The mark is an "M" drawn as a decision/trend line with three nodes, in the site'
 | `../../favicon.ico` | Legacy browsers (16, 32, 48 px) |
 
 Colours: cyan `#4dd2ff`, magenta `#ff6ad5`, tile `#101a4a` to `#1a0b3a`, nodes white. To change the logo, edit `icon.svg` and regenerate the PNGs and `favicon.ico` from it.
+
+Full brand guide (usage rules, colours, typography, voice): [docs/BRAND.md](../../docs/BRAND.md).

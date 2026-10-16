@@ -6,7 +6,7 @@ MBALAB.feature('about', () => {
     '<div class="ov" id="infoDlg" role="dialog" aria-modal="true" aria-labelledby="infoT"><div class="mw dlgw wide">' +
     '<div class="row" style="justify-content:space-between;margin:0"><h3 id="infoT"></h3>' +
     '<button type="button" data-close data-sfx="close" data-ia="aria-label=close">✕</button></div>' +
-    '<p id="aboutIntro"></p>' +
+    '<div class="about-brand"><img src="assets/logo/icon.svg" alt="" width="44" height="44"><b id="aboutTag"></b></div><p id="aboutIntro"></p>' +
     '<h4 id="aboutApproachH"></h4><p id="aboutApproach"></p>' +
     '<h4 id="aboutTopicsH"></h4><ul class="about-topics" id="aboutTopics"></ul>' +
     '<h4 id="aboutDevH"></h4><ul class="devlist" id="aboutDevs"></ul></div></div>');
@@ -18,6 +18,7 @@ MBALAB.feature('about', () => {
   bind($('aboutApproachH'), () => tr(A.approachTitle));
   bind($('aboutApproach'), () => tr(A.approach));
   bind($('aboutTopicsH'), () => tr(A.topicsTitle));
+  bind($('aboutTag'), () => tr(MBALAB.data.landing.tag));
   bind($('aboutDevH'), () => tr(A.developedBy));
   MBALAB.data.categories.forEach(c => { const li = document.createElement('li'); $('aboutTopics').appendChild(li); bind(li, () => tr(c.name)); });
   /* Credits are built from the catalog: every distinct "developer" in data/simulations.js appears here with the simulations it built.
