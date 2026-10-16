@@ -19,8 +19,8 @@ MBALAB.i18n.add({
     "tpl_exam": "Exam",
     "noMatch": "No simulation matches these filters.",
     "reset": "Reset filters",
-    "showing": "{n} shown",
-    "search": "Search by keyword…"
+    "search": "Search by keyword…",
+    "ofTotal": "of {l} live · {s} coming soon in total"
   },
   "id": {
     "all": "Semua",
@@ -41,8 +41,8 @@ MBALAB.i18n.add({
     "tpl_exam": "Ujian",
     "noMatch": "Tidak ada simulasi yang cocok dengan filter ini.",
     "reset": "Reset filter",
-    "showing": "{n} ditampilkan",
-    "search": "Cari dengan kata kunci…"
+    "search": "Cari dengan kata kunci…",
+    "ofTotal": "dari total {l} aktif · {s} segera hadir"
   },
   "ja": {
     "all": "すべて",
@@ -63,8 +63,8 @@ MBALAB.i18n.add({
     "tpl_exam": "試験",
     "noMatch": "条件に合うシミュレーションはありません。",
     "reset": "フィルターをリセット",
-    "showing": "{n} 件表示",
-    "search": "キーワードで検索…"
+    "search": "キーワードで検索…",
+    "ofTotal": "全体：公開中 {l} · 近日公開 {s}"
   },
   "zh": {
     "all": "全部",
@@ -85,7 +85,7 @@ MBALAB.i18n.add({
     "tpl_exam": "考试",
     "noMatch": "没有符合这些筛选条件的模拟。",
     "reset": "重置筛选",
-    "showing": "显示 {n} 个",
-    "search": "按关键词搜索…"
+    "search": "按关键词搜索…",
+    "ofTotal": "总计：{l} 个已上线 · {s} 个即将推出"
   }
 });

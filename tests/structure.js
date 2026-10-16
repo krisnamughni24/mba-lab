@@ -15,7 +15,7 @@ const run = (f, keep) => { const M = { data: {}, sims: { files(id, o) { (M._file
 
 /* the five UI templates */
 const TPL = Object.fromEntries(run('data/ui-templates.js', true).data.templates.map(x => [x.id, x]));
-for (const x of Object.values(TPL)) { if (!fs.existsSync(path.join(root, x.starter, 'sim.js'))) bad.push(`template ${x.id}: starter ${x.starter}/ is missing`); for (const k of x.kits) if (!fs.existsSync(path.join(root, k))) bad.push(`template ${x.id}: kit ${k} does not exist`); }
+for (const x of Object.values(TPL)) { for (const st of [x.starter, ...(x.variants || [])]) if (!fs.existsSync(path.join(root, st, 'sim.js'))) bad.push(`template ${x.id}: starter ${st}/ is missing`); for (const k of x.kits) if (!fs.existsSync(path.join(root, k))) bad.push(`template ${x.id}: kit ${k} does not exist`); }
 
 /* catalog */
 const M = { data: {} }; vm.runInNewContext(rd('data/simulations.js'), { MBALAB: M, window: {} });
@@ -33,7 +33,7 @@ for (const s of sims) {
 /* live simulations + the starters: sim.js files exist, kits are loaded, required classes are present */
 const live = sims.filter(s => s.status === 'live').map(s => s.id);
 const units = live.map(id => ({ id, dir: `simulations/${id}`, tpl: (sims.find(s => s.id === id) || {}).template }))
-  .concat(Object.values(TPL).map(x => ({ id: x.starter, dir: x.starter, tpl: x.id })));
+  .concat(Object.values(TPL).flatMap(x => [x.starter, ...(x.variants || [])].map(st => ({ id: st, dir: st, tpl: x.id }))));
 const hasClass = (src, c) => new RegExp('(?<![\\w-])' + c + '(?![\\w-])').test(src);
 for (const { id, dir, tpl } of units) {
   const sj = dir + '/sim.js';

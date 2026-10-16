@@ -28,12 +28,12 @@ MBALAB.sims.define('disc-crisis-room', {
       $('#dcLevel').hidden = true; $('#dcMenu').hidden = false;
       const r = rank(st.xp), nx = RANKS[r + 1], pc = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
       const pf = allDone() ? total() : null;
-      $('#dcMenu').innerHTML = `<div class="sg-hero"><div><h2>${T('startT')}</h2><p>${T('startSub')}</p></div>
-        <div class="sg-rank"><span class="sg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sg-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
-        <div class="sg-levels dc-levels">${LEVELS.map((L, i) => { const ok = unlocked(i), d = st.done[i];
-          return `<button type="button" class="sg-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="sg-lvi" aria-hidden="true">${L.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('lv' + (i + 1) + 'n')}</b><em>${T('lv' + (i + 1) + 'd')}</em>${ok ? (d ? `<span class="dc-code">${T('lvRead', { code: d.code })}</span>` : '') + `<span class="sg-go">${d ? '↻' : '▶'}</span>` : '<span class="sg-lock" aria-hidden="true">🔒 ' + T('lvLock') + '</span>'}</button>`; }).join('')}</div>
-        <div class="dc-pf">${pf ? `<h3 class="sg-h3">${T('pfT')}: <span class="dc-badge">${pf.code}</span></h3><button type="button" class="sg-btn" data-a="profile">${T('seeProfile')}</button>` : `<p class="sg-note">${T('pfHint')}</p>`}</div>
-        <h3 class="sg-h3">${T('bdT')}</h3><div class="sg-badges">${BADGES.map(b => `<div class="sg-bd ${st.badges[b] ? 'on' : ''}" title="${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}"><span>${BI[b]}</span><b>${b.length === 1 ? word(b) : T('bd_' + b)}</b><small>${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}</small></div>`).join('')}</div>`;
+      $('#dcMenu').innerHTML = `<div class="sc-hero"><div><h2>${T('startT')}</h2><p>${T('startSub')}</p></div>
+        <div class="sc-rank"><span class="sc-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sc-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
+        <div class="sc-levels dc-levels">${LEVELS.map((L, i) => { const ok = unlocked(i), d = st.done[i];
+          return `<button type="button" class="sc-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="sc-lvi" aria-hidden="true">${L.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('lv' + (i + 1) + 'n')}</b><em>${T('lv' + (i + 1) + 'd')}</em>${ok ? (d ? `<span class="dc-code">${T('lvRead', { code: d.code })}</span>` : '') + `<span class="sc-go">${d ? '↻' : '▶'}</span>` : '<span class="sc-lock" aria-hidden="true">🔒 ' + T('lvLock') + '</span>'}</button>`; }).join('')}</div>
+        <div class="dc-pf">${pf ? `<h3 class="sc-h3">${T('pfT')}: <span class="dc-badge">${pf.code}</span></h3><button type="button" class="sc-btn" data-a="profile">${T('seeProfile')}</button>` : `<p class="sc-memo">${T('pfHint')}</p>`}</div>
+        <h3 class="sc-h3">${T('bdT')}</h3><div class="sc-badges">${BADGES.map(b => `<div class="sc-bd ${st.badges[b] ? 'on' : ''}" title="${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}"><span>${BI[b]}</span><b>${b.length === 1 ? word(b) : T('bd_' + b)}</b><small>${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 
     /* ---------- level ---------- */
@@ -46,7 +46,7 @@ MBALAB.sims.define('disc-crisis-room', {
     }
     function say(txt) { const b = $('#dcSay'); b.innerHTML = `<b>🧑‍💼</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); fitStage(); }
     function pills() { $('#dcSteps').innerHTML = [1, 2, 3].map(i => `<li class="${step === i ? 'on' : step > i ? 'done' : ''}"><span>${step > i ? '✓' : i}</span>${i < 3 ? T('stCrisis', { n: i }) : T('stRead')}</li>`).join(''); }
-    function hud() { const r = rank(st.xp); $('#dcHud').innerHTML = `<button type="button" class="sg-back" data-a="menu">← ${T('toMenu')}</button><b class="sg-lt">${T('lvN', { n: li + 1 })} · ${LEVELS[li].icon} ${T('lv' + (li + 1) + 'n')}</b><span class="sg-chipx">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
+    function hud() { const r = rank(st.xp); $('#dcHud').innerHTML = `<button type="button" class="sc-back" data-a="menu">← ${T('toMenu')}</button><b class="sc-lt">${T('lvN', { n: li + 1 })} · ${LEVELS[li].icon} ${T('lv' + (li + 1) + 'n')}</b><span class="sc-chip">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
     const meters = () => `<div class="dc-meters">${S.map(k => `<div class="dc-meter">${T(METER[k])}<i><b data-m="${k}" style="width:${gs.meters[k]}%"></b></i></div>`).join('')}</div>`;
     const setMeters = () => S.forEach(k => { const b = $('#dcPanel [data-m="' + k + '"]'); b && (b.style.width = gs.meters[k] + '%'); });
 
@@ -54,7 +54,7 @@ MBALAB.sims.define('disc-crisis-room', {
       const n = gs.scene, i = LEVELS[li].scenes[n], mv = gs.step, ord = gs.orders[n][mv], pre = 's' + i + (mv ? 'b' : 'a');
       step = n + 1; hud(); pills(); say(T(n ? 'say2' : 'say1'));
       scene.set({ icon: E.ICONS[i], resolved: false, alarm: mv ? .5 : 1 });
-      $('#dcPanel').innerHTML = `${meters()}<div class="sg-brief"><b>${E.ICONS[i]} ${t('s' + i + 't')}</b><p class="dc-sit">${t('s' + i + 's')}</p><p class="dc-q">${T(mv ? 'nextStep' : 'firstMove')}</p></div>
+      $('#dcPanel').innerHTML = `${meters()}<div class="sc-brief"><b>${E.ICONS[i]} ${t('s' + i + 't')}</b><p class="dc-sit">${t('s' + i + 's')}</p><p class="dc-q">${T(mv ? 'nextStep' : 'firstMove')}</p></div>
         <div class="dc-opts">${ord.map((idx, pos) => `<button type="button" class="dc-opt" data-i="${idx}"><kbd>${pos + 1}</kbd><span>${t(pre + idx)}</span></button>`).join('')}</div>`;
       busy = false;
     }
@@ -82,11 +82,11 @@ MBALAB.sims.define('disc-crisis-room', {
     function bars(pct) { return `<div class="dc-bars">${S.map(k => `<div class="dc-bar"><span>${word(k)}</span><i><b style="width:${pct[k]}%"></b></i><span>${pct[k]}%</span></div>`).join('')}</div>`; }
     function renderRead() {
       const r = read, P = r.primary, last = li >= LEVELS.length - 1;
-      $('#dcPanel').innerHTML = `<div class="sg-res"><div class="sg-big"><span class="dc-badge">${P}</span><b>${sn(P)}</b><em class="sg-xpg">${T('xpGain', { n: xpRun })}</em></div>
-        <h3 class="sg-h3">${T('rsLevel')}</h3><p class="sg-note">${t('st' + P + 'tag')}</p>${bars(r.pct)}
-        <p class="sg-note">${T('lvNote')}</p>
-        ${newBadges.length ? `<div class="sg-new">${newBadges.map(b => `<div class="sg-bd on pop"><span>${BI[b]}</span><b>${b.length === 1 ? word(b) : T('bd_' + b)}</b><small>${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}</small></div>`).join('')}</div>` : ''}
-        <div class="sg-foot"><button type="button" class="sg-btn" data-a="again">${T('again')}</button>${!last ? `<button type="button" class="sg-main inl" data-a="next">${T('nextLv')}</button>` : allDone() ? `<button type="button" class="sg-main inl" data-a="profile">${T('seeProfile')}</button>` : ''}<button type="button" class="sg-btn ghost" data-a="menu">${T('toLevels')}</button></div></div>`;
+      $('#dcPanel').innerHTML = `<div class="sc-res"><div class="sc-big"><span class="dc-badge">${P}</span><b>${sn(P)}</b><em class="sc-xpg">${T('xpGain', { n: xpRun })}</em></div>
+        <h3 class="sc-h3">${T('rsLevel')}</h3><p class="sc-memo">${t('st' + P + 'tag')}</p>${bars(r.pct)}
+        <p class="sc-memo">${T('lvNote')}</p>
+        ${newBadges.length ? `<div class="sc-new">${newBadges.map(b => `<div class="sc-bd on pop"><span>${BI[b]}</span><b>${b.length === 1 ? word(b) : T('bd_' + b)}</b><small>${T(b.length === 1 ? 'bddStyle' : 'bdd_' + b)}</small></div>`).join('')}</div>` : ''}
+        <div class="sc-foot"><button type="button" class="sc-btn" data-a="again">${T('again')}</button>${!last ? `<button type="button" class="sc-main inl" data-a="next">${T('nextLv')}</button>` : allDone() ? `<button type="button" class="sc-main inl" data-a="profile">${T('seeProfile')}</button>` : ''}<button type="button" class="sc-btn ghost" data-a="menu">${T('toLevels')}</button></div></div>`;
       $('#dcSr') && ($('#dcSr').textContent = T('rsLevel') + ': ' + P);
     }
 
@@ -115,19 +115,19 @@ MBALAB.sims.define('disc-crisis-room', {
       const r = total(), P = r.primary, Sx = r.secondary;
       const others = S.filter(k => k !== P).map(k => `<li><b>${sn(k)}:</b> ${t('st' + k + 'wrk')}</li>`).join('');
       say(T('rsPrimary') + ': ' + (r.blend ? T('rsBlend', { a: sn(P), b: sn(Sx) }) : sn(P)));
-      $('#dcPanel').innerHTML = `<div class="sg-res"><h3 class="sg-h3">${T('rsTitle')}</h3>
+      $('#dcPanel').innerHTML = `<div class="sc-res"><h3 class="sc-h3">${T('rsTitle')}</h3>
         <div class="dc-rtop"><canvas id="dcRadar" aria-label="DISC radar"></canvas><div>
           <p><span class="dc-badge">${r.code}</span> <b>${r.blend ? T('rsBlend', { a: sn(P), b: sn(Sx) }) : sn(P)}</b></p>
-          <p class="sg-note">${t('st' + P + 'tag')}${r.blend ? '<br>' + t('st' + Sx + 'tag') : ''}</p>${bars(r.pct)}</div></div>
+          <p class="sc-memo">${t('st' + P + 'tag')}${r.blend ? '<br>' + t('st' + Sx + 'tag') : ''}</p>${bars(r.pct)}</div></div>
         <div class="dc-grid"><div><h4>${T('rsStr')}</h4><p>${t('st' + P + 'str')}</p></div><div><h4>${T('rsPrs')}</h4><p>${t('st' + P + 'prs')}</p></div>
           <div><h4>${T('rsBld')}</h4><p>${t('st' + P + 'bld')}</p></div><div><h4>${T('rsWrk')}</h4><p>${t('st' + P + 'wrk')}</p></div></div>
         <div class="dc-oth"><h4>${T('rsOthers')}</h4><ul>${others}</ul></div>
-        <p class="sg-note">${T('rsNote')}</p>
-        <div class="sg-foot"><button type="button" class="sg-btn" data-a="menu">${T('toLevels')}</button></div></div>`;
+        <p class="sc-memo">${T('rsNote')}</p>
+        <div class="sc-foot"><button type="button" class="sc-btn" data-a="menu">${T('toLevels')}</button></div></div>`;
       radar($('#dcRadar'), r);
     }
 
-    function confetti() { const box = $('#dcLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; if (still()) return; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'sg-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${Math.round((Math.random() - .5) * 240)}px;--r:${Math.round(Math.random() * 720)}deg;animation-delay:${(Math.random() * .3).toFixed(2)}s`; box.appendChild(e); setTimeout(() => e.remove(), 2800); } }
+    function confetti() { const box = $('#dcLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; if (still()) return; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'sc-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${Math.round((Math.random() - .5) * 240)}px;--r:${Math.round(Math.random() * 720)}deg;animation-delay:${(Math.random() * .3).toFixed(2)}s`; box.appendChild(e); setTimeout(() => e.remove(), 2800); } }
 
     /* ---------- events ---------- */
     host.addEventListener('click', e => {
@@ -153,7 +153,7 @@ MBALAB.sims.define('disc-crisis-room', {
     function loop() { if (visible && gs && !read && !profile && !still() && !document.hidden) scene.start(); else if (scene.running) scene.stop(); else scene.draw(); }
     document.addEventListener('visibilitychange', loop);
     function fitStage() {
-      const L = $('#dcLevel'); if (!L || L.hidden) return; const col = $('.sg-left'), sy = $('#dcSay'), sg = $('#dcStage'), colW = col.clientWidth;
+      const L = $('#dcLevel'); if (!L || L.hidden) return; const col = $('.sc-left'), sy = $('#dcSay'), sg = $('#dcStage'), colW = col.clientWidth;
       const mobile = window.matchMedia('(max-width:900px)').matches, availH = mobile ? Math.min(L.clientHeight * .5, colW * 9 / 16) : col.clientHeight - sy.offsetHeight - 12;
       const w = Math.max(220, Math.min(colW, availH * 16 / 9)); sg.style.width = Math.floor(w) + 'px';
     }

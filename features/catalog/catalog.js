@@ -41,8 +41,7 @@ MBALAB.feature('catalog', () => {
     }).join('') + '</div></details>';
 
   const render = () => {
-    const live = simulations.filter(s => s.status === 'live').length;
-    $('mcount').textContent = t('count', { l: live, s: simulations.length - live });
+    const liveAll = simulations.filter(s => s.status === 'live').length;
     const all = { id: 'all', label: t('all') };
     $('chips').innerHTML =
       group('type', t('fType'), [all, ...TYPES.map(x => ({ id: x, label: t('tpl_' + x) }))]) +
@@ -53,8 +52,11 @@ MBALAB.feature('catalog', () => {
     const ordered = simulations
       .filter(s => matches(s))
       .sort((a, b) => ((b.status === 'live') - (a.status === 'live')) || byName(a, b));
+    /* the count follows the filters; the totals stay visible next to it whenever a filter or search is active */
     const filtered = F.q || F.type !== 'all' || F.cat !== 'all' || F.status !== 'all';
-    $('mshow').textContent = filtered ? t('showing', { n: ordered.length }) : '';
+    const lv = ordered.filter(s => s.status === 'live').length;
+    $('mcount').textContent = t('count', { l: lv, s: ordered.length - lv });
+    $('mshow').textContent = filtered ? t('ofTotal', { l: liveAll, s: simulations.length - liveAll }) : '';
     $('sg').innerHTML = ordered.length ? ordered.map(card).join('')
       : '<div class="nomatch"><p>' + t('noMatch') + '</p><button type="button" class="chip" data-f="reset">' + t('reset') + '</button></div>';
   };

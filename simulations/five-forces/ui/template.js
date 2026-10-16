@@ -7,17 +7,17 @@ MBALAB.sims.define('five-forces', {
     <div class="sk-tabs" role="tablist"><button type="button" role="tab" class="on" aria-selected="true" data-tab="game" data-i18n="tabGame"></button><button type="button" role="tab" aria-selected="false" data-tab="lab" data-i18n="tabLab"></button></div>
   </header>
   <div class="sk-scroll" id="ffScroll">
-    <div class="sg-root" id="fgGame">
-      <div class="sg-menu" id="fgMenu"></div>
-      <div class="sg-level" id="fgLevel" hidden>
-        <div class="sg-hud" id="fgHud"></div>
-        <ol class="sg-steps" id="fgSteps"></ol>
-        <div class="sg-cols">
-          <div class="sg-left">
-            <div class="sg-stage" id="fgStage"><canvas id="fgCv" width="960" height="540" role="img" data-ia="aria-label=stageAria"></canvas><div class="sg-labels" id="fgLabels"></div><div class="sg-kept" id="fgKept"></div></div>
-            <div class="sg-say" id="fgSay" aria-live="polite"></div>
+    <div class="sc-root" id="fgGame">
+      <div class="sc-select" id="fgMenu"></div>
+      <div class="sc-play" id="fgLevel" hidden>
+        <div class="sc-hud" id="fgHud"></div>
+        <ol class="sc-steps" id="fgSteps"></ol>
+        <div class="sc-cols">
+          <div class="sc-left">
+            <div class="sc-stage" id="fgStage"><canvas id="fgCv" width="960" height="540" role="img" data-ia="aria-label=stageAria"></canvas><div class="sc-labels" id="fgLabels"></div><div class="sc-kept" id="fgKept"></div></div>
+            <div class="sc-say" id="fgSay" aria-live="polite"></div>
           </div>
-          <div class="sg-panel" id="fgPanel"></div>
+          <div class="sc-panel" id="fgPanel"></div>
         </div>
       </div>
     </div>

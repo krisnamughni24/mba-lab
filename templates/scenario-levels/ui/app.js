@@ -15,18 +15,18 @@ MBALAB.sims.define('my-simulation', {
     let li = 0, step = 1, price = 8, out = null, xpRun = 0;
     const rank = xp => RANKS.reduce((r, x, i) => xp >= x ? i : r, 0);
     const unlocked = i => i === 0 || (st.stars[i - 1] || 0) >= 1;
-    const starsHtml = n => `<span class="sg-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
+    const starsHtml = n => `<span class="sc-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
     const BADGES = ['first', 'star'], BI = { first: '🍋', star: '🌟' };
 
     /* ---------- menu: hero + rank, levels, badges ---------- */
     function menu() {
       $('#gmLevel').hidden = true; $('#gmMenu').hidden = false;
       const r = rank(st.xp), nx = RANKS[r + 1], pc = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
-      $('#gmMenu').innerHTML = `<div class="sg-hero"><div><h2>${T('hero')}</h2><p>${T('heroSub')}</p></div>
-        <div class="sg-rank"><span class="sg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sg-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
-        <div class="sg-levels">${MARKETS.map((m, i) => { const ok = unlocked(i), n = st.stars[i] || 0;
-          return `<button type="button" class="sg-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'}><span class="sg-lvi" aria-hidden="true">${m.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('lv' + (i + 1))}</b><em>${T('lv' + (i + 1) + 'd')}</em>${ok ? starsHtml(n) + `<span class="sg-go">${n ? '↻' : '▶'}</span>` : `<span class="sg-lock">🔒 ${T('lvLock')}</span>`}</button>`; }).join('')}</div>
-        <h3 class="sg-h3">${T('bdT')}</h3><div class="sg-badges">${BADGES.map(b => `<div class="sg-bd ${st.badges[b] ? 'on' : ''}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
+      $('#gmMenu').innerHTML = `<div class="sc-hero"><div><h2>${T('hero')}</h2><p>${T('heroSub')}</p></div>
+        <div class="sc-rank"><span class="sc-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sc-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
+        <div class="sc-levels">${MARKETS.map((m, i) => { const ok = unlocked(i), n = st.stars[i] || 0;
+          return `<button type="button" class="sc-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'}><span class="sc-lvi" aria-hidden="true">${m.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('lv' + (i + 1))}</b><em>${T('lv' + (i + 1) + 'd')}</em>${ok ? starsHtml(n) + `<span class="sc-go">${n ? '↻' : '▶'}</span>` : `<span class="sc-lock">🔒 ${T('lvLock')}</span>`}</button>`; }).join('')}</div>
+        <h3 class="sc-h3">${T('bdT')}</h3><div class="sc-badges">${BADGES.map(b => `<div class="sc-bd ${st.badges[b] ? 'on' : ''}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 
     /* ---------- level: hud, steps, stage, say, panel ---------- */
@@ -34,19 +34,19 @@ MBALAB.sims.define('my-simulation', {
     function say(txt) { const b = $('#gmSay'); b.innerHTML = `<b>🧑‍🍳</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
     function render() {
       const r = rank(st.xp);
-      $('#gmHud').innerHTML = `<button type="button" class="sg-back" data-a="menu">← ${T('toMenu')}</button><b class="sg-lt">${T('lvN', { n: li + 1 })} · ${MARKETS[li].icon} ${T('lv' + (li + 1))}</b><span class="sg-chipx">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`;
+      $('#gmHud').innerHTML = `<button type="button" class="sc-back" data-a="menu">← ${T('toMenu')}</button><b class="sc-lt">${T('lvN', { n: li + 1 })} · ${MARKETS[li].icon} ${T('lv' + (li + 1))}</b><span class="sc-chip">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`;
       $('#gmSteps').innerHTML = [1, 2].map(i => `<li class="${step === i ? 'on' : step > i ? 'done' : ''}"><span>${step > i ? '✓' : i}</span>${T('st' + i)}</li>`).join('');
       const P = $('#gmPanel'), m = MARKETS[li];
       if (step === 1) {
         say(T('say1'));
         P.innerHTML = `<div class="gm-price"><label for="gmP">${T('lv' + (li + 1))}</label><output id="gmOut">${T('price', { p: rp(price) })}</output></div>
-          <div class="sg-sl"><input type="range" id="gmP" min="${m.c}" max="${Math.floor(m.a / m.b)}" step="0.5" value="${price}"></div>
-          <div class="sg-foot"><button type="button" class="sg-main go" data-a="sell">${T('sell')}</button></div>`;
+          <div class="sc-sl"><input type="range" id="gmP" min="${m.c}" max="${Math.floor(m.a / m.b)}" step="0.5" value="${price}"></div>
+          <div class="sc-foot"><button type="button" class="sc-main go" data-a="sell">${T('sell')}</button></div>`;
       } else {
         say(T('say2'));
-        P.innerHTML = `<div class="sg-res"><div class="sg-big">${starsHtml(out.n)}<b>${T('score', { s: out.score })}</b><em class="sg-xpg">${T('xpLbl', { n: xpRun })}</em></div>
-          <div class="sg-kpis"><div><small>${T('profit')}</small><b>${rp(out.profit)}</b></div><div class="hi"><small>${T('best')}</small><b>${rp(out.best)}</b></div><div><small>${T('priceL')}</small><b>${rp(price)}</b></div></div>
-          <div class="sg-foot"><button type="button" class="sg-btn" data-a="again">${T('again')}</button>${out.n >= 1 && li < MARKETS.length - 1 ? `<button type="button" class="sg-main inl" data-a="next">${T('next')}</button>` : ''}<button type="button" class="sg-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
+        P.innerHTML = `<div class="sc-res"><div class="sc-big">${starsHtml(out.n)}<b>${T('score', { s: out.score })}</b><em class="sc-xpg">${T('xpLbl', { n: xpRun })}</em></div>
+          <div class="sc-kpis"><div><small>${T('profit')}</small><b>${rp(out.profit)}</b></div><div class="hi"><small>${T('best')}</small><b>${rp(out.best)}</b></div><div><small>${T('priceL')}</small><b>${rp(price)}</b></div></div>
+          <div class="sc-foot"><button type="button" class="sc-btn" data-a="again">${T('again')}</button>${out.n >= 1 && li < MARKETS.length - 1 ? `<button type="button" class="sc-main inl" data-a="next">${T('next')}</button>` : ''}<button type="button" class="sc-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
       }
       draw();
     }

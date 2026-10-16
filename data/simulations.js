@@ -1,7 +1,7 @@
 /* Simulation registry: one entry per simulation, shown in the catalog.
    status "live"  -> opens a microsite from simulations/<id>/ (its file list is simulations/<id>/sim.js; loaded on demand)
    status "soon"  -> shown as "Coming soon", no files needed yet.
-   template (required) -> one of the five UI templates in data/ui-templates.js (game, scenario, explorer, calculator, exam).
+   template (required) -> one of the four UI templates in data/ui-templates.js (scenario, explorer, calculator, exam).
                            Live: tests/structure.js checks that the simulation follows it. Soon: the planned type (used by the catalog filter). See docs/UI-TEMPLATES.md
    developer (optional) -> the credit on the card, the loading screen and the Info window. Without it the main developer
                            from data/about.js is used. A new name appears in Info automatically, listed with its simulations.
@@ -29,7 +29,7 @@ MBALAB.data.simulations = [
   {
     "id": "disc-crisis-room",
     "status": "live",
-    "template": "game",
+    "template": "scenario",
     "icon": "🎭",
     "category": "leadership",
     "name": {
@@ -258,7 +258,7 @@ MBALAB.data.simulations = [
   {
     "id": "five-forces",
     "status": "live",
-    "template": "game",
+    "template": "scenario",
     "icon": "🛡️",
     "category": "strategy-finance",
     "name": {
@@ -277,7 +277,7 @@ MBALAB.data.simulations = [
   {
     "id": "van-westendorp",
     "status": "live",
-    "template": "game",
+    "template": "scenario",
     "icon": "🏷️",
     "category": "marketing",
     "name": {
@@ -942,7 +942,7 @@ MBALAB.data.simulations = [
   {
     "id": "game-theory-price-war",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "♟️",
     "category": "decision-negotiation",
     "name": {
@@ -961,7 +961,7 @@ MBALAB.data.simulations = [
   {
     "id": "auction-bidding",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🔨",
     "category": "decision-negotiation",
     "name": {
@@ -980,7 +980,7 @@ MBALAB.data.simulations = [
   {
     "id": "cognitive-biases",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🧠",
     "category": "decision-negotiation",
     "name": {
@@ -1417,7 +1417,7 @@ MBALAB.data.simulations = [
   {
     "id": "ab-testing",
     "status": "live",
-    "template": "game",
+    "template": "scenario",
     "icon": "🔬",
     "category": "analytics",
     "name": {
@@ -1778,7 +1778,7 @@ MBALAB.data.simulations = [
   {
     "id": "selling-race",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🏁",
     "category": "marketing",
     "name": {
@@ -2500,7 +2500,7 @@ MBALAB.data.simulations = [
   {
     "id": "ai-governance",
     "status": "live",
-    "template": "game",
+    "template": "scenario",
     "icon": "🛡️",
     "category": "analytics",
     "name": {
@@ -2519,7 +2519,7 @@ MBALAB.data.simulations = [
   {
     "id": "self-awareness-values-purpose",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🧭",
     "category": "leadership",
     "name": {
@@ -2538,7 +2538,7 @@ MBALAB.data.simulations = [
   {
     "id": "inner-outer-mirror",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🪞",
     "category": "leadership",
     "name": {
@@ -2557,7 +2557,7 @@ MBALAB.data.simulations = [
   {
     "id": "ikigai",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🌸",
     "category": "leadership",
     "name": {
@@ -2576,7 +2576,7 @@ MBALAB.data.simulations = [
   {
     "id": "mbti-types",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🧩",
     "category": "leadership",
     "name": {
@@ -2595,7 +2595,7 @@ MBALAB.data.simulations = [
   {
     "id": "enneagram",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🔯",
     "category": "leadership",
     "name": {
@@ -2614,7 +2614,7 @@ MBALAB.data.simulations = [
   {
     "id": "strengthsfinder",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "💪",
     "category": "leadership",
     "name": {
@@ -2633,7 +2633,7 @@ MBALAB.data.simulations = [
   {
     "id": "big-five-ocean",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🌊",
     "category": "leadership",
     "name": {
@@ -2652,7 +2652,7 @@ MBALAB.data.simulations = [
   {
     "id": "four-drives-motivation",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🔥",
     "category": "leadership",
     "name": {
@@ -2671,7 +2671,7 @@ MBALAB.data.simulations = [
   {
     "id": "ceo-excellence",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "👑",
     "category": "leadership",
     "name": {
@@ -3013,7 +3013,7 @@ MBALAB.data.simulations = [
   {
     "id": "theory-of-choice",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🎯",
     "category": "marketing",
     "name": {
@@ -3032,7 +3032,7 @@ MBALAB.data.simulations = [
   {
     "id": "theory-of-use",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🛠️",
     "category": "marketing",
     "name": {
@@ -3127,7 +3127,7 @@ MBALAB.data.simulations = [
   {
     "id": "customer-persona",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🧑‍🤝‍🧑",
     "category": "marketing",
     "name": {
@@ -3146,7 +3146,7 @@ MBALAB.data.simulations = [
   {
     "id": "jobs-to-be-done",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🔧",
     "category": "marketing",
     "name": {
@@ -3374,7 +3374,7 @@ MBALAB.data.simulations = [
   {
     "id": "poka-yoke",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🛡️",
     "category": "operations",
     "name": {
@@ -3526,7 +3526,7 @@ MBALAB.data.simulations = [
   {
     "id": "five-whys",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "❓",
     "category": "decision-negotiation",
     "name": {
@@ -3659,7 +3659,7 @@ MBALAB.data.simulations = [
   {
     "id": "data-visualization",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🎨",
     "category": "analytics",
     "name": {
@@ -3754,7 +3754,7 @@ MBALAB.data.simulations = [
   {
     "id": "cluster-analysis",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🫧",
     "category": "analytics",
     "name": {
@@ -3849,7 +3849,7 @@ MBALAB.data.simulations = [
   {
     "id": "incrementality-testing",
     "status": "soon",
-    "template": "game",
+    "template": "scenario",
     "icon": "🧲",
     "category": "analytics",
     "name": {

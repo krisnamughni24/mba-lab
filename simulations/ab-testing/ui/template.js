@@ -7,17 +7,17 @@ MBALAB.sims.define('ab-testing', {
     <div class="sk-tabs" role="tablist"><button type="button" role="tab" class="on" aria-selected="true" data-tab="game" data-i18n="tabGame"></button><button type="button" role="tab" aria-selected="false" data-tab="lab" data-i18n="tabLab"></button></div>
   </header>
   <div class="sk-scroll" id="abScroll">
-    <div class="sg-root" id="agGame">
-      <div class="sg-menu" id="agMenu"></div>
-      <div class="sg-level" id="agLevel" hidden>
-        <div class="sg-hud" id="agHud"></div>
-        <ol class="sg-steps" id="agSteps"></ol>
-        <div class="sg-cols">
-          <div class="sg-left">
-            <div class="sg-stage" id="agStage"><canvas id="agCv" width="960" height="540" role="img" data-ia="aria-label=stageAria"></canvas></div>
-            <div class="sg-say" id="agSay" aria-live="polite"></div>
+    <div class="sc-root" id="agGame">
+      <div class="sc-select" id="agMenu"></div>
+      <div class="sc-play" id="agLevel" hidden>
+        <div class="sc-hud" id="agHud"></div>
+        <ol class="sc-steps" id="agSteps"></ol>
+        <div class="sc-cols">
+          <div class="sc-left">
+            <div class="sc-stage" id="agStage"><canvas id="agCv" width="960" height="540" role="img" data-ia="aria-label=stageAria"></canvas></div>
+            <div class="sc-say" id="agSay" aria-live="polite"></div>
           </div>
-          <div class="sg-panel" id="agPanel"></div>
+          <div class="sc-panel" id="agPanel"></div>
         </div>
       </div>
     </div>

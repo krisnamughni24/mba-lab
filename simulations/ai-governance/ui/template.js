@@ -7,17 +7,17 @@ MBALAB.sims.define('ai-governance', {
     <div class="sk-tabs" role="tablist"><button type="button" role="tab" class="on" aria-selected="true" data-tab="game" data-i18n="tabGame"></button><button type="button" role="tab" aria-selected="false" data-tab="lab" data-i18n="tabLab"></button></div>
   </header>
   <div class="sk-scroll" id="gvScroll">
-    <div class="sg-root" id="gxGame">
-      <div class="sg-menu" id="gxMenu"></div>
-      <div class="sg-level" id="gxLevel" hidden>
-        <div class="sg-hud" id="gxHud"></div>
-        <ol class="sg-steps" id="gxSteps"></ol>
-        <div class="sg-cols">
-          <div class="sg-left">
-            <div class="sg-stage" id="gxStage"><canvas id="gxCv" width="960" height="540" role="img" data-ia="aria-label=stageAria"></canvas></div>
-            <div class="sg-say" id="gxSay" aria-live="polite"></div>
+    <div class="sc-root" id="gxGame">
+      <div class="sc-select" id="gxMenu"></div>
+      <div class="sc-play" id="gxLevel" hidden>
+        <div class="sc-hud" id="gxHud"></div>
+        <ol class="sc-steps" id="gxSteps"></ol>
+        <div class="sc-cols">
+          <div class="sc-left">
+            <div class="sc-stage" id="gxStage"><canvas id="gxCv" width="960" height="540" role="img" data-ia="aria-label=stageAria"></canvas></div>
+            <div class="sc-say" id="gxSay" aria-live="polite"></div>
           </div>
-          <div class="sg-panel" id="gxPanel"></div>
+          <div class="sc-panel" id="gxPanel"></div>
         </div>
       </div>
     </div>

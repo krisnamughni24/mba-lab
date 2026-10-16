@@ -96,11 +96,11 @@
 @media(max-width:900px){.vw-pts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.vw-ms{grid-template-columns:repeat(2,1fr)}}
 .vg{max-width:1180px;margin:0 auto;padding:8px clamp(12px,3vw,28px);position:relative}
-.vw .sg-lv::before{content:"";position:absolute;inset:0 0 auto 0;height:70px;opacity:.9}
-.vw .sg-lv.vg-l-kopi::before{background:linear-gradient(135deg,#8a5a3a,#d9a96e)}
-.vw .sg-lv.vg-l-sepatu::before{background:linear-gradient(135deg,#2f6fdb,#4dd2ff)}
-.vw .sg-lv.vg-l-app::before{background:linear-gradient(135deg,#7a3fe0,#4dd2ff)}
-.vw .sg-lv.vg-l-batik::before{background:linear-gradient(135deg,#c2542d,#ffd166)}
+.vw .sc-lv::before{content:"";position:absolute;inset:0 0 auto 0;height:70px;opacity:.9}
+.vw .sc-lv.vg-l-kopi::before{background:linear-gradient(135deg,#8a5a3a,#d9a96e)}
+.vw .sc-lv.vg-l-sepatu::before{background:linear-gradient(135deg,#2f6fdb,#4dd2ff)}
+.vw .sc-lv.vg-l-app::before{background:linear-gradient(135deg,#7a3fe0,#4dd2ff)}
+.vw .sc-lv.vg-l-batik::before{background:linear-gradient(135deg,#c2542d,#ffd166)}
 .vg-chartcard{background:var(--panel);border:1px solid var(--edge);border-radius:18px;padding:10px}
 .vg-chartcard .vw-legend{margin:4px 0 0;gap:12px}
 .vg-chartcard .vw-lg{pointer-events:none;border:0!important;background:none!important;padding:2px 0!important;font-size:14.5px}

@@ -16,7 +16,7 @@
     let visible = false, cs = null, li = 0, step = 1, ideaI = -1, plan = { days: 7, mde: .08 }, run = null, timer = 0, playing = false, speed = 4, out = null, evs = [], flags = {}, newBadges = [], xpRun = 0, day = false, decided = false;
     const rank = xp => { let r = 0; RANKS.forEach((x, i) => { if (xp >= x) r = i; }); return r; };
     const unlocked = i => i === 0 || (st.stars[E.CASES[i - 1].id] || 0) >= 1;
-    const starsHtml = n => `<span class="sg-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
+    const starsHtml = n => `<span class="sc-st" aria-label="${n}/3">${[0, 1, 2].map(i => `<b class="${i < n ? 'on' : ''}" style="--i:${i}">★</b>`).join('')}</span>`;
     const pct = (x, d) => (x * 100).toFixed(d == null ? 1 : d) + '%', spct = (x, d) => (x >= 0 ? '+' : '−') + pct(Math.abs(x), d);
     const rp = v => { const a = Math.abs(v); return (v < 0 ? '−' : '') + 'Rp ' + (a >= 1e9 ? T('rpB', { n: (a / 1e9).toFixed(1) }) : a >= 1e6 ? T('rpM', { n: Math.round(a / 1e6) }) : T('rpK', { n: Math.round(a / 1e3) })); };
     const idea = () => cs.ideas[ideaI], ideaOf = i => Object.assign({}, cs.ideas[i], { emoji: IDEM[cs.id][i] });
@@ -29,11 +29,11 @@
     function menu() {
       cs = null; clear(); scene.stop(); $('#agLevel').hidden = true; $('#agMenu').hidden = false;
       const r = rank(st.xp), nx = RANKS[r + 1], pc = nx ? Math.round((st.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
-      $('#agMenu').innerHTML = `<div class="sg-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
-        <div class="sg-rank"><span class="sg-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sg-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
-        <div class="sg-levels">${E.CASES.map((c, i) => { const ok = unlocked(i), n = st.stars[c.id] || 0;
-          return `<button type="button" class="sg-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="sg-lvi" aria-hidden="true">${c.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('c_' + c.id + '_n')}</b><em>${T('c_' + c.id + '_d')}</em>${ok ? starsHtml(n) + `<span class="sg-go">${n ? '↻' : '▶'}</span>` : '<span class="sg-lock" aria-hidden="true">🔒</span>'}</button>`; }).join('')}</div>
-        <h3 class="sg-h3">${T('bdT')}</h3><div class="sg-badges">${BADGES.map(b => `<div class="sg-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
+      $('#agMenu').innerHTML = `<div class="sc-hero"><div><h2>${T('gmHero')}</h2><p>${T('gmSub')}</p></div>
+        <div class="sc-rank"><span class="sc-rk">${T('rk' + r)}</span><b>${T('xpLbl', { n: st.xp })}</b><div class="sc-xp"><i style="width:${pc}%"></i></div><small>${nx ? T('xpNext', { n: nx }) : T('xpMax')}</small></div></div>
+        <div class="sc-levels">${E.CASES.map((c, i) => { const ok = unlocked(i), n = st.stars[c.id] || 0;
+          return `<button type="button" class="sc-lv ${ok ? '' : 'locked'}" data-lv="${i}" ${ok ? '' : 'disabled'} ${ok ? '' : `title="${T('lvLock')}"`}><span class="sc-lvi" aria-hidden="true">${c.icon}</span><small>${T('lvN', { n: i + 1 })}</small><b>${T('c_' + c.id + '_n')}</b><em>${T('c_' + c.id + '_d')}</em>${ok ? starsHtml(n) + `<span class="sc-go">${n ? '↻' : '▶'}</span>` : '<span class="sc-lock" aria-hidden="true">🔒</span>'}</button>`; }).join('')}</div>
+        <h3 class="sc-h3">${T('bdT')}</h3><div class="sc-badges">${BADGES.map(b => `<div class="sc-bd ${st.badges[b] ? 'on' : ''}" title="${T('bdd_' + b)}"><span>${BI[b]}</span><b>${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>`;
     }
 
     /* ---------- case ---------- */
@@ -45,7 +45,7 @@
     }
     function say(txt) { const b = $('#agSay'); b.innerHTML = `<b>🧑‍🔬</b> ${txt}`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); fitStage(); }
     function pills() { $('#agSteps').innerHTML = [1, 2, 3, 4].map(i => `<li class="${step === i ? 'on' : step > i ? 'done' : ''}"><span>${step > i ? '✓' : i}</span>${T('st' + i)}</li>`).join(''); }
-    function hud() { const r = rank(st.xp); $('#agHud').innerHTML = `<button type="button" class="sg-back" data-a="menu">← ${T('toMenu')}</button><b class="sg-lt">${T('lvN', { n: li + 1 })} · ${cs.icon} ${cn('n')}</b><span class="sg-chipx">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
+    function hud() { const r = rank(st.xp); $('#agHud').innerHTML = `<button type="button" class="sc-back" data-a="menu">← ${T('toMenu')}</button><b class="sc-lt">${T('lvN', { n: li + 1 })} · ${cs.icon} ${cn('n')}</b><span class="sc-chip">${T('rk' + r)} · ${T('xpLbl', { n: st.xp + xpRun })}</span>`; }
     function render() {
       hud(); pills(); const P = $('#agPanel'); P.scrollTop = 0;
       if (step === 1) brief(P); else if (step === 2) planView(P); else if (step === 3) runView(P); else resultView(P);
@@ -54,11 +54,11 @@
     /* step 1: brief and idea */
     function brief(P) {
       say(T('sayBrief'));
-      P.innerHTML = `<div class="sg-brief"><b>${cs.icon} ${cn('n')}</b><p>${cn('d')}</p>
-        <div class="sg-facts"><span>📊 ${T('brBase', { p: (cs.p0 * 100).toFixed(cs.p0 < .1 ? 1 : 0) })}</span><span>👥 ${T('brTraffic', { n: cs.traffic.toLocaleString() })}</span><span>💰 ${T('brValue', { v: rp(cs.value) })}</span><span>🎯 ${T('brMin', { n: Math.round(cs.minLift * 100) })}</span></div>
-        <p class="sg-hint"><b>${T('brMetric')}:</b> ${cn('m')}</p></div>
-        <h3 class="sg-h3">${T('brPick')}</h3><div class="sg-ideas" role="radiogroup">${cs.ideas.map((x, i) => `<button type="button" role="radio" aria-checked="${ideaI === i}" class="sg-idea ${ideaI === i ? 'on' : ''}" data-idea="${i}"><span class="sg-ie" aria-hidden="true">${IDEM[cs.id][i]}</span><span class="sg-it"><b>${cn('i' + i)}</b><small>${cn('i' + i + 'w')}</small></span></button>`).join('')}</div>
-        <p class="sg-hint">${T('brHint')}</p><div class="sg-foot"><button type="button" class="sg-main" data-a="toplan" ${ideaI < 0 ? 'disabled' : ''}>${T('brGo')} →</button></div>`;
+      P.innerHTML = `<div class="sc-brief"><b>${cs.icon} ${cn('n')}</b><p>${cn('d')}</p>
+        <div class="sc-facts"><span>📊 ${T('brBase', { p: (cs.p0 * 100).toFixed(cs.p0 < .1 ? 1 : 0) })}</span><span>👥 ${T('brTraffic', { n: cs.traffic.toLocaleString() })}</span><span>💰 ${T('brValue', { v: rp(cs.value) })}</span><span>🎯 ${T('brMin', { n: Math.round(cs.minLift * 100) })}</span></div>
+        <p class="sc-hint"><b>${T('brMetric')}:</b> ${cn('m')}</p></div>
+        <h3 class="sc-h3">${T('brPick')}</h3><div class="sc-ideas" role="radiogroup">${cs.ideas.map((x, i) => `<button type="button" role="radio" aria-checked="${ideaI === i}" class="sc-idea ${ideaI === i ? 'on' : ''}" data-idea="${i}"><span class="sc-ie" aria-hidden="true">${IDEM[cs.id][i]}</span><span class="sc-it"><b>${cn('i' + i)}</b><small>${cn('i' + i + 'w')}</small></span></button>`).join('')}</div>
+        <p class="sc-hint">${T('brHint')}</p><div class="sc-foot"><button type="button" class="sc-main" data-a="toplan" ${ideaI < 0 ? 'disabled' : ''}>${T('brGo')} →</button></div>`;
     }
     function pick(i) { ideaI = i; scene.setCase(cs, ideaOf(i)); sfx('tick'); render(); }
 
@@ -67,11 +67,11 @@
     function previewHist() { const p0 = cs.p0, p1 = p0 * (1 + plan.mde), a = []; for (let d = 1; d <= plan.days; d++) { const n = E.nPer(cs, d), hw = E.Z * Math.sqrt(p0 * (1 - p0) / n + p1 * (1 - p1) / n) / p0; a.push({ lift: plan.mde, lo: plan.mde - hw, hi: plan.mde + hw }); } return a; }
     function planView(P) {
       say(T('sayPlan')); scene.setMode('plan'); scene.setCase(cs, ideaOf(ideaI));
-      P.innerHTML = `<div class="sg-brief"><b>${IDEM[cs.id][ideaI]} ${cn('i' + ideaI)}</b><p>${cn('d')}</p></div>
-        <div class="sg-sl"><label for="agDays"><span>${T('plDays')}</span><output id="agDaysO"></output></label><input type="range" id="agDays" min="3" max="${cs.maxDays}" step="1" value="${plan.days}"></div>
-        <div class="sg-sl"><label for="agMde"><span>${T('plMde')}</span><output id="agMdeO"></output></label><input type="range" id="agMde" min="2" max="50" step="1" value="${Math.round(plan.mde * 100)}"></div>
-        <div class="sg-kpis"><div><small>${T('plN')}</small><b id="agN"></b></div><div class="hi" id="agPwBox"><small>${T('plPow')}</small><b id="agPw"></b></div><div><small>${T('brMin', { n: Math.round(cs.minLift * 100) })}</small><b>≈ ${E.daysFor(cs, cs.minLift)} ${T('chDays')}</b></div></div>
-        <div class="sg-msgs" id="agMsgs"></div><p class="sg-hint">🔒 ${T('plLock')}</p><div class="sg-foot"><button type="button" class="sg-btn ghost" data-a="tobrief">← ${T('st1')}</button><button type="button" class="sg-main go" data-a="start">${T('plGo')} ▶</button></div>`;
+      P.innerHTML = `<div class="sc-brief"><b>${IDEM[cs.id][ideaI]} ${cn('i' + ideaI)}</b><p>${cn('d')}</p></div>
+        <div class="sc-sl"><label for="agDays"><span>${T('plDays')}</span><output id="agDaysO"></output></label><input type="range" id="agDays" min="3" max="${cs.maxDays}" step="1" value="${plan.days}"></div>
+        <div class="sc-sl"><label for="agMde"><span>${T('plMde')}</span><output id="agMdeO"></output></label><input type="range" id="agMde" min="2" max="50" step="1" value="${Math.round(plan.mde * 100)}"></div>
+        <div class="sc-kpis"><div><small>${T('plN')}</small><b id="agN"></b></div><div class="hi" id="agPwBox"><small>${T('plPow')}</small><b id="agPw"></b></div><div><small>${T('brMin', { n: Math.round(cs.minLift * 100) })}</small><b>≈ ${E.daysFor(cs, cs.minLift)} ${T('chDays')}</b></div></div>
+        <div class="sc-msgs" id="agMsgs"></div><p class="sc-hint">🔒 ${T('plLock')}</p><div class="sc-foot"><button type="button" class="sc-btn ghost" data-a="tobrief">← ${T('st1')}</button><button type="button" class="sc-main go" data-a="start">${T('plGo')} ▶</button></div>`;
       planUpdate();
     }
     function planUpdate() {
@@ -103,9 +103,9 @@
     }
     function runView(P) {
       say(playing ? T('sayRun') : T('sayDec'));
-      P.innerHTML = `<div class="sg-run"><div class="sg-rt"><b id="agDay"></b><span class="sg-prog"><i id="agProg"></i></span></div>
-        <div class="sg-k4"><div class="ag-k"><small>${T('rnLift')}</small><b id="agLift">—</b><em id="agCI"></em></div><div class="ag-k"><small>${T('rnP')}</small><b id="agP">—</b></div><div class="ag-k" id="agSplitK"><small>${T('rnSplit')}</small><b id="agSplit">50% / 50%</b><em id="agSplitS"></em></div></div>
-        <div class="sg-ev" id="agEv" aria-live="polite"></div><div id="agCtl"></div></div>`;
+      P.innerHTML = `<div class="sc-run"><div class="sc-rt"><b id="agDay"></b><span class="sc-prog"><i id="agProg"></i></span></div>
+        <div class="sc-k4"><div class="ag-k"><small>${T('rnLift')}</small><b id="agLift">—</b><em id="agCI"></em></div><div class="ag-k"><small>${T('rnP')}</small><b id="agP">—</b></div><div class="ag-k" id="agSplitK"><small>${T('rnSplit')}</small><b id="agSplit">50% / 50%</b><em id="agSplitS"></em></div></div>
+        <div class="sc-ev" id="agEv" aria-live="polite"></div><div id="agCtl"></div></div>`;
       paintRun(); ctl();
     }
     function paintRun() {
@@ -118,8 +118,8 @@
     function ctl() {
       const C = $('#agCtl'); if (!C) return;
       if (!decided && (playing || run.day < plan.days) && !run.finished) {
-        C.innerHTML = `<div class="sg-ctl"><button type="button" class="sg-btn" data-a="pp">${playing ? '⏸ ' + T('rnPause') : '▶ ' + T('rnPlay')}</button><span class="sg-spd" role="group" aria-label="${T('rnSpeed')}">${[1, 4, 16].map(v => `<button type="button" class="${speed === v ? 'on' : ''}" data-spd="${v}">${v}×</button>`).join('')}</span></div>
-          <button type="button" class="sg-btn warnb" data-a="stop">🛑 ${T('rnStop')}</button><p class="sg-hint">${T('rnStopWarn')}</p>`;
+        C.innerHTML = `<div class="sc-ctl"><button type="button" class="sc-btn" data-a="pp">${playing ? '⏸ ' + T('rnPause') : '▶ ' + T('rnPlay')}</button><span class="sc-spd" role="group" aria-label="${T('rnSpeed')}">${[1, 4, 16].map(v => `<button type="button" class="${speed === v ? 'on' : ''}" data-spd="${v}">${v}×</button>`).join('')}</span></div>
+          <button type="button" class="sc-btn warnb" data-a="stop">🛑 ${T('rnStop')}</button><p class="sc-hint">${T('rnStopWarn')}</p>`;
       } else decideView(C);
     }
     function finishRun(early) {
@@ -127,8 +127,8 @@
     }
     function decideView(C) {
       const s = run.hist[run.hist.length - 1] || E.stats(0, 0, 0, 0);
-      C.innerHTML = `<p class="sg-sum">${T('rsObs')}: <b>${spct(s.lift)}</b> [${spct(s.lo)} … ${spct(s.hi)}] · p ${s.p < .001 ? '<0.001' : s.p.toFixed(3)}</p><h3 class="sg-h3">${T('dT')}</h3>
-        <div class="sg-dec"><button type="button" class="sg-d ship" data-dec="ship"><span>🚀</span><b>${T('dShip')}</b><small>${T('dShipS')}</small></button><button type="button" class="sg-d keep" data-dec="keep"><span>🛑</span><b>${T('dKeep')}</b><small>${T('dKeepS')}</small></button><button type="button" class="sg-d inv" data-dec="invalid"><span>🧪</span><b>${T('dInvalid')}</b><small>${T('dInvS')}</small></button></div>`;
+      C.innerHTML = `<p class="sc-sum">${T('rsObs')}: <b>${spct(s.lift)}</b> [${spct(s.lo)} … ${spct(s.hi)}] · p ${s.p < .001 ? '<0.001' : s.p.toFixed(3)}</p><h3 class="sc-h3">${T('dT')}</h3>
+        <div class="sc-dec"><button type="button" class="sc-d ship" data-dec="ship"><span>🚀</span><b>${T('dShip')}</b><small>${T('dShipS')}</small></button><button type="button" class="sc-d keep" data-dec="keep"><span>🛑</span><b>${T('dKeep')}</b><small>${T('dKeepS')}</small></button><button type="button" class="sc-d inv" data-dec="invalid"><span>🧪</span><b>${T('dInvalid')}</b><small>${T('dInvS')}</small></button></div>`;
     }
 
     /* step 4: result */
@@ -149,15 +149,15 @@
       if (j.early) fb.push(T('fbEarly')); else if (j.falseAlarm) fb.push(T('fbFalse', { d: run.cross[0] }));
       if (j.power < .8) fb.push(T('fbPow', { p: Math.round(j.power * 100), d: plan.days, n: j.need })); if (plan.mde > cs.minLift * 1.25) fb.push(T('fbBig', { n: Math.round(cs.minLift * 100) }));
       const imp = d === 'ship' ? j.impact : 0, miss = d === 'keep' ? Math.max(0, j.impact) : 0;
-      P.innerHTML = `<div class="sg-res"><div class="sg-big">${starsHtml(n)}<b>${T('rsScore', { s: j.total })}</b><em class="sg-xpg">${T('xpGain', { n: gain })}</em></div>
-        <div class="sg-kpis"><div><small>${T('rsDec')}</small><b>${j.dec}/50</b></div><div><small>${T('rsDesign')}</small><b>${j.design}/30</b></div><div><small>${T('rsDisc')}</small><b>${j.disc}/20</b></div></div>
-        <div class="sg-ver"><div><small>${T('rsObs')}</small><b>${spct(s.lift)} <em>[${spct(s.lo, 0)} … ${spct(s.hi, 0)}]</em></b></div><div class="hi"><small>${T('rsTruth')}</small><b class="${j.truth >= cs.minLift ? 'gn' : j.truth > 0 ? '' : 'rd'}">${spct(j.truth)}</b></div></div>
-        <p class="sg-note">${T('rsImpact', { v: rp(d === 'ship' ? imp : miss || j.impact) })}</p>
-        <ul class="sg-fb">${fb.map(x => `<li>${x}</li>`).join('')}</ul><p class="sg-tw">💡 ${cn('tw')}</p>
-        ${newBadges.length ? `<div class="sg-new">${newBadges.map(b => `<div class="sg-bd on pop"><span>${BI[b]}</span><b>${T('bdNew')}: ${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>` : ''}
-        <div class="sg-foot"><button type="button" class="sg-btn" data-a="again">${T('again')}</button>${n >= 1 && li < E.CASES.length - 1 ? `<button type="button" class="sg-main inl" data-a="next">${T('nextLv')}</button>` : ''}<button type="button" class="sg-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
+      P.innerHTML = `<div class="sc-res"><div class="sc-big">${starsHtml(n)}<b>${T('rsScore', { s: j.total })}</b><em class="sc-xpg">${T('xpGain', { n: gain })}</em></div>
+        <div class="sc-kpis"><div><small>${T('rsDec')}</small><b>${j.dec}/50</b></div><div><small>${T('rsDesign')}</small><b>${j.design}/30</b></div><div><small>${T('rsDisc')}</small><b>${j.disc}/20</b></div></div>
+        <div class="sc-ver"><div><small>${T('rsObs')}</small><b>${spct(s.lift)} <em>[${spct(s.lo, 0)} … ${spct(s.hi, 0)}]</em></b></div><div class="hi"><small>${T('rsTruth')}</small><b class="${j.truth >= cs.minLift ? 'gn' : j.truth > 0 ? '' : 'rd'}">${spct(j.truth)}</b></div></div>
+        <p class="sc-memo">${T('rsImpact', { v: rp(d === 'ship' ? imp : miss || j.impact) })}</p>
+        <ul class="sc-fb">${fb.map(x => `<li>${x}</li>`).join('')}</ul><p class="sc-tw">💡 ${cn('tw')}</p>
+        ${newBadges.length ? `<div class="sc-new">${newBadges.map(b => `<div class="sc-bd on pop"><span>${BI[b]}</span><b>${T('bdNew')}: ${T('bd_' + b)}</b><small>${T('bdd_' + b)}</small></div>`).join('')}</div>` : ''}
+        <div class="sc-foot"><button type="button" class="sc-btn" data-a="again">${T('again')}</button>${n >= 1 && li < E.CASES.length - 1 ? `<button type="button" class="sc-main inl" data-a="next">${T('nextLv')}</button>` : ''}<button type="button" class="sc-btn ghost" data-a="menu">${T('toMenu')}</button></div></div>`;
     }
-    function confetti() { const box = $('#agLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'sg-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${(Math.random() - .5) * 200}px;--r:${Math.random() * 720}deg;animation-delay:${Math.random() * .3}s`; box.appendChild(e); setTimeout(() => e.remove(), 2200); } }
+    function confetti() { const box = $('#agLevel'), cols = ['#ffd166', '#6ee7b7', '#4dd2ff', '#ff6ad5', '#a78bfa']; for (let i = 0; i < 36; i++) { const e = document.createElement('i'); e.className = 'sc-cf'; e.style.cssText = `left:${10 + Math.random() * 80}%;background:${cols[i % 5]};--dx:${(Math.random() - .5) * 200}px;--r:${Math.random() * 720}deg;animation-delay:${Math.random() * .3}s`; box.appendChild(e); setTimeout(() => e.remove(), 2200); } }
 
     /* ---------- events ---------- */
     host.addEventListener('click', e => {
@@ -176,7 +176,7 @@
     /* ---------- loop ---------- */
     function loopCtl() { if (visible && cs && !document.hidden) scene.start(); else { scene.stop(); scene.draw(); } }
     function fitStage() {
-      const L = $('#agLevel'); if (!L || L.hidden) return; const col = $('.sg-left'), sy = $('#agSay'), sg = $('#agStage'), colW = col.clientWidth;
+      const L = $('#agLevel'); if (!L || L.hidden) return; const col = $('.sc-left'), sy = $('#agSay'), sg = $('#agStage'), colW = col.clientWidth;
       const mobile = window.matchMedia('(max-width:900px)').matches, availH = mobile ? Math.min(L.clientHeight * .5, colW * 9 / 16) : col.clientHeight - sy.offsetHeight - 12;
       const w = Math.max(220, Math.min(colW, availH * 16 / 9)); sg.style.width = Math.floor(w) + 'px';
     }

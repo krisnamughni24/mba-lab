@@ -7,17 +7,17 @@ MBALAB.sims.define('van-westendorp', {
     <div class="sk-tabs" role="tablist"><button type="button" role="tab" class="on" aria-selected="true" data-tab="game" data-i18n="tabGame"></button><button type="button" role="tab" aria-selected="false" data-tab="lab" data-i18n="tabLab"></button></div>
   </header>
   <div class="sk-scroll vw-scroll" id="vwScroll">
-    <div class="sg-root vg" id="vgGame">
-      <div class="sg-menu" id="vgMenu"></div>
-      <div class="sg-level" id="vgLevel" hidden>
-        <div class="sg-hud" id="vgTop"></div>
-        <ol class="sg-steps" id="vgSteps"></ol>
-        <div class="sg-cols">
-          <div class="sg-left">
-            <div class="sg-stage" id="vgStage"><canvas id="vgCv" width="960" height="540" role="img" data-ia="aria-label=vgStageAria"></canvas></div>
-            <div class="sg-say" id="vgSay" aria-live="polite"></div>
+    <div class="sc-root vg" id="vgGame">
+      <div class="sc-select" id="vgMenu"></div>
+      <div class="sc-play" id="vgLevel" hidden>
+        <div class="sc-hud" id="vgTop"></div>
+        <ol class="sc-steps" id="vgSteps"></ol>
+        <div class="sc-cols">
+          <div class="sc-left">
+            <div class="sc-stage" id="vgStage"><canvas id="vgCv" width="960" height="540" role="img" data-ia="aria-label=vgStageAria"></canvas></div>
+            <div class="sc-say" id="vgSay" aria-live="polite"></div>
           </div>
-          <div class="sg-panel" id="vgSide">
+          <div class="sc-panel" id="vgSide">
             <div class="vg-chartcard"><div id="vgChart"></div><div class="vw-legend" id="vgLegend"></div></div>
             <div class="vg-body" id="vgPanel"></div>
           </div>

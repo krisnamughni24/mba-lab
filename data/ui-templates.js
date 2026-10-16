@@ -1,4 +1,4 @@
-/* The five official UI/UX templates ("patokan"). Every live simulation declares one of them in data/simulations.js (field "template"),
+/* The four official UI/UX templates ("patokan"). Every live simulation declares one of them in data/simulations.js (field "template"),
    and tests/structure.js enforces the contract below: the template's kit stylesheets must be loaded by sim.js and its required
    classes must appear in ui/template.js. A working starter for each lives in templates/<id>/ (copy it to simulations/<your-id>/).
    Full description: docs/UI-TEMPLATES.md. This file is data only (read by the tests and the docs), the site does not load it.
@@ -9,24 +9,15 @@
    starter   folder with the copy-and-edit starter */
 MBALAB.data.templates = [
   {
-    id: 'game',
-    name: { en: 'Game', id: 'Game', ja: 'ゲーム', zh: '游戏' },
-    summary: { en: 'Levels, ranks, stars and badges around a decision you can see on a stage.', id: 'Level, peringkat, bintang, dan lencana di sekitar keputusan yang terlihat di panggung.', ja: 'レベル・ランク・星・バッジで、ステージ上の意思決定を遊ぶ。', zh: '以关卡、等级、星星和徽章，围绕舞台上可见的决策展开。' },
-    flow: 'menu (hero + rank, levels, badges) > level (hud, steps, stage + say, panel) > result (stars, XP, badges)',
-    root: 'sk-root',
-    kits: ['shared/simkit.css'],
-    required: ['sg-root', 'sg-menu', 'sg-level', 'sg-hud', 'sg-steps', 'sg-cols', 'sg-left', 'sg-stage', 'sg-say', 'sg-panel'],
-    starter: 'templates/game'
-  },
-  {
     id: 'scenario',
     name: { en: 'Scenario', id: 'Skenario', ja: 'シナリオ', zh: '情景' },
-    summary: { en: 'Pick a scenario, then play it round by round on a stage with a guide pop-up.', id: 'Pilih skenario, lalu mainkan ronde demi ronde di panggung dengan panduan pop-up.', ja: 'シナリオを選び、ガイド付きのステージで1ラウンドずつ進める。', zh: '选择情景，在带指南弹窗的舞台上逐轮进行。' },
-    flow: 'select (title, sub, cards, how-to) > play (hud chips, stage + info + guide, controls) > result (stars, actions)',
+    summary: { en: 'Pick a scenario or level, then play it round by round on a stage with a guide pop-up. Rank, XP, steps and badges are optional parts.', id: 'Pilih skenario, lalu mainkan ronde demi ronde di panggung dengan panduan pop-up.', ja: 'シナリオを選び、ガイド付きのステージで1ラウンドずつ進める。', zh: '选择情景，在带指南弹窗的舞台上逐轮进行。' },
+    flow: 'select (title, sub, cards or levels, how-to; optional rank/XP hero and badges) > play (hud chips, optional steps, stage + info + guide, controls or side panel) > result (stars, actions)',
     root: 'sk-root',
     kits: ['shared/simkit.css', 'shared/scenario.css'],
-    required: ['sc-select', 'sc-play', 'sc-hud', 'sc-stage', 'sc-how'],
-    starter: 'templates/scenario'
+    required: ['sc-select', 'sc-play', 'sc-hud', 'sc-stage'],
+    starter: 'templates/scenario',
+    variants: ['templates/scenario-levels']   // the same template with rank/XP hero, level cards, steps, side panel and badges (wrapped in sc-root)
   },
   {
     id: 'explorer',

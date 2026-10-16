@@ -61,9 +61,9 @@
 .gx-ct.dis{opacity:.42}
 .gx-ct .gx-cost{right:12px;top:50%;transform:translateY(-50%);width:26px;height:26px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--am);font-size:13px}
 .gx-moves.m3{grid-template-columns:1fr;gap:6px}
-.gx-moves.m3 .sg-mv{min-width:0;padding:8px 12px!important}
-.gx-moves.m3 .sg-mv b{font-size:15.5px}
-.gx-moves.m3 .sg-mv small{font-size:13.5px}
+.gx-moves.m3 .sc-mv{min-width:0;padding:8px 12px!important}
+.gx-moves.m3 .sc-mv b{font-size:15.5px}
+.gx-moves.m3 .sc-mv small{font-size:13.5px}
 .gx-tk{display:block;height:6px;border-radius:4px;background:color-mix(in srgb,var(--txt) 14%,transparent);overflow:hidden;margin-top:4px}
 .gx-tk i{display:block;height:100%;transition:width .4s}
 .gx-tk i.g{background:var(--gn)}

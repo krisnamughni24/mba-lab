@@ -6,17 +6,17 @@ MBALAB.sims.define('disc-crisis-room', {
     <h1 data-i18n="dc_gTitle">DISC Crisis Room Test</h1>
   </header>
   <div class="sk-scroll dc-scroll" id="dcScroll">
-    <div class="sg-root" id="dcGame">
-      <div class="sg-menu" id="dcMenu"></div>
-      <div class="sg-level" id="dcLevel" hidden>
-        <div class="sg-hud" id="dcHud"></div>
-        <ol class="sg-steps" id="dcSteps"></ol>
-        <div class="sg-cols">
-          <div class="sg-left">
-            <div class="sg-stage" id="dcStage"><canvas id="dcCv" width="960" height="540" role="img" aria-label="DISC Crisis Room"></canvas></div>
-            <div class="sg-say" id="dcSay" aria-live="polite"></div>
+    <div class="sc-root" id="dcGame">
+      <div class="sc-select" id="dcMenu"></div>
+      <div class="sc-play" id="dcLevel" hidden>
+        <div class="sc-hud" id="dcHud"></div>
+        <ol class="sc-steps" id="dcSteps"></ol>
+        <div class="sc-cols">
+          <div class="sc-left">
+            <div class="sc-stage" id="dcStage"><canvas id="dcCv" width="960" height="540" role="img" aria-label="DISC Crisis Room"></canvas></div>
+            <div class="sc-say" id="dcSay" aria-live="polite"></div>
           </div>
-          <div class="sg-panel" id="dcPanel"></div>
+          <div class="sc-panel" id="dcPanel"></div>
         </div>
       </div>
     </div>

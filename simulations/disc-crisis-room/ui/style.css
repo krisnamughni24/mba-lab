@@ -4,7 +4,7 @@
 .dc-levels{grid-template-columns:repeat(3,1fr)}
 .dc-code{font-weight:800;color:var(--am);font-size:15px}
 .dc-pf{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px}
-.dc-pf .sg-h3{margin:0}
+.dc-pf .sc-h3{margin:0}
 .dc-meters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .dc-meter{padding:5px 10px;border-radius:12px;border:1px solid var(--edge);background:var(--panel2);font-size:15px;font-weight:700}
 .dc-meter i{display:block;height:6px;border-radius:3px;background:rgba(var(--tint-rgb),.16);margin-top:4px;overflow:hidden}
