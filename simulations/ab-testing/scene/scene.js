@@ -20,7 +20,7 @@
     const cnt = { A: { n: 0, c: 0, d: 0 }, B: { n: 0, c: 0, d: 0 } };
     const parts = [], queue = [], floats = [], pulses = []; let curDay = 0, yr = .35, glow = 0;
 
-    const pos = (g, k) => { const p = PG[g]; return { x: p.x + p.w * (.2 + .6 * k), y: p.y + p.h * .55 }; };
+    const pos = (g, k) => { const p = PG[g]; return { x: p.x + p.w * (.2 + .6 * k), y: p.y - 3 }; };
     function emit(rec, dur) {
       const M = Math.max(8, Math.min(64, Math.round(Math.sqrt(rec.nA + rec.nB) * 1.2))), fa = rec.nA / (rec.nA + rec.nB || 1), pa = rec.cA / Math.max(1, rec.nA), pb = rec.cB / Math.max(1, rec.nB);
       for (let i = 0; i < M; i++) { const g = Math.random() < fa ? 'A' : 'B'; queue.push({ t: T + Math.random() * dur * .85, g, conv: Math.random() < (g === 'A' ? pa : pb) }); }
@@ -33,7 +33,7 @@
         const tg = pos(p.g, p.k), side = p.g === 'A' ? -1 : 1;
         if (p.t < .35) { const k = p.t / .35; p.x = lerp(SRC.x, FORK.x, k); p.y = lerp(SRC.y, FORK.y, k); }
         else if (p.t < 1) { const k = (p.t - .35) / .65, e = k * k * (3 - 2 * k); p.x = lerp(FORK.x, tg.x, e) + Math.sin(k * Math.PI) * side * 20; p.y = lerp(FORK.y, tg.y, e); }
-        else if (!p.done) { p.done = true; if (p.conv) { floats.push({ x: tg.x, y: tg.y, g: p.g, t: 0 }); pulses.push({ g: p.g, t: 0 }); } }
+        else if (!p.done) { p.done = true; if (p.conv) { floats.push({ x: PG[p.g].x + 20 + (p.g === 'B' ? 66 : 48), y: PG[p.g].y + 104, g: p.g, t: 0 }); pulses.push({ g: p.g, t: 0 }); } }
         if (p.t > 1.45) parts.splice(i, 1);
       }
       for (let i = floats.length - 1; i >= 0; i--) { floats[i].t += dt; if (floats[i].t > 1.1) floats.splice(i, 1); }
@@ -55,7 +55,7 @@
       c.fillStyle = col; c.globalAlpha = .22; rr(c, p.x + p.w * .58, p.y + 42, p.w * .36, 42, 10); c.fill(); c.globalAlpha = 1;
       const bw = 96 + (g === 'B' ? 18 : 0), bx = p.x + 20, by = p.y + 90 - 0, sc = 1 + bump * .08;
       c.save(); c.translate(bx + bw / 2, by + 16); c.scale(sc, sc); c.fillStyle = g === 'A' ? '#6b7fb0' : CB; rr(c, -bw / 2, -16, bw, 32, 10); c.fill();
-      c.font = '17px ' + EMO; c.textAlign = 'center'; c.fillStyle = '#fff'; c.fillText(g === 'A' ? '🛒' : (idea ? idea.emoji || '✨' : '✨'), 0, 6); c.restore();
+      c.font = '20px ' + EMO; c.textAlign = 'center'; c.textBaseline = 'alphabetic'; c.fillStyle = '#fff'; c.fillText(g === 'A' ? '🛒' : (idea ? idea.emoji || '✨' : '✨'), 0, 6); c.restore();
       const cy = p.y + p.h - 44;
       text(c, (rate * 100).toFixed(rate < .1 ? 2 : 1) + '%', p.x + 20, cy + 22, 32, P.ink, 'left', 900);
       text(c, d.c.toLocaleString() + ' / ' + d.n.toLocaleString(), p.x + p.w - 16, cy + 6, 15, P.dim, 'right', 600);
@@ -63,16 +63,16 @@
     }
     function arena(c) {
       const P = ink();
-      c.save(); c.shadowColor = '#7c5cff'; c.shadowBlur = 14; c.fillStyle = P.card; c.beginPath(); c.arc(SRC.x, SRC.y, 22, 0, TAU); c.fill(); c.restore();
-      c.font = '24px ' + EMO; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = P.ink; c.fillText('👥', SRC.x, SRC.y + 1);
+      c.save(); c.shadowColor = '#7c5cff'; c.shadowBlur = 14; c.fillStyle = P.card; c.beginPath(); c.arc(SRC.x, SRC.y, 26, 0, TAU); c.fill(); c.restore();
+      c.font = '28px ' + EMO; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = P.ink; c.fillText('👥', SRC.x, SRC.y + 1);
       c.lineWidth = 4; c.lineCap = 'round'; c.strokeStyle = P.line; c.setLineDash([2, 9]);
       [['A', -1], ['B', 1]].forEach(([g, s]) => { const t = pos(g, .5); c.beginPath(); c.moveTo(FORK.x, FORK.y); c.quadraticCurveTo(FORK.x + s * 80, FORK.y + 10, t.x, t.y); c.stroke(); });
-      c.beginPath(); c.moveTo(SRC.x, SRC.y + 22); c.lineTo(FORK.x, FORK.y); c.stroke(); c.setLineDash([]);
-      c.fillStyle = '#7c5cff'; c.beginPath(); c.arc(FORK.x, FORK.y, 12, 0, TAU); c.fill(); text(c, '50/50', FORK.x, FORK.y - 20, 13, P.dim, 'center', 700);
+      c.beginPath(); c.moveTo(SRC.x, SRC.y + 26); c.lineTo(FORK.x, FORK.y); c.stroke(); c.setLineDash([]);
+      c.fillStyle = '#7c5cff'; c.beginPath(); c.arc(FORK.x, FORK.y, 12, 0, TAU); c.fill(); text(c, '50/50', FORK.x, FORK.y - 22, 13, P.dim, 'center', 700);
       page(c, 'A'); page(c, 'B');
-      parts.forEach(p => { const a = p.t < 1 ? 1 : Math.max(0, 1 - (p.t - 1) / .45), col = p.t >= 1 && p.conv ? GOLD : (p.g === 'A' ? CA : CB); c.globalAlpha = a * (p.t >= 1 && !p.conv ? .5 : 1); c.fillStyle = p.t >= 1 && !p.conv ? '#9aa6c8' : col; c.beginPath(); c.arc(p.x, p.y, p.t >= 1 && p.conv ? 6 + (p.t - 1) * 10 : 5, 0, TAU); c.fill(); });
+      parts.forEach(p => { const a = p.t < 1 ? 1 : Math.max(0, 1 - (p.t - 1) / .45), col = p.t >= 1 && p.conv ? GOLD : (p.g === 'A' ? CA : CB); c.globalAlpha = a * (p.t >= 1 && !p.conv ? .5 : 1); c.fillStyle = p.t >= 1 && !p.conv ? '#9aa6c8' : col; c.beginPath(); c.arc(p.x, p.y, p.t >= 1 && p.conv ? 3.5 + (p.t - 1) * 5 : 3, 0, TAU); c.fill(); });
       c.globalAlpha = 1;
-      floats.forEach(f => { const y = f.y - f.t * 54; c.globalAlpha = Math.max(0, 1 - f.t / 1.1); c.font = '22px ' + EMO; c.textAlign = 'center'; c.fillStyle = GOLD; c.fillText('🪙', f.x, y); }); c.globalAlpha = 1;
+      floats.forEach(f => { const y = f.y - f.t * 30; c.globalAlpha = Math.max(0, 1 - f.t / 1.1); c.font = '16px ' + EMO; c.textAlign = 'center'; c.fillStyle = GOLD; c.fillText('🪙', f.x, y); }); c.globalAlpha = 1;
     }
     /* the two bell curves: H0 (no difference) and H1 (B really is better by the planned lift) */
     function bells(c) {

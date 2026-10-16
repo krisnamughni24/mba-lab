@@ -14,9 +14,12 @@
 .bw-select h2,.bw-roles h2,.bw-rh h2{font-size:20px}
 .bw-sub{color:var(--txt2);margin:4px 0 12px}
 .bw-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.bw .bw-card{display:flex;align-items:flex-start;gap:12px;text-align:left;padding:14px;background:var(--panel);border-radius:16px;border:1px solid var(--edge)}
-.bw-ci{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:26px;background:rgba(var(--tint-rgb),.12);border:2px solid var(--mg);box-shadow:0 0 12px var(--mg)}
-.bw-ct{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.bw .bw-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:6px 12px;text-align:left;padding:14px;background:var(--panel);border-radius:16px;border:1px solid var(--edge)}
+.bw-ci{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:rgba(var(--tint-rgb),.12);border:2px solid var(--mg);box-shadow:0 0 12px var(--mg)}
+.bw-ct{display:contents}
+.bw-ct b{grid-column:2;grid-row:1;min-width:0}
+.bw-ct i,.bw-ct small,.bw-ct em{grid-column:1/-1}
+.bw-cs{grid-column:3;grid-row:1}
 .bw-ct i{color:var(--mg);font-style:normal;font-size:15px;font-weight:700}
 .bw-ct small{color:var(--txt2);font-size:15px;line-height:1.35}
 .bw-ct em{font-style:normal;font-size:14px;color:var(--cy);line-height:1.35}
