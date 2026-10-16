@@ -2,14 +2,11 @@
 MBALAB.sims.files('van-westendorp', {
   scripts: [
     "i18n/strings.js",
-    "i18n/strings-game.js",
     "ui/template.js",
     "engine/engine.js",
-    "scene/scene.js",
-    "ui/chart.js",
     "../../shared/assistant.js",
-    "ui/game.js",
+    "../../shared/report.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/simkit.css", "../../shared/scenario.css", "../../shared/studio.css", "ui/style.css"]
+  styles: ["../../shared/studio.css", "ui/style.css"]
 });

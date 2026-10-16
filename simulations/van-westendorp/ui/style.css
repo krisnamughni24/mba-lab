@@ -1,15 +1,27 @@
-/* van-westendorp: sim-specific UI. The shared backbone is shared/simkit.css (classes sk-/sg-/sl-). */
-.vw-scroll{flex:1;min-height:0;overflow:auto;padding-bottom:96px}
-.vw-wrap{max-width:1100px;margin:0 auto;padding:8px clamp(12px,3vw,28px);display:flex;flex-direction:column;gap:14px}
+/* van-westendorp: calculator widgets (chart, curve legend, key points, price meter). The frame comes from shared/studio.css (sd-*). */
+.vw{--txt:var(--fg);--txt2:var(--fg2);--edge:var(--panel-b);--panel2:var(--field);--cy:var(--g1);--vi:var(--g2);--gn:#34d399;--am:#fbbf24;--rd:#fb7185}
+.vw input[type=number],.vw textarea{width:100%;text-align:left;font:inherit;color:var(--fg);background:var(--field);border:1px solid var(--panel-b);border-radius:10px;padding:8px 10px}
+.vw textarea{font-family:ui-monospace,monospace;resize:vertical;margin-bottom:10px}
+.vw input[type=range]{width:100%;padding:0;background:none;border:0}
+.vw-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.vw-cols{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:14px;align-items:start}
+.vw-card{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:14px}
+.vw-sc{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:10px 12px!important;border-width:2px!important}
+.vw-sc.on{border-color:var(--cy)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--cy) 25%,transparent)}
+.vw-sc b{font-size:16px}.vw-sc small{font-size:14px;color:var(--txt2);font-weight:500}
+.vw-ic{font-size:22px}
+.vw-sens{width:100%;border-collapse:collapse;margin:6px 0 10px}
+.vw-sens th,.vw-sens td{padding:6px 8px;border-bottom:1px solid var(--edge);text-align:left;font-variant-numeric:tabular-nums}
+.vw-sens th{font-size:14px;color:var(--txt2)}
+.vw-sens tr.me td{background:color-mix(in srgb,var(--cy) 14%,transparent);font-weight:700}
+@media(max-width:900px){.vw-cols{grid-template-columns:1fr}.vw-grid{grid-template-columns:repeat(2,1fr)}}
 .vw-h{font-size:17px;font-weight:800}
 .vw-card{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:14px}
-.vw-scen{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .vw-sc{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:10px 12px!important;border-width:2px!important}
 .vw-sc.on{border-color:var(--cy)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--cy) 25%,transparent)}
 .vw-sc b{font-size:16px}
 .vw-sc small{font-size:14px;color:var(--txt2);font-weight:500}
 .vw-ic{font-size:22px}
-.vw-main{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px;align-items:start}
 .vw-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
 .vw-lg{display:flex;align-items:center;gap:7px;padding:5px 10px!important;font-size:15px}
 .vw-lg i{width:18px;height:0;border-top:3px solid currentColor;display:inline-block}
@@ -44,8 +56,6 @@
 .vw-f label{display:flex;justify-content:space-between;gap:8px;font-size:15.5px;font-weight:700}
 .vw-f output{color:var(--cy);font-variant-numeric:tabular-nums}
 .vw-f small{font-size:14.5px;color:var(--txt2)}
-.sk-root input[type=number],.sk-root textarea{width:100%;font:inherit;color:var(--txt);background:var(--panel2);border:1px solid var(--edge);border-radius:10px;padding:8px 10px}
-.sk-root textarea{font-family:ui-monospace,monospace;resize:vertical;margin-bottom:10px}
 .vw-dq{margin:6px 0 0;font-size:15px;color:var(--txt2)}
 .vw-btn{width:100%}
 .vw-btn.ghost{background:transparent}
@@ -61,11 +71,6 @@
 .vw-p b{font-size:19px}
 .vw-p em{font-style:normal;font-size:15px;font-weight:700}
 .vw-p small{font-size:14.5px;color:var(--txt2)}
-.vw-mission p{margin:0 0 8px;color:var(--txt2)}
-.vw-sco{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.vw-stars{color:var(--am);font-size:20px;letter-spacing:2px}
-.vw-stars u{text-decoration:none;opacity:.25}
-.vw-sco small{color:var(--txt2)}
 .vw-pr{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .vw-pr label{font-weight:700}
 .vw-pr output{font-size:24px;font-weight:800;color:var(--cy)}
@@ -84,51 +89,12 @@
 .vw-mb i{display:block;height:100%;background:currentColor;transition:width .2s}
 .vw-m:not([class*=" vw-"]) .vw-mb i{background:var(--cy)}
 .vw-cav{margin:10px 0 0;font-size:15px;color:var(--txt2)}
-.vw-more summary{cursor:pointer;font-weight:800;font-size:17px}
-.vw-more[open] summary{margin-bottom:10px}
 .vw-small{margin:0 0 10px;color:var(--txt2);font-size:16px}
 .vw-msg{margin:8px 0 0;font-size:16px;color:var(--gn)}
 .vw-msg.bad{color:var(--rd)}
 .vw-learn{margin:0;padding-left:20px;color:var(--txt2);display:grid;gap:6px}
-.vw-hide{display:none}
-@media(max-width:900px){.vw-main{grid-template-columns:1fr}}
-@media(max-width:900px){.vw-scen{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.vw-pts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.vw-ms{grid-template-columns:repeat(2,1fr)}}
-.vg{max-width:1180px;margin:0 auto;padding:8px clamp(12px,3vw,28px);position:relative}
-.vw .sc-lv::before{content:"";position:absolute;inset:0 0 auto 0;height:70px;opacity:.9}
-.vw .sc-lv.vg-l-kopi::before{background:linear-gradient(135deg,#8a5a3a,#d9a96e)}
-.vw .sc-lv.vg-l-sepatu::before{background:linear-gradient(135deg,#2f6fdb,#4dd2ff)}
-.vw .sc-lv.vg-l-app::before{background:linear-gradient(135deg,#7a3fe0,#4dd2ff)}
-.vw .sc-lv.vg-l-batik::before{background:linear-gradient(135deg,#c2542d,#ffd166)}
-.vg-chartcard{background:var(--panel);border:1px solid var(--edge);border-radius:18px;padding:10px}
-.vg-chartcard .vw-legend{margin:4px 0 0;gap:12px}
-.vg-chartcard .vw-lg{pointer-events:none;border:0!important;background:none!important;padding:2px 0!important;font-size:14.5px}
-.vw-help{stroke-width:1.6;stroke-dasharray:2 4;opacity:.6}
-.vw-truth{stroke-width:2;stroke-dasharray:2 4;opacity:.8}
-.vw-fuzz{color:var(--gn)}
-.vw-mk{fill:var(--am)}
-.vw-mk.ok{fill:var(--gn)}
-.vw-mk.no{fill:var(--rd)}
-.vw-mk-l{stroke:var(--txt2);stroke-dasharray:2 3}
-.vw-mk-t{fill:none;stroke:var(--txt);stroke-width:2.5}
-.vw-mk-t.ok{stroke:var(--gn)}
-.vw-mk-t.no{stroke:var(--rd)}
-@keyframes vgpulse{50%{transform:scale(1.025)}}
-.vg-stat{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:16px}
-.vg-stat span{color:var(--txt2)}
-.vg-marks{display:flex;gap:8px;flex-wrap:wrap}
-.vg-mk{padding:6px 14px;border-radius:999px;border:2px solid var(--edge);font-weight:800;font-size:16px}
-.vg-mk.cur{border-color:var(--cy);box-shadow:0 0 12px color-mix(in srgb,var(--cy) 50%,transparent);animation:vgpulse 1.2s infinite}
-.vg-mk.ok{border-color:var(--gn);color:var(--gn)}
-.vg-mk.no{border-color:var(--rd);color:var(--rd)}
-.vg-pr{display:flex;justify-content:space-between;align-items:baseline}
-.vg-pr label{font-weight:700}
-.vg-pr output{font-size:26px;font-weight:900;color:var(--cy)}
-.vg-live{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.vg-live div{background:var(--panel2);border-radius:12px;padding:10px;display:flex;flex-direction:column}
-.vg-live small{color:var(--txt2);font-size:14px}
-.vg-live b{font-size:18px;font-variant-numeric:tabular-nums}
-body.still .vg *{animation:none!important}
-.vw .vg-kpis{grid-template-columns:repeat(4,1fr)}
-@media(max-width:900px){.vw .vg-kpis,.vg-live{grid-template-columns:repeat(2,1fr)}}
+.vw .vw-lg.vw-tc{color:var(--vi)}.vw .vw-lg.vw-c{color:var(--gn)}.vw .vw-lg.vw-e{color:var(--am)}.vw .vw-lg.vw-te{color:var(--rd)}
+.vw .vw-chart{max-width:860px;margin:0 auto}
+.vw-sc{min-height:84px}

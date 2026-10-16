@@ -16,11 +16,11 @@ Interactive business simulations over an animated 3D Jakarta (day and night), in
 | Type | Simulation | Topic |
 |---|---|---|
 | Calculator | **SMART Calculator** | Multi-criteria decision analysis, 4 guided parts, PDF/HTML/Markdown report |
+| Calculator | **Van Westendorp Calculator** | Price sensitivity meter: four curves, acceptable price range, price test, report download |
 | Calculator | **Decision Tree Calculator** | Expected value, roll-back, EVPI, risk attitude, sensitivity, report download |
 | Game | **AI Governance Lab** | Responsible AI decisions in levels |
 | Game | **A/B Testing Lab** | Experiment design and statistics |
 | Game | **Porter's Five Forces** | Industry analysis cases |
-| Game | **Van Westendorp** | Price sensitivity meter |
 | Game | **Bullwhip Effect** | Supply chain demand amplification |
 | Game | **Koperasi Tycoon** | Running a cooperative |
 | Game | **BATNA: Patience** | Negotiation |

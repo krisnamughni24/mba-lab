@@ -8,7 +8,7 @@ template lives in `templates/<type>/` (copy it to `simulations/<your-id>/`).
 |---|---|---|---|---|
 | **Scenario** | Pick a scenario or level, play it round by round on a stage, guide pop-up. Optional parts: rank/XP hero, steps, side panel, badges (wrapped in `sc-root`) | `shared/simkit.css`, `shared/scenario.css` | `sk-root` + `sc-select` / `sc-play` | A/B Testing Lab, AI Governance Lab, DISC Crisis Room, Porter's Five Forces, Van Westendorp Calculator, BATNA, Bullwhip Effect, Koperasi Tycoon, Life 40 |
 | **Explorer** | Browse a dataset in 3D/cards, then a quiz | `shared/simkit.css`, `shared/explorer.css` | `ex` | BUMN Explorer |
-| **Calculator** | Step-by-step input, a result card, a downloadable report | `shared/simkit.css`, `shared/studio.css` | `sd` | Decision Tree Calculator, SMART Calculator |
+| **Calculator** | Step-by-step input, a result card, a downloadable report | `shared/simkit.css`, `shared/studio.css` | `sd` | Decision Tree Calculator, SMART Calculator, Van Westendorp Calculator |
 | **Exam** | Timed multiple-choice practice with review | `shared/simkit.css`, `shared/exam.css` | `xm` | Try Out MBA |
 
 ## How to use

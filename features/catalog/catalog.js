@@ -11,7 +11,7 @@ MBALAB.feature('catalog', () => {
   MBALAB.overlay.register(modal);
 
   /* three independent filters: UI template type, topic (category), status */
-  const TYPES = ['game', 'scenario', 'explorer', 'calculator', 'exam'];
+  const TYPES = ['scenario', 'explorer', 'calculator', 'exam'];
   const F = { type: 'all', cat: 'all', status: 'all', q: '' };
   const norm = x => String(x || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
   const hay = s => norm(['name', 'description'].map(k => Object.values(s[k] || {}).join(' ')).join(' ') + ' ' + s.id.replace(/-/g, ' ') + ' ' + catName(s.category));

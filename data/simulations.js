@@ -278,7 +278,7 @@ MBALAB.data.simulations = [
   {
     "id": "van-westendorp",
     "status": "live",
-    "template": "scenario",
+    "template": "calculator",
     "icon": "🏷️",
     "category": "marketing",
     "name": {

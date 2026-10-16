@@ -11,7 +11,7 @@ Goal: every simulation feels the same to use. What differs is the **animation an
 Accent: `--sk-g1` / `--sk-g2` (default green to cyan). A simulation may override them on its root.
 
 ## What stays in the simulation
-Engine and numbers, scene or canvas drawing (`scene/`), charts, strings, thumbnail, and any widget that exists only there (e.g. the AI Governance control chips, the Van Westendorp chart, the 3D BUMN map, the SMART Calculator editor). Keep these in `ui/style.css` under the simulation's own root class and prefix. A class is moved into the kit only when two or more simulations need the identical rule.
+Engine and numbers, scene or canvas drawing (`scene/`), charts, strings, thumbnail, and any widget that exists only there (e.g. the AI Governance control chips, the Van Westendorp curves chart, the 3D BUMN map, the SMART Calculator editor). Keep these in `ui/style.css` under the simulation's own root class and prefix. A class is moved into the kit only when two or more simulations need the identical rule.
 
 ## Visual size scale (stage 960 x 540 logical)
 - Text in the scene: 13 px minimum, titles 17 to 20 px.
@@ -27,7 +27,7 @@ Engine and numbers, scene or canvas drawing (`scene/`), charts, strings, thumbna
 
 ## Migration status
 - **Shell on `simkit.css` (all 11 game/lab simulations):** root `sk-root`, header `sk-top` with back button `sk-back`, scroll area `sk-scroll`, base buttons, focus ring, hover and disabled states, and the `--sk-g1`/`--sk-g2` accent. A simulation keeps its own class next to the kit class (for example `class="sk-top bw-top"`) so its JS selectors and its small overrides keep working. A simulation sets its accent on its root (`.bw{--sk-g1:var(--cy);--sk-g2:var(--mg)}`).
-- **Scenario family (levels, rank, XP, badges) (`sc-*` menu, hero, rank, levels, badges, steps, panel, results):** AI Governance, A/B Testing, Five Forces, Van Westendorp.
+- **Scenario family (levels, rank, XP, badges) (`sc-*` menu, hero, rank, levels, badges, steps, panel, results):** AI Governance, A/B Testing, Five Forces.
 - **Own content layout on top of the shared shell:** Bullwhip, BUMN Explorer, DISC Crisis Room, Koperasi Tycoon, Life 40, Negotiation & BATNA, Try Out MBA. Their cards, scenes and meters are specific to them and stay in their own `ui/style.css`. Moving a pattern into the kit is welcome when two simulations need the identical rule.
-- **Calculator frame (`shared/studio.css`, see `docs/CALCULATORS.md`):** SMART Calculator and Decision Tree Calculator. Name any calculation-type simulation "... Calculator". Simulations that use the Bit assistant (BUMN, DISC, Koperasi, BATNA, Van Westendorp) also load `studio.css` for the robot's styles.
+- **Calculator frame (`shared/studio.css`, see `docs/CALCULATORS.md`):** SMART Calculator, Decision Tree Calculator and Van Westendorp Calculator. Name any calculation-type simulation "... Calculator". Simulations that use the Bit assistant (BUMN, DISC, Koperasi, BATNA) also load `studio.css` for the robot's styles.
 - **Tools:** `tests/shots.js` + `tests/shotdiff.py` for visual regression. When you touch a shared stylesheet, shoot every simulation before and after; the migration of these seven was verified with a computed-style comparison of every element (desktop and 390 px, menu and play views) and showed zero differences.

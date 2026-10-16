@@ -6,6 +6,13 @@ MBALAB.sims.define('bumn-explorer', {
     <h1 data-i18n="bm_gTitle">BUMN Explorer</h1>
     <div class="ex-modes" role="group"><button type="button" id="bmExp" class="on"><span data-i18n="bm_modeExp"></span></button><button type="button" id="bmQz"><span data-i18n="bm_modeQz"></span></button></div>
   </header>
+  <section class="ex-choose" id="bmChoose" hidden aria-labelledby="bmChT">
+    <h2 id="bmChT" data-i18n="bm_chooseT"></h2><p data-i18n="bm_chooseSub"></p>
+    <div class="ex-cho">
+      <button type="button" class="ex-co" data-pick="map"><span class="ex-cs"><img src="simulations/bumn-explorer/assets/map-shot.jpg" alt="" width="1080" height="608" loading="lazy"></span><b data-i18n="bm_optMapT"></b><span data-i18n="bm_optMapD"></span><em data-i18n="bm_optMapGo"></em></button>
+      <button type="button" class="ex-co" data-pick="guide"><span class="ex-cs ex-gs" id="bmGShot"></span><b data-i18n="bm_optGuideT"></b><span data-i18n="bm_optGuideD"></span><em data-i18n="bm_optGuideGo"></em><small data-i18n="bm_optGuideNote"></small></button>
+    </div>
+  </section>
   <div class="sk-scroll ex-scroll" id="bmScroll">
     <div class="ex-wrap">
       <div class="ex-bar"><span class="ex-prog" id="bmProg"></span><div class="ex-chips" id="bmChips"></div></div>

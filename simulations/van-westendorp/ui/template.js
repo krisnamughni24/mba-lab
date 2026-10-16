@@ -1,51 +1,12 @@
-/* Van Westendorp PSM: page skeleton. app.js fills the product cards, the chart, the four points and the pricing mission. */
+/* Van Westendorp Calculator: page skeleton. The frame (stepper, stage, guide, toasts, checklist, download block) comes from shared/studio.css (sd-*). Root class: sd. */
 MBALAB.sims.define('van-westendorp', {
-  template: `<div class="sk-root vw" id="vw">
-  <header class="sk-top">
-    <button class="sk-back" data-sim-back><span data-i18n="vwBack">← Home</span></button>
-    <h1 data-i18n="vwTitle">Price Sensitivity Meter</h1>
-    <div class="sk-tabs" role="tablist"><button type="button" role="tab" class="on" aria-selected="true" data-tab="game" data-i18n="tabGame"></button><button type="button" role="tab" aria-selected="false" data-tab="lab" data-i18n="tabLab"></button></div>
+  template: `<div class="sd vw" id="sd">
+  <header class="sd-top">
+    <button class="sd-back" data-sim-back data-ia="title=back"><span data-i18n="vwBack">← Home</span></button>
+    <h1 data-i18n="vwTitle">Van Westendorp Calculator</h1>
   </header>
-  <div class="sk-scroll vw-scroll" id="vwScroll">
-    <div class="sc-root vg" id="vgGame">
-      <div class="sc-select" id="vgMenu"></div>
-      <div class="sc-play" id="vgLevel" hidden>
-        <div class="sc-hud" id="vgTop"></div>
-        <ol class="sc-steps" id="vgSteps"></ol>
-        <div class="sc-cols">
-          <div class="sc-left">
-            <div class="sc-stage" id="vgStage"><canvas id="vgCv" width="960" height="540" role="img" data-ia="aria-label=vgStageAria"></canvas></div>
-            <div class="sc-say" id="vgSay" aria-live="polite"></div>
-          </div>
-          <div class="sc-panel" id="vgSide">
-            <div class="vg-chartcard"><div id="vgChart"></div><div class="vw-legend" id="vgLegend"></div></div>
-            <div class="vg-body" id="vgPanel"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sx vw-wrap" id="vwLab" hidden>
-      <p class="sk-sub" data-i18n="vwSub"></p>
-      <h2 class="vw-h" data-i18n="vwScen"></h2>
-      <div class="vw-scen" id="vwScen" role="radiogroup"></div>
-      <div class="vw-main">
-        <section class="vw-card sk-chartcard">
-          <div class="vw-legend" id="vwLegend"></div>
-          <div class="vw-chart" id="vwChart"></div>
-          <div class="vw-read" id="vwRead" aria-live="polite"></div>
-        </section>
-        <aside class="vw-card sk-side">
-          <div id="vwCtl"></div>
-          <p class="vw-dq" id="vwDq"></p>
-        </aside>
-      </div>
-      <section class="vw-range" id="vwRange"></section>
-      <div class="vw-pts" id="vwPts"></div>
-      <section class="vw-card sk-price" id="vwPrice"></section>
-      <details class="vw-card vw-more" id="vwSurvey"><summary data-i18n="svT"></summary><div id="vwSvBody"></div></details>
-      <details class="vw-card vw-more" id="vwOwn"><summary data-i18n="odT"></summary><div id="vwOwnBody"></div></details>
-      <details class="vw-card vw-more" id="vwLearn"><summary data-i18n="learnT"></summary><div id="vwLearnBody"></div></details>
-    </div>
-  </div>
+  <ol class="sd-steps" id="sdSteps"></ol>
+  <div class="sd-stage" id="sdStage"></div>
+  <div class="sd-toasts" id="sdToasts" role="status" aria-live="polite"></div>
 </div>`
 });

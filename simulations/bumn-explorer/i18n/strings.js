@@ -211,6 +211,19 @@
     alsoLbl: ["also", "juga", "兼", "兼属"],
     srcT: ["Source: Danantara Corporate & Sector Intelligence Guide (Oct 2026)", "Sumber: Danantara Corporate & Sector Intelligence Guide (Okt 2026)", "出典：Danantara Corporate & Sector Intelligence Guide（2026年10月）", "来源：Danantara Corporate & Sector Intelligence Guide（2026 年 10 月）"],
     devT: ["Developer: 077 - M. Zildjian Laxamana", "Pengembang: 077 - M. Zildjian Laxamana", "開発：077 - M. Zildjian Laxamana", "开发者：077 - M. Zildjian Laxamana"],
+    chooseT: ["How do you want to explore?", "Mau menjelajah dengan cara apa?", "どちらで探索しますか？", "你想怎样探索？"],
+    chooseSub: ["Walk through the 3D city here, or open the Danantara Intelligence guide that this map is based on.", "Jelajahi kota 3D di sini, atau buka panduan Danantara Intelligence yang menjadi dasar peta ini.", "ここで3Dの街を探索するか、この地図の元になったDanantara Intelligenceガイドを開きます。", "在这里漫游 3D 城市，或打开本地图所依据的 Danantara Intelligence 指南。"],
+    optMapT: ["3D BUMN map", "Peta 3D BUMN", "BUMN 3Dマップ", "BUMN 3D 地图"],
+    optMapD: ["Fly through the city of 67 buildings, open company cards with key figures and fact-check notes, then take the quiz.", "Jelajahi kota dengan 67 bangunan, buka kartu perusahaan berisi angka kunci dan catatan cek fakta, lalu ikuti kuis.", "67の建物がある街を巡り、主要数字とファクトチェックを載せた企業カードを開いて、クイズに挑戦します。", "漫游有 67 栋建筑的城市，打开含关键数字与核查提示的公司卡片，再参加测验。"],
+    optMapGo: ["Open the map →", "Buka peta →", "マップを開く →", "打开地图 →"],
+    optGuideT: ["Danantara Intelligence guide (website)", "Panduan Danantara Intelligence (situs web)", "Danantara Intelligenceガイド（ウェブサイト）", "Danantara Intelligence 指南（网站）"],
+    optGuideD: ["The Corporate & Sector Intelligence Guide: sector pages, company profiles and subsidiary rosters, as a normal website.", "Corporate & Sector Intelligence Guide: halaman sektor, profil perusahaan, dan daftar anak usaha, dalam bentuk situs web biasa.", "Corporate & Sector Intelligence Guide：セクター別ページ、企業プロフィール、子会社名簿を通常のウェブサイトで。", "Corporate & Sector Intelligence Guide：行业页面、公司简介和子公司名册，以普通网站形式呈现。"],
+    optGuideGo: ["Go to the website →", "Buka situs web →", "ウェブサイトへ →", "前往网站 →"],
+    optGuideNote: ["Leaves this page and opens the guide in this tab.", "Meninggalkan halaman ini dan membuka panduan di tab ini.", "このページを離れ、同じタブでガイドを開きます。", "将离开本页，并在当前标签页打开指南。"],
+    gsTitle: ["Danantara Corporate & Sector Intelligence Guide", "Danantara Corporate & Sector Intelligence Guide", "Danantara Corporate & Sector Intelligence Guide", "Danantara Corporate & Sector Intelligence Guide"],
+    gsStat: ["14 sectors", "14 sektor", "14セクター", "14 个行业"],
+    gsPl: ["51 placements", "51 penempatan", "51配置", "51 个归类"],
+    gsCo: ["50 companies", "50 perusahaan", "50社", "50 家公司"],
     nbt_end: ['Try the quiz again to beat your score.', 'Coba kuis lagi untuk mengalahkan skor Anda.', 'もう一度クイズに挑戦してスコアを更新しましょう。', '再测一次，刷新你的得分。']
   };
   const strings = { en: {}, id: {}, ja: {}, zh: {} };
