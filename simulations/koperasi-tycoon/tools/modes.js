@@ -1,4 +1,4 @@
-/* balance check per mode: node tests/modes.js [mode] */
+/* balance check per mode: node simulations/koperasi-tycoon/tools/modes.js [mode] */
 global.MBALAB={coop:{}};require('../data/events.js');require('../data/events-remote.js');require('../data/events-fishing.js');const E=require('../engine/engine.js');
 const MODE=process.argv[2]||'remote';
 function play(seed,pol){let s=E.create(seed,MODE),g=0;

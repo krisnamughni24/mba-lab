@@ -22,7 +22,7 @@ Small fixes (typos, a translation, a number in a case) can go straight to a pull
 
 1. `cp -r simulations/_template simulations/<your-id>` (lowercase, hyphens), then replace `my-simulation` with your id in every file.
 2. Put the maths in `engine/engine.js`: pure functions, no DOM, no `MBALAB`. Write `tests/engine.js` for it (plain `node`, print `engine OK` on success, exit non-zero on failure). `npm run test:engines` picks it up automatically.
-3. Write every visible text in `i18n/strings.js` as `[en, id, ja, zh]`. No hard-coded words in the UI.
+3. Write every visible text in `i18n/strings.js` as `[en, id, ja, zh]`. No hard-coded words in the UI. **You only need to write the English**: add the key as `key: ['English text']`, then run `ANTHROPIC_API_KEY=… npm run translate -- <your-id>` (or `DEEPL_API_KEY=…`). It fills Indonesian, Japanese and Chinese, keeps `{placeholders}` and `<b>` tags, never overwrites existing translations, and you review the result with `git diff`. Machine translation is a draft: have a native speaker check important texts. API keys stay in your shell environment, never in a file.
 4. Build the UI on the shared kit:
    - **Calculator** (you compute something for the user's own case): use the guided frame in `shared/studio.css`, see [docs/CALCULATORS.md](docs/CALCULATORS.md). Name it "… Calculator".
    - **Game or lab** (levels, scoring, scenarios): use `shared/simkit.css`, see [docs/SIM-BLUEPRINT.md](docs/SIM-BLUEPRINT.md).
@@ -33,7 +33,7 @@ The fastest way to learn the pattern is to read a small existing simulation next
 
 ## Rules that keep the project coherent
 
-- **Four languages**: `en`, `id`, `ja`, `zh` for every visible string. If you cannot write one, give an honest draft in English and say so in the pull request; do not leave keys missing.
+- **Four languages**: `en`, `id`, `ja`, `zh` for every visible string (the menu shows them as EN, ID, JP, ZH; the code for Japanese stays `ja`). Use `npm run translate` for drafts. `node tests/structure.js` fails on missing translations.
 - **Indonesian** addresses the visitor formally (Anda; the assistant says saya).
 - **Copy** is sentence case; use `&` in names and labels, `and` in sentences. UPPERCASE comes from CSS, never from typing.
 - **Look and feel**: reuse kit classes, put only truly specific rules in your own `ui/style.css`, scoped under your root class and prefix. Do not copy shared rules. Use theme tokens (`--cy`, `--panel`, …), never hard-coded colours, and never write `body.day …` rules (see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)).
@@ -46,6 +46,7 @@ The fastest way to learn the pattern is to read a small existing simulation next
 ## Before you open the pull request
 
 ```bash
+npm run test:structure        # catalog, sim.js file lists, translations, secrets (instant)
 npm run test:engines          # fast
 python3 -m http.server 8099 & # keep it running
 npm run test:smoke            # all live simulations mount without errors

@@ -11,6 +11,7 @@ jobs:
         with: { node-version: 20 }
       - run: npm install --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
+      - run: node tests/structure.js
       - run: node tests/engines.js
       - name: Smoke test (opens every live simulation)
         run: |

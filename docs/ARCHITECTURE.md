@@ -16,11 +16,12 @@ data/                 CONTENT & CONFIG – the files you edit most
 core/                 small engine: namespace/event bus, i18n, overlays, loader, simulation host, kinetic text effects, boot
 features/<name>/      one folder per site feature (scripts, styles, strings)
   landing scene theme camera language audio catalog about idea-form
-simulations/<id>/     one microsite per simulation, lazy-loaded: sim.js (file list) + i18n/ ui/ and optionally engine/ data/ scene/
+simulations/<id>/     one microsite per simulation, lazy-loaded: sim.js (file list) + i18n/ ui/ and optionally engine/ data/ scene/  tests/ (assertions) tools/ (balance and trace scripts, not run by CI)
                         (see ADDING-A-SIMULATION.md)
 docs/                 documentation, index in docs/README.md
 shared/               code shared by several simulations: simkit.css (game/lab UI kit), studio.css (calculator frame), assistant.js (Bit robot), report.js (PDF/HTML download)
-tests/                engines.js (all engine tests), smoke.js (opens every live simulation), shots.js + shotdiff.py (visual regression)
+tools/                translate.js (fills missing translations via API)
+tests/                structure.js (repo integrity), engines.js (all engine tests), smoke.js (opens every live simulation), shots.js + shotdiff.py (visual regression)
 css/                  core.css (layout, dialogs, loader) · nav.css (top bar) · cyber.css (THE THEME: colours, fonts, type scale)
 apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 ```

@@ -37,6 +37,7 @@ Opening `index.html` directly also works; a local server is only needed for the 
 ```bash
 npm install                      # once: installs Playwright (headless Chromium)
 npx playwright install chromium  # once
+npm run test:structure           # catalog, file lists, translations, secrets (instant)
 npm run test:engines             # pure-logic tests, no browser, seconds
 npm run test:smoke               # opens all live simulations (needs the server above), about 2 minutes
 ```
@@ -51,7 +52,8 @@ features/           site features, one folder each (landing, scene, theme, audio
 simulations/<id>/   one microsite per simulation, loaded on demand
 shared/             code shared by simulations: simkit.css, studio.css, assistant.js, report.js
 css/                theme (cyber.css), layout, nav
-tests/              engines.js, smoke.js, shots.js + shotdiff.py (visual regression)
+tools/              translate.js: fills missing id/ja/zh texts from your English via API
+tests/              structure.js, engines.js, smoke.js, shots.js + shotdiff.py (visual regression)
 supabase/           database schema for accounts and leaderboard
 apps-script/        Google Apps Script that saves submitted ideas to Drive
 docs/               documentation (start at docs/README.md)

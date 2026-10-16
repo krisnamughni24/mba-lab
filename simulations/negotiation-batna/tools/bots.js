@@ -1,4 +1,4 @@
-/* Bot playthroughs of every mission: node simulations/negotiation-batna/tests/bots.js. Prints the average score per mission for a few bot styles (careful, lazy, lowballer, overpayer). */
+/* Bot playthroughs of every mission: node simulations/negotiation-batna/tools/bots.js. Prints the average score per mission for a few bot styles (careful, lazy, lowballer, overpayer). */
 const N = require('../engine/engine.js');
 function run(i, pol) { const s = N.create(i); let g = 0; pol.pre && pol.pre(s);
   while (!s.over && g++ < 40) { const a = pol.act(s); if (a === 'walk') N.walk(s); else if (a === 'acc') N.accept(s); else if (a && a.ally != null) N.ally(s, a.ally); else N.offer(s, a.x, a.who); }

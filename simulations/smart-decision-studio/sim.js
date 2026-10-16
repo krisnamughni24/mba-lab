@@ -4,6 +4,7 @@ MBALAB.sims.files('smart-decision-studio', {
     "i18n/strings.js",
     "ui/template.js",
     "../../shared/assistant.js",
+    "../../shared/report.js",
     "ui/app.js"
   ],
   styles: ["../../shared/studio.css"]

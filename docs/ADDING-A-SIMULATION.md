@@ -45,9 +45,13 @@ Games and labs use the same UI backbone, `shared/simkit.css`; calculators use th
 - Texts: never hard-code visible words; add keys to `i18n/strings.js` and use `t('key')`.
 - Saving progress to the account: `MBALAB.cloud(id, {read, write, merge, refresh})`, see `docs/ACCOUNTS.md`.
 
+## Translations
+Write only the English: `key: ['English text']` in `i18n/strings.js`, then `ANTHROPIC_API_KEY=… npm run translate -- <your-id>` (or `DEEPL_API_KEY=…`; `--provider mock` for a dry test, `--dry` to preview). It fills `id`, `ja`, `zh`, keeps placeholders and tags, and never overwrites existing translations. Review `git diff`; `node tests/structure.js` fails until every key has four languages. Indonesian is formal (Anda).
+
 ## Tests
 ```
 npm install && npx playwright install chromium   # once
+npm run test:structure                           # catalog + file lists + translations + secrets
 npm run test:engines                             # runs simulations/*/tests/engine.js (pure node, seconds)
 python3 -m http.server 8099 &                    # in the repo root
 npm run test:smoke                               # opens every live simulation; fails on a 404, script error or empty page

@@ -2,6 +2,6 @@
 MBALAB.data.languages = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'id', label: 'ID', name: 'Bahasa Indonesia' },
-  { code: 'ja', label: 'JA', name: '日本語' },
+  { code: 'ja', label: 'JP', name: '日本語' },
   { code: 'zh', label: 'ZH', name: '中文' }
 ];

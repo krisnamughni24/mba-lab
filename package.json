@@ -6,8 +6,10 @@
   "scripts": {
     "start": "python3 -m http.server 8099",
     "test:engines": "node tests/engines.js",
+    "test:structure": "node tests/structure.js",
+    "translate": "node tools/translate.js",
     "test:smoke": "node tests/smoke.js",
-    "test": "node tests/engines.js && node tests/smoke.js"
+    "test": "node tests/structure.js && node tests/engines.js && node tests/smoke.js"
   },
   "devDependencies": {
     "playwright": "^1.48.0"
