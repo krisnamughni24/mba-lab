@@ -39,6 +39,20 @@ MBALAB.feature('account', () => {
   }
   const initial = u => esc((u.name || u.email || '?').trim().charAt(0).toUpperCase());
   const avatar = (u, cls) => u.avatar ? '<img class="' + cls + '" alt="" referrerpolicy="no-referrer" src="' + esc(u.avatar) + '">' : '<span class="' + cls + ' ph" aria-hidden="true">' + initial(u) + '</span>';
+  /* leaderboard markup, shared by the signed-in tab and the guest view */
+  function boardHtml() {
+    const bs = (MBALAB.data.simulations || []).filter(x => x.status === 'live' && x.id !== 'smart-decision-studio' && x.id !== 'disc-crisis-room');
+    const sel = '<label class="acct-sel">' + esc(t('acctBoardFor')) + ' <select data-acct="bsim"><option value="">' + esc(t('acctAllSims')) + '</option>' +
+      bs.map(x => '<option value="' + esc(x.id) + '"' + (boardSim === x.id ? ' selected' : '') + '>' + esc(simName(x.id)) + '</option>').join('') + '</select></label>';
+    const medal = r => r == 1 ? '🥇' : r == 2 ? '🥈' : r == 3 ? '🥉' : esc(r);
+    /* your own row can sit below the top 20: a "..." divider marks the gap */
+    const li = (r, i) => (r.is_me && i > 0 && Number(r.rank) > Number(board[i - 1].rank) + 1 ? '<li class="gap" aria-hidden="true">⋯</li>' : '') +
+      '<li class="' + (r.is_me ? 'me' : '') + '"><span class="rk">' + medal(r.rank) + '</span><span class="nm">' + esc(r.name) + '</span><span class="pt">' + esc(r.points) + ' <small>' + esc(t('acctPts')) + '</small></span></li>';
+    const rows = board === null ? (boardErr ? '<p class="acct-st err">' + esc(t('acctLoadErr')) + '</p>' : '<p class="acct-st">…</p>') :
+      !board.length ? '<div class="acct-empty"><span>🏆</span><p>' + esc(t('acctNoBoard')) + '</p></div>' :
+        '<ol class="acct-board">' + board.map(li).join('') + '</ol>';
+    return sel + rows + '<p class="acct-note">' + esc(t('acctBoardHow')) + '</p>' + (!me() ? '<p class="acct-note">' + esc(t('acctBoardGuest')) + '</p>' : '') + (prof && !prof.show_on_board ? '<p class="acct-note acct-warn">' + esc(t('acctNotShown')) + '</p>' : '');
+  }
   function paintDialog() {
     $('acctT').textContent = t('acctTitle');
     const u = me(), body = $('acctBody');
@@ -49,10 +63,12 @@ MBALAB.feature('account', () => {
       return;
     }
     if (!u) {
+      const gt = '<div class="acct-tabs" role="tablist">' + [['in', 'acctSignIn', '🔑'], ['board', 'acctTabBoard', '🏆']].map(k => '<button type="button" role="tab" aria-selected="' + (gtab === k[0]) + '" data-acct="gtab" data-g="' + k[0] + '"><span aria-hidden="true">' + k[2] + '</span> ' + esc(t(k[1])) + '</button>').join('') + '</div>';
+      if (gtab === 'board') { body.innerHTML = gt + '<div class="acct-pane" role="tabpanel">' + boardHtml() + '</div>'; return; }
       const up = amode === 'up', rs = amode === 'reset';
       const perks = '<ul class="acct-perks"><li><span>☁️</span>' + esc(t('acctPerk1')) + '</li><li><span>🏆</span>' + esc(t('acctPerk2')) + '</li><li><span>🎓</span>' + esc(t('acctPerk3')) + '</li></ul>';
       const seg = rs ? '' : '<div class="acct-seg" role="tablist">' + [['in', 'acctSignIn'], ['up', 'acctSignUp']].map(a => '<button type="button" role="tab" aria-selected="' + ((a[0] === 'up') === up) + '" data-acct="mode" data-m="' + a[0] + '">' + esc(t(a[1])) + '</button>').join('') + '</div>';
-      body.innerHTML = '<p class="acct-lead">' + esc(t('acctIntro')) + '</p>' + perks +
+      body.innerHTML = gt + '<p class="acct-lead">' + esc(t('acctIntro')) + '</p>' + perks +
         (C.googleClientId ? '<div class="acct-gsi" id="acctGsi"></div>' : '<button type="button" class="acct-google" data-acct="in" data-sfx="click"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.2A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg><span>' + esc(t('acctGoogle')) + '</span></button>') +
         '<div class="acct-or"><span>' + esc(t('acctOrMail')) + '</span></div>' + seg +
         (msg ? '<p class="acct-st ' + (msgOk ? 'ok' : 'err') + '" role="status">' + esc(msg) + '</p>' : '') +
@@ -81,14 +97,7 @@ MBALAB.feature('account', () => {
         '<ul class="acct-hist">' + hist.map(h => '<li><span><b>' + esc(simName(h.sim)) + '</b>' + (h.variant ? ' · ' + esc(h.variant) : '') + '<small>' + esc(fmt(h.at)) + '</small></span><span class="sc">' + (h.score == null ? '' : Math.round(h.score) + '%') + '</span></li>').join('') + '</ul>';
     let main = '';
     if (tab === 'board') {
-      const bs = (MBALAB.data.simulations || []).filter(x => x.status === 'live' && x.id !== 'smart-decision-studio' && x.id !== 'disc-crisis-room');
-      const sel = '<label class="acct-sel">' + esc(t('acctBoardFor')) + ' <select data-acct="bsim"><option value="">' + esc(t('acctAllSims')) + '</option>' +
-        bs.map(x => '<option value="' + esc(x.id) + '"' + (boardSim === x.id ? ' selected' : '') + '>' + esc(simName(x.id)) + '</option>').join('') + '</select></label>';
-      const medal = r => r == 1 ? '🥇' : r == 2 ? '🥈' : r == 3 ? '🥉' : esc(r);
-      const rows = board === null ? (boardErr ? '<p class="acct-st err">' + esc(t('acctLoadErr')) + '</p>' : '<p class="acct-st">…</p>') :
-        !board.length ? '<div class="acct-empty"><span>🏆</span><p>' + esc(t('acctNoBoard')) + '</p></div>' :
-          '<ol class="acct-board">' + board.map(r => '<li class="' + (r.is_me ? 'me' : '') + '"><span class="rk">' + medal(r.rank) + '</span><span class="nm">' + esc(r.name) + '</span><span class="pt">' + esc(r.points) + ' <small>' + esc(t('acctPts')) + '</small></span></li>').join('') + '</ol>';
-      main = sel + rows + '<p class="acct-note">' + esc(t('acctBoardHow')) + '</p>' + (prof && !prof.show_on_board ? '<p class="acct-note acct-warn">' + esc(t('acctNotShown')) + '</p>' : '');
+      main = boardHtml();
     } else if (tab === 'hist') {
       main = histList;
     } else if (tab === 'set') {
@@ -175,9 +184,9 @@ MBALAB.feature('account', () => {
   };
 
   /* ---------- leaderboard + board profile ---------- */
-  let amode = 'in', msgOk = false, busy = false, recovering = false, setupErr = false, tab = 'me', board = null, boardErr = false, boardSim = '', prof = null;
+  let amode = 'in', msgOk = false, busy = false, recovering = false, setupErr = false, tab = 'me', board = null, boardErr = false, boardSim = '', prof = null, gtab = 'in';
   async function loadBoard() {
-    if (!ready()) return;
+    if (!sb || (me() && !ready())) return;   // guests may read the board too
     board = null; boardErr = false; paintDialog();
     const r = await sb.rpc('leaderboard', { p_sim: boardSim || null, p_limit: 20 });
     if (r.error) boardErr = true; else board = r.data || [];
@@ -186,7 +195,7 @@ MBALAB.feature('account', () => {
   async function loadProf() {
     if (!ready()) return;
     const r = await sb.from('profiles').select('display_name,show_on_board,name').eq('id', session.user.id).maybeSingle();
-    prof = r.data || { display_name: '', show_on_board: false }; paintDialog();
+    prof = r.data || { display_name: '', show_on_board: true }; paintDialog();
   }
 
   /* ---------- Google sign-in without the supabase.co screen ----------
@@ -216,7 +225,7 @@ MBALAB.feature('account', () => {
   }
 
   /* ---------- actions ---------- */
-  MBALAB.actions['open-account'] = () => { MBALAB.overlay.open(dlg); paintDialog(); if (ready()) { loadHist(); loadProf(); if (tab === 'board') loadBoard(); } };
+  MBALAB.actions['open-account'] = () => { MBALAB.overlay.open(dlg); paintDialog(); if (!me() && gtab === 'board') loadBoard(); if (ready()) { loadHist(); loadProf(); if (tab === 'board') loadBoard(); } };
   dlg.addEventListener('click', async e => {
     const b = e.target.closest('[data-acct]'); if (!b || !sb) return;
     const act = b.dataset.acct;
@@ -226,6 +235,7 @@ MBALAB.feature('account', () => {
       if (r.error) { msg = t('acctSignErr'); paintDialog(); }
     } else if (act === 'pw') { const i = b.parentNode.querySelector('input'); i.type = i.type === 'password' ? 'text' : 'password'; return;
     } else if (act === 'mode') { amode = b.dataset.m; msg = ''; paintDialog();
+    } else if (act === 'gtab') { gtab = b.dataset.g; paintDialog(); if (gtab === 'board') loadBoard();
     } else if (act === 'tab') { tab = b.dataset.tab; paintDialog(); if (tab === 'board') loadBoard(); if (tab === 'hist' && hist === null) loadHist();
     } else if (act === 'savep' && ready()) {
       const name = dlg.querySelector('[data-acct=dname]').value.trim().slice(0, 24), show = dlg.querySelector('[data-acct=show]').checked;

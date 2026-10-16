@@ -1,5 +1,6 @@
 {
   "name": "mba-lab",
+  "license": "MIT",
   "version": "1.0.0",
   "private": true,
   "description": "MBA Lab: interactive mini business simulations (static site, no build step).",

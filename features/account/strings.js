@@ -12,7 +12,8 @@ MBALAB.i18n.add({
     "acctDenied": "This Google account is not allowed on this site. Ask the owner to add your email.",
     "acctLoadErr": "Could not load history.", "acctSignErr": "Sign-in failed. Please try again.",
     "acctPriv": "Stored: your name, email and photo from Google, plus your progress and history. Other users cannot see them.",
-    "acctCheck": "Checking your account…", "acctSignedAs": "Signed in as"
+    "acctCheck": "Checking your account…", "acctSignedAs": "Signed in as",
+    "acctBoardGuest": "Sign in to appear on the board yourself."
   },
   "id": {
     "acctHist": "Riwayat",
@@ -26,7 +27,8 @@ MBALAB.i18n.add({
     "acctDenied": "Akun Google ini belum diizinkan di situs ini. Minta pemilik situs menambahkan emailmu.",
     "acctLoadErr": "Riwayat gagal dimuat.", "acctSignErr": "Gagal masuk. Silakan coba lagi.",
     "acctPriv": "Yang disimpan: nama, email, dan foto dari Google, serta progres dan riwayatmu. Pengguna lain tidak dapat melihatnya.",
-    "acctCheck": "Memeriksa akunmu…", "acctSignedAs": "Masuk sebagai"
+    "acctCheck": "Memeriksa akunmu…", "acctSignedAs": "Masuk sebagai",
+    "acctBoardGuest": "Masuk untuk tampil di papan peringkat."
   },
   "ja": {
     "acctHist": "履歴",
@@ -40,7 +42,8 @@ MBALAB.i18n.add({
     "acctDenied": "このGoogleアカウントはこのサイトでは許可されていません。管理者にメールアドレスの追加を依頼してください。",
     "acctLoadErr": "履歴を読み込めませんでした。", "acctSignErr": "ログインに失敗しました。もう一度お試しください。",
     "acctPriv": "保存される情報:Googleの名前・メール・写真、および進捗と履歴。他のユーザーには表示されません。",
-    "acctCheck": "アカウントを確認中…", "acctSignedAs": "ログイン中"
+    "acctCheck": "アカウントを確認中…", "acctSignedAs": "ログイン中",
+    "acctBoardGuest": "ログインするとランキングに参加できます。"
   },
   "zh": {
     "acctHist": "历史记录",
@@ -54,6 +57,7 @@ MBALAB.i18n.add({
     "acctDenied": "此 Google 账户未被允许使用本站。请联系站点所有者添加你的邮箱。",
     "acctLoadErr": "无法加载历史记录。", "acctSignErr": "登录失败,请重试。",
     "acctPriv": "会保存:来自 Google 的姓名、邮箱和头像,以及你的进度和历史记录。其他用户无法看到。",
-    "acctCheck": "正在检查你的账户…", "acctSignedAs": "已登录为"
+    "acctCheck": "正在检查你的账户…", "acctSignedAs": "已登录为",
+    "acctBoardGuest": "登录后即可上榜。"
   }
 });

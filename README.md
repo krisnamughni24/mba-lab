@@ -84,4 +84,4 @@ Any static host works. Production runs on **Vercel** (import the repo, framework
 The Supabase URL and publishable key in `data/config.js` are public by design; data is protected by row level security. **Never commit** the `service_role` key, the database password or the Google OAuth client secret.
 
 ## License
-No license file has been added yet, so by default all rights are reserved. The owner should add one (for example MIT) before accepting outside contributions.
+[MIT](LICENSE) © 2026 Krisna Mughni. Contributions are accepted under the same license.

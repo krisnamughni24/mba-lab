@@ -281,10 +281,10 @@ MBALAB.data.simulations = [
     "icon": "🏷️",
     "category": "marketing",
     "name": {
-      "en": "Van Westendorp",
-      "id": "Van Westendorp",
-      "ja": "価格感度測定（PSM）",
-      "zh": "价格敏感度测试（PSM）"
+      "en": "Van Westendorp Calculator",
+      "id": "Kalkulator Van Westendorp",
+      "ja": "ヴァン・ウェステンドルプ計算機（PSM）",
+      "zh": "Van Westendorp 计算器（PSM）"
     },
     "description": {
       "en": "Four price questions, four curves: find the accepted price range.",

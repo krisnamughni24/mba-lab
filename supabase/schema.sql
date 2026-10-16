@@ -79,9 +79,10 @@ create policy "attempts own" on public.attempts for all to authenticated
   using (user_id = auth.uid() and public.is_allowed()) with check (user_id = auth.uid() and public.is_allowed());
 
 -- ---------- leaderboard ----------
--- Profile fields for the board: nobody appears unless they switch it on and choose a display name.
+-- Profile fields for the board: new players appear by default (first name or chosen display name) and can switch it off in Settings.
 alter table public.profiles add column if not exists display_name  text check (char_length(display_name) <= 24);
-alter table public.profiles add column if not exists show_on_board boolean not null default false;
+alter table public.profiles add column if not exists show_on_board boolean not null default true;
+alter table public.profiles alter column show_on_board set default true;   -- existing rows keep their own choice
 
 -- Attempts carry a 0-100 score, a variant (scenario / level / background) and whether they count for the board.
 alter table public.attempts add column if not exists variant text    not null default '';
@@ -110,6 +111,7 @@ drop trigger if exists attempts_guard_t on public.attempts;
 create trigger attempts_guard_t before insert on public.attempts for each row execute function public.attempts_guard();
 
 -- Points = sum over (simulation, variant) of the user's best score. p_sim = null means all simulations.
+-- Readable by guests (anon) too. Returns the top p_limit rows plus the caller's own row when it is further down.
 create or replace function public.leaderboard(p_sim text default null, p_limit int default 20)
 returns table (rank bigint, name text, points numeric, plays bigint, is_me boolean)
 language sql stable security definer set search_path = public as $$
@@ -123,16 +125,18 @@ language sql stable security definer set search_path = public as $$
     from best b join public.profiles p on p.id = b.user_id
     where p.show_on_board or b.user_id = auth.uid()
     group by b.user_id
+  ), ranked as (
+    select rank() over (order by t.pts desc)::bigint as rk,
+           row_number() over (order by t.pts desc, t.user_id) as rn,
+           coalesce(nullif(p.display_name, ''), split_part(coalesce(p.name, 'Player'), ' ', 1)) as nm,
+           round(t.pts, 1) as pts, t.plays, coalesce(t.user_id = auth.uid(), false) as me
+    from tot t join public.profiles p on p.id = t.user_id
   )
-  select rank() over (order by t.pts desc)::bigint,
-         coalesce(nullif(p.display_name, ''), split_part(coalesce(p.name, 'Player'), ' ', 1)),
-         round(t.pts, 1), t.plays, t.user_id = auth.uid()
-  from tot t join public.profiles p on p.id = t.user_id
-  where public.is_allowed()
-  order by 1, 2
-  limit least(greatest(p_limit, 1), 100);
+  select rk, nm, pts, plays, me from ranked
+  where public.is_allowed() and (rn <= least(greatest(p_limit, 1), 100) or me)
+  order by rn;
 $$;
-grant execute on function public.leaderboard(text, int) to authenticated;
+grant execute on function public.leaderboard(text, int) to anon, authenticated;
 
 -- ---------- "delete my account and data" button ----------
 create or replace function public.delete_my_account() returns void

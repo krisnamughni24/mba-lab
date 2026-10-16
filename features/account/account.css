@@ -92,3 +92,4 @@
 @media(max-width:480px){.acct-stats{grid-template-columns:repeat(2,1fr)}.acct-hero{padding:12px}.acct-bigav{width:56px;height:56px}}
 .acct-google svg{width:20px;height:20px;flex:none}
 .acct-gsi{display:flex;justify-content:center;align-items:center;min-height:44px;margin-top:14px}
+.acct-board li.gap{display:block;text-align:center;padding:0;line-height:1;color:var(--txt2);letter-spacing:.3em}
