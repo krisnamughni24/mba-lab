@@ -51,6 +51,7 @@ MBALAB.data.simulations = [
     "template": "explorer",
     "icon": "🏙️",
     "category": "indonesia-business",
+    "developer": "077 - M. Zildjian Laxamana",
     "name": {
       "en": "BUMN Explorer",
       "id": "Jelajah BUMN",
@@ -58,10 +59,10 @@ MBALAB.data.simulations = [
       "zh": "印尼国企探索 BUMN"
     },
     "description": {
-      "en": "Explore Indonesia's state-owned firms in 3D, then take a quiz.",
-      "id": "Jelajahi BUMN Indonesia di dunia 3D, lalu uji lewat kuis.",
-      "ja": "港・鉱山・発電所のある3Dの世界でインドネシアの国有企業を探索し、クイズに挑戦。",
-      "zh": "在有港口、矿山和电厂的3D世界中探索印尼国有企业，再来一场测验。"
+      "en": "Explore 54 Danantara-linked state firms in a 3D city, then take a fact-check quiz.",
+      "id": "Jelajahi 54 BUMN di bawah Danantara dalam kota 3D, lalu uji lewat kuis cek fakta.",
+      "ja": "ダナンタラ傘下の国有企業54社を3Dの街で探索し、ファクトチェック・クイズに挑戦。",
+      "zh": "在3D城市中探索Danantara旗下54家国企，再挑战核查测验。"
     }
   },
   {

@@ -53,7 +53,7 @@
     [-9, 9].forEach(p => { hs.push([p, 27, p, 72], [p, -72, p, -27], [27, p, 72, p], [-72, p, -27, p]); ln.push([p, 27, p, 72], [p, -72, p, -27], [27, p, 72, p], [-72, p, -27, p]); });
     strips(hs, 5, mRoad, .12); strips(ln, .14, mLane, .24);
     const edges = [0x4dd2ff, 0xff6ad5, 0xa78bfa].map(c => dc(edgeMat(c, .35)));
-    const banned = new Set(['-36,-18', '36,-18', '-36,18', '36,18', '0,54', '0,-54']);
+    const banned = new Set(['-36,-18', '36,-18', '-36,18', '36,18', '0,54', '0,-54', '-54,0', '54,0', '0,36']);
     for (let cx = -54; cx <= 54; cx += 18) for (let cz = -54; cz <= 54; cz += 18) {
       if (Math.abs(cx) < 27 && Math.abs(cz) < 27) continue; if (banned.has(cx + ',' + cz)) continue; if (R0() < .1) continue;
       const n = 1 + Math.floor(R0() * 2.4), d = Math.hypot(cx, cz);

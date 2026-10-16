@@ -185,3 +185,15 @@ body.day .ex select option,body.day .ex select optgroup{background:#fff;color:#1
 .ex-lvb span{font-size:15px;color:var(--txt2);line-height:1.4}
 .ex-lvb em{font-style:normal;font-size:14px;font-weight:800;color:var(--am)}
 @media(max-width:760px){.ex-opts,.ex-lvs{grid-template-columns:1fr}.ex .ex-lvb{padding:9px 12px}}
+
+/* company card extras: legal name, subsidiary roster, linked landmarks (used when an explorer lists parents and subsidiaries) */
+.ex-card .ex-sec+.ex-sec{margin-left:10px}
+.ex-legal{margin:0 0 6px;font-size:14px;font-weight:600;color:var(--txt2);letter-spacing:.01em}
+.ex-subs{margin:8px 0 4px;padding:9px 11px;border-radius:10px;border:1px solid var(--edge);background:var(--btn-bg)}
+.ex-subs h4{margin:0 0 4px}.ex-subs p{margin:0 0 4px;font-size:15px}.ex-subs small{color:var(--txt2);font-size:13.5px}
+.ex-sl{font-size:13.5px!important;color:var(--txt2)}
+.ex-st{font-style:normal;font-size:12.5px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid var(--edge);color:var(--txt2)}
+.ex-st.rec{color:var(--gn);border-color:var(--gn)}.ex-st.par{color:var(--am);border-color:var(--am)}.ex-st.nv{color:var(--rd);border-color:var(--rd)}
+.ex-chs{display:flex;flex-wrap:wrap;gap:6px}
+.ex-sub{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:14px;font-weight:700;padding:5px 10px;border-radius:99px;border:1px solid var(--c);background:transparent;color:var(--txt);cursor:pointer}
+.ex-sub:hover,.ex-sub:focus-visible{background:var(--btn-bg);outline:none;box-shadow:0 0 0 2px var(--c)}

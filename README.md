@@ -25,7 +25,7 @@ Interactive business simulations over an animated 3D Jakarta (day and night), in
 | Game | **Koperasi Tycoon** | Running a cooperative |
 | Game | **BATNA: Patience** | Negotiation |
 | Game | **DISC Crisis Room Test** | Leadership style under pressure |
-| Explorer | **BUMN Explorer** | Indonesian state-owned enterprises on a 3D map |
+| Explorer | **BUMN Explorer** | 54 Danantara-linked state firms (plus subsidiary landmarks) in a 3D city, with a fact-check quiz. Developer: 077 - M. Zildjian Laxamana |
 | Test | **Try Out MBA** | Practice questions |
 | Life | **Life 40** | Long-term planning |
 

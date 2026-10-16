@@ -14,23 +14,24 @@ MBALAB.sims.define('bumn-explorer', {
     const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...visited])); } catch (e) {} cloud.changed(); };
     const col = id => E.COLORS[E.byId[id].sec];
     const secName = id => t('bm_sec_' + E.byId[id].sec);
+    const inSec = (b, x) => b.sec === x || b.also === x;
     const clue = id => t('bm_d_' + id).split(name(id)).join('___');
 
     /* ---------- chips + list + progress ---------- */
     function chips() {
       const f = host.contains(document.activeElement) && document.activeElement.closest('#bmChips') ? document.activeElement.id : '';
       const opt = b => `<option value="${b.id}"${sel === b.id ? ' selected' : ''}>${b.icon} ${b.n}${visited.has(b.id) ? ' ✓' : ''}</option>`;
-      const cats = `<option value="">${T('allCat')}</option>` + E.SECTORS.map(x => `<option value="${x}"${filter === x ? ' selected' : ''}>${t('bm_sec_' + x)} (${E.LIST.filter(b => b.sec === x).length})</option>`).join('');
-      const cos = filter ? E.LIST.filter(b => b.sec === filter).map(opt).join('')
+      const cats = `<option value="">${T('allCat')}</option>` + E.SECTORS.map(x => `<option value="${x}"${filter === x ? ' selected' : ''}>${t('bm_sec_' + x)} (${E.LIST.filter(b => inSec(b, x)).length})</option>`).join('');
+      const cos = filter ? E.LIST.filter(b => inSec(b, filter)).map(opt).join('')
         : E.SECTORS.map(x => `<optgroup label="${t('bm_sec_' + x)}">${E.LIST.filter(b => b.sec === x).map(opt).join('')}</optgroup>`).join('');
       $('#bmChips').innerHTML = `<label class="ex-dd" style="--c:${filter ? E.COLORS[filter] : 'var(--cy)'}"><select id="bmCat" aria-label="${T('catLbl')}">${cats}</select></label>` +
-        `<label class="ex-dd"><select id="bmCo" aria-label="${T('coLbl')}"><option value=""${sel ? '' : ' selected'}>${T('coLbl')} (${filter ? E.LIST.filter(b => b.sec === filter).length : M})</option>${cos}</select></label>`;
+        `<label class="ex-dd"><select id="bmCo" aria-label="${T('coLbl')}"><option value=""${sel ? '' : ' selected'}>${T('coLbl')} (${filter ? E.LIST.filter(b => inSec(b, filter)).length : M})</option>${cos}</select></label>`;
       if (f) { const el = $('#' + f); el && el.focus({ preventScroll: true }); }
     }
     function list() {
       const L = $('#bmList');
       if (mode !== 'explore' || gl) { L.innerHTML = ''; return; }
-      L.innerHTML = `<h3>${T('listT')}</h3><div class="ex-lg">` + E.LIST.filter(b => !filter || b.sec === filter).map(b =>
+      L.innerHTML = `<h3>${T('listT')}</h3><div class="ex-lg">` + E.LIST.filter(b => !filter || inSec(b, filter)).map(b =>
         `<button type="button" class="ex-li${sel === b.id ? ' on' : ''}" data-id="${b.id}" style="--c:${E.COLORS[b.sec]}"><span>${b.icon}</span><b>${b.n}</b>${visited.has(b.id) ? '<em aria-label="' + T('visited') + '">✓</em>' : ''}</button>`).join('') + '</div>';
     }
     function prog() {
@@ -42,12 +43,25 @@ MBALAB.sims.define('bumn-explorer', {
     function card() {
       const c = $('#bmCard');
       if (mode !== 'explore' || !sel) { c.hidden = true; return; }
-      const b = E.byId[sel], I = E.INFO && E.INFO[sel], li = ['en', 'id', 'ja', 'zh'].indexOf(MBALAB.i18n.get());
-      const meta = I ? `<div class="ex-meta"><span>🗓 ${T('since', { y: I.since })}</span><span>📍 ${I.hq}</span></div>` : '';
-      const facts = I ? `<h4>${T('factT')}</h4><ul class="ex-facts">` + I.f.map((f, i) => `<li><span>${['📜', '📊', '💡'][i]}</span><div>${f[li < 0 ? 0 : li]}</div></li>`).join('') + '</ul>' : '';
-      c.innerHTML = `<button type="button" class="ex-x" data-x aria-label="${T('close')}">✕</button>
-        <div class="ex-sec" style="--c:${col(sel)}"><i></i>${secName(sel)}</div>
-        <h3><span>${b.icon}</span> ${b.n}</h3>${meta}<p>${t('bm_d_' + sel)}</p>${facts}
+      const b = E.byId[sel], I = E.INFO && E.INFO[sel], G = (E.GUIDE || {})[sel] || {}, L = li();
+      const pick = a => a && (a[L] || a[0]);
+      const meta = (I ? `<span>🗓 ${T('since', { y: I.since })}</span><span>📍 ${I.hq}</span>` : '') + (G.tick ? `<span>📈 ${G.tick}</span>` : '');
+      const secs = `<div class="ex-sec" style="--c:${col(sel)}"><i></i>${secName(sel)}</div>` + (b.also ? `<div class="ex-sec" style="--c:${E.COLORS[b.also]}"><i></i>${T('alsoLbl')} ${t('bm_sec_' + b.also)}</div>` : '');
+      const row = (ico, lab, txt) => txt ? `<li><span>${ico}</span><div><b>${lab}</b> ${txt}</div></li>` : '';
+      const rows = (I ? row('📜', '', pick(I.f[0])) : '') + (G.fig ? row('📊', T('figT') + ':', pick(G.fig)) : I ? row('📊', '', pick(I.f[1])) : '') +
+        (G.val ? row('💡', T('valT') + ':', pick(G.val)) : I ? row('💡', '', pick(I.f[2])) : '') + (G.note ? row('🔎', T('noteT') + ':', pick(G.note)) : '');
+      const facts = rows ? `<h4>${T('factT')}</h4><ul class="ex-facts">${rows}</ul>` : '';
+      const chip = id => `<button type="button" class="ex-sub" data-go="${id}" style="--c:${col(id)}"><span>${E.byId[id].icon}</span>${name(id)}</button>`;
+      let sb = '';
+      if (G.subs) {
+        const S = G.subs, st = { rec: 'subRec', par: 'subPar', nv: 'subNv' }[S.st] || 'subRec';
+        sb += `<div class="ex-subs"><h4>${T('subsT')}</h4><p><b>${S.n == null ? '—' : S.n === 0 ? T('subsNone') : T('subsN', { n: S.n })}</b> <em class="ex-st ${S.st}">${T(st)}</em>${S.at ? ' <small>' + T('subAt', { d: S.at }) + '</small>' : ''}</p>`;
+        const kids = E.LIST.filter(x => x.sub === sel); if (kids.length) sb += `<p class="ex-sl">${T('subLand')}:</p><div class="ex-chs">${kids.map(x => chip(x.id)).join('')}</div>`;
+        sb += '</div>';
+      }
+      if (b.sub && E.byId[b.sub]) sb += `<div class="ex-subs"><h4>${T('subOf')}</h4><div class="ex-chs">${chip(b.sub)}</div></div>`;
+      c.innerHTML = `<button type="button" class="ex-x" data-x aria-label="${T('close')}">✕</button>${secs}
+        <h3><span>${b.icon}</span> ${b.n}</h3>${G.legal ? `<p class="ex-legal">${G.legal}</p>` : ''}${meta ? `<div class="ex-meta">${meta}</div>` : ''}<p>${t('bm_d_' + sel)}</p>${facts}${sb}
         <div class="ex-vis">✓ ${T('visited')}</div>`;
       c.hidden = false;
       $('#bmSr').textContent = b.n + '. ' + t('bm_d_' + sel);
@@ -80,6 +94,11 @@ MBALAB.sims.define('bumn-explorer', {
         case 'member': return { title: T('qMember', { sec: t('bm_sec_' + c.sec) }), body: '', lab: c.o.map(name) };
         case 'fact': return { title: T('qFact'), body: '“' + Q.mask(info(c.id).f[c.fi][li()], c.id) + '”', lab: c.o.map(name) };
         case 'year': return { title: T('qYear', { name: nm() }), body: '', lab: c.o.map(String) };
+        case 'figure': return { title: T('qFig'), body: '“' + Q.mask(E.GUIDE[c.id].fig[li()], c.id) + '”', lab: c.o.map(name) };
+        case 'note': return { title: T('qNote'), body: '“' + Q.mask(E.GUIDE[c.id].note[li()], c.id) + '”', lab: c.o.map(name) };
+        case 'subs': return { title: T('qSubs', { name: nm() }), body: '', lab: c.o.map(String) };
+        case 'parent': return { title: T('qParent', { name: nm() }), body: '', lab: c.o.map(name) };
+        case 'orgq': return { title: T('qOrg_' + c.q), body: '', lab: c.o.map(name) };
         case 'oldest': return { title: T('qOldest'), body: '', lab: c.o.map(name) };
         default: return { title: T('qTitle'), body: clue(c.id), lab: c.o.map(name) };
       }
@@ -100,7 +119,7 @@ MBALAB.sims.define('bumn-explorer', {
         return;
       }
       const c = Q.cur(q), x = qText(c), last = q.i === Q.ROUNDS - 1, I = info(c.id);
-      const why = I ? I.f[c.k === 'fact' ? (c.fi + 1) % 3 : 2][li()] : '';
+      const G = (E.GUIDE || {})[c.id], why = (c.k === 'figure' || c.k === 'note') && G && G.val ? G.val[li()] : c.k === 'subs' && G && G.note ? G.note[li()] : c.k === 'orgq' && G && G.val ? G.val[li()] : I ? I.f[c.k === 'fact' ? (c.fi + 1) % 3 : 2][li()] : (G && G.val ? G.val[li()] : '');
       b.innerHTML = `<div class="ex-qc"><div class="ex-hud"><span class="ex-pill">${T('qN', { n: q.i + 1, m: Q.ROUNDS })}</span><span class="ex-pill" style="border-color:${LVC[q.level]};color:${LVC[q.level]}">${T(LVN[q.level])}</span><span class="ex-pill ex-pill-b">${T('qScore', { s: q.score })}</span></div>
         <h3>${x.title}</h3>${x.body ? `<p class="ex-clue">${x.body}</p>` : ''}<div class="ex-opts">` +
         x.lab.map((l, i) => `<button type="button" class="ex-opt${fb ? (i === c.ci ? ' ok' : i === fb.picked ? ' bad' : '') : ''}" data-o="${i}"${fb ? ' disabled' : ''}><i>${'ABCD'[i]}</i><span>${l}</span></button>`).join('') + '</div>' +
@@ -143,11 +162,11 @@ MBALAB.sims.define('bumn-explorer', {
     /* ---------- events ---------- */
     $('#bmChips').addEventListener('change', e => {
       const el = e.target; sfx('click');
-      if (el.id === 'bmCat') { filter = el.value || null; if (sel && filter && E.byId[sel].sec !== filter) sel = null; sync(); }
+      if (el.id === 'bmCat') { filter = el.value || null; if (sel && filter && !inSec(E.byId[sel], filter)) sel = null; sync(); }
       else if (el.id === 'bmCo') { if (el.value) select(el.value); else deselect(); }
     });
     $('#bmList').addEventListener('click', e => { const b = e.target.closest('.ex-li'); if (b) select(b.dataset.id); });
-    $('#bmCard').addEventListener('click', e => { if (e.target.closest('[data-x]')) deselect(); });
+    $('#bmCard').addEventListener('click', e => { if (e.target.closest('[data-x]')) { deselect(); return; } const g = e.target.closest('[data-go]'); if (g && E.byId[g.dataset.go]) { if (filter && !inSec(E.byId[g.dataset.go], filter)) filter = null; select(g.dataset.go); } });
     $('#bmBox').addEventListener('click', e => {
       const lv = e.target.closest('[data-lv]'); if (lv) { beginQuiz(lv.dataset.lv); return; }
       const o = e.target.closest('[data-o]'); if (o) { pickQuiz(+o.dataset.o); return; }

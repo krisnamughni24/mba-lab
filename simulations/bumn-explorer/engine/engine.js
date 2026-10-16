@@ -1,8 +1,8 @@
 /* BUMN Explorer: data (buildings, sectors) and quiz logic. No DOM. Texts live in strings.js.
    MBALAB.bumn = { SECTORS, COLORS, LIST, byId, quiz: { create(level, seed), cur(q), answer(q, optIndex) } } */
 (function () {
-  const SECTORS = ['energy', 'telecom', 'banking', 'transport', 'infra', 'industry', 'resources', 'food', 'health', 'invest'];
-  const COLORS = { energy: '#ffb020', telecom: '#2bd4ff', banking: '#34d399', transport: '#5b8cff', infra: '#e879f9', industry: '#ff7a45', resources: '#a78bfa', food: '#a3e635', health: '#ff5d7a', invest: '#ffd36e' };
+  const SECTORS = ['org', 'energy', 'logistics', 'banking', 'manufacturing', 'food', 'minerals', 'health', 'plantations', 'telecom', 'insurance', 'tourism', 'special', 'survey', 'infra'];
+  const COLORS = { org: '#ffc857', energy: '#ff9f1c', logistics: '#5b8cff', banking: '#34d399', manufacturing: '#ff5a36', food: '#d4e157', minerals: '#8b7cff', health: '#ff4d6d', plantations: '#4caf50', telecom: '#38bdf8', insurance: '#c084fc', tourism: '#2dd4bf', special: '#94a3b8', survey: '#e2e8f0', infra: '#e879f9' };
   /* x, z = world position (units ~ metres in the 3D city), r = footprint radius, h = height scale used for camera framing */
   const LIST = [
     { id: 'danantara', n: 'Danantara', sec: 'invest', x: 0, z: 0, r: 17, h: 64, icon: '🏛️' },
@@ -38,7 +38,9 @@
   const rng = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   /* Fact quiz: three levels, 8 four-option questions each. Questions are plain data (kind + company ids / values);
      app.js turns them into text in the current language, so switching language mid-quiz works. */
-  const ALIAS = { pertamina: ['Permina', 'Pertamin', 'ペルミナ', 'ペルタミン', 'プルタミナ'], garuda: ['ガルーダ'], bri: ['BRIsat'], telkom: ['Telkomsel'], pelindo: ['Pelindo'] };
+  const ALIAS = { pertamina: ['Permina', 'Pertamin', 'ペルミナ', 'ペルタミン', 'プルタミナ'], garuda: ['ガルーダ'], bri: ['BRIsat', 'BRImo', 'BRILink'], telkom: ['Telkomsel'], pelindo: ['Pelindo'],
+    mandiri: ["Livin'", 'Kopra'], pos: ['Pospay', 'Giropos', 'PosIND', 'AgriPost'], bni: ['Xpora'], idfood: ['Rajawali Nusantara Indonesia', 'Rajawali', 'Warung Pangan'], bsi: ['Bank Syariah Indonesia'], btn: ['Bank Syariah Nasional', 'Bank Tabungan Negara'],
+    pelni: ['Pelayaran Nasional'], 'agrinas-jaladri': ['Virama Karya', 'Virama'], 'agrinas-pangan': ['Yodya Karya', 'Yodya'], 'persero-batam': ['Batam'], kai: ['Kereta Api'], len: ['Len Industri'], danantara: ['BPI', 'Danantara'], dam: ['Danantara Asset Management', 'Danantara Aset Management'] };
   const GENERIC = /^(bank|indonesia|persero|karya|plaza)$/i;
   const tokens = id => { const b = byId[id], w = b.n.split(/[\s()]+/).filter(x => x.length >= 3 && !GENERIC.test(x)); return [b.n].concat(w, ALIAS[id] || []).sort((p, q) => q.length - p.length); };
   const esc = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -46,10 +48,13 @@
   const mask = (text, id) => tokens(id).reduce((s, w) => s.replace(rx(w), '___'), text);
   const mentions = (text, id) => tokens(id).some(w => rx(w).test(text));
   const info = id => (MBALAB.bumn.INFO || {})[id];
+  const guide = id => (MBALAB.bumn.GUIDE || {})[id];
+  /* fact-check pool: questions about the Danantara structure itself (answer = one of the four organisation entities) */
+  const ORGQ = ['dam', 'dim', 'ddmf', 'danantara'];
   const SPEC = {
-    easy: [['clue', 3], ['sector', 2], ['hq', 2], ['member', 1]],
-    medium: [['fact', 5], ['clue2', 2], ['hq', 1]],
-    hard: [['fact3', 4], ['year', 3], ['oldest', 1]]
+    easy: [['clue', 3], ['sector', 2], ['hq', 1], ['member', 1], ['parent', 1]],
+    medium: [['fact', 2], ['figure', 2], ['subs', 1], ['clue2', 1], ['orgq', 1], ['parent', 1]],
+    hard: [['note', 2], ['fact3', 1], ['year', 2], ['oldest', 1], ['subs', 1], ['figure', 1]]
   };
   const quiz = {
     ROUNDS: 8, LEVELS: ['easy', 'medium', 'hard'],
@@ -77,6 +82,11 @@
           const fis = kind === 'fact' ? [0, 1] : [2];
           take(n, id => fis.some(fi => factOk(id, fi))).forEach(id => { used.add(id); const fi = shuf(fis.filter(f => factOk(id, f)))[0]; qs.push({ k: 'fact', id, fi, o: opts(id, true, info(id).f[fi].join(' ')) }); });
         }
+        else if (kind === 'parent') take(n, id => byId[id].sub && byId[byId[id].sub]).forEach(id => { used.add(id); const par = byId[id].sub, bad = ids.filter(x => x === id || x === par); qs.push({ k: 'parent', id, v: par, o: shuf([par].concat(shuf(ids.filter(x => !bad.includes(x) && !byId[x].sub && x !== 'danantara')).slice(0, 3))) }); });
+        else if (kind === 'figure') take(n, id => guide(id) && guide(id).fig && guide(id).val).forEach(id => { used.add(id); qs.push({ k: 'figure', id, o: opts(id, true, guide(id).fig.join(' ')) }); });
+        else if (kind === 'note') take(n, id => guide(id) && guide(id).note).forEach(id => { used.add(id); qs.push({ k: 'note', id, o: opts(id, true, guide(id).note.join(' ')) }); });
+        else if (kind === 'subs') take(n, id => guide(id) && guide(id).subs && guide(id).subs.n != null).forEach(id => { used.add(id); const v = guide(id).subs.n, pool = [...new Set([v - 3, v - 2, v - 1, v + 1, v + 2, v + 3, v + 5].filter(x => x >= 0))]; qs.push({ k: 'subs', id, v, o: shuf([v].concat(shuf(pool).slice(0, 3))) }); });
+        else if (kind === 'orgq') { const id = shuf(ORGQ)[0]; used.add(id); qs.push({ k: 'orgq', id, q: id, o: shuf(ORGQ) }); }
         else if (kind === 'year') take(n, yearOk).forEach(id => { used.add(id); const y = info(id).since, pool = [...new Set(ids.map(x => info(x) && Number(info(x).since)).filter(v => v && v !== Number(y)))]; qs.push({ k: 'year', id, v: y, o: shuf([Number(y)].concat(shuf(pool).slice(0, 3))) }); });
         else if (kind === 'oldest') {
           const el = shuf(ids.filter(yearOk)), seen = new Set(), pick = [];
@@ -84,7 +94,9 @@
           const win = pick.slice().sort((p, q) => Number(info(p).since) - Number(info(q).since))[0]; qs.push({ k: 'oldest', id: win, o: shuf(pick) });
         }
       });
-      const fin = shuf(qs).slice(0, quiz.ROUNDS).map(x => { x.ci = x.o.indexOf(x.k === 'sector' || x.k === 'hq' ? x.v : x.k === 'year' ? Number(x.v) : x.id); return x; });
+      /* top up with plain clue questions if a kind found too few eligible companies */
+      take(Math.max(0, quiz.ROUNDS - qs.length)).forEach(id => { used.add(id); qs.push({ k: 'clue', id, o: opts(id, true) }); });
+      const fin = shuf(qs).slice(0, quiz.ROUNDS).map(x => { x.ci = x.o.indexOf(x.k === 'sector' || x.k === 'hq' || x.k === 'parent' ? x.v : x.k === 'year' || x.k === 'subs' ? Number(x.v) : x.id); return x; });
       return { level, qs: fin, i: 0, score: 0, missed: [], done: false, answered: false, picked: -1 };
     },
     cur: q => q.qs[q.i],

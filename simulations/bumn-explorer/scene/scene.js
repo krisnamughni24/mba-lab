@@ -150,7 +150,7 @@
     let da = 1;
     const applyFade = dt => {
       const k = 1 - Math.exp(-dt * 6);
-      E.LIST.forEach(b => { const e = B[b.id]; e.aT = focusId ? (focusId === b.id ? 1 : .14) : st.filter ? (st.filter === b.sec ? 1 : .2) : 1; e.a += (e.aT - e.a) * k; if (Math.abs(e.aT - e.a) < .004) e.a = e.aT; e.mats.forEach(o => fade(o, e.a)); });
+      E.LIST.forEach(b => { const e = B[b.id]; e.aT = focusId ? (focusId === b.id ? 1 : .14) : st.filter ? (st.filter === b.sec || st.filter === b.also ? 1 : .2) : 1; e.a += (e.aT - e.a) * k; if (Math.abs(e.aT - e.a) < .004) e.a = e.aT; e.mats.forEach(o => fade(o, e.a)); });
       const dT = focusId ? .25 : st.filter ? .35 : 1; da += (dT - da) * k; if (Math.abs(dT - da) < .004) da = dT; dec.forEach(o => fade(o, da));
     };
 
