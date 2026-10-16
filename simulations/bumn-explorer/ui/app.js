@@ -202,7 +202,7 @@ MBALAB.sims.define('bumn-explorer', {
     /* ---------- start window: the 3D map, or the Danantara guide website ---------- */
     const GUIDE_URL = 'https://danantara-intelligence.boldpeach9.chatgpt.site/', choose = $('#bmChoose'), scrollEl = $('#bmScroll'), modesEl = $('.ex-modes');
     let entry = true;
-    $('#bmGShot').innerHTML = `<i>Danantara</i><h5>${T('gsTitle')}</h5><div class="st"><u>${T('gsStat')}</u><u>${T('gsPl')}</u><u>${T('gsCo')}</u></div><div class="bars">${E.SECTORS.slice(1, 6).map((x, i) => `<s style="--c:${E.COLORS[x]};width:${88 - i * 13}%"></s>`).join('')}</div>`;
+    $('#bmGShot').innerHTML = '<img src="simulations/bumn-explorer/assets/guide-shot.svg" alt="" width="1080" height="608" loading="lazy">';
     function showChoose() { entry = true; choose.hidden = false; scrollEl.classList.add('ex-hold'); modesEl.classList.add('ex-hold'); closeGuide(); loop(); const b = choose.querySelector('[data-pick]'); b && b.focus({ preventScroll: true }); }
     function enterMap() { entry = false; choose.hidden = true; scrollEl.classList.remove('ex-hold'); modesEl.classList.remove('ex-hold'); sfx('click'); loop(); fit(); setTimeout(fit, 60); }
     choose.addEventListener('click', e => { const b = e.target.closest('[data-pick]'); if (!b) return; if (b.dataset.pick === 'map') enterMap(); else { sfx('open'); window.location.href = GUIDE_URL; } });

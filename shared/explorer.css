@@ -209,7 +209,7 @@ body.day .ex select option,body.day .ex select optgroup{background:#fff;color:#1
 .ex-co:hover,.ex-co:focus-visible{border-color:var(--cy)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--cy) 25%,transparent)}
 .ex-cs{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0b1130;border:1px solid var(--edge)}
 .ex-cs img{width:100%;height:100%;object-fit:cover;display:block}
-.ex-gs{position:relative;padding:12px 14px;display:flex;flex-direction:column;gap:7px;background:linear-gradient(135deg,#0f1b3d,#1c2a5e);color:#fff}
+.ex-gs{position:relative;background:linear-gradient(135deg,#0f1b3d,#1c2a5e);color:#fff}
 .ex-gs i{font-style:normal;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#ffc857;font-weight:800}
 .ex-gs h5{margin:0;font-size:clamp(15px,2.2vw,19px);line-height:1.2}
 .ex-gs .st{display:flex;gap:6px;flex-wrap:wrap}.ex-gs .st u{text-decoration:none;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.14)}
