@@ -78,6 +78,13 @@
     '<circle class="fc k-bob" cx="100" cy="12" r="4"/><path class="g" d="M100 16v10M100 26L48 14M100 26L152 14" stroke-dasharray="3 5"/>' +
     '<path class="g" d="M20 94H186"/><path class="c k-draw" pathLength="1" d="M24 88Q70 70 100 80T184 70"/><path class="d k-draw" style="--d:.4s" pathLength="1" d="M24 90Q70 84 110 72T184 62"/><circle class="fd k-pulse" cx="184" cy="62" r="4"/>');
 
+  T['ai-governance'] = S(
+    '<path class="g" d="M10 62H190" stroke-dasharray="3 5"/>' +
+    [[14, 'fa'], [62, 'fd'], [110, 'fb'], [158, 'fc']].map(p => '<rect class="' + p[1] + ' o" x="' + p[0] + '" y="50" width="28" height="24" rx="6"/>').join('') +
+    '<path class="fa k-pulse" d="M76 8l14 5v9c0 8-6 13-14 16c-8-3-14-8-14-16v-9z" opacity=".9"/><path class="a k-draw" pathLength="1" d="M70 22l5 5 9-10"/>' +
+    '<path class="g" d="M76 38v10"/><circle class="fb k-bob" cx="124" cy="86" r="4"/><circle class="fc k-pulse" style="--d:.5s" cx="172" cy="40" r="3.5"/>' +
+    '<circle class="fc k-ride" style="offset-path:path(\'M8 62L192 62\');--d:0s" cx="0" cy="0" r="3.5"/><circle class="fa k-ride" style="offset-path:path(\'M8 62L192 62\');--d:.9s" cx="0" cy="0" r="3.5"/>');
+
   T['five-forces'] = S(
     '<rect class="fd o" x="78" y="34" width="44" height="32" rx="4"/><path class="fa" d="M74 36L100 22L126 36z"/>' +
     '<path class="a k-draw" pathLength="1" d="M100 10V20"/><path class="b k-draw" pathLength="1" d="M20 50H74"/><path class="c k-draw" pathLength="1" d="M180 50H126"/><path class="d k-draw" pathLength="1" d="M100 90V68"/>' +

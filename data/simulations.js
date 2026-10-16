@@ -2365,21 +2365,21 @@ MBALAB.data.simulations = [
     }
   },
   {
-    "id": "ai-ethics-governance",
-    "status": "soon",
+    "id": "ai-governance",
+    "status": "live",
     "icon": "🛡️",
     "category": "analytics",
     "name": {
-      "en": "AI governance",
-      "id": "Tata kelola AI",
-      "ja": "AI倫理とガバナンス",
-      "zh": "AI伦理、监管与数据治理"
+      "en": "AI Governance Lab",
+      "id": "Lab Tata Kelola AI",
+      "ja": "AIガバナンス・ラボ",
+      "zh": "AI 治理实验室"
     },
     "description": {
-      "en": "Bias, privacy and compliance for AI in business.",
-      "id": "Bias, privasi, dan kepatuhan AI dalam bisnis.",
-      "ja": "ビジネスにおけるAIのバイアス・プライバシー・コンプライアンス。",
-      "zh": "商业中AI的偏见、隐私与合规。"
+      "en": "8 AI cases: rate the risk, choose controls, run 12 months.",
+      "id": "8 kasus AI: nilai risiko, pilih kontrol, jalankan 12 bulan.",
+      "ja": "AI 8ケース：リスク評価、対策選択、12か月を実行。",
+      "zh": "8 个 AI 案例：评估风险、选择措施、运行 12 个月。"
     }
   }
 ];
