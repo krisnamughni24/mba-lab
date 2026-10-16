@@ -92,9 +92,9 @@ MBALAB.sims.define('life-40', {
     /* ---------- render ---------- */
     function hud() {
       const h = G.hist[G.hist.length - 1], j = G.joy.length ? G.joy[G.joy.length - 1] : null;
-      $('#lfHud').innerHTML = `<span class="lf-chip">${esc(t('bg_' + bg))} · ${esc(t('lv_' + lv))}</span><span class="lf-chip age">${esc(t('ageLbl', { age: Math.min(G.age, L.END) }))} · ${esc(t('yearOf', { n: Math.min(G.y + 1, L.YEARS) }))}</span>
-        <span class="lf-chip">${esc(t('nwNom'))}: ${esc(fmt(h.nw))}</span><span class="lf-chip">${esc(t('nwReal'))}: ${esc(fmt(h.real))}</span>${j === null ? '' : `<span class="lf-chip">😊 ${j.toFixed(1)}/10</span>`}
-        <button type="button" class="lf-chip btn" id="lfToLives">${esc(t('btnChains'))}</button>`;
+      $('#lfHud').innerHTML = `<span class="sc-chip lf-chip">${esc(t('bg_' + bg))} · ${esc(t('lv_' + lv))}</span><span class="sc-chip lf-chip age">${esc(t('ageLbl', { age: Math.min(G.age, L.END) }))} · ${esc(t('yearOf', { n: Math.min(G.y + 1, L.YEARS) }))}</span>
+        <span class="sc-chip lf-chip">${esc(t('nwNom'))}: ${esc(fmt(h.nw))}</span><span class="sc-chip lf-chip">${esc(t('nwReal'))}: ${esc(fmt(h.real))}</span>${j === null ? '' : `<span class="sc-chip lf-chip">😊 ${j.toFixed(1)}/10</span>`}
+        <button type="button" class="sc-chip lf-chip btn" id="lfToLives">${esc(t('btnChains'))}</button>`;
     }
     function side() {
       const a = [['cash', G.cash], ['dep', G.dep], ['fund', G.fund], ['gold', G.gold], ['house', G.house ? G.house.value : 0]], debt = L.debt(G);
@@ -107,7 +107,7 @@ MBALAB.sims.define('life-40', {
           <label for="lfSave" class="lf-lb">${esc(t('pl_save', { n: Math.round(G.saveRate * 100) }))}</label><input type="range" id="lfSave" min="0" max="100" step="5" value="${Math.round(G.saveRate * 100)}">
           <label for="lfMix" class="lf-lb">${esc(t('pl_mix'))}</label><select id="lfMix">${Object.keys(L.MIX).map(k => `<option value="${k}"${G.mix === k ? ' selected' : ''}>${esc(t('mx_' + k))}</option>`).join('')}</select>
           <label class="lf-chk"><input type="checkbox" id="lfExtra"${G.extra ? ' checked' : ''}> ${esc(t('pl_extra'))}</label>
-          <p class="lf-sub sm">${esc(t('pl_note'))}</p></div>`;
+          <p class="sc-sub lf-sub sm">${esc(t('pl_note'))}</p></div>`;
       requestAnimationFrame(() => requestAnimationFrame(() => root.querySelectorAll('.lf-gg i[data-w]').forEach(n => { n.style.width = n.dataset.w + '%'; })));
     }
     const realRet = (r, i) => Math.round(((1 + r) / (1 + i) - 1) * 1000) / 10;
@@ -196,7 +196,7 @@ MBALAB.sims.define('life-40', {
     function stage() {
       let h = '';
       if (phase === 'ready') {
-        h = `<div class="lf-card"><h3>${esc(t('ageLbl', { age: G.age }))}</h3><p class="lf-sub">${esc(t('quiet'))}</p><button type="button" class="lf-main" id="lfBegin">${esc(t('btnBegin', { age: G.age }))}</button></div>`;
+        h = `<div class="lf-card"><h3>${esc(t('ageLbl', { age: G.age }))}</h3><p class="sc-sub lf-sub">${esc(t('quiet'))}</p><button type="button" class="lf-main" id="lfBegin">${esc(t('btnBegin', { age: G.age }))}</button></div>`;
       } else if (phase === 'cards' && cur) {
         if (cur.kind === 'later') {
           h = `<div class="lf-card later">${Sc.banner(cur.l.key)}${burst(cur.l.fx)}<span class="lf-k">${esc(t('later'))}</span><h3>${esc(t('lt_' + cur.l.key))}</h3>${fxChips(cur.l.fx)}${cur.l.tag ? `<p class="lf-res ${cur.l.tag}">${esc(t('res_' + cur.l.tag))}</p>` : ''}<button type="button" class="lf-main" id="lfNext">${esc(t('btnNext'))}</button></div>`;
@@ -252,13 +252,13 @@ MBALAB.sims.define('life-40', {
       if (G.cash > 3 * G.B.living * G.cpi && G.cash > 0.25 * L.liquid(G)) I.push('rd_cash');
       I.push(r.years >= 25 ? 'rd_good' : 'rd_low'); if (r.joy < 45) I.push('rd_joy');
       const wy = wise.res.years;
-      $('#lfStage').innerHTML = `<div class="lf-card res"><div class="lf-rh"><h2>${esc(t('rsT'))}</h2><span class="lf-stars" aria-label="${esc(t('stars', { n: r.stars }))}">${stars(r.stars)}</span></div>
+      $('#lfStage').innerHTML = `<div class="lf-card res"><div class="sc-rh lf-rh"><h2>${esc(t('rsT'))}</h2><span class="sc-stars lf-stars" aria-label="${esc(t('stars', { n: r.stars }))}">${stars(r.stars)}</span></div>
         <p class="lf-big">${esc(t('rsYears', { n: Math.round(r.years), age: Math.round(r.endAge) }))}</p>
         <div class="lf-kv"><div><span>${esc(t('rsWealth'))}</span><b>${esc(fmt(r.wReal))}</b></div><div><span>${esc(t('rsNeed'))}</span><b>${esc(fmt(r.expenses))}</b></div></div>
-        <p>${esc(t('rsJoy', { n: r.joy }))}</p><p>${esc(t('rsWise', { n: Math.round(wy) }))}</p><p class="lf-sub sm">${esc(t('rsBest', { n: best[k] }))}</p>
+        <p>${esc(t('rsJoy', { n: r.joy }))}</p><p>${esc(t('rsWise', { n: Math.round(wy) }))}</p><p class="sc-sub lf-sub sm">${esc(t('rsBest', { n: best[k] }))}</p>
         <div class="lf-less"><h3>${esc(t('rsLessT'))}</h3><ul>${I.map(x => `<li>${esc(t(x))}</li>`).join('')}</ul></div>
         <details class="lf-log"><summary>${esc(t('rsLogOpen'))}</summary><ol>${log.map(x => { const e = EV.LIST.find(y => y.id === x.id); return `<li><b>${x.age}</b> · ${esc(t('ev_' + x.id, {}))} → ${esc(t('ev_' + x.id + '_' + x.opt, {}).replace(/\{[^}]+\}/g, '…'))}</li>`; }).join('')}</ol></details>
-        <div class="lf-end"><button type="button" class="lf-main" id="lfAgain">${esc(t('rsAgain'))}</button><button type="button" id="lfToLives2">${esc(t('rsOther'))}</button></div></div>`;
+        <div class="sc-end lf-end"><button type="button" class="lf-main" id="lfAgain">${esc(t('rsAgain'))}</button><button type="button" id="lfToLives2">${esc(t('rsOther'))}</button></div></div>`;
       $('#lfChart').innerHTML = `<h3>${esc(t('rsPath'))}</h3>${chart([{ d: G.hist.map(h => h.nw), c: 'c-n' }, { d: G.hist.map(h => h.real), c: 'c-r' }, { d: wise.s.hist.map(h => h.real), c: 'c-w', dash: true }], t('rsPath'))}${legend([{ c: 'c-n', t: t('lgNom') }, { c: 'c-r', t: t('lgReal') }, { c: 'c-w', t: t('lgWise'), dash: true }])}`;
     }
 

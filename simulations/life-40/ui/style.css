@@ -4,10 +4,6 @@
 .lf select{font:inherit;cursor:pointer;color:var(--txt);background:var(--btn-bg);border:1px solid var(--edge);border-radius:12px;padding:9px 14px;text-transform:none;font-weight:600;transition:transform .15s,background .15s,box-shadow .2s,opacity .2s}
 .lf select:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
 .lf h3{margin:0}
-.lf-select,.lf-play{padding:8px clamp(12px,3vw,28px) 0;max-width:1100px;margin:0 auto}
-.lf-select[hidden],.lf-play[hidden]{display:none}
-.lf-select h2{font-size:20px}
-.lf-sub{color:var(--txt2);margin:4px 0 12px}
 .lf-sub.sm{font-size:15px;margin:8px 0 0}
 .lf-lives{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
 .lf-life{padding:14px;border-radius:18px;background:var(--panel);border:1px solid var(--edge)}
@@ -23,12 +19,6 @@
 .lf-lv.easy b{color:var(--gn)}
 .lf-lv.medium b{color:var(--am)}
 .lf-lv.hard b{color:var(--rd)}
-.lf-how{margin-top:14px;padding:14px 18px;border-radius:16px;background:var(--panel);border:1px solid var(--edge)}
-.lf-how h3{font-size:16px;color:var(--mg);margin-bottom:6px}
-.lf-how ol{margin:0;padding-left:20px;color:var(--txt2)}
-.lf-how li{margin:4px 0}
-.lf-note{margin:12px 2px;font-size:15px;color:var(--txt2)}
-.lf-hud{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 10px}
 .lf .lf-chip,.lf-chip{padding:4px 12px;border-radius:999px;border:1px solid var(--edge);background:var(--panel);font-weight:700;font-size:15.5px}
 .lf-chip.age{border-color:var(--cy);color:var(--cy)}
 .lf-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
@@ -89,9 +79,7 @@
 .lf-lg .sw.c-n{border-color:var(--cy)}
 .lf-lg .sw.c-r{border-color:var(--gn)}
 .lf-lg .sw.c-w{border-color:var(--am);border-top-style:dashed}
-.lf-rh{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .lf-rh h2{font-size:22px}
-.lf-stars{color:var(--am);font-size:26px;letter-spacing:3px;text-shadow:0 0 10px var(--am)}
 .lf-big{font-size:18px;font-weight:800;color:var(--cy);margin:8px 0}
 .lf-kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
 .lf-kv div{padding:10px;border-radius:12px;border:1px solid var(--edge);background:rgba(var(--tint-rgb),.06)}
@@ -103,9 +91,7 @@
 .lf-less li{margin:5px 0}
 .lf-log summary{cursor:pointer;font-weight:700;color:var(--txt2)}
 .lf-log ol{margin:6px 0 0;padding-left:22px;font-size:15.5px;color:var(--txt2)}
-.lf-end{display:flex;flex-wrap:wrap;gap:8px}
 .lf .lf-end .lf-main{width:auto}
-.lf-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(max-width:820px){.lf-grid{grid-template-columns:1fr}.lf-kv{grid-template-columns:1fr}}
 .lf .lf-end .lf-main{margin-top:0}
 /* ---- pictures ---- */

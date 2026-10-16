@@ -42,7 +42,7 @@ MBALAB.sims.define('negotiation-batna', {
       how();
     }
     function how() {
-      $('#nbHow').innerHTML = `<h3>${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li><li>${t('how5')}</li></ol><p class="nb-hn">💡 ${t('gdTip2')}</p>`;
+      $('#nbHow').innerHTML = `<h3>${t('howT')}</h3><p>${t('brGoal')}</p><ol><li>${t('how1')}</li><li>${t('how2')}</li><li>${t('how3')}</li><li>${t('how4')}</li><li>${t('how5')}</li></ol><p class="sc-hn nb-hn">💡 ${t('gdTip2')}</p>`;
     }
     $('#nbCards').addEventListener('click', e => { const b = e.target.closest('.nb-card'); if (b) { sfx('open'); openLevel(+b.dataset.i); } });
 
@@ -189,7 +189,7 @@ MBALAB.sims.define('negotiation-batna', {
       const rows = gs.hist.map(h => `<tr><td>${h.round}</td><td>${h.you}k</td><td>${h.ask}k</td></tr>`).join('');
       $('#nbCtl').hidden = true; hideBubbles();
       const el = $('#nbRes'); el.hidden = false;
-      el.innerHTML = `<div class="nb-rc"><div class="nb-rh"><h2>${t(head)}</h2><span class="nb-stars" aria-label="${t('stars', { n: res.stars })}">${starsTxt(res.stars)}</span></div>
+      el.innerHTML = `<div class="nb-rc"><div class="sc-rh nb-rh"><h2>${t(head)}</h2><span class="sc-stars nb-stars" aria-label="${t('stars', { n: res.stars })}">${starsTxt(res.stars)}</span></div>
         ${o.price != null ? `<p class="nb-price">${t('rsPrice', { n: o.price })}</p>` : ''}
         <p class="nb-score"><span>${t('rsScore')}</span> <b>${res.score}</b></p>
         <div class="nb-reveal"><h3>${t('rsRevealT')}</h3><ul><li>${t('rsSellerMin', { n: L.r })}</li><li>${t('rsYourBatna', { n: L.batna })}</li>
@@ -197,7 +197,7 @@ MBALAB.sims.define('negotiation-batna', {
           ${res.share != null && o.price <= L.batna ? `<li>${t('rsShare', { n: Math.round(res.share * 100) })}</li>` : ''}</ul></div>
         <div class="nb-less"><h3>${t('rsLessons')}</h3><ul>${res.lessons.map(k => `<li>${t(k)}</li>`).join('')}</ul></div>
         ${rows ? `<details class="nb-hist"><summary>${t('rsHist')}</summary><table><thead><tr><th>${t('rsRound')}</th><th>${t('youLbl')}</th><th>${t('askLbl')}</th></tr></thead><tbody>${rows}</tbody></table></details>` : ''}
-        <div class="nb-end"><button type="button" class="nb-main" data-a="again">${t('rsAgain')}</button>${idx < NL - 1 ? `<button type="button" data-a="next">${t('rsNext')}</button>` : ''}<button type="button" data-a="levels">${t('rsLevels')}</button></div></div>`;
+        <div class="sc-end nb-end"><button type="button" class="nb-main" data-a="again">${t('rsAgain')}</button>${idx < NL - 1 ? `<button type="button" data-a="next">${t('rsNext')}</button>` : ''}<button type="button" data-a="levels">${t('rsLevels')}</button></div></div>`;
       $('#nbSr').textContent = t(head) + '. ' + t('rsScore') + ' ' + res.score;
       el.scrollIntoView && el.scrollIntoView({ block: 'nearest', behavior: still() ? 'auto' : 'smooth' });
     }

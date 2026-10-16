@@ -8,5 +8,5 @@ MBALAB.sims.files('life-40', {
     "scene/scene.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/simkit.css", "ui/style.css"]
+  styles: ["../../shared/simkit.css", "../../shared/scenario.css", "ui/style.css"]
 });

@@ -1,22 +1,14 @@
 /* Negotiation & BATNA: UI. Scoped under .nb. Colours come only from the global theme tokens (no body.day rules). */
 .nb{--sk-g1:var(--cy);--sk-g2:var(--mg);--g1:var(--cy);--g2:var(--mg)}
 .nb h3{margin:0}
-.nb-select,.nb-play{padding:8px clamp(12px,3vw,28px) 0;max-width:1040px;margin:0 auto}
-.nb-select h2{font-size:20px}
-.nb-sub{color:var(--txt2);margin:4px 0 14px}
-.nb-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
 .nb .nb-card{display:flex;align-items:center;gap:12px;text-align:left;padding:14px;background:var(--panel);border-radius:16px;border:1px solid var(--edge)}
 .nb-av{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:26px;background:rgba(var(--tint-rgb),.12);border:2px solid var(--mg);box-shadow:0 0 12px var(--mg)}
 .nb-ct{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .nb-ct i{color:var(--mg);font-style:normal;font-size:15px;font-weight:700}
 .nb-ct small{color:var(--txt2);font-size:15px;line-height:1.3}
 .nb-cs{flex:none;color:var(--am);font-size:17px;letter-spacing:1px}
-.nb-hud{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.nb-chip{padding:4px 12px;border-radius:999px;border:1px solid var(--edge);background:var(--panel);font-weight:700;font-size:15.5px}
 .nb-chip-b{border-color:var(--am);color:var(--am)}
 .nb-scn{font-weight:500;color:var(--txt2)}
-.nb-stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--edge);box-shadow:var(--glow);background:var(--panel)}
-.nb-stage canvas{display:block;width:100%;height:100%}
 .nb-bub{position:absolute;top:24%;width:27%;max-width:300px;padding:8px 12px;border-radius:14px;background:var(--panel);border:1px solid var(--edge);font-size:clamp(11px,1.6vw,14px);line-height:1.3;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none;min-height:2.4em}
 .nb-bub.on{opacity:1;transform:none}
 .nb-bub-n{right:2.5%;border-color:var(--mg)}
@@ -32,7 +24,6 @@
 .nb-ctl[hidden],.nb-res[hidden],.nb-select[hidden],.nb-play[hidden]{display:none}
 .nb-offer{flex:1 1 320px;min-width:0}
 .nb-offer label{display:block;font-weight:700;font-size:15.5px;color:var(--txt2);margin-bottom:6px}
-.nb-row{display:flex;align-items:center;gap:8px}
 .nb-row button{width:38px;padding:6px 0;font-size:18px;line-height:1}
 .nb-row input[type=range]{width:auto;flex:1;min-width:0;accent-color:var(--cy);height:28px;cursor:pointer}
 .nb-val{min-width:64px;text-align:right;font-weight:800;font-size:20px;color:var(--cy)}
@@ -43,9 +34,7 @@
 .nb .nb-danger{border-color:var(--rd);color:var(--rd)}
 .nb-res{margin-top:12px}
 .nb-rc{padding:16px 18px;border-radius:18px;background:var(--panel);border:1px solid var(--edge);box-shadow:var(--glow)}
-.nb-rh{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .nb-rh h2{font-size:22px}
-.nb-stars{color:var(--am);font-size:26px;letter-spacing:3px;text-shadow:0 0 10px var(--am)}
 .nb-price{margin:4px 0 0;font-weight:700;color:var(--txt2)}
 .nb-score{margin:6px 0 10px;font-size:16px;color:var(--txt2)}
 .nb-score b{font-size:34px;color:var(--cy);margin-left:6px}
@@ -57,35 +46,10 @@
 .nb-hist summary{cursor:pointer;font-weight:700;color:var(--txt2)}
 .nb-hist table{border-collapse:collapse;margin-top:6px;min-width:220px}
 .nb-hist th,.nb-hist td{padding:3px 14px 3px 0;text-align:left;font-variant-numeric:tabular-nums}
-.nb-end{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.nb-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(max-width:620px){.nb-bub{width:48%;top:2%;padding:4px 7px;font-size:13.5px}.nb-bub-n{right:1.5%}.nb-bub-y{left:1.5%}.nb-scn{display:none}.nb-acts button{flex:1 1 44%}}
-.nb .nb-info{padding:0;border-radius:50%;display:grid;place-items:center;color:var(--cy);border-color:var(--cy);background:var(--panel)}
-.nb .nb-info svg{width:20px;height:20px}
 .nb .nb-missions[hidden]{display:none}
-.nb-guide{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:16px;background:var(--t-guide);backdrop-filter:blur(5px)}
-.nb-guide[hidden]{display:none}
-.nb-guide .gd{position:relative;width:min(560px,100%);max-height:100%;overflow:auto;padding:22px 22px 18px;border-radius:20px;background:var(--t-gd-bg);color:var(--t-gd-fg);border:1px solid var(--t-gd-bd);box-shadow:0 24px 70px rgba(0,0,0,.45)}
-.nb-guide .gk{font-size:14px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
-.nb-guide h3{font-size:20px;margin:4px 0 10px;font-weight:800}
-.nb-guide ol,.nb-guide ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px;line-height:1.5}
-.nb-guide .gtip{margin:0 0 14px;padding:10px 12px;border-radius:12px;background:var(--t-gtip);font-size:16px}
-.nb-guide .gx{position:absolute;top:12px;right:12px;padding:2px 9px;border-radius:9px;background:transparent;color:inherit}
 .nb-guide .nb-main{width:100%}
-.nb-tools{position:absolute;top:8px;left:8px;right:8px;z-index:5;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.nb-tools button{pointer-events:auto;backdrop-filter:blur(4px)}
 .nb .nb-tools .nb-missions{padding:6px 12px;font-size:15.5px}
-.nb .nb-tools .nb-info{width:34px;height:34px}
-.nb-guide{overflow:auto}
-.nb-guide .gd{padding:18px 18px 14px;font-size:16px}
-.nb-guide h3{font-size:17px}
-.nb-how{margin-top:16px;padding:14px 18px;border-radius:16px;background:var(--panel);border:1px solid var(--edge)}
-.nb-how h3{font-size:17px;color:var(--mg);margin-bottom:6px}
-.nb-how p{margin:0 0 8px}
-.nb-how ol{margin:0 0 8px;padding-left:20px;color:var(--txt2)}
-.nb-how li{margin:4px 0}
-.nb-how .nb-hn{margin:0;font-size:16px;color:var(--txt2)}
-@media(max-width:620px){.nb-guide{padding:6px}.nb-guide .gd{padding:12px;font-size:14.5px}.nb-guide h3{font-size:16px}.nb-guide ol{gap:4px;margin-bottom:6px}.nb-guide .gtip{padding:6px 8px;margin-bottom:8px;font-size:14px}}
 /* teammates, two-seller picker, richer cards */
 .nb-team{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
 .nb-team[hidden],.nb-addr[hidden],.nb-allies[hidden]{display:none}
@@ -103,56 +67,21 @@
 .nb .nb-card:hover{box-shadow:var(--glow)}
 @media(max-width:620px){.nb-ally{flex:1 1 100%}}
 /* mission menu: how-to-play sits on the right on wide screens */
-@media(min-width:980px){
-  .nb-select{max-width:1280px;display:grid;grid-template-columns:minmax(0,1fr) 320px;grid-template-areas:"h h" "s s" "c how";column-gap:20px;align-items:start}
-  .nb-select>h2{grid-area:h}.nb-select>.nb-sub{grid-area:s;grid-column:1/-1}
-  .nb-select>.nb-cards{grid-area:c;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .nb-select>.nb-how{grid-area:how;margin-top:0;position:sticky;top:8px}
-  .nb-select[hidden]{display:none}
-}
+@media(min-width:980px){.nb-select{max-width:1280px;display:grid;grid-template-columns:minmax(0,1fr) 320px;grid-template-areas:"h h" "s s" "c how";column-gap:20px;align-items:start}.nb-select>h2{grid-area:h}.nb-select>.nb-sub{grid-area:s;grid-column:1/-1}.nb-select>.nb-cards{grid-area:c;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.nb-select>.nb-how{grid-area:how;margin-top:0;position:sticky;top:8px}.nb-select[hidden]{display:none}}
 /* wider how-to box, four mission cards per row on large screens */
-@media(min-width:980px){
-  .nb-select{max-width:1560px;grid-template-columns:minmax(0,1fr) 400px}
-}
-@media(min-width:1280px){
-  .nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .nb-select .nb-card{flex-direction:column;align-items:flex-start;gap:8px;height:100%}
-  .nb-select .nb-card .nb-ct{width:100%}
-  .nb-select .nb-card .nb-cs{align-self:flex-start}
-  .nb-select .nb-card .nb-av{order:-1}
-}
+@media(min-width:980px){.nb-select{max-width:1560px;grid-template-columns:minmax(0,1fr) 400px}}
+@media(min-width:1280px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))}.nb-select .nb-card{flex-direction:column;align-items:flex-start;gap:8px;height:100%}.nb-select .nb-card .nb-ct{width:100%}.nb-select .nb-card .nb-cs{align-self:flex-start}.nb-select .nb-card .nb-av{order:-1}}
 /* wider play window: as wide as the screen allows while the whole stage still fits the viewport height */
-.nb-play{max-width:1560px}
 .nb-stage{width:100%;max-width:max(640px,calc((100vh - 170px) * 16 / 9));margin-left:auto;margin-right:auto}
 .nb-hud,.nb-ctl,.nb-res{max-width:max(640px,calc((100vh - 170px) * 16 / 9));margin-left:auto;margin-right:auto}
 @media(max-width:900px){.nb-stage,.nb-hud,.nb-ctl,.nb-res{max-width:none}}
 /* wider mission menu: use more of the screen on large displays */
-@media(min-width:980px){
-  .nb-select{max-width:min(1880px,100%);grid-template-columns:minmax(0,1fr) clamp(340px,26vw,440px);column-gap:24px}
-  .nb-select>.nb-cards{gap:14px}
-}
-@media(min-width:1700px){
-  .nb-select,.nb-play{padding-left:40px;padding-right:40px}
-}
+@media(min-width:980px){.nb-select{max-width:min(1880px,100%);grid-template-columns:minmax(0,1fr) clamp(340px,26vw,440px);column-gap:24px}.nb-select>.nb-cards{gap:14px}}
+@media(min-width:1700px){.nb-select,.nb-play{padding-left:40px;padding-right:40px}}
 /* full-width play window that never scrolls: the stage takes whatever height is left
    after the HUD and controls, and the scene extends sideways instead of stretching */
-@media(min-width:901px){
-  .nb-scroll:has(.nb-play:not([hidden])){overflow:hidden;padding-bottom:0;display:flex;flex-direction:column}
-  .nb-play:not([hidden]){display:flex;flex-direction:column;flex:1;min-height:0;max-width:none;width:100%;margin:0;padding:6px clamp(10px,1.4vw,22px) 10px}
-  .nb-play .nb-hud,.nb-play .nb-ctl,.nb-play .nb-res{max-width:none;margin-left:0;margin-right:0;flex:none}
-  .nb-play .nb-hud{margin-bottom:6px}
-  .nb-play .nb-stage{flex:1 1 0;min-height:200px;max-width:none;width:100%;margin:0;aspect-ratio:auto;container-type:size}
-  .nb-play .nb-ctl{margin-top:8px;padding:8px 12px;gap:8px 18px}
-  .nb-play .nb-res{margin-top:8px;max-height:46vh;overflow:auto}
-  .nb-play .nb-kb{display:none}
-  .nb-bub{--z:min(100cqw,177.78cqh)}
-  .nb-bub-n{right:calc(50% - var(--z) / 2 + var(--z) * .025)}
-  .nb-bub-y{left:calc(50% - var(--z) / 2 + var(--z) * .025)}
-}
-@media(min-width:901px){
-  .nb-bub{width:calc(var(--z) * .27)}
-  .nb-play .nb-acts{padding-left:120px}
-}
+@media(min-width:901px){.nb-scroll:has(.nb-play:not([hidden])){overflow:hidden;padding-bottom:0;display:flex;flex-direction:column}.nb-play:not([hidden]){display:flex;flex-direction:column;flex:1;min-height:0;max-width:none;width:100%;margin:0;padding:6px clamp(10px,1.4vw,22px) 10px}.nb-play .nb-hud,.nb-play .nb-ctl,.nb-play .nb-res{max-width:none;margin-left:0;margin-right:0;flex:none}.nb-play .nb-hud{margin-bottom:6px}.nb-play .nb-stage{flex:1 1 0;min-height:200px;max-width:none;width:100%;margin:0;aspect-ratio:auto;container-type:size}.nb-play .nb-ctl{margin-top:8px;padding:8px 12px;gap:8px 18px}.nb-play .nb-res{margin-top:8px;max-height:46vh;overflow:auto}.nb-play .nb-kb{display:none}.nb-bub{--z:min(100cqw,177.78cqh)}.nb-bub-n{right:calc(50% - var(--z) / 2 + var(--z) * .025)}.nb-bub-y{left:calc(50% - var(--z) / 2 + var(--z) * .025)}}
+@media(min-width:901px){.nb-bub{width:calc(var(--z) * .27)}.nb-play .nb-acts{padding-left:120px}}
 /* ===== mission cards v2: art header, avatars, difficulty pips, stars ===== */
 .nb-select>.nb-cards{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))!important;gap:16px!important}
 @media(min-width:1000px){.nb-select>.nb-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
@@ -190,12 +119,7 @@
 body.still .nb-card.v2,body.still .nb-card.v2 *{animation:none!important}
 @media(max-width:640px){.nb-art{height:118px}.nb-tt{font-size:18px}}
 /* widest cards: the how-to box moves under the cards so they can use the full width */
-@media(min-width:1000px){
-  .nb-select{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"h" "s" "c" "how"!important}
-  .nb-select>.nb-sub{grid-column:auto}
-  .nb-select>.nb-how{position:static;margin-top:18px}
-  .nb-select>.nb-how ol{columns:2;column-gap:36px}.nb-select>.nb-how li{break-inside:avoid}
-}
+@media(min-width:1000px){.nb-select{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"h" "s" "c" "how"!important}.nb-select>.nb-sub{grid-column:auto}.nb-select>.nb-how{position:static;margin-top:18px}.nb-select>.nb-how ol{columns:2;column-gap:36px}.nb-select>.nb-how li{break-inside:avoid}}
 @media(min-width:1000px){.nb-select>.nb-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(min-width:1900px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(min-width:1000px){.nb-art{height:170px}}
@@ -203,12 +127,5 @@ body.still .nb-card.v2,body.still .nb-card.v2 *{animation:none!important}
 @media(min-width:1100px){.nb-select>.nb-cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:14px!important}.nb-art{height:128px}.nb-tt{font-size:18px}}
 @media(min-width:1000px) and (max-width:1099px){.nb-select>.nb-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 /* how-to back on the right, window padding widened, five cards per row */
-@media(min-width:1100px){
-  .nb-select{max-width:none!important;padding-left:24px!important;padding-right:24px!important;grid-template-columns:minmax(0,1fr) clamp(300px,19vw,380px)!important;grid-template-areas:"h h" "s s" "c how"!important;column-gap:20px!important}
-  .nb-select>.nb-sub{grid-column:1/-1}
-  .nb-select>.nb-how{position:sticky;top:8px;margin-top:0}
-  .nb-select>.nb-how ol{columns:1}
-  .nb-select>.nb-cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important}
-  .nb-art{height:104px}.nb-tt{font-size:17px}.nb-ds{font-size:14.5px}.nb .nb-card.v2 .nb-av{width:40px;height:40px;font-size:21px}.nb-body{padding:0 11px 6px}.nb-ft{padding:9px 11px 12px}
-}
+@media(min-width:1100px){.nb-select{max-width:none!important;padding-left:24px!important;padding-right:24px!important;grid-template-columns:minmax(0,1fr) clamp(300px,19vw,380px)!important;grid-template-areas:"h h" "s s" "c how"!important;column-gap:20px!important}.nb-select>.nb-sub{grid-column:1/-1}.nb-select>.nb-how{position:sticky;top:8px;margin-top:0}.nb-select>.nb-how ol{columns:1}.nb-select>.nb-cards{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important}.nb-art{height:104px}.nb-tt{font-size:17px}.nb-ds{font-size:14.5px}.nb .nb-card.v2 .nb-av{width:40px;height:40px;font-size:21px}.nb-body{padding:0 11px 6px}.nb-ft{padding:9px 11px 12px}}
 @media(min-width:1700px){.nb-art{height:128px}.nb-tt{font-size:18px}.nb-ds{font-size:15px}}

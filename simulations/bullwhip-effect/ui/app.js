@@ -85,9 +85,9 @@ MBALAB.sims.define('bullwhip-effect', {
     }
     function pickRole() {
       g = null; role = null; res = null;
-      $('#bwHud').innerHTML = `<span class="bw-chip">${esc(t('sc_' + sc.id))}</span><button type="button" class="bw-chip btn" id="bwToChains">${esc(t('btnChange'))}</button>`;
+      $('#bwHud').innerHTML = `<span class="sc-chip bw-chip">${esc(t('sc_' + sc.id))}</span><button type="button" class="sc-chip bw-chip btn" id="bwToChains">${esc(t('btnChange'))}</button>`;
       $('#bwChain').innerHTML = chainHtml();
-      $('#bwBody').innerHTML = `<div class="bw-roles"><h2>${esc(t('roleT'))}</h2><p class="bw-sub">${esc(t('roleSub'))}</p><div class="bw-rg">` +
+      $('#bwBody').innerHTML = `<div class="bw-roles"><h2>${esc(t('roleT'))}</h2><p class="sc-sub bw-sub">${esc(t('roleSub'))}</p><div class="bw-rg">` +
         [0, 1, 2, 3].map(r => `<button type="button" class="bw-role" data-r="${r}"><span class="ic" aria-hidden="true">${ICON[r]}</span><span><b>${esc(name(sc, r))}</b><i>${esc(t('tr' + r))}</i><small>${esc(t('rl' + r))}</small></span></button>`).join('') + '</div></div>';
       mode();
     }
@@ -108,9 +108,9 @@ MBALAB.sims.define('bullwhip-effect', {
       return t('tipSteady');
     }
     function hud() {
-      $('#bwHud').innerHTML = `<span class="bw-chip">${esc(t('sc_' + sc.id))}</span><span class="bw-chip wk">${esc(t('weekLbl', { n: Math.min(g.week + 1, g.weeks), m: g.weeks }))}</span>
-        <span class="bw-chip">${esc(t('costYou', { n: Math.round(g.cost[role]) }))}</span><span class="bw-chip">${esc(t('costTeam', { n: Math.round(B.sum(g.cost)) }))}</span>
-        <button type="button" class="bw-chip btn" id="bwToChains">${esc(t('btnChange'))}</button>`;
+      $('#bwHud').innerHTML = `<span class="sc-chip bw-chip">${esc(t('sc_' + sc.id))}</span><span class="sc-chip bw-chip wk">${esc(t('weekLbl', { n: Math.min(g.week + 1, g.weeks), m: g.weeks }))}</span>
+        <span class="sc-chip bw-chip">${esc(t('costYou', { n: Math.round(g.cost[role]) }))}</span><span class="sc-chip bw-chip">${esc(t('costTeam', { n: Math.round(B.sum(g.cost)) }))}</span>
+        <button type="button" class="sc-chip bw-chip btn" id="bwToChains">${esc(t('btnChange'))}</button>`;
     }
     function miniChart() {
       const h = g.hist, n = g.weeks;
@@ -141,7 +141,7 @@ MBALAB.sims.define('bullwhip-effect', {
         </div>
         <div class="bw-order">
           <label for="bwRange">${esc(t('orderLbl'))}</label>
-          <div class="bw-row"><button type="button" id="bwMinus" aria-label="-1">−</button><input type="range" id="bwRange" min="0" max="40" step="1" value="${order}"><button type="button" id="bwPlus" aria-label="+1">+</button><output id="bwVal" class="bw-val">${order}</output></div>
+          <div class="sc-row bw-row"><button type="button" id="bwMinus" aria-label="-1">−</button><input type="range" id="bwRange" min="0" max="40" step="1" value="${order}"><button type="button" id="bwPlus" aria-label="+1">+</button><output id="bwVal" class="bw-val">${order}</output></div>
           <small class="bw-pos">${esc(t('posLbl'))}: <b>${v.position}</b> <span>(${esc(t('posHint'))})</span></small>
           <button type="button" id="bwGo" class="bw-main">${esc(t('btnOrder', { n: order }))}</button>
         </div>
@@ -187,21 +187,21 @@ MBALAB.sims.define('bullwhip-effect', {
       if (showBench) [0, 1, 2, 3].forEach(i => series.push({ d: r.benchOrders[i], c: COL[i], dash: true }));
       const mx = Math.max.apply(null, r.ratio.concat([1]));
       $('#bwBody').innerHTML = `<div class="bw-rc">
-        <div class="bw-rh"><h2>${esc(t('rsT'))}</h2><span class="bw-stars" aria-label="${esc(t('stars', { n: r.stars }))}">${stars(r.stars)}</span></div>
+        <div class="sc-rh bw-rh"><h2>${esc(t('rsT'))}</h2><span class="sc-stars bw-stars" aria-label="${esc(t('stars', { n: r.stars }))}">${stars(r.stars)}</span></div>
         <p class="bw-score">${esc(t('rsTeam'))}<b>${Math.round(r.total)}</b></p>
-        <p class="bw-sub">${esc(t('rsBench', { n: Math.round(r.bench) }))}<br>${esc(extra > 8 ? t('rsExtra', { n: extra }) : t('rsNoExtra'))}</p>
-        <p class="bw-sub"><small>${esc(t('rsBest', { n: best[sc.id] }))}</small></p>
-        <div class="bw-blk"><h3>${esc(t('rsChart'))}</h3><p class="bw-sub"><small>${esc(t('rsChartSub'))}</small></p>
+        <p class="sc-sub bw-sub">${esc(t('rsBench', { n: Math.round(r.bench) }))}<br>${esc(extra > 8 ? t('rsExtra', { n: extra }) : t('rsNoExtra'))}</p>
+        <p class="sc-sub bw-sub"><small>${esc(t('rsBest', { n: best[sc.id] }))}</small></p>
+        <div class="bw-blk"><h3>${esc(t('rsChart'))}</h3><p class="sc-sub bw-sub"><small>${esc(t('rsChartSub'))}</small></p>
           ${chart(series, { n: r.demand.length, h: 250, aria: t('rsChart') })}
           ${legend([{ c: 'c-d', t: t('lgDemand') }].concat([0, 1, 2, 3].map(i => ({ c: COL[i], t: name(sc, i) + (i === v ? ' (' + t('you') + ')' : '') }))))}
           <button type="button" class="bw-tog" id="bwBench" aria-pressed="${showBench}">${esc(t('rsChartBench'))}</button></div>
         <div class="bw-two">
-          <div class="bw-blk"><h3>${esc(t('rsRatioT'))}</h3>${[3, 2, 1, 0].map(i => `<div class="bw-bar ${COL[i]}${i === v ? ' me' : ''}"><span>${esc(name(sc, i))}</span><div><i style="width:${Math.max(3, r.ratio[i] / mx * 100).toFixed(0)}%"></i></div><b>${r.ratio[i].toFixed(1)}×</b></div>`).join('')}<p class="bw-sub"><small>${esc(t('rsRatioNote'))}</small></p></div>
+          <div class="bw-blk"><h3>${esc(t('rsRatioT'))}</h3>${[3, 2, 1, 0].map(i => `<div class="bw-bar ${COL[i]}${i === v ? ' me' : ''}"><span>${esc(name(sc, i))}</span><div><i style="width:${Math.max(3, r.ratio[i] / mx * 100).toFixed(0)}%"></i></div><b>${r.ratio[i].toFixed(1)}×</b></div>`).join('')}<p class="sc-sub bw-sub"><small>${esc(t('rsRatioNote'))}</small></p></div>
           <div class="bw-blk"><h3>${esc(t('rsCostT'))}</h3>${(() => { const m = Math.max.apply(null, r.tier); return [3, 2, 1, 0].map(i => `<div class="bw-bar ${COL[i]}${i === v ? ' me' : ''}"><span>${esc(name(sc, i))}</span><div><i style="width:${Math.max(3, r.tier[i] / m * 100).toFixed(0)}%"></i></div><b>${Math.round(r.tier[i])}</b></div>`).join(''); })()}</div>
         </div>
         <div class="bw-blk"><h3>${esc(t('rsRead'))}</h3><ul>${read.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
-        <div class="bw-blk"><h3>${esc(t('lsT'))}</h3><ul>${[1, 2, 3, 4].map(k => `<li>${esc(t('ls' + k))}</li>`).join('')}</ul><p class="bw-sub">${esc(t('lsBumn'))}</p></div>
-        <div class="bw-end"><button type="button" class="bw-main" id="bwAgain">${esc(t('rsAgain'))}</button><button type="button" id="bwRoles">${esc(t('rsRoles'))}</button><button type="button" id="bwAll">${esc(t('rsChains'))}</button></div>
+        <div class="bw-blk"><h3>${esc(t('lsT'))}</h3><ul>${[1, 2, 3, 4].map(k => `<li>${esc(t('ls' + k))}</li>`).join('')}</ul><p class="sc-sub bw-sub">${esc(t('lsBumn'))}</p></div>
+        <div class="sc-end bw-end"><button type="button" class="bw-main" id="bwAgain">${esc(t('rsAgain'))}</button><button type="button" id="bwRoles">${esc(t('rsRoles'))}</button><button type="button" id="bwAll">${esc(t('rsChains'))}</button></div>
       </div>`;
     }
 

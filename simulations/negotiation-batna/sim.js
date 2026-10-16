@@ -9,5 +9,5 @@ MBALAB.sims.files('negotiation-batna', {
     "../../shared/assistant.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/simkit.css", "../../shared/studio.css", "ui/style.css"]
+  styles: ["../../shared/simkit.css", "../../shared/scenario.css", "../../shared/studio.css", "ui/style.css"]
 });

@@ -16,11 +16,11 @@ MBALAB.sims.define('disc-crisis-room', {
     function how() {
       $('#dcExp').innerHTML = [1, 2, 3, 4].map(i => `<span>${T('exp' + i)}</span>`).join('');
       $('#dcStyles').innerHTML = S.map((k, i) => `<div class="dc-sty dc-sty-${k}" role="listitem" style="--i:${i}"><span class="dc-sl" aria-hidden="true">${k}</span><b>${sn(k)}</b><small>${t('st' + k + 'tag')}</small></div>`).join('');
-      $('#dcHow').innerHTML = `<h3>${T('howT')}</h3><ol><li>${T('how1')}</li><li>${T('how2')}</li><li>${T('how3')}</li><li>${T('how4')}</li></ol><p class="dc-hn">💡 ${T('gdTip2')}</p>`;
+      $('#dcHow').innerHTML = `<h3>${T('howT')}</h3><ol><li>${T('how1')}</li><li>${T('how2')}</li><li>${T('how3')}</li><li>${T('how4')}</li></ol><p class="sc-hn dc-hn">💡 ${T('gdTip2')}</p>`;
       let last = ''; try { last = localStorage.getItem(KEY) || ''; } catch (e) {}
       $('#dcLast').textContent = last ? T('last', { code: last }) : '';
     }
-    $('#dcHow').className = 'dc-how';
+    $('#dcHow').className = 'sc-how dc-how';
     $('#dcGo').addEventListener('click', () => { sfx('open'); begin(); });
 
     /* ---------- meters ---------- */
@@ -98,8 +98,8 @@ MBALAB.sims.define('disc-crisis-room', {
         <div class="dc-grid"><div><h4>${T('rsStr')}</h4><p>${t('st' + P + 'str')}</p></div><div><h4>${T('rsPrs')}</h4><p>${t('st' + P + 'prs')}</p></div>
           <div><h4>${T('rsBld')}</h4><p>${t('st' + P + 'bld')}</p></div><div><h4>${T('rsWrk')}</h4><p>${t('st' + P + 'wrk')}</p></div></div>
         <div class="dc-oth"><h4>${T('rsOthers')}</h4><ul>${others}</ul></div>
-        <p class="dc-note">${T('rsNote')}</p>
-        <div class="dc-end"><button type="button" class="dc-main" id="dcAgain">${T('rsAgain')}</button></div></div>`;
+        <p class="sc-note dc-note">${T('rsNote')}</p>
+        <div class="sc-end dc-end"><button type="button" class="dc-main" id="dcAgain">${T('rsAgain')}</button></div></div>`;
       radar($('#dcRadar'), r);
       $('#dcAgain').addEventListener('click', () => { sfx('click'); begin(); });
       $('#dcSr').textContent = T('rsTitle') + ': ' + r.code;

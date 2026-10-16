@@ -105,7 +105,7 @@ MBALAB.sims.define('koperasi-tycoon', {
       const rows = [['rpRevGoods', R.revGoods - R.cogs], ['rpRevRice', R.revRice - R.cogsRice], ['rpInterest', R.interest], ['rpDefaults', -R.defaults], ['rpOverhead', -R.overhead], ['rpInvest', -R.invest * (['storage', 'digital'].includes(R.action) ? .3 : 1)]];
       const pts = gs.hist.map(h => h.eq), mn = Math.min.apply(null, pts), mx = Math.max.apply(null, pts), sp = pts.length > 1 ? pts.map((p, i) => `${(i / (pts.length - 1) * 300).toFixed(1)},${(56 - (p - mn) / ((mx - mn) || 1) * 50).toFixed(1)}`).join(' ') : '';
       put(`<h2>${t('rpT')}</h2><div class="kp-rows">${rows.map(r => `<div><span>${t(r[0])}</span><b class="${cls(r[1])}">${sgn(r[1])}</b></div>`).join('')}<div class="tot"><span>${t('rpProfit')}</span><b class="${cls(R.profit)}">${sgn(R.profit)}</b></div></div>
-        ${R.lost > R.demand * .1 ? `<p class="kp-note">${t('rpLost', { n: Math.round(R.lost) })}</p>` : ''}${R.cut ? `<p class="kp-note">${t('rpRoad')}</p>` : ''}${R.spoil > 3 ? `<p class="kp-note">${t('rpSpoil', { n: Math.round(R.spoil) })}</p>` : ''}${R.borrowed ? `<p class="kp-note">${t('rpBorrow', { n: Math.round(R.borrowed) })}</p>` : ''}
+        ${R.lost > R.demand * .1 ? `<p class="sc-note kp-note">${t('rpLost', { n: Math.round(R.lost) })}</p>` : ''}${R.cut ? `<p class="sc-note kp-note">${t('rpRoad')}</p>` : ''}${R.spoil > 3 ? `<p class="sc-note kp-note">${t('rpSpoil', { n: Math.round(R.spoil) })}</p>` : ''}${R.borrowed ? `<p class="sc-note kp-note">${t('rpBorrow', { n: Math.round(R.borrowed) })}</p>` : ''}
         ${sp ? `<svg class="kp-spark" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true"><polyline points="${sp}" fill="none" stroke="var(--cy)" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>` : ''}
         <button type="button" class="kp-main" data-a="next">${gs.over ? t('kpContinue') : t('kpContinue')}</button>`);
     }
@@ -118,7 +118,7 @@ MBALAB.sims.define('koperasi-tycoon', {
         ${P <= 0 ? `<p class="kp-result">${t('ratLoss')}</p>` : `<div class="kp-grid">
           <div class="kp-f"><label for="kp_m">${t('ratMembers')}<output id="kpo_m">${alloc.members}%</output></label><input type="range" id="kp_m" min="0" max="80" step="5" value="${alloc.members}"></div>
           <div class="kp-f"><label for="kp_r">${t('ratReserve')}<output id="kpo_r">${alloc.reserve}%</output></label><input type="range" id="kp_r" min="0" max="${100 - alloc.members}" step="5" value="${Math.min(alloc.reserve, 100 - alloc.members)}"></div></div>
-          <p class="kp-note" id="kpSplit">${t('ratSplit', { a: alloc.members, b: alloc.reserve, c: so })}</p>`}
+          <p class="sc-note kp-note" id="kpSplit">${t('ratSplit', { a: alloc.members, b: alloc.reserve, c: so })}</p>`}
         <button type="button" class="kp-main" data-a="rat">${t('ratGo')}</button>`);
     }
     panel.addEventListener('input', e => {
@@ -136,7 +136,7 @@ MBALAB.sims.define('koperasi-tycoon', {
     function renderEnd() {
       const r = E.result(gs), P = r.parts;
       if (!reported) { reported = true; if (r.score > bests[mode]) { bests[mode] = r.score; saveBest(); cloud.changed(); } cloud.attempt({ at: Date.now(), score: r.score, variant: mode === 'village' ? 'main' : mode, detail: { ending: r.ending, years: Math.ceil(r.turns / 4) } }); bestLine(); scene.fx(r.score >= 58 ? 'cheer' : 'warn'); }
-      put(`<div class="kp-end" style="display:flex;flex-direction:column;gap:10px"><span class="kp-tag">${t('endT')}</span><h2>${t('end_' + r.ending)}</h2><div class="kp-score">${t('endScore', { n: r.score })}</div><p>${t('endb_' + r.ending)}</p>
+      put(`<div class="sc-end kp-end" style="display:flex;flex-direction:column;gap:10px"><span class="kp-tag">${t('endT')}</span><h2>${t('end_' + r.ending)}</h2><div class="kp-score">${t('endScore', { n: r.score })}</div><p>${t('endb_' + r.ending)}</p>
         <div class="kp-parts">${[['pfin', P.fin], ['ptrust', P.trust], ['pindep', P.indep], ['psoc', P.social], ['peth', P.ethics]].map(([k, x]) => `<div class="kp-seg"><b>${t(k)} · ${x}</b><div class="kp-bar"><i style="width:${x}%;background:${x >= 62 ? 'var(--gn)' : x >= 42 ? 'var(--am)' : 'var(--rd)'}"></i></div></div>`).join('')}</div>
         <h3>${t('endLessons')}</h3><ul class="kp-lessons">${r.lessons.map(l => `<li>${t(l)}</li>`).join('')}</ul>
         <button type="button" class="kp-main" data-a="again">${t('kpAgain')}</button></div>`);

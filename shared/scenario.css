@@ -1,0 +1,58 @@
+/* MBA Lab · Scenario kit (template 2: "Scenario").
+   Used by BATNA, Bullwhip, Koperasi Tycoon, Life 40 and the starter in simulations/_templates/scenario.
+   Loaded after shared/simkit.css and before the simulation's own ui/style.css.
+   Flow: select section (title, sub, cards, how-to) -> play section (hud chips, stage + info, controls) -> results.
+   Everything is namespaced `sc-*`; a simulation adds its own prefixed class beside each one. */
+
+/* ---- pages: select + play ---- */
+.sc-select,.sc-play{padding:8px clamp(12px,3vw,28px) 0;max-width:1040px;margin:0 auto}
+.sc-select[hidden],.sc-play[hidden]{display:none}
+.sk-root .sc-select h2{font-size:20px}
+.sc-sub{color:var(--txt2);margin:4px 0 14px}
+.sc-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.sc-note{margin:12px 2px;font-size:15px;color:var(--txt2)}
+
+/* ---- how-to box ---- */
+.sc-how{margin-top:16px;padding:14px 18px;border-radius:16px;background:var(--panel);border:1px solid var(--edge)}
+.sk-root .sc-how h3{font-size:17px;color:var(--mg);margin-bottom:6px}
+.sk-root .sc-how p{margin:0 0 8px}
+.sk-root .sc-how ol{margin:0 0 8px;padding-left:20px;color:var(--txt2)}
+.sk-root .sc-how li{margin:4px 0}
+.sk-root .sc-how .sc-hn{margin:0;font-size:16px;color:var(--txt2)}
+
+/* ---- hud: chips above the stage ---- */
+.sc-hud{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 10px}
+.sc-chip{padding:4px 12px;border-radius:999px;border:1px solid var(--edge);background:var(--panel);font-weight:700;font-size:15.5px}
+
+/* ---- stage: the framed canvas ---- */
+.sc-stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid var(--edge);box-shadow:var(--glow);background:var(--panel)}
+.sc-stage[hidden]{display:none}
+.sk-root .sc-stage canvas{display:block;width:100%;height:100%}
+.sc-tools{position:absolute;top:8px;left:8px;right:8px;z-index:5;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.sk-root .sc-tools button{pointer-events:auto;backdrop-filter:blur(4px)}
+.sk-root .sc-info{width:34px;height:34px;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--cy);border-color:var(--cy);background:var(--panel)}
+.sk-root .sc-info svg{width:20px;height:20px}
+.sk-root .sc-stage>.sc-info{position:absolute;top:8px;right:8px;z-index:5}
+
+/* ---- guide pop-up opened by the info button ---- */
+.sc-guide{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--t-guide);backdrop-filter:blur(5px)}
+.sc-guide[hidden]{display:none}
+.sk-root .sc-guide .gd{position:relative;width:min(560px,100%);max-height:100%;overflow:auto;padding:18px 18px 14px;font-size:16px;border-radius:20px;background:var(--t-gd-bg);color:var(--t-gd-fg);border:1px solid var(--t-gd-bd);box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.sk-root .sc-guide .gk{font-size:14px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.sk-root .sc-guide h3{font-size:17px;margin:4px 0 10px;font-weight:800}
+.sk-root .sc-guide ol,.sk-root .sc-guide ul{margin:0 0 12px;padding-left:20px;display:grid;gap:8px;line-height:1.5}
+.sk-root .sc-guide .gtip{margin:0 0 14px;padding:10px 12px;border-radius:12px;background:var(--t-gtip);font-size:16px}
+.sk-root .sc-guide .gx{position:absolute;top:12px;right:12px;padding:2px 9px;border-radius:9px;background:transparent;color:inherit}
+@media(max-width:620px){.sc-guide{padding:6px}.sk-root .sc-guide .gd{padding:12px;font-size:14.5px}.sk-root .sc-guide h3{font-size:16px}.sk-root .sc-guide ol{gap:4px;margin-bottom:6px}.sk-root .sc-guide .gtip{padding:6px 8px;margin-bottom:8px;font-size:14px}}
+
+/* ---- controls ---- */
+.sc-row{display:flex;align-items:center;gap:8px}
+.sk-root .sc-row button{width:38px;padding:6px 0;font-size:18px;line-height:1}
+.sk-root .sc-row input[type=range]{width:auto;flex:1;min-width:0;accent-color:var(--cy);height:28px;cursor:pointer}
+
+/* ---- results ---- */
+.sc-rh{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sk-root .sc-rh h2{font-size:22px}
+.sc-stars{color:var(--am);font-size:26px;letter-spacing:3px;text-shadow:0 0 10px var(--am)}
+.sc-end{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.sc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
