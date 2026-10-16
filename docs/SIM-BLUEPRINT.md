@@ -26,7 +26,8 @@ Engine and numbers, scene or canvas drawing (`scene/`), charts, strings, thumbna
 4. Run `node tests/smoke.js`, your engine tests, and `node tests/shots.js` before and after changes (`python3 tests/shotdiff.py a b`).
 
 ## Migration status
-- On `simkit.css` (game family): AI Governance, A/B Testing, Five Forces, Van Westendorp.
-- On the calculator frame (`shared/studio.css`, see `docs/CALCULATORS.md`): SMART Calculator and Decision Tree Calculator. Name any calculation-type simulation "... Calculator".
-- Still on their own base CSS (same look, duplicated rules): Bullwhip, BUMN Explorer, DISC Crisis Room, Koperasi Tycoon, Life 40, Negotiation & BATNA, Try Out MBA. They can move over class by class; compare `node tests/shots.js` before and after. Good first contributions.
-- Tools: `tests/shots.js` + `tests/shotdiff.py` for visual regression.
+- **Shell on `simkit.css` (all 11 game/lab simulations):** root `sk-root`, header `sk-top` with back button `sk-back`, scroll area `sk-scroll`, base buttons, focus ring, hover and disabled states, and the `--sk-g1`/`--sk-g2` accent. A simulation keeps its own class next to the kit class (for example `class="sk-top bw-top"`) so its JS selectors and its small overrides keep working. A simulation sets its accent on its root (`.bw{--sk-g1:var(--cy);--sk-g2:var(--mg)}`).
+- **Game family (`sg-*` menu, hero, rank, levels, badges, steps, panel, results):** AI Governance, A/B Testing, Five Forces, Van Westendorp.
+- **Own content layout on top of the shared shell:** Bullwhip, BUMN Explorer, DISC Crisis Room, Koperasi Tycoon, Life 40, Negotiation & BATNA, Try Out MBA. Their cards, scenes and meters are specific to them and stay in their own `ui/style.css`. Moving a pattern into the kit is welcome when two simulations need the identical rule.
+- **Calculator frame (`shared/studio.css`, see `docs/CALCULATORS.md`):** SMART Calculator and Decision Tree Calculator. Name any calculation-type simulation "... Calculator". Simulations that use the Bit assistant (BUMN, DISC, Koperasi, BATNA, Van Westendorp) also load `studio.css` for the robot's styles.
+- **Tools:** `tests/shots.js` + `tests/shotdiff.py` for visual regression. When you touch a shared stylesheet, shoot every simulation before and after; the migration of these seven was verified with a computed-style comparison of every element (desktop and 390 px, menu and play views) and showed zero differences.

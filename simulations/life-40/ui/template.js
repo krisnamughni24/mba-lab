@@ -1,11 +1,11 @@
 /* Life 40: page skeleton. app.js draws the lives, the year board and the results. */
 MBALAB.sims.define('life-40', {
-  template: `<div class="lf" id="lf">
-  <header class="lf-top">
-    <button class="lf-back" data-sim-back><span data-i18n="lfBack">← Home</span></button>
+  template: `<div class="sk-root lf" id="lf">
+  <header class="sk-top lf-top">
+    <button class="sk-back lf-back" data-sim-back><span data-i18n="lfBack">← Home</span></button>
     <h1 data-i18n="lfTitle">Life 40</h1>
   </header>
-  <div class="lf-scroll" id="lfScroll">
+  <div class="sk-scroll lf-scroll" id="lfScroll">
     <section class="lf-select" id="lfSelect">
       <h2 data-i18n="lfPick"></h2>
       <p class="lf-sub" data-i18n="lfPickSub"></p>

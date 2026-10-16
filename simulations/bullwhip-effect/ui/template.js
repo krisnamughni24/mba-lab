@@ -1,11 +1,11 @@
 /* Bullwhip effect: page skeleton. app.js fills the chain cards, the dashboard and the results. */
 MBALAB.sims.define('bullwhip-effect', {
-  template: `<div class="bw" id="bw">
-  <header class="bw-top">
-    <button class="bw-back" data-sim-back><span data-i18n="bwBack">← Home</span></button>
+  template: `<div class="sk-root bw" id="bw">
+  <header class="sk-top bw-top">
+    <button class="sk-back bw-back" data-sim-back><span data-i18n="bwBack">← Home</span></button>
     <h1 data-i18n="bwTitle">Bullwhip Effect</h1>
   </header>
-  <div class="bw-scroll" id="bwScroll">
+  <div class="sk-scroll bw-scroll" id="bwScroll">
     <section class="bw-select" id="bwSelect">
       <h2 data-i18n="bwPick"></h2>
       <p class="bw-sub" data-i18n="bwPickSub"></p>

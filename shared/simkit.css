@@ -5,6 +5,8 @@
 .sk-root *{box-sizing:border-box}
 .sk-root button{font:inherit;cursor:pointer;color:var(--txt);background:var(--btn-bg);border:1px solid var(--edge);border-radius:12px;padding:9px 14px;text-transform:none;font-weight:600;transition:transform .15s,background .15s,box-shadow .2s,opacity .2s}
 .sk-root button:hover:not(:disabled){transform:translateY(-1px);background:var(--btn-hover-bg);color:var(--btn-hover-fg);box-shadow:var(--glow)}
+.sk-root button:active:not(:disabled){transform:scale(.97)}
+.sk-root button:disabled:not(.locked){opacity:.45;cursor:not-allowed}
 .sk-root button:focus-visible,.sk-root input:focus-visible,.sk-root summary:focus-visible,.sk-root textarea:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
 .sk-root h1,.sk-root h2{margin:0}
 .dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--c)}

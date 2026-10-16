@@ -1,11 +1,11 @@
 /* Koperasi: page skeleton. app.js fills the panel for each phase (story, plan, report, annual meeting, ending). */
 MBALAB.sims.define('koperasi-tycoon', {
-  template: `<div class="kp" id="kp">
-  <header class="kp-top">
-    <button class="kp-back" data-sim-back><span data-i18n="kpBack">← Home</span></button>
+  template: `<div class="sk-root kp" id="kp">
+  <header class="sk-top kp-top">
+    <button class="sk-back kp-back" data-sim-back><span data-i18n="kpBack">← Home</span></button>
     <h1 data-i18n="kpTitle">Koperasi: Season by Season</h1>
   </header>
-  <div class="kp-scroll" id="kpScroll">
+  <div class="sk-scroll kp-scroll" id="kpScroll">
     <section class="kp-start" id="kpStart">
       <div class="kp-card">
         <div class="kp-pick" id="kpPick"></div>

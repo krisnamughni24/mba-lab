@@ -7,5 +7,5 @@ MBALAB.sims.files('bullwhip-effect', {
     "scene/scene.js",
     "ui/app.js"
   ],
-  styles: ["../../shared/studio.css", "ui/style.css"]
+  styles: ["../../shared/simkit.css", "ui/style.css"]
 });

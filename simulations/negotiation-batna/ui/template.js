@@ -1,11 +1,11 @@
 /* Negotiation & BATNA: page skeleton. app.js fills the level cards and drives the stage. */
 MBALAB.sims.define('negotiation-batna', {
-  template: `<div class="nb" id="nb">
-  <header class="nb-top">
-    <button class="nb-back" data-sim-back><span data-i18n="nbBack">← Home</span></button>
+  template: `<div class="sk-root nb" id="nb">
+  <header class="sk-top nb-top">
+    <button class="sk-back nb-back" data-sim-back><span data-i18n="nbBack">← Home</span></button>
     <h1 data-i18n="nbTitle">BATNA: Price of Patience</h1>
   </header>
-  <div class="nb-scroll" id="nbScroll">
+  <div class="sk-scroll nb-scroll" id="nbScroll">
   <section class="nb-select" id="nbSelect">
     <h2 data-i18n="nbPick">Choose a negotiation</h2>
     <p class="nb-sub" data-i18n="mPickSub"></p>

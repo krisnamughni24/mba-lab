@@ -1,12 +1,12 @@
 /* BUMN Explorer: page skeleton. app.js fills the chips, info card, quiz box and company list. */
 MBALAB.sims.define('bumn-explorer', {
-  template: `<div class="bm" id="bm">
-  <header class="bm-top">
-    <button class="bm-back" data-sim-back><span data-i18n="bm_backT">← Home</span></button>
+  template: `<div class="sk-root bm" id="bm">
+  <header class="sk-top bm-top">
+    <button class="sk-back bm-back" data-sim-back><span data-i18n="bm_backT">← Home</span></button>
     <h1 data-i18n="bm_gTitle">BUMN Explorer</h1>
     <div class="bm-modes" role="group"><button type="button" id="bmExp" class="on"><span data-i18n="bm_modeExp"></span></button><button type="button" id="bmQz"><span data-i18n="bm_modeQz"></span></button></div>
   </header>
-  <div class="bm-scroll" id="bmScroll">
+  <div class="sk-scroll bm-scroll" id="bmScroll">
     <div class="bm-wrap">
       <div class="bm-bar"><span class="bm-prog" id="bmProg"></span><div class="bm-chips" id="bmChips"></div></div>
       <div class="bm-sw"><div class="bm-stage" id="bmStage">

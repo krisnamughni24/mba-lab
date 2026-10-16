@@ -1,11 +1,11 @@
 /* DISC Crisis Room: page skeleton. app.js renders the crises, meters and result. */
 MBALAB.sims.define('disc-crisis-room', {
-  template: `<div class="dc" id="dc">
-  <header class="dc-top">
-    <button class="dc-back" data-sim-back><span data-i18n="dc_backT">← Home</span></button>
+  template: `<div class="sk-root dc" id="dc">
+  <header class="sk-top dc-top">
+    <button class="sk-back dc-back" data-sim-back><span data-i18n="dc_backT">← Home</span></button>
     <h1 data-i18n="dc_gTitle">DISC Crisis Room Test</h1>
   </header>
-  <div class="dc-scroll" id="dcScroll">
+  <div class="sk-scroll dc-scroll" id="dcScroll">
   <section class="dc-start" id="dcStart">
     <div class="dc-hero"><h2 data-i18n="dc_startT"></h2><p data-i18n="dc_startSub"></p>
       <div class="dc-exp" id="dcExp"></div><div class="dc-styles" id="dcStyles" role="list"></div>
