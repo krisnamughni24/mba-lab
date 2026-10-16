@@ -12,6 +12,7 @@ MBALAB.sims.files('bumn-explorer', {
     "scene/buildings.js",
     "scene/buildings2.js",
     "scene/buildings3.js",
+    "scene/buildings4.js",
     "scene/scene.js",
     "../../shared/assistant.js",
     "ui/app.js"

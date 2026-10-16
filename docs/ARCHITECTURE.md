@@ -57,6 +57,7 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | BUMN Explorer: Danantara guide facts (legal names, key figures, why it matters, fact-check notes, subsidiary counts; 4 languages) | `simulations/bumn-explorer/data/guide.js` |
 | BUMN Explorer: guide alignment (15 sectors, parent/subsidiary flags, removed and added companies with positions) | `simulations/bumn-explorer/data/danantara.js` |
 | BUMN Explorer: 3D builders for the guide additions (DAM, DIM, DDMF, shipyards, insurers, survey group, ...) | `simulations/bumn-explorer/scene/buildings3.js` |
+| BUMN Explorer: detail pass (richer, animated versions of ~25 buildings: banks, Telkom, Garuda, shipyards, mining, insurers, ...; loads last and overrides earlier builders) | `simulations/bumn-explorer/scene/buildings4.js` |
 | BUMN Explorer: terrain and infrastructure (sea, mountains, city, highway, rail, river, runway, forest) | `simulations/bumn-explorer/scene/world.js` |
 | BUMN Explorer: one 3D builder per company (port, offshore platform, power plant, mine, ...) | `simulations/bumn-explorer/scene/buildings.js` |
 | 3D city | `features/scene/scene.js` |

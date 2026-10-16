@@ -83,6 +83,14 @@
       t.blink = (x, y, z, c) => { const sp = t.glow(c || 'rgba(255,60,80,1)', 4, x, y, z); anims.push(tm => { sp.visible = Math.sin(tm * 5 + ent.X) > 0; }); return sp; };
       t.smoke = (x, y, z, sz, par) => { const mp = gt('rgba(235,235,245,.9)'), arr = []; for (let i = 0; i < 5; i++) { const sp = new T.Sprite(new T.SpriteMaterial({ map: mp, transparent: true, depthWrite: false, opacity: 0 })); (par || g).add(sp); arr.push(sp); reg(ent, sp.material, 's'); } const s = sz || 1; anims.push(tm => arr.forEach((sp, i) => { const u = ((tm * .22 + i / 5) % 1); sp.position.set(x + u * 4 * s, y + u * 14 * s, z); sp.scale.setScalar((2 + u * 6) * s); sp.material.opacity = (1 - u) * .42 * ent.a; })); };
       t.ring = (r0, y, c, par, self) => { const m = new T.Mesh(new T.RingGeometry(r0 * .94, r0, 40), reg(ent, MB(c, { transparent: true, opacity: .8, side: T.DoubleSide }), self ? 's' : 'k')); m.rotation.x = -Math.PI / 2; m.position.y = y; (par || g).add(m); return m; };
+      /* a flat sign with text (company wordmarks, tickers): label(text, w, h, x, y, z, fg, bg, par, rotY) */
+      t.label = (txt, w, h, x, y, z, fg, bg, par, ry) => {
+        const c = document.createElement('canvas'); c.width = 256; c.height = Math.max(32, Math.round(256 * h / w)); const q = c.getContext('2d');
+        if (bg) { q.fillStyle = bg; q.fillRect(0, 0, c.width, c.height); }
+        q.fillStyle = fg || '#fff'; q.font = '800 ' + Math.round(c.height * .62) + 'px system-ui,sans-serif'; q.textAlign = 'center'; q.textBaseline = 'middle'; q.fillText(txt, c.width / 2, c.height / 2 + 2);
+        const m = new T.Mesh(new T.PlaneGeometry(w, h), reg(ent, new T.MeshBasicMaterial({ map: new T.CanvasTexture(c), transparent: true, side: T.DoubleSide }), 'k'));
+        m.position.set(x || 0, y || 0, z || 0); m.rotation.y = ry || 0; (par || g).add(m); return m;
+      };
       t.beam = (x1, y1, z1, x2, y2, z2, w, c, par) => { const dx = x2 - x1, dy = y2 - y1, dz = z2 - z1, L = Math.hypot(dx, dy, dz) || 1, m = new T.Mesh(new T.BoxGeometry(w, w, L), t.std(c)); m.position.set((x1 + x2) / 2, (y1 + y2) / 2, (z1 + z2) / 2); m.quaternion.setFromUnitVectors(new T.Vector3(0, 0, 1), new T.Vector3(dx / L, dy / L, dz / L)); (par || g).add(m); return m; };
       t.lines = (pts, hex, op) => { const ge = new T.BufferGeometry(); ge.setAttribute('position', new T.Float32BufferAttribute(pts, 3)); const l = new T.LineSegments(ge, reg(ent, edgeMat(hex, op == null ? .85 : op))); g.add(l); return l; };
       t.ship = (o, par) => { const s = ship(t, o); (par || g).add(s); return s; };
