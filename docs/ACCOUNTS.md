@@ -8,6 +8,11 @@ Backend: Supabase (Postgres + Auth). Frontend: `features/account/`. No build ste
 3. **Supabase -> SQL Editor: run `supabase/schema.sql`** (tables, row level security, delete-account function).
 4. `data/config.js`: `supabaseUrl` and `supabaseKey` (publishable key). Both are public by design; the data is protected by row level security.
 
+## Google sign-in screen shows "<project>.supabase.co"
+With the plain redirect flow Google names the domain it redirects to (`<ref>.supabase.co`) because that domain cannot carry verified branding. Two ways to fix it:
+1. **Free, recommended:** set `googleClientId` in `data/config.js` to the same OAuth Web Client ID that is in Supabase (it is public, not the secret). Google's own button then signs in on your site, the chooser says "continue to mba-lab.vercel.app", and the ID token goes to Supabase (`signInWithIdToken`, with a nonce). Requirements: the Vercel URL is in the Client ID's *Authorized JavaScript origins*, and in Supabase → Authentication → Providers → Google the option "Skip nonce checks" stays **off**. If the Google script cannot load, the old redirect button is shown instead.
+2. **Paid:** a Supabase custom domain (for example `auth.yourdomain.com`), then the chooser shows that domain. Showing an app name and logo on the consent screen additionally needs Google's brand verification, which requires a domain you own (a `vercel.app` subdomain does not qualify).
+
 ## Who may sign in
 Default: any Google account (`access_mode = 'public'`). To restrict to a class, see the commented block at the bottom of `schema.sql` (allowed emails / domains). It is enforced in the database, not in the browser.
 

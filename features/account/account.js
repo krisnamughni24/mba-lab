@@ -53,7 +53,7 @@ MBALAB.feature('account', () => {
       const perks = '<ul class="acct-perks"><li><span>☁️</span>' + esc(t('acctPerk1')) + '</li><li><span>🏆</span>' + esc(t('acctPerk2')) + '</li><li><span>🎓</span>' + esc(t('acctPerk3')) + '</li></ul>';
       const seg = rs ? '' : '<div class="acct-seg" role="tablist">' + [['in', 'acctSignIn'], ['up', 'acctSignUp']].map(a => '<button type="button" role="tab" aria-selected="' + ((a[0] === 'up') === up) + '" data-acct="mode" data-m="' + a[0] + '">' + esc(t(a[1])) + '</button>').join('') + '</div>';
       body.innerHTML = '<p class="acct-lead">' + esc(t('acctIntro')) + '</p>' + perks +
-        '<button type="button" class="acct-google" data-acct="in" data-sfx="click"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.2A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg><span>' + esc(t('acctGoogle')) + '</span></button>' +
+        (C.googleClientId ? '<div class="acct-gsi" id="acctGsi"></div>' : '<button type="button" class="acct-google" data-acct="in" data-sfx="click"><svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.2C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.2A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.2C6.5 42.6 14.6 48 24 48z"/></svg><span>' + esc(t('acctGoogle')) + '</span></button>') +
         '<div class="acct-or"><span>' + esc(t('acctOrMail')) + '</span></div>' + seg +
         (msg ? '<p class="acct-st ' + (msgOk ? 'ok' : 'err') + '" role="status">' + esc(msg) + '</p>' : '') +
         '<form class="acct-form" data-acct-form="' + amode + '" novalidate>' +
@@ -62,6 +62,7 @@ MBALAB.feature('account', () => {
         '<button type="submit" class="acct-go"' + (busy ? ' disabled' : '') + '>' + esc(t(rs ? 'acctSendReset' : up ? 'acctSignUp' : 'acctSignIn')) + '</button></form>' +
         '<div class="acct-links">' + (rs ? '<button type="button" data-acct="mode" data-m="in">' + esc(t('acctBack')) + '</button>' : up ? '' : '<button type="button" data-acct="mode" data-m="reset">' + esc(t('acctForgot')) + '</button>') + '</div>' +
         '<p class="acct-note">' + esc(t('acctPriv')) + '</p>';
+      mountGsi();
       return;
     }
     if (allowed === null) { body.innerHTML = '<div class="acct-hero">' + avatar(u, 'acct-bigav') + '<div class="acct-id"><b>' + esc(u.name) + '</b><small>' + esc(u.email) + '</small></div></div><p class="acct-st">' + esc(t('acctCheck')) + '</p>'; return; }
@@ -186,6 +187,32 @@ MBALAB.feature('account', () => {
     if (!ready()) return;
     const r = await sb.from('profiles').select('display_name,show_on_board,name').eq('id', session.user.id).maybeSingle();
     prof = r.data || { display_name: '', show_on_board: false }; paintDialog();
+  }
+
+  /* ---------- Google sign-in without the supabase.co screen ----------
+     With data/config.js googleClientId set, Google's own button signs the user in on THIS site (the account chooser says
+     "continue to <this site>") and the ID token is handed to Supabase. Without it, the redirect flow below is used. */
+  let gsiP = null, gsiNonce = '';
+  const gsiLoad = () => gsiP || (gsiP = MBALAB.load.scripts(['https://accounts.google.com/gsi/client']));
+  async function gsiHash(n) { const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(n)); return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, '0')).join(''); }
+  async function gsiCred(resp) {
+    if (!sb || !resp || !resp.credential) return;
+    const r = await sb.auth.signInWithIdToken({ provider: 'google', token: resp.credential, nonce: gsiNonce });
+    if (r.error) { console.warn('[account] Google ID token rejected', r.error.message); msg = t('acctSignErr'); msgOk = false; paintDialog(); }
+  }
+  async function mountGsi() {
+    const box = dlg.querySelector('#acctGsi'); if (!box || !C.googleClientId) return;
+    try {
+      await gsiLoad();
+      gsiNonce = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2)) + Date.now();
+      const hashed = await gsiHash(gsiNonce);
+      window.google.accounts.id.initialize({ client_id: C.googleClientId, callback: gsiCred, nonce: hashed, ux_mode: 'popup', use_fedcm_for_prompt: true, auto_select: false });
+      if (!box.isConnected || !dlg.querySelector('#acctGsi')) return;
+      window.google.accounts.id.renderButton(box, { type: 'standard', theme: 'filled_blue', size: 'large', shape: 'rectangular', text: 'continue_with', logo_alignment: 'left', width: Math.min(360, Math.max(200, box.clientWidth || 300)), locale: ({ en: 'en', id: 'id', ja: 'ja', zh: 'zh-CN' })[MBALAB.i18n.get()] || 'en' });
+    } catch (e) {
+      console.warn('[account] Google button unavailable, using the redirect sign-in', e);
+      const cur = dlg.querySelector('#acctGsi'); if (cur) cur.outerHTML = '<button type="button" class="acct-google" data-acct="in" data-sfx="click"><span>' + esc(t('acctGoogle')) + '</span></button>';
+    }
   }
 
   /* ---------- actions ---------- */
