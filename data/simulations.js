@@ -1340,20 +1340,20 @@ MBALAB.data.simulations = [
   },
   {
     "id": "ab-testing",
-    "status": "soon",
+    "status": "live",
     "icon": "🔬",
     "category": "analytics",
     "name": {
-      "en": "A/B testing",
-      "id": "Uji A/B",
-      "ja": "A/Bテストと有意性",
-      "zh": "A/B测试与显著性"
+      "en": "A/B Testing Lab",
+      "id": "Lab A/B Testing",
+      "ja": "A/Bテスト・ラボ",
+      "zh": "A/B 测试实验室"
     },
     "description": {
-      "en": "Know when a result is real, not luck.",
-      "id": "Ketahui kapan hasil itu nyata, bukan kebetulan.",
-      "ja": "結果が偶然でなく本物だと判断する。",
-      "zh": "判断结果是真实的而非运气。"
+      "en": "8 cases from coffee to betta fish: plan, run, decide ship or keep.",
+      "id": "8 kasus dari kopi sampai ikan cupang: rancang, jalankan, putuskan.",
+      "ja": "コーヒーから闘魚まで8ケース：設計し、実行し、判断する。",
+      "zh": "从咖啡到斗鱼 8 个案例：设计、运行、决策。"
     }
   },
   {

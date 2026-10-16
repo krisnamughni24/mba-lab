@@ -72,6 +72,12 @@
     '<path class="g" d="M16 50H186" stroke-dasharray="3 5"/><path class="b k-draw" pathLength="1" d="M20 50L50 44L70 56L90 38L112 62L132 28L152 72L172 16L184 84"/>' +
     [[20, 'fa'], [70, 'fa'], [112, 'fc'], [152, 'fb']].map((p, i) => '<circle class="' + p[1] + ' k-pulse" style="--d:' + (i * .4) + 's" cx="' + p[0] + '" cy="92" r="4"/>').join('') + '<path class="g" d="M24 92H66M74 92H108M116 92H148" stroke-dasharray="2 3"/><circle class="fc k-ride" style="offset-path:path(\'M20 50L50 44L70 56L90 38L112 62L132 28L152 72L172 16L184 84\');--d:0s" cx="0" cy="0" r="4"/>');
 
+  T['ab-testing'] = S(
+    '<rect class="a" x="14" y="14" width="68" height="48" rx="8" opacity=".9"/><rect class="b" x="118" y="14" width="68" height="48" rx="8" opacity=".9"/>' +
+    '<rect class="g" x="22" y="22" width="30" height="5" rx="2"/><rect class="g" x="22" y="32" width="20" height="4" rx="2"/><rect class="fa" x="22" y="44" width="26" height="10" rx="4" opacity=".7"/><rect class="g" x="126" y="22" width="30" height="5" rx="2"/><rect class="g" x="126" y="32" width="20" height="4" rx="2"/><rect class="fb k-pulse" x="126" y="44" width="34" height="10" rx="4"/>' +
+    '<circle class="fc k-bob" cx="100" cy="12" r="4"/><path class="g" d="M100 16v10M100 26L48 14M100 26L152 14" stroke-dasharray="3 5"/>' +
+    '<path class="g" d="M20 94H186"/><path class="c k-draw" pathLength="1" d="M24 88Q70 70 100 80T184 70"/><path class="d k-draw" style="--d:.4s" pathLength="1" d="M24 90Q70 84 110 72T184 62"/><circle class="fd k-pulse" cx="184" cy="62" r="4"/>');
+
   T['five-forces'] = S(
     '<rect class="fd o" x="78" y="34" width="44" height="32" rx="4"/><path class="fa" d="M74 36L100 22L126 36z"/>' +
     '<path class="a k-draw" pathLength="1" d="M100 10V20"/><path class="b k-draw" pathLength="1" d="M20 50H74"/><path class="c k-draw" pathLength="1" d="M180 50H126"/><path class="d k-draw" pathLength="1" d="M100 90V68"/>' +

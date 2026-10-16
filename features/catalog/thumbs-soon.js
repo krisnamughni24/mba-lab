@@ -86,7 +86,7 @@
     'marginal-analysis': M.curve(s, 'M24 34Q90 40 178 80'), 'exchange-rate-exposure': M.curve(down, up), 'global-market-entry': M.globe(), 'hofstede-culture': M.globe(),
     'kotter-change': M.pyramid(), 'motivation-theories': M.pyramid(), 'tuckman-team': M.people(4), 'performance-management-okr': M.target(), 'talent-retention': M.people(6),
     'csr-esg': M.leaf(), 'umkm-digital': M.phone(),
-    'ab-testing': M.sliders(), 'pareto-root-cause': M.bars([76, 54, 36, 24, 14, 8], 'M34 14Q80 30 120 34T178 40'), 'regression-for-managers': M.curve('M30 76L178 24'), 'monte-carlo-risk': M.bell(),
+    'pareto-root-cause': M.bars([76, 54, 36, 24, 14, 8], 'M34 14Q80 30 120 34T178 40'), 'regression-for-managers': M.curve('M30 76L178 24'), 'monte-carlo-risk': M.bell(),
     'ethical-dilemmas': M.shield(), 'emotional-intelligence': M.chat()
   };
   // spec strings "motif:arg" resolved against the motifs above

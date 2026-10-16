@@ -173,3 +173,4 @@ body.still .ff *{animation:none!important;transition:none!important}
 }
 
 .ff-scroll:has(.fg-level:not([hidden])) .fg{max-width:min(1760px,100%)}
+.ff-scroll .fg[hidden]{display:none!important}
