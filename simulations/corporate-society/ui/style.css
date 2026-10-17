@@ -1,0 +1,121 @@
+/* Corporate Society: UI. Scoped under .cs. Colours only from the global theme tokens. */
+.cs{--sk-g1:var(--cy);--sk-g2:var(--mg);}
+.cs-scroll{padding-bottom:70px}
+.cs h3{margin:0}
+.cs-pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:8px 0 14px}
+.cs-pick.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cs .cs-card{display:grid;align-content:start;gap:4px;text-align:left;padding:14px;border-radius:16px;background:var(--panel);border:2px solid var(--edge);color:var(--txt);cursor:pointer;font:inherit;text-transform:none;transition:transform .15s,border-color .15s,box-shadow .15s}
+.cs .cs-card:hover{transform:translateY(-2px)}
+.cs .cs-card:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.cs .cs-card.on{border-color:var(--cy);box-shadow:0 0 0 1px var(--cy),var(--glow)}
+.cs-card .ic{font-size:30px;line-height:1}
+.cs-card b{font-size:18px}
+.cs-card small{color:var(--txt2);font-size:15px;line-height:1.35;font-weight:500}
+.cs-card em{font-style:normal;color:var(--am);font-weight:700;font-size:14.5px;letter-spacing:.5px}
+.cs-go{margin:6px 0 4px}
+.cs .sc-h3{margin:14px 0 2px}
+/* stats */
+.cs-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:10px 0}
+.cs-stat{display:grid;grid-template-columns:1fr auto;gap:2px 6px;padding:8px 10px;border-radius:12px;background:var(--panel);border:1px solid var(--edge)}
+.cs-stat .n{font-size:14px;color:var(--txt2);font-weight:700;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.cs-stat .n i{font-style:normal}
+.cs-stat .n em{font-style:normal;color:var(--rd);font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+.cs-stat b{font-size:18px}
+.cs-stat .bar{grid-column:1/3;height:7px;border-radius:5px;background:color-mix(in srgb,var(--txt) 14%,transparent);overflow:hidden}
+.cs-stat .bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--cy),var(--gn));transition:width .5s}
+.cs-stat.low{border-color:var(--rd)}
+.cs-stat.low .bar i{background:var(--rd)}
+.cs-stat.low b{color:var(--rd)}
+/* stage + side */
+.cs-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:start}
+.cs-stage{padding:0!important;overflow:hidden;border-radius:18px}
+.cs-scene{position:relative;aspect-ratio:2/1;background:var(--panel2);overflow:hidden}
+.cs-bg{position:absolute;inset:0;width:100%;height:100%}
+.cs-bg .f{fill:color-mix(in srgb,var(--txt) 12%,var(--panel2))}
+.cs-bg .m{fill:color-mix(in srgb,var(--txt) 22%,var(--panel2))}
+.cs-bg .a{fill:color-mix(in srgb,var(--cy) 55%,var(--panel2))}
+.cs-bg .s{fill:color-mix(in srgb,var(--mg) 30%,var(--panel2))}
+.cs-bg .sk{fill:color-mix(in srgb,var(--mg) 35%,var(--panel2))}
+.cs-tint{position:absolute;inset:0;pointer-events:none}
+.cs-scene.t0 .cs-tint{background:linear-gradient(180deg,rgba(255,220,150,.16),transparent 60%)}
+.cs-scene.t1 .cs-tint{background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 60%)}
+.cs-scene.t2 .cs-tint{background:linear-gradient(180deg,rgba(40,20,90,.34),rgba(255,140,80,.12))}
+.cs-place{position:absolute;left:12px;top:10px;padding:3px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--edge);font-weight:800;font-size:14.5px}
+.cs-me,.cs-npc{position:absolute;bottom:10px;display:grid;justify-items:center;gap:1px}
+.cs-me{left:9%}
+.cs-npc{right:9%}
+.cs .av{display:grid;place-items:center;width:clamp(46px,9vw,72px);height:clamp(46px,9vw,72px);border-radius:50%;font-size:clamp(26px,5.4vw,42px);background:var(--panel);border:3px solid var(--cy);box-shadow:var(--glow)}
+.cs-me i{font-style:normal;font-size:20px;margin-top:-18px;margin-left:44px}
+.cs-npc.low .av{border-color:var(--rd)}
+.cs-npc.ok .av{border-color:var(--am)}
+.cs-npc.good .av{border-color:var(--gn)}
+.cs-npc b{font-size:14.5px;padding:1px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--edge)}
+.cs-npc small{font-size:12.5px;color:var(--txt);text-shadow:0 0 6px var(--panel2)}
+.cs-side{padding:12px 14px;border-radius:18px;background:var(--panel);border:1px solid var(--edge)}
+.cs-side h4{margin:0 0 8px;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--mg)}
+.cs-rel{display:grid;grid-template-columns:auto 1fr 56px auto;gap:8px;align-items:center;padding:5px 0}
+.cs-rel .av{width:30px;height:30px;font-size:17px;border-width:2px;box-shadow:none}
+.cs-rel.low .av{border-color:var(--rd)}
+.cs-rel.ok .av{border-color:var(--am)}
+.cs-rel.good .av{border-color:var(--gn)}
+.cs-rel .who b{display:block;font-size:15px;line-height:1.15}
+.cs-rel .who small{display:block;color:var(--txt2);font-size:13px}
+.cs-rel .bar{height:6px;border-radius:4px;background:color-mix(in srgb,var(--txt) 14%,transparent);overflow:hidden}
+.cs-rel .bar i{display:block;height:100%;background:var(--cy);transition:width .5s}
+.cs-rel.low .bar i{background:var(--rd)}
+.cs-rel.good .bar i{background:var(--gn)}
+.cs-rel em{font-style:normal;font-weight:800;font-size:14px;min-width:24px;text-align:right}
+.cs-rel.crit em{color:var(--rd)}
+/* dialogue box */
+.cs-box{margin-top:14px;padding:16px 18px;border-radius:18px;background:var(--panel);border:1px solid var(--edge);box-shadow:var(--glow);animation:csin .35s both}
+.cs-box h3{font-size:19px;margin-bottom:6px}
+.cs-sub{margin:0 0 10px;color:var(--txt2)}
+.cs-say{margin:6px 0 12px;padding:10px 14px;border-left:4px solid var(--mg);background:rgba(var(--tint-rgb),.07);border-radius:0 12px 12px 0;font-size:17px;line-height:1.5}
+.cs-say .who{color:var(--mg)}
+.cs-opts{display:grid;gap:8px}
+.cs .cs-opt{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;text-align:left;padding:11px 14px;border-radius:14px;background:var(--btn-bg);border:1px solid var(--edge);color:var(--txt);cursor:pointer;font:inherit;text-transform:none;font-weight:600;transition:transform .12s,border-color .12s}
+.cs .cs-opt:hover{transform:translateX(3px);border-color:var(--cy)}
+.cs .cs-opt:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.cs-opt .k{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--cy);color:#06122a;font-weight:900;font-size:14px}
+.cs-opt em{font-style:normal;font-size:13px;color:var(--am);border:1px solid var(--am);border-radius:999px;padding:1px 9px;font-weight:700}
+.cs-locs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.cs .cs-loc{display:grid;justify-items:center;gap:4px;padding:14px 10px;border-radius:16px;background:var(--btn-bg);border:2px solid var(--edge);color:var(--txt);cursor:pointer;font:inherit;text-transform:none;transition:transform .15s,border-color .15s}
+.cs .cs-loc:hover{transform:translateY(-3px);border-color:var(--cy)}
+.cs .cs-loc:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.cs-loc span{font-size:30px}
+.cs-chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.cs-chip{padding:3px 11px;border-radius:999px;font-weight:800;font-size:14.5px;border:1px solid var(--edge);background:var(--panel2)}
+.cs-chip.pos{border-color:var(--gn);color:var(--gn)}
+.cs-chip.neg{border-color:var(--rd);color:var(--rd)}
+.cs-tag{display:inline-block;margin:0 0 4px;padding:2px 12px;border-radius:999px;font-weight:800;font-size:14px;border:1px solid var(--edge)}
+.cs-tag.ok{border-color:var(--gn);color:var(--gn)}
+.cs-tag.bad{border-color:var(--rd);color:var(--rd)}
+.cs-warn{padding:8px 12px;border-radius:12px;border:1px solid var(--am);color:var(--am);font-weight:700}
+/* ending */
+.cs-play.ended .cs-grid{display:none}
+.cs-end h2{margin:0 0 4px;font-size:clamp(24px,4vw,32px)}
+.cs-end.won h2{background:linear-gradient(90deg,var(--gn),var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cs-end.lost h2{color:var(--rd)}
+.cs-end>p{margin:0 0 10px;color:var(--txt2);font-size:17px}
+.cs-end h3{margin:16px 0 6px;font-size:17px;color:var(--mg)}
+.cs-bar,.cs-log{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.cs-bar li{display:flex;gap:8px;padding:6px 12px;border-radius:10px;background:var(--panel2);font-weight:700}
+.cs-bar li.ok span{color:var(--gn)}
+.cs-bar li.no span{color:var(--rd)}
+.cs-log li{display:grid;gap:2px;padding:8px 12px;border-radius:10px;background:var(--panel2)}
+.cs-log li span{color:var(--txt2);font-size:15.5px}
+.cs-log em{font-style:normal;font-weight:800}
+.cs-log em.ok{color:var(--gn)}
+.cs-log em.bad{color:var(--rd)}
+.cs-conc{display:grid;gap:8px}
+.cs-conc div{padding:10px 14px;border-radius:12px;background:var(--panel2);border-left:4px solid var(--cy)}
+.cs-conc p{margin:3px 0 0;color:var(--txt2);font-size:15.5px}
+.cs-end .sc-btns{margin-top:16px}
+@keyframes csin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+body.still .cs-box{animation:none}
+@media (max-width:760px){
+  .cs-grid{grid-template-columns:1fr}
+  .cs-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cs-pick,.cs-pick.three{grid-template-columns:1fr}
+  .cs-scene{aspect-ratio:16/9}
+}

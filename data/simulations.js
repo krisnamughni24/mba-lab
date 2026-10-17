@@ -105,6 +105,25 @@ MBALAB.data.simulations = [
     }
   },
   {
+    "id": "corporate-society",
+    "status": "live",
+    "template": "scenario",
+    "icon": "🏢",
+    "category": "leadership",
+    "name": {
+      "en": "Corporate Society",
+      "id": "Corporate Society",
+      "ja": "コーポレート・ソサエティ",
+      "zh": "企业社会"
+    },
+    "description": {
+      "en": "Live a week at a company as Finance or IT, junior to senior. Choose where to go, who to trust and what to do.",
+      "id": "Jalani seminggu di perusahaan sebagai Finance atau IT, dari junior hingga senior. Pilih ke mana pergi, siapa dipercaya, dan apa yang dilakukan.",
+      "ja": "経理または ITとして、ジュニアからシニアまで会社の一週間を体験。行き先、信頼する相手、行動を自分で選ぶ。",
+      "zh": "以财务或IT身份，从初级到资深，体验公司的一周。自己选择去哪里、信任谁、做什么。"
+    }
+  },
+  {
     "id": "life-40",
     "status": "live",
     "template": "scenario",
