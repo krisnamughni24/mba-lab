@@ -41,3 +41,5 @@
 .wn .wn-item p{margin:4px 0 0;font-size:15.5px}
 .wn .wn-item.hit b::after{content:"";display:inline-block;width:8px;height:8px;margin-left:6px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff}
 .wn .wn-fit{font-style:normal;font-size:13px;font-weight:700;margin-left:6px;opacity:.9}
+.wn .wn-lrow input[type=search]{width:min(320px,100%)}
+.wn .wn-cur{font-weight:800;color:var(--cy)}

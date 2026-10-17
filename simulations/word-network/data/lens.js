@@ -6,7 +6,8 @@
 (function () {
   window.MBALAB = window.MBALAB || {}; MBALAB.wordnet = MBALAB.wordnet || {};
   const I = (d, tg, a, m, l, e) => ({ d, tg: tg === '*' ? [] : tg.split(','), a, m, l: l.split('|'), e: e.split('|') });
-  const C = (k, name, x, pos, neg) => ({ k, name: name.split('|'), x, pos, neg });
+  const C = (k, name, x, pos, neg, cat) => ({ k, name: name.split('|'), x, pos, neg, cat: cat || '' });
+  MBALAB.wordnet.lensKit = { I, C };   /* later files (lens-2.js ...) add concepts with these helpers */
   MBALAB.wordnet.lens = [
     C('growth', 'Growth|Pertumbuhan|成長|增长', ['quality', 'loan'], [
       I('mkt', 'retail,biz', 'market', 3, 'Market share|Pangsa pasar|市場シェア|市场份额', 'Bigger reach wins more customers than rivals.|Jangkauan lebih besar memenangkan lebih banyak pelanggan daripada pesaing.|到達範囲が広がり、競合より多くの顧客を獲得できる。|覆盖更广，能比对手赢得更多客户。'),

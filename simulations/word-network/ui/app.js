@@ -183,11 +183,19 @@ MBALAB.sims.define('word-network', {
       else if (d) { loadWords([d.dataset.direct]); setMode('explore'); }
     });
     function lensBar() {
-      const b = $('#wnLens'), cur = lens.concept;
-      b.innerHTML = `<div class="wn-lrow"><span class="wn-empty">${T('lensConcept')}:</span>` + N.lensList().map(c => `<button type="button" class="ex-chip${cur === c.k ? ' on' : ''}" data-lc="${c.k}">${c.name[LI()]}</button>`).join('') + `</div>
-        <div class="wn-lrow"><span class="wn-empty">${T('lensCtx')}:</span><button type="button" class="ex-chip${!lens.ctx ? ' on' : ''}" data-lx="">${T('lensNone')}</button>` + N.CTX_CHOICES.map(w => `<button type="button" class="ex-chip${N.norm(lens.ctx) === w ? ' on' : ''}" data-lx="${w}">${w}</button>`).join('') + `<input id="wnLx" type="text" maxlength="24" spellcheck="false" placeholder="${T('lensCtxPh')}" value="${N.CTX_CHOICES.includes(N.norm(lens.ctx)) ? '' : lens.ctx}"></div>
+      const bar = $('#wnLens'), cur = lens.concept, cc = N.lensGet(cur), own = N.CTX_CHOICES.includes(N.norm(lens.ctx));
+      bar.innerHTML = `<div class="wn-lrow"><span class="wn-empty">${T('lensConcept')}:</span><input id="wnLq" type="search" maxlength="40" spellcheck="false" autocomplete="off" placeholder="${T('lensSearchPh', { n: N.lensList().length })}" aria-label="${T('lensConcept')}">${cc ? `<span class="wn-cur">${cc.name[LI()]}</span>` : ''}</div>
+        <div class="wn-lrow" id="wnLres"></div>
+        <div class="wn-lrow"><span class="wn-empty">${T('lensCtx')}:</span><button type="button" class="ex-chip${!lens.ctx ? ' on' : ''}" data-lx="">${T('lensNone')}</button>` + N.CTX_CHOICES.map(w => `<button type="button" class="ex-chip${N.norm(lens.ctx) === w ? ' on' : ''}" data-lx="${w}">${w}</button>`).join('') + `<input id="wnLx" type="text" maxlength="24" spellcheck="false" placeholder="${T('lensCtxPh')}" value="${own ? '' : lens.ctx}"></div>
         ${cur ? '' : `<p class="wn-note">${T('lensPick')}</p>`}`;
+      lensRes('');
     }
+    function lensRes(q) {
+      const r = $('#wnLres'); if (!r) return;
+      const l = q ? N.lensSearch(q, 14) : N.lensList().slice(0, 14);
+      r.innerHTML = (q ? '' : `<span class="wn-empty">${T('lensPopular')}</span>`) + (l.length ? l.map(c => `<button type="button" class="ex-chip${lens.concept === c.k ? ' on' : ''}" data-lc="${c.k}">${c.name[LI()]}</button>`).join('') : `<span class="wn-empty">${T('lensNoMatch')}</span>`);
+    }
+    $('#wnLens').addEventListener('input', e => { if (e.target.id === 'wnLq') lensRes(e.target.value); });
     $('#wnLens').addEventListener('click', e => {
       const lc = e.target.closest('[data-lc]'), lx = e.target.closest('[data-lx]');
       if (lc) { lens.concept = lc.dataset.lc; lens.sel = -1; sfx('tick'); lensBar(); refresh(); }

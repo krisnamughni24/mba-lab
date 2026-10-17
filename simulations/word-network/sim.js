@@ -3,6 +3,8 @@ MBALAB.sims.files('word-network', {
   scripts: [
     "data/swow.js",
     "data/lens.js",
+    "data/lens-2.js",
+    "data/lens-3.js",
     "engine/engine.js",
     "engine/lens.js",
     "i18n/strings.js",

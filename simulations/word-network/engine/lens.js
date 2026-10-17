@@ -36,6 +36,12 @@
     return c[side].map((it, i) => { const r = relevance(it, ctx); return { item: it, i, rel: r, score: Math.round((it.m / 3 * 0.55 + r * 0.45) * 100) / 100, hit: !!N.norm(ctx) && r >= 0.9 }; })
       .sort((a, b) => b.score - a.score || a.i - b.i);
   }
-  Object.assign(N, { lensList: list, lensGet: get, lensKeys: keys, lensRank: rank, lensRel: relevance, ctxTag: tagOf, CTX_CHOICES: CHOICES });
+  /* search the curated concepts by English key or by the name in any language; starts-with beats contains. [{k, name, cat}] */
+  function search(q, k) {
+    q = N.norm(q); const L = list(); if (!q) return L.slice(0, k || 12);
+    const sc = c => { const names = [c.k].concat(c.name).map(x => x.toLowerCase()); let best = 0; names.forEach(n => { if (n === q) best = Math.max(best, 4); else if (n.startsWith(q)) best = Math.max(best, 3); else if (n.split(/[\s-]+/).some(w => w.startsWith(q))) best = Math.max(best, 2); else if (n.includes(q)) best = Math.max(best, 1); }); return best; };
+    return L.map((c, i) => [sc(c), i, c]).filter(x => x[0]).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, k || 12).map(x => x[2]);
+  }
+  Object.assign(N, { lensSearch: search, lensList: list, lensGet: get, lensKeys: keys, lensRank: rank, lensRel: relevance, ctxTag: tagOf, CTX_CHOICES: CHOICES });
   if (typeof module !== 'undefined') module.exports = N;
 })();
