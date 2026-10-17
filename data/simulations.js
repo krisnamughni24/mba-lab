@@ -117,10 +117,10 @@ MBALAB.data.simulations = [
       "zh": "企业社会"
     },
     "description": {
-      "en": "Live a week at a company as Finance or IT, junior to senior. Choose where to go, who to trust and what to do.",
-      "id": "Jalani seminggu di perusahaan sebagai Finance atau IT, dari junior hingga senior. Pilih ke mana pergi, siapa dipercaya, dan apa yang dilakukan.",
-      "ja": "経理または ITとして、ジュニアからシニアまで会社の一週間を体験。行き先、信頼する相手、行動を自分で選ぶ。",
-      "zh": "以财务或IT身份，从初级到资深，体验公司的一周。自己选择去哪里、信任谁、做什么。"
+      "en": "An endless corporate career in seven roles, from junior to department head. Choose where to go, who to trust and what to do, and survive every review.",
+      "id": "Karier korporat tanpa batas dalam tujuh peran, dari junior hingga kepala departemen. Pilih ke mana pergi, siapa dipercaya, dan apa yang dilakukan, lalu lewati setiap evaluasi.",
+      "ja": "7つの職種で、ジュニアから部門長まで続く終わりなき会社員生活。行き先、信頼する相手、行動を選び、毎回の評価を乗り越える。",
+      "zh": "以七种岗位体验从初级到部门负责人的无尽职场生涯。选择去哪里、信任谁、做什么,并通过每一次考评。"
     }
   },
   {
