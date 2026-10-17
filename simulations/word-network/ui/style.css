@@ -1,0 +1,28 @@
+/* Word Network: local styles on top of shared/explorer.css. Everything is scoped under .wn. */
+.wn .wn-in{position:relative;display:flex;gap:8px;margin:0 0 8px}
+.wn .wn-in input{flex:1;min-width:0;padding:10px 14px;border-radius:12px;font-size:17px;border:1px solid var(--line,rgba(127,127,127,.4));background:var(--panel);color:var(--txt)}
+.wn .wn-in .ex-main{padding:10px 18px;border-radius:12px}
+.wn .wn-sug{position:absolute;left:0;top:100%;z-index:7;margin-top:4px;display:flex;flex-wrap:wrap;gap:6px;padding:8px;border-radius:12px;background:var(--panel);border:1px solid var(--line,rgba(127,127,127,.4));box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.wn .wn-sug[hidden]{display:none}
+.wn .wn-sel{display:flex;flex-wrap:wrap;gap:6px;min-height:34px;margin-bottom:8px}
+.wn .wn-tag{--c:var(--cy);display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 12px;border-radius:999px;border:1px solid var(--c);font-weight:800}
+.wn .wn-tag i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 6px var(--c)}
+.wn .wn-tag button{padding:0 8px;border-radius:999px;border:0;background:transparent;color:inherit;font-size:16px;line-height:1.4}
+.wn .wn-empty{opacity:.7;font-size:15.5px;align-self:center}
+.wn .wn-rows{display:grid;gap:5px;margin:8px 0 0;padding:0;list-style:none}
+.wn .wn-row{display:grid;grid-template-columns:minmax(80px,32%) 1fr auto;align-items:center;gap:8px;font-size:15.5px}
+.wn .wn-row button{justify-self:start;padding:3px 10px;border-radius:999px;font-weight:700}
+.wn .wn-bar{height:8px;border-radius:5px;background:rgba(127,127,127,.2);overflow:hidden}
+.wn .wn-bar b{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--cy),var(--mg))}
+.wn .wn-row em{font-style:normal;opacity:.75;font-size:14px;min-width:42px;text-align:right}
+.wn .wn-note{margin:8px 0 0;padding:8px 10px;border-radius:10px;background:rgba(127,127,127,.14);font-size:15.5px}
+.wn .wn-pairs{display:flex;flex-wrap:wrap;gap:8px}
+.wn .wn-pairs button{padding:6px 14px;border-radius:999px}
+.wn .wn-credit{margin:14px 0 20px;font-size:13px;opacity:.65;line-height:1.5}
+.wn canvas{cursor:pointer}
+@media(max-width:620px){.wn .wn-row{grid-template-columns:minmax(70px,38%) 1fr auto}}
+/* the result card sits under the map, not over it */
+.wn .ex-sw{width:100%}
+.wn .ex-card{position:relative;inset:auto;bottom:auto;right:auto;left:auto;top:auto;width:auto;max-height:none;margin-top:10px}
+.wn .wn-msg{margin:-2px 0 8px;min-height:0;font-size:15.5px;color:var(--am)}
+.wn .wn-msg:empty{display:none}

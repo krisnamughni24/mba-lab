@@ -66,6 +66,25 @@ MBALAB.data.simulations = [
     }
   },
   {
+    "id": "word-network",
+    "status": "live",
+    "template": "explorer",
+    "icon": "🕸️",
+    "category": "analytics",
+    "name": {
+      "en": "Word Network",
+      "id": "Jaringan Kata",
+      "ja": "ワード・ネットワーク",
+      "zh": "词语网络"
+    },
+    "description": {
+      "en": "Add one word, then two, then more, and watch how people's associations connect them.",
+      "id": "Tambahkan satu kata, lalu dua, lalu lebih, dan lihat bagaimana asosiasi orang menghubungkannya.",
+      "ja": "1語、2語と追加して、人々の連想がどうつながるかをネットワークで見よう。",
+      "zh": "先加一个词，再加两个、更多，看人们的联想如何把它们连起来。"
+    }
+  },
+  {
     "id": "tryout-mba",
     "status": "live",
     "template": "exam",

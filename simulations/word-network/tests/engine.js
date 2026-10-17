@@ -1,0 +1,19 @@
+/* Word Network engine test (plain node). Usage: node simulations/word-network/tests/engine.js */
+const assert = require('assert'), path = require('path'), fs = require('fs'), vm = require('vm');
+global.window = global;
+const dir = path.join(__dirname, '..');
+vm.runInThisContext(fs.readFileSync(path.join(dir, 'data/swow.js'), 'utf8'));
+const N = require(path.join(dir, 'engine/engine.js'));
+assert(N.load(MBALAB.wordnet.raw) > 10000, 'vocabulary loaded');
+assert(N.has('coffee') && N.has(' Coffee '), 'case/space tolerant lookup');
+assert(!N.has('zzzzqq'), 'unknown word');
+const nb = N.neighbors('price', 8); assert(nb.length === 8 && nb[0].s >= nb[7].s, 'neighbours sorted');
+assert(nb.some(x => x.w === 'cost'), 'price~cost'); assert(N.weight('price', 'cost') > 100, 'strong link');
+assert(N.weight('cost', 'price') === N.weight('price', 'cost'), 'undirected weight is symmetric');
+const br = N.bridges(['coffee', 'money'], 5); assert(br.length > 0 && br[0].hit === 2, 'coffee and money share a neighbour');
+assert(N.bridges(['coffee'], 5).length === 0, 'one word has no bridge');
+let seed = 7; const rng = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const q = N.quizTop(['coffee', 'price', 'brand'], rng); assert(q && q.options.length === 4 && q.options.includes(q.answer), 'quizTop shape');
+assert(new Set(q.options).size === 4, 'options unique');
+const b = N.quizBridge([['coffee', 'money'], ['customer', 'price']], rng); assert(b && b.options.includes(b.answer), 'quizBridge shape');
+console.log('word-network engine: OK');
