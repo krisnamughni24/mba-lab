@@ -51,6 +51,12 @@
     finalT: ['Final measures', 'Ukuran akhir', '最終指標', '最终指标'], logT: ['Your decisions', 'Keputusan Anda', 'あなたの決断', '你的决定'], conceptsT: ['Concepts you met', 'Konsep yang Anda temui', '出会ったコンセプト', '你遇到的概念'],
     again: ['Play again', 'Main lagi', 'もう一度', '再玩一次'], newRun: ['Change role or level', 'Ganti peran atau level', '職種・レベルを変える', '更换岗位或级别'],
     xpGain: ['+{n} XP', '+{n} XP', '+{n} XP', '+{n} XP'], barT: ['To be promoted you needed', 'Syarat promosi', '昇進の条件', '晋升所需'],
+    s_skill: ['Skill', 'Keahlian', 'スキル', '技能'], s_skill_d: ['How good you are at the craft. It fades if you do not practise.', 'Seberapa mahir Anda. Memudar jika tidak dilatih.', '仕事の腕前。練習しないと衰える。', '你的专业水平，不练习就会退步。'],
+    end_politician: ['The politician', 'Sang politikus', '政治家', '政客'], end_politician_d: ['You got the promotion, but the way you played it left some doubts about your integrity.', 'Anda mendapat promosi, tetapi cara bermain Anda menyisakan keraguan soal integritas.', '昇進は得たが、そのやり方に誠実さへの疑念が残った。', '你拿到了晋升，但手段让人对你的诚信心存疑虑。'],
+    end_mentor: ['The mentor', 'Sang mentor', 'メンター', '导师'], end_mentor_d: ['You missed the promotion bar, but the people you grew will carry your name further than a title.', 'Anda belum memenuhi syarat promosi, tetapi orang yang Anda bina akan membawa nama Anda lebih jauh dari sebuah jabatan.', '昇進の基準には届かなかったが、育てた人々が肩書き以上にあなたの名を広めてくれる。', '你没达到晋升线，但你培养的人会把你的名字传得比头衔更远。'],
+    valuesT: ['Your values profile', 'Profil nilai Anda', 'あなたの価値観プロフィール', '你的价值观画像'], valTop: ['Your strongest value was {v}.', 'Nilai terkuat Anda adalah {v}.', '最も強かった価値観は{v}です。', '你最突出的价值观是{v}。'],
+    histT: ['How your week went', 'Perjalanan minggu Anda', '一週間の推移', '这一周的走势'], prologueT: ['Your story begins', 'Cerita Anda dimulai', '物語の始まり', '你的故事开始'],
+    chapterT: ['New chapter', 'Bab baru', '新しい章', '新的篇章'], beginDay: ['Begin', 'Mulai', '始める', '开始'],
     srEnd: ['The week is over: {e}', 'Minggu berakhir: {e}', '一週間が終わった：{e}', '这一周结束了：{e}']
   };
   Object.keys(K).forEach(k => { ['en', 'id', 'ja', 'zh'].forEach((l, i) => { strings[l][k] = K[k][i]; }); });

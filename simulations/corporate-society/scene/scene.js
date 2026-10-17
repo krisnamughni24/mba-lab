@@ -4,6 +4,14 @@
   const root = typeof MBALAB !== 'undefined' ? MBALAB : (globalThis.MBALAB = globalThis.MBALAB || {});
   const AVATAR = { boss: '👩‍💼', senior: '👨‍💼', peer: '🧑‍💻', junior: '🧑‍🎓', other: '🧔', director: '🕴️' };
   const PLAYER = { finance: '💼', it: '💻' };
+  /* flat SVG people: skin, hair and clothes differ per colleague, the face follows how they feel about you */
+  const LOOK = { boss: ['#e0b08c', '#2b2230', '#6d4cff', 'f'], senior: ['#d8a67f', '#6b6b73', '#2f6f8f', 'm'], peer: ['#c98f6b', '#3a2a1c', '#2e9e83', 'm'], junior: ['#e8bd96', '#4a2f22', '#e0803a', 'f'], other: ['#b9835e', '#1d1d22', '#8a5a9e', 'm'], director: ['#dcb18f', '#cfcfd6', '#222a3a', 'm'], me: ['#e2b48e', '#2a2a30', '#3a7bd5', 'm'] };
+  function person(kind, mood) {
+    const L = LOOK[kind] || LOOK.me, sk = L[0], hr = L[1], cl = L[2], f = L[3] === 'f';
+    const mouth = mood === 'good' ? '<path d="M24 38q6 6 12 0" fill="none" stroke="#3a2020" stroke-width="2" stroke-linecap="round"/>' : mood === 'low' ? '<path d="M24 41q6-5 12 0" fill="none" stroke="#3a2020" stroke-width="2" stroke-linecap="round"/>' : '<path d="M25 39h10" fill="none" stroke="#3a2020" stroke-width="2" stroke-linecap="round"/>';
+    const brow = mood === 'low' ? '<path d="M20 25l8 3M40 25l-8 3" stroke="#3a2020" stroke-width="2" stroke-linecap="round"/>' : '';
+    return `<svg class="cs-fig ${mood}" viewBox="0 0 60 84" aria-hidden="true" focusable="false"><path d="M8 84v-16q0-14 22-14t22 14v16z" fill="${cl}"/><path d="M26 54l4 10 4-10z" fill="#fff" opacity=".85"/><rect x="26" y="46" width="8" height="9" rx="3" fill="${sk}"/>${f ? `<path d="M14 30q0-20 16-20t16 20v18q-4 4-8 0V30H22v18q-4 4-8 0z" fill="${hr}"/>` : ''}<ellipse cx="30" cy="30" rx="14" ry="16" fill="${sk}"/><path d="M15 28q0-17 15-17t15 17q-8-9-15-9t-15 9z" fill="${hr}"/><g class="eyes"><ellipse cx="24" cy="30" rx="2" ry="2.6" fill="#222"/><ellipse cx="36" cy="30" rx="2" ry="2.6" fill="#222"/></g>${brow}${mouth}</svg>`;
+  }
   /* each place: a few shapes on a 320 x 160 canvas (floor line at y = 118) */
   const ART = {
     desk: '<rect class="f" x="0" y="118" width="320" height="42"/><rect class="m" x="70" y="84" width="96" height="34" rx="3"/><rect class="a" x="86" y="46" width="64" height="38" rx="4"/><rect class="s" x="92" y="52" width="52" height="26" rx="2"/><rect class="m" x="112" y="84" width="12" height="8"/><rect class="m" x="196" y="96" width="30" height="22" rx="3"/><rect class="a" x="204" y="86" width="14" height="10" rx="2"/><circle class="a" cx="258" cy="62" r="14"/><rect class="m" x="256" y="76" width="4" height="42"/>',
@@ -18,9 +26,9 @@
   const mood = v => v < 25 ? 'low' : v < 60 ? 'ok' : 'good';
   function html(loc, slot, npc, o) {
     o = o || {};
-    const who = npc ? `<div class="cs-npc ${mood(o.rel || 50)}"><span class="av" aria-hidden="true">${AVATAR[npc] || '🙂'}</span><b>${o.name || ''}</b><small>${o.label || ''}</small></div>` : '';
-    return `<div class="cs-scene t${slot}">${bg(loc)}<div class="cs-tint"></div><div class="cs-me" aria-hidden="true"><span class="av">🙂</span><i>${PLAYER[o.role] || ''}</i></div>${who}<div class="cs-place">${o.place || ''}</div></div>`;
+    const who = npc ? `<div class="cs-npc ${mood(o.rel || 50)}"><span class="av" aria-hidden="true">${person(npc, mood(o.rel || 50))}</span><b>${o.name || ''}</b><small>${o.label || ''}</small></div>` : '';
+    return `<div class="cs-scene t${slot}">${bg(loc)}<div class="cs-tint"></div><div class="cs-me" aria-hidden="true"><span class="av">${person('me', o.me || 'ok')}</span><i>${PLAYER[o.role] || ''}</i></div>${who}<div class="cs-place">${o.place || ''}</div></div>`;
   }
-  root.corpScene = { html, AVATAR, bg };
+  root.corpScene = { html, AVATAR, bg, person };
   if (typeof module !== 'undefined') module.exports = root.corpScene;
 })();

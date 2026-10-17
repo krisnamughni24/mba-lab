@@ -119,3 +119,44 @@ body.still .cs-box{animation:none}
   .cs-pick,.cs-pick.three{grid-template-columns:1fr}
   .cs-scene{aspect-ratio:16/9}
 }
+
+/* ---- v2: figures, chapters, charts ---- */
+.cs-scene .av{border:0;background:none;box-shadow:none;border-radius:0;width:auto;height:auto;font-size:0}
+.cs-fig{height:clamp(74px,17vw,118px);width:auto;display:block;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35));transform-origin:50% 100%;animation:cs-bob 3.4s ease-in-out infinite}
+.cs-npc .cs-fig{animation-delay:-1.1s}
+.cs-npc.low .cs-fig{filter:drop-shadow(0 0 7px var(--rd))}.cs-npc.good .cs-fig{filter:drop-shadow(0 0 7px var(--gn))}.cs-npc.ok .cs-fig{filter:drop-shadow(0 0 5px var(--am))}
+.cs-fig .eyes{animation:cs-blink 5s infinite;transform-origin:30px 30px}
+@keyframes cs-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px) scale(1.01)}}
+@keyframes cs-blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.cs-stage.shake{animation:cs-shake .45s}
+@keyframes cs-shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.cs-chip{animation:cs-pop .5s cubic-bezier(.2,1.6,.4,1) both}.cs-chip:nth-child(2){animation-delay:.06s}.cs-chip:nth-child(3){animation-delay:.12s}.cs-chip:nth-child(4){animation-delay:.18s}.cs-chip:nth-child(5){animation-delay:.24s}
+@keyframes cs-pop{0%{transform:translateY(8px) scale(.6);opacity:0}100%{transform:none;opacity:1}}
+.cs-stats{grid-template-columns:repeat(6,minmax(0,1fr))}
+.cs-chapter{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--cy) 16%,var(--panel)),var(--panel));border:1px solid var(--edge);margin:4px 0 10px;animation:cs-pop .6s both}
+.cs-chapter.sub{opacity:.95}
+.cs-chapter .e{font-size:42px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.cs-chapter small{color:var(--txt2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12.5px}
+.cs-chapter h3{margin:2px 0 4px}
+.cs-viz{display:grid;grid-template-columns:minmax(200px,260px) 1fr;gap:14px;align-items:center;margin:6px 0 14px}
+.cs-radar{width:100%;max-width:260px}
+.cs-radar .grid polygon,.cs-radar .grid line{fill:none;stroke:var(--edge);stroke-width:1}
+.cs-radar .shape{fill:color-mix(in srgb,var(--cy) 35%,transparent);stroke:var(--cy);stroke-width:2;stroke-linejoin:round;animation:cs-grow .9s ease-out both;transform-origin:110px 100px}
+.cs-radar text{font-size:15px;fill:var(--txt)}
+@keyframes cs-grow{from{transform:scale(.2);opacity:0}to{transform:none;opacity:1}}
+.cs-top{font-weight:800;margin:0 0 8px}
+.cs-vals{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cs-vals li{display:grid;grid-template-columns:auto 1fr;gap:0 8px;align-items:center}
+.cs-vals li i{grid-column:2;height:6px;border-radius:4px;background:linear-gradient(90deg,var(--cy) var(--w),color-mix(in srgb,var(--txt) 14%,transparent) var(--w))}
+.cs-vals li small{grid-column:1/3;color:var(--txt2);font-size:13px}
+.cs-hist{width:100%;max-width:520px;display:block;background:var(--panel);border:1px solid var(--edge);border-radius:12px}
+.cs-hist .grid line{stroke:var(--edge);stroke-width:1;stroke-dasharray:3 4}.cs-hist .grid .danger{stroke:var(--rd)}
+.cs-hist polyline{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.cs-hist .l0{stroke:var(--cy)}.cs-hist .l1{stroke:var(--am)}.cs-hist .l2{stroke:var(--gn)}.cs-hist .l3{stroke:var(--vi,#a98bff)}
+
+.cs-leg{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 12px;font-size:13.5px;color:var(--txt2)}
+@media (prefers-reduced-motion:reduce){.cs-fig,.cs-fig .eyes,.cs-chip,.cs-chapter,.cs-radar .shape{animation:none}}
+@media (max-width:640px){.cs-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.cs-viz{grid-template-columns:1fr}.cs-chapter .e{font-size:34px}}
+@keyframes cs-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.cs-hist polyline{animation:none!important;stroke-dashoffset:0}}
+@media (max-width:640px){.cs-stat{padding:6px 8px}.cs-stat .n{font-size:12.5px;min-width:0}.cs-stat b{font-size:16px}.cs-stat .n em{font-size:11px}}

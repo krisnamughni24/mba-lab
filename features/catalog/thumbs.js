@@ -34,6 +34,14 @@
     '<path class="a k-sx" d="M10 84q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0"/><path class="a o k-sx" style="--d:-1s" d="M10 92q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0"/>' +
     '<path class="fc" d="M96 18h2v2h-2z"/>');
 
+  T['corporate-society'] = S(
+    '<rect class="g" x="14" y="62" width="172" height="2"/><rect class="fg" x="18" y="30" width="26" height="32" rx="2"/><rect class="fg" x="50" y="18" width="30" height="44" rx="2"/><rect class="fg" x="86" y="36" width="22" height="26" rx="2"/>' +
+    [[24, 38], [30, 46], [58, 26], [66, 34], [72, 44], [92, 44]].map((p, i) => '<rect class="fc k-blink" style="--d:' + (i * .5) + 's" x="' + p[0] + '" y="' + p[1] + '" width="5" height="5"/>').join('') +
+    '<circle class="fa k-bob" cx="132" cy="44" r="9"/><path class="fa k-bob" d="M118 70q0-14 14-14t14 14z"/>' +
+    '<circle class="fb k-bob" style="--d:.6s" cx="166" cy="46" r="8"/><path class="fb k-bob" style="--d:.6s" d="M154 70q0-12 12-12t12 12z"/>' +
+    '<rect class="a" x="116" y="12" width="34" height="18" rx="6"/><path class="a" d="M124 30l-2 7 8-7"/><path class="tk k-draw" pathLength="1" d="M122 21h22"/>' +
+    '<rect class="b k-up" x="156" y="14" width="30" height="16" rx="6"/><path class="b" d="M178 30l3 6-9-6"/><circle class="fc k-pulse" cx="165" cy="22" r="2"/><circle class="fc k-pulse" style="--d:.2s" cx="171" cy="22" r="2"/><circle class="fc k-pulse" style="--d:.4s" cx="177" cy="22" r="2"/>' +
+    '<path class="c k-draw" pathLength="1" d="M14 90L50 84 86 88 122 78 158 82 186 72"/><circle class="fc k-ride" style="offset-path:path(\'M14 90L50 84 86 88 122 78 158 82 186 72\');--d:0s" cx="0" cy="0" r="3.5"/>');
   T['word-network'] = S(
     '<path class="g" d="M52 40L26 22M52 40L30 66M52 40L68 18M52 40L72 76M148 60L176 28M148 60L172 76M148 60L134 24M148 60L128 82"/>' +
     [[26, 22], [30, 66], [68, 18], [72, 76], [176, 28], [172, 76], [134, 24], [128, 82]].map((p, i) => '<circle class="fg k-bob" style="--d:' + (i * .35) + 's" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>').join('') +
