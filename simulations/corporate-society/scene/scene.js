@@ -3,7 +3,7 @@
 (function () {
   const root = typeof MBALAB !== 'undefined' ? MBALAB : (globalThis.MBALAB = globalThis.MBALAB || {});
   const AVATAR = { boss: '👩‍💼', senior: '👨‍💼', peer: '🧑‍💻', junior: '🧑‍🎓', other: '🧔', director: '🕴️' };
-  const PLAYER = { finance: '💼', it: '💻' };
+  const PLAYER = { finance: '💼', it: '💻', marketing: '📣', hr: '🫶', ops: '📦', sales: '🤝', legal: '⚖️' };
   /* flat SVG people: skin, hair and clothes differ per colleague, the face follows how they feel about you */
   const LOOK = { boss: ['#e0b08c', '#2b2230', '#6d4cff', 'f'], senior: ['#d8a67f', '#6b6b73', '#2f6f8f', 'm'], peer: ['#c98f6b', '#3a2a1c', '#2e9e83', 'm'], junior: ['#e8bd96', '#4a2f22', '#e0803a', 'f'], other: ['#b9835e', '#1d1d22', '#8a5a9e', 'm'], director: ['#dcb18f', '#cfcfd6', '#222a3a', 'm'], me: ['#e2b48e', '#2a2a30', '#3a7bd5', 'm'] };
   function person(kind, mood) {

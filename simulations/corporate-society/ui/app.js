@@ -4,8 +4,8 @@ MBALAB.sims.define('corporate-society', {
   mount(host) {
     const C = MBALAB.corp, D = MBALAB.corpContent, Sc = MBALAB.corpScene, $ = s => host.querySelector(s), esc = MBALAB.util.esc, sfx = MBALAB.util.sfx;
     const LI = () => Math.max(0, ['en', 'id', 'ja', 'zh'].indexOf(MBALAB.i18n.get())), X = a => a[LI()];
-    const KEY = 'mbalab-corporate-society', RANKS = [0, 60, 160, 300], ROLES = ['finance', 'it'], LEVELS = ['junior', 'mid', 'senior'];
-    const RICON = { finance: '💼', it: '💻' }, LICON = { junior: '🌱', mid: '🔧', senior: '🏛️' }, PICON = { desk: '🖥️', pantry: '☕', meeting: '📊', floor: '🏢', lobby: '🛗', after: '🌆' };
+    const KEY = 'mbalab-corporate-society', RANKS = [0, 60, 160, 300], ROLES = C.ROLES, LEVELS = C.LADDER;
+    const RICON = { finance: '💼', it: '💻', marketing: '📣', hr: '🫶', ops: '📦', sales: '🤝', legal: '⚖️' }, LICON = { junior: '🌱', mid: '🔧', senior: '🏛️', head: '👑' }, PICON = { desk: '🖥️', pantry: '☕', meeting: '📊', floor: '🏢', lobby: '🛗', after: '🌆' };
     const SICON = { perf: '📈', rep: '🌟', energy: '⚡', integ: '🧭', net: '🤝', skill: '🛠️' };
     let me = { xp: 0, best: {} };
     try { const o = JSON.parse(localStorage.getItem(KEY) || '{}'); if (o && typeof o === 'object') me = { xp: +o.xp || 0, best: o.best && typeof o.best === 'object' ? o.best : {} }; } catch (e) {}
@@ -14,7 +14,7 @@ MBALAB.sims.define('corporate-society', {
     const cloud = MBALAB.cloud('corporate-society', { read: () => me, write: o => { me = o; save(); }, merge: maxMerge, refresh: () => { if (phase === 'menu') menu(); } });
     const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
 
-    let sel = { role: 'finance', level: 'junior', trait: 'steady', goal: 'promo' }, s = null, ev = null, rec = null, pick = -1, phase = 'menu', burnSeen = 0, scored = null;
+    let retireArm = false, sel = { role: 'finance', level: 'junior', trait: 'steady', goal: 'promo' }, s = null, ev = null, rec = null, pick = -1, phase = 'menu', burnSeen = 0, scored = null;
     const NAMES = D.names, nameOf = k => NAMES[k];
     /* {boss} etc. in a story text become the colleague's name */
     const sub = txt => String(txt).replace(/\{(\w+)\}/g, (m, k) => NAMES[k] || m);
@@ -26,7 +26,7 @@ MBALAB.sims.define('corporate-society', {
     function menu() {
       phase = 'menu'; $('#csPlay').hidden = true; $('#csSelect').hidden = false;
       const r = rankOf(me.xp), nx = RANKS[r + 1], pc = nx ? Math.round((me.xp - RANKS[r]) / (nx - RANKS[r]) * 100) : 100;
-      const best = (ro, lv) => me.best[ro + '-' + lv] || 0, pv = C.create(sel.role, sel.level, 1, { trait: sel.trait, goal: sel.goal }), bar = C.BAR[sel.level];
+      const best = (ro, lv) => me.best[ro + '-' + lv] || 0, pv = C.create(sel.role, sel.level, 1, { trait: sel.trait, goal: sel.goal }), bar = C.barOf(pv);
       const TICON = { analyst: '🔬', charmer: '✨', steady: '🌿', maverick: '🔥' }, GICON = { promo: '🏆', network: '🕸️', integrity: '⚖️', balance: '🌗', mentor: '🌱' };
       const card = (a, v, on, ic, name, desc, extra) => `<button type="button" class="cs-card${on ? ' on' : ''}" data-a="${a}" data-v="${v}" aria-pressed="${on}"><span class="ic" aria-hidden="true">${ic}</span><b>${name}</b><span class="d">${desc}</span>${extra || ''}</button>`;
       const mini = k => { const v = Math.round(pv.st[k]), need = bar[k]; return `<div class="cs-mini"><span>${SICON[k]} ${t('s_' + k)}</span><i class="b"><i style="width:${v}%"></i>${need ? `<u style="left:${need}%" title="${need}"></u>` : ''}</i><b>${v}</b></div>`; };
@@ -34,9 +34,9 @@ MBALAB.sims.define('corporate-society', {
         <div class="sc-rank"><span class="sc-rk">${t('rk' + r)}</span><b>${t('xpLbl', { n: me.xp })}</b><div class="sc-xp"><i style="width:${pc}%"></i></div><small>${nx ? t('xpNext', { n: nx }) : t('xpMax')}</small></div></div>
         <div class="cs-wiz"><div class="cs-steps">
         <h3 class="sc-h3">${t('pickRole')}</h3>
-        <div class="cs-pick">${ROLES.map(ro => card('role', ro, sel.role === ro, `<span class="fig">${Sc.person(ro === 'finance' ? 'senior' : 'peer', 'good')}<em>${RICON[ro]}</em></span>`, t('role_' + ro), t('role_' + ro + '_d'), `<small class="k">${t('role_' + ro + '_k')}</small>`)).join('')}</div>
+        <div class="cs-pick roles">${ROLES.map((ro, ri) => card('role', ro, sel.role === ro, `<span class="fig">${Sc.person(['senior', 'peer', 'junior', 'boss', 'other', 'director', 'me'][ri % 7], 'good')}<em>${RICON[ro]}</em></span>`, t('role_' + ro), t('role_' + ro + '_d'), `<small class="k">${t('role_' + ro + '_k')}</small>`)).join('')}</div>
         <h3 class="sc-h3">${t('pickLevel')}</h3>
-        <div class="cs-pick three">${LEVELS.map(lv => card('level', lv, sel.level === lv, LICON[lv], t('lvl_' + lv), t('lvl_' + lv + '_d'), `<small class="k">${t('best')}: ${stars(best(sel.role, lv))}</small>`)).join('')}</div>
+        <div class="cs-pick four">${LEVELS.map(lv => card('level', lv, sel.level === lv, LICON[lv], t('lvl_' + lv), t('lvl_' + lv + '_d'), `<small class="k">${t('best')}: ${stars(best(sel.role, lv))}</small>`)).join('')}</div>
         <h3 class="sc-h3">${t('step3')}</h3>
         <div class="cs-pick four">${Object.keys(C.TRAITS).map(k => card('trait', k, sel.trait === k, TICON[k], t('tr_' + k), t('tr_' + k + '_d'), `<small class="k">${sub(t('tr_' + k + '_k'))}</small>`)).join('')}</div>
         <h3 class="sc-h3">${t('step4')}</h3>
@@ -56,7 +56,7 @@ MBALAB.sims.define('corporate-society', {
 
     /* ---------- run ---------- */
     function start() { s = C.create(sel.role, sel.level, 1 + Math.floor(Math.random() * 1e6), { trait: sel.trait, goal: sel.goal }); ev = null; rec = null; pick = -1; burnSeen = 0; scored = null; $('#csSelect').hidden = true; $('#csPlay').hidden = false; $('#csPlay').classList.remove('ended'); phase = 'prologue'; render(); sfx('open'); host.querySelector('#csScroll').scrollTop = 0; }
-    const dayLbl = () => t('dayN', { n: C.day(s), m: C.DAYS }) + ' · ' + t('slot' + C.slot(s));
+    const dayLbl = () => t('qtrN', { q: s.quarters + 1 }) + ' · ' + t('dayN', { n: C.day(s) }) + ' · ' + t('slot' + C.slot(s));
     function hud() {
       $('#csHud').innerHTML = `<button type="button" class="sc-back" data-a="menu">← ${t('toMenu')}</button><b class="sc-lt">${RICON[s.role]} ${t('role_' + s.role)} · ${LICON[s.level]} ${t('lvl_' + s.level)}</b>${phase === 'end' ? '' : `<span class="sc-chip">${esc(dayLbl())}</span>`}${goalChip()}`;
     }
@@ -67,8 +67,8 @@ MBALAB.sims.define('corporate-society', {
     }
     /* the week at a glance: eight chapter dots and the three moments of today */
     function agenda() {
-      const d = C.day(s), CH = D.chapters || [], slotIc = ['🌅', '☀️', '🌆'];
-      const dots = CH.map((c, i) => `<li class="${i + 1 < d ? 'past' : i + 1 === d ? 'now' : ''}" title="${esc(X(c.t))}"><span aria-hidden="true">${c.e}</span><b>${i + 1}</b></li>`).join('');
+      const d = C.day(s), dq = (d - 1) % C.DAYS + 1, CH = D.chapters || [], slotIc = ['🌅', '☀️', '🌆'];
+      const dots = CH.map((c, i) => `<li class="${i + 1 < dq ? 'past' : i + 1 === dq ? 'now' : ''}" title="${esc(X(c.t))}"><span aria-hidden="true">${c.e}</span><b>${i + 1}</b></li>`).join('');
       const today = [0, 1, 2].map(i => { const turn = (d - 1) * C.SLOTS + i, lg = s.log.filter(x => x.turn === turn).pop(), ee = lg && D.events.find(y => y.id === lg.id), cur = i === C.slot(s) && phase !== 'end';
         return `<li class="${lg ? 'done' : cur ? 'now' : ''}"><span aria-hidden="true">${slotIc[i]}</span><b>${t('slot' + i)}</b><small>${ee ? esc(sub(X(ee.t))) : cur ? '…' : ''}</small></li>`; }).join('');
       $('#csAgenda').innerHTML = `<ol class="days" aria-label="${esc(t('agendaT'))}">${dots}</ol><ol class="slots">${today}</ol>`;
@@ -88,7 +88,7 @@ MBALAB.sims.define('corporate-society', {
       const b = $('#csBox');
       if (phase === 'move') {
         say(t('whereTo'));
-        b.innerHTML = `<h3>${t('whereTo')}</h3><p class="cs-sub">${t('whereToSub')}</p><div class="cs-locs">${C.locsNow(s).map(l => `<button type="button" class="cs-loc" data-a="loc" data-v="${l}"><span aria-hidden="true">${PICON[l]}</span><b>${t('loc_' + l)}</b></button>`).join('')}</div>`;
+        b.innerHTML = `<h3>${t('whereTo')}</h3><p class="cs-sub">${t('whereToSub')}</p><div class="cs-locs">${C.locsNow(s).map(l => `<button type="button" class="cs-loc" data-a="loc" data-v="${l}"><span aria-hidden="true">${PICON[l]}</span><b>${t('loc_' + l)}</b></button>`).join('')}</div><div class="cs-retire"><button type="button" class="sc-btn ghost${retireArm ? ' arm' : ''}" data-a="retire">${retireArm ? t('retireSure') : t('retire')}</button></div>`;
       } else if (phase === 'event') {
         say(X(ev.t));
         b.innerHTML = `${ev.free ? `<span class="cs-tag ok">${t('reviewTag')}</span>` : ''}<h3>${esc(sub(X(ev.t)))}</h3><p class="cs-say">${esc(sub(X(ev.d)))}</p><div class="cs-opts">${ev.opts.map((o, i) => `<button type="button" class="cs-opt" data-a="opt" data-i="${i}"><span class="k">${'ABCD'[i]}</span><span>${esc(sub(X(o.t)))}</span>${o.g ? `<em>${t('risky')}</em>` : ''}</button>`).join('')}</div>`;
@@ -100,11 +100,16 @@ MBALAB.sims.define('corporate-society', {
           <div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('cont')}</button></div>`;
       } else if (phase === 'prologue') {
         const P = D.prologue, ch = C.chapter(s); say(t('prologueT'));
-        b.innerHTML = `<div class="cs-chapter"><span class="e" aria-hidden="true">📖</span><div><small>${t('prologueT')}</small><h3>${esc(X(P.role[s.role]))}</h3><p class="cs-say">${esc(X(P.level[s.level]))}</p></div></div>${ch ? `<div class="cs-chapter sub"><span class="e" aria-hidden="true">${ch.e}</span><div><small>${esc(t('dayN', { n: 1, m: C.DAYS }))}</small><h3>${esc(X(ch.t))}</h3><p class="cs-say">${esc(X(ch.s))}</p></div></div>` : ''}<div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('beginDay')}</button></div>`;
-      } else if (phase === 'day') {
+        b.innerHTML = `<div class="cs-chapter"><span class="e" aria-hidden="true">📖</span><div><small>${t('prologueT')}</small><h3>${esc(X(P.role[s.role]))}</h3><p class="cs-say">${esc(X(P.level[s.level]))}</p></div></div>${ch ? `<div class="cs-chapter sub"><span class="e" aria-hidden="true">${ch.e}</span><div><small>${esc(t('dayN', { n: 1 }))}</small><h3>${esc(X(ch.t))}</h3><p class="cs-say">${esc(X(ch.s))}</p></div></div>` : ''}<div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('beginDay')}</button></div>`;
+      } else if (phase === 'day' || phase === 'quarter') {
         const ch = C.chapter(s); say(t('newDay'));
-        b.innerHTML = `${recap()}${ch ? `<div class="cs-chapter"><span class="e" aria-hidden="true">${ch.e}</span><div><small>${esc(t('chapterT'))} · ${esc(t('dayN', { n: C.day(s), m: C.DAYS }))}</small><h3>${esc(X(ch.t))}</h3><p class="cs-say">${esc(X(ch.s))}</p></div></div>` : `<h3>${t('newDay')} · ${esc(t('dayN', { n: C.day(s), m: C.DAYS }))}</h3>`}<p class="cs-sub">${t('newDaySub')}</p><div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('cont')}</button></div>`;
+        b.innerHTML = `${phase === 'quarter' ? qrCard() : ''}${recap()}${ch ? `<div class="cs-chapter"><span class="e" aria-hidden="true">${ch.e}</span><div><small>${esc(t('chapterT'))} · ${esc(t('dayN', { n: C.day(s) }))}</small><h3>${esc(X(ch.t))}</h3><p class="cs-say">${esc(X(ch.s))}</p></div></div>` : `<h3>${t('newDay')} · ${esc(t('dayN', { n: C.day(s) }))}</h3>`}<p class="cs-sub">${t('newDaySub')}</p><div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('cont')}</button></div>`;
       } else if (phase === 'end') endScreen(b);
+    }
+    function qrCard() {
+      const r = s.qr; if (!r) return '';
+      const cls = r.ok ? 'ok' : 'bad', head = r.ok ? (r.top ? t('qrTop') : t('qrPass')) : t('qrWarn'), sub = r.ok ? (r.top ? t('qrTopSub', { n: s.legacy || 0 }) : t('qrPassSub', { lvl: t('lvl_' + r.to) })) : t('qrWarnSub');
+      return `<div class="cs-qr ${cls}"><span class="e" aria-hidden="true">${r.ok ? (r.top ? '🏅' : '🎉') : '⚠️'}</span><div><small>${t('qrT', { q: s.quarters })}</small><h3>${head}</h3><p class="cs-say">${esc(sub)}</p>${r.ok && !r.top ? `<p class="cs-trans"><b>${LICON[r.from]} ${t('lvl_' + r.from)}</b> → <b>${LICON[r.to]} ${t('lvl_' + r.to)}</b></p>` : ''}<small>${t('qrNext')}</small></div></div>`;
     }
     function recap() {
       const d = C.day(s) - 1, t0 = (d - 1) * C.SLOTS, a = s.hist.find(h => h.turn === t0), z = s.hist[s.hist.length - 1]; if (!a || d < 1) return '';
@@ -134,7 +139,7 @@ MBALAB.sims.define('corporate-society', {
     }
 
     function endScreen(b) {
-      const o = s.over, sc = scored, conc = [...new Set(s.log.map(x => (D.events.find(e => e.id === x.id) || {}).c).filter(Boolean))], bar = C.BAR[s.level];
+      const o = s.over, sc = scored, conc = [...new Set(s.log.map(x => (D.events.find(e => e.id === x.id) || {}).c).filter(Boolean))], bar = C.barOf(s);
       say(t('srEnd', { e: t('end_' + o) }));
       const barRows = Object.keys(bar).map(k => { const v = s.st[k] !== undefined ? s.st[k] : s.rel[k], ok = v >= bar[k]; return `<li class="${ok ? 'ok' : 'no'}"><span aria-hidden="true">${ok ? '✓' : '✗'}</span>${t('s_' + k)}: ${Math.round(v)} / ${bar[k]}</li>`; }).join('');
       const logRows = s.log.map(x => { const e = D.events.find(y => y.id === x.id), op = e.opts[x.opt]; return `<li><b>${esc(sub(X(e.t)))}</b><span>${esc(sub(X(op.t)))}${x.branch ? ` · <em class="${x.branch}">${t(x.branch === 'ok' ? 'gambleOk' : 'gambleBad')}</em>` : ''}</span></li>`; }).join('');
@@ -143,6 +148,7 @@ MBALAB.sims.define('corporate-society', {
         <p class="cs-goalres ${sc.goalDone ? 'ok' : ''}">${GICON2[s.goal]} <b>${t('gl_' + s.goal)}</b> — ${sc.goalDone ? t('goalDone') : t('goalMiss')}</p>
         <h3>${t('valuesT')}</h3>${radar()}
         <h3>${t('histT')}</h3>${history()}
+        <p class="cs-career">${LICON[s.level]} <b>${t('lvl_' + s.level)}</b> · ${t('careerLine', { d: C.day(s), q: s.quarters, p: s.promos })}</p>
         <h3>${t('barT')}</h3><ul class="cs-bar">${barRows}</ul>
         <h3>${t('logT')}</h3><ol class="cs-log">${logRows}</ol>
         ${conc.length ? `<h3>${t('conceptsT')}</h3><div class="cs-conc">${conc.map(c => `<div><b>${esc(D.concepts[c][LI()])}</b><p>${esc(D.concepts[c][4 + LI()])}</p></div>`).join('')}</div>` : ''}
@@ -159,13 +165,14 @@ MBALAB.sims.define('corporate-society', {
     host.addEventListener('click', e => {
       const a = e.target.closest('[data-a]'); if (!a) return; const act = a.dataset.a, v = a.dataset.v; sfx('tick');
       if (act === 'role') { sel.role = v; menu(); } else if (act === 'level') { sel.level = v; menu(); } else if (act === 'trait') { sel.trait = v; menu(); } else if (act === 'goal') { sel.goal = v; menu(); } else if (act === 'start' || act === 'again') start(); else if (act === 'menu') menu();
-      else if (act === 'loc' && phase === 'move') { ev = C.visit(s, v); rec = null; pick = -1; phase = 'event'; render(); }
+      else if (act === 'retire' && phase === 'move') { if (!retireArm) { retireArm = true; render(); } else { retireArm = false; C.retire(s); finish(); } }
+      else if (act === 'loc' && phase === 'move') { retireArm = false; ev = C.visit(s, v); rec = null; pick = -1; phase = 'event'; render(); }
       else if (act === 'opt' && phase === 'event') { pick = +a.dataset.i; burnSeen = s.burn; rec = C.choose(s, ev, pick); phase = 'result'; render(); if (rec.branch === 'bad') { const g = $('#csStage'); g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake'); } sfx((rec.fx.integ || 0) < 0 ? 'lose' : 'tick'); }
-      else if (act === 'cont' && (phase === 'result' || phase === 'day' || phase === 'prologue')) {
-        if (phase === 'day' && C.day(s) === 4 && !s.flags.reviewed) { s.flags.reviewed = true; ev = C.review(s); rec = null; pick = -1; phase = 'event'; render(); return; }
-        if (phase === 'day' || phase === 'prologue') { phase = 'move'; render(); return; }
+      else if (act === 'cont' && (phase === 'result' || phase === 'day' || phase === 'prologue' || phase === 'quarter')) {
+        if ((phase === 'day' || phase === 'quarter') && (C.day(s) - 1) % C.DAYS === 3 && s.flags.reviewed !== C.day(s)) { s.flags.reviewed = C.day(s); ev = C.review(s); rec = null; pick = -1; phase = 'event'; render(); return; }
+        if (phase === 'day' || phase === 'prologue' || phase === 'quarter') { phase = 'move'; render(); return; }
         if (ev && ev.free) { phase = 'move'; render(); return; }
-        const r = C.next(s); if (r === 'end') finish(); else if (r === 'day') { phase = 'day'; render(); } else { phase = 'move'; render(); }
+        const r = C.next(s); if (r === 'end') finish(); else if (r === 'day' || r === 'quarter') { phase = r; render(); try { $('#csBox').scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {} } else { phase = 'move'; render(); }
       }
     });
     menu();
