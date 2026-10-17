@@ -4,12 +4,13 @@ MBALAB.sims.define('word-network', {
   <header class="sk-top ex-top">
     <button class="sk-back ex-back" data-sim-back><span data-i18n="simBack">← Home</span></button>
     <h1 data-i18n="title">Word Network</h1>
-    <div class="ex-modes" role="group"><button type="button" id="wnExp" class="on"><span data-i18n="modeExp"></span></button><button type="button" id="wnQz"><span data-i18n="modeQz"></span></button></div>
+    <div class="ex-modes" role="group"><button type="button" id="wnExp" class="on"><span data-i18n="modeExp"></span></button><button type="button" id="wnPos"><span data-i18n="modePos"></span></button><button type="button" id="wnNeg"><span data-i18n="modeNeg"></span></button><button type="button" id="wnQz"><span data-i18n="modeQz"></span></button></div>
   </header>
   <div class="sk-scroll ex-scroll" id="wnScroll">
     <div class="ex-wrap">
       <div class="ex-bar"><span class="ex-prog" id="wnProg"></span><div class="ex-chips" id="wnChips"></div></div>
       <form class="wn-in" id="wnForm" autocomplete="off"><input id="wnInput" type="text" maxlength="30" spellcheck="false" data-ia="placeholder=ph,aria-label=ph"><button type="submit" class="ex-main" data-i18n="add">Add</button><div class="wn-sug" id="wnSug" hidden></div></form>
+      <div class="wn-lens" id="wnLens" hidden></div>
       <p class="wn-msg" id="wnMsg"></p>
       <div class="wn-sel" id="wnSel"></div>
       <div class="ex-sw"><div class="ex-stage" id="wnStage">

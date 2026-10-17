@@ -56,6 +56,8 @@ apps-script/Code.gs   Google Apps Script that saves ideas to Drive
 | BUMN Explorer: 3D builders for the second wave | `simulations/bumn-explorer/scene/buildings2.js` |
 | BUMN Explorer: Danantara guide facts (legal names, key figures, why it matters, fact-check notes, subsidiary counts; 4 languages) | `simulations/bumn-explorer/data/guide.js` |
 | Word Network: association engine (neighbours, bridges, quiz generators; pure logic) | `simulations/word-network/engine/engine.js` |
+| Word Network: curated benefits / trade-offs per concept (15 concepts x 5 + 5, 4 languages, context tags) | `simulations/word-network/data/lens.js` |
+| Word Network: lens engine (context relevance and ranking; pure logic) | `simulations/word-network/engine/lens.js` |
 | Word Network: SWOW-EN data (generated; licence notes in `docs/DATA-SOURCES.md`) | `simulations/word-network/data/swow.js`, `tools/build-swow.py` |
 | BUMN Explorer: second guide pass (figures, value, fact-check notes for Healthcare, Plantation, Telecom, Insurance, Tourism, Survey, Infrastructure, Minerals) | `simulations/bumn-explorer/data/guide2.js` |
 | BUMN Explorer: guide alignment (15 sectors, parent/subsidiary flags, removed and added companies with positions) | `simulations/bumn-explorer/data/danantara.js` |

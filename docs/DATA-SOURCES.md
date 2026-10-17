@@ -12,3 +12,7 @@
   teaching and research and carries responsibility for that choice. If the site is made commercial, or you want to be fully clear of the ND
   clause, ask the SWOW team for written permission or replace the file with a self-made data set.
 - Language: English only. The interface is translated, the words are not.
+
+## Word Network: curated benefits and trade-offs
+
+- File: `simulations/word-network/data/lens.js`. Written by hand (15 business concepts, 5 benefits and 5 trade-offs each, 4 languages). It is the author's teaching judgement, not measured data, and is not derived from SWOW; SWOW is only used to score a free-typed context word against each item's anchor word.

@@ -17,3 +17,16 @@ const q = N.quizTop(['coffee', 'price', 'brand'], rng); assert(q && q.options.le
 assert(new Set(q.options).size === 4, 'options unique');
 const b = N.quizBridge([['coffee', 'money'], ['customer', 'price']], rng); assert(b && b.options.includes(b.answer), 'quizBridge shape');
 console.log('word-network engine: OK');
+/* ---- lens (curated positives / negatives and the context word) ---- */
+vm.runInThisContext(fs.readFileSync(path.join(dir, 'data/lens.js'), 'utf8'));
+require(path.join(dir, 'engine/lens.js'));
+assert(N.lensKeys().length === 15, '15 curated concepts');
+N.lensList().forEach(c => ['pos', 'neg'].forEach(s => { assert(c[s].length === 5, c.k + ' ' + s + ' has 5 items'); c[s].forEach(i => { assert(i.l.length === 4 && i.e.length === 4 && i.l.every(Boolean) && i.e.every(Boolean), c.k + ' item has 4 languages'); assert(i.m >= 1 && i.m <= 3, 'importance 1-3'); }); }));
+assert(N.lensGet(' Growth ').k === 'growth' && !N.lensGet('zzz'), 'concept lookup');
+const plain = N.lensRank('growth', 'neg', ''), withBank = N.lensRank('growth', 'neg', 'bank');
+assert(plain.length === 5 && plain.every(x => x.rel === 0.5 && !x.hit), 'no context = neutral relevance');
+assert(withBank[0].hit && withBank[0].item.tg.includes('fin'), 'bank lifts finance-tagged items to the top');
+assert(N.lensRank('growth', 'pos', 'bank').filter(x => x.hit).length >= 2, 'several benefits are tagged for finance');
+assert(N.ctxTag('Hospital') === 'health' && N.ctxTag('xyz') === '', 'context tag lookup');
+const free = N.lensRank('speed', 'pos', 'children'); assert(free.length === 5 && free.every(x => x.score >= 0 && x.score <= 1), 'free context word scores stay in range');
+console.log('word-network lens: OK');

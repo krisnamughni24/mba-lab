@@ -26,7 +26,7 @@ Interactive business simulations over an animated 3D Jakarta (day and night), in
 | Game | **BATNA: Patience** | Negotiation |
 | Game | **DISC Crisis Room Test** | Leadership style under pressure |
 | Explorer | **BUMN Explorer** | 54 Danantara-linked state firms (plus subsidiary landmarks) in a 3D city, with a fact-check quiz. Developer: 077 - M. Zildjian Laxamana |
-| Explorer | **Word Network** | Add one word, then two or more, and watch how people's word associations connect them (SWOW-EN data, see `docs/DATA-SOURCES.md`), with a predict-the-association quiz. |
+| Explorer | **Word Network** | Add one word, then two or more, and watch how people's word associations connect them (SWOW-EN data, see `docs/DATA-SOURCES.md`), with Benefits and Trade-offs modes (curated, with an optional context word) and a predict-the-association quiz. |
 | Test | **Try Out MBA** | Practice questions |
 | Life | **Life 40** | Long-term planning |
 
