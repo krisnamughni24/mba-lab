@@ -7,10 +7,10 @@
   const TAGS = {
     fin: 'bank money credit loan finance investor insurance stock', health: 'hospital doctor clinic nurse health patient medicine', edu: 'school university teacher student college class education',
     food: 'farm farmer restaurant kitchen food cafe chef harvest', pub: 'government state ministry city police public council', mfg: 'factory industry plant machine production workshop',
-    retail: 'shop store market retail mall supermarket customer', biz: 'company business firm office corporation enterprise', fam: 'family home village household parent'
+    retail: 'shop store market retail mall supermarket customer marketing brand sales advertising', biz: 'company business firm office corporation enterprise organization organisation leadership leader management manager group team startup strategy hr employee', fam: 'family home village household parent'
   };
   const CTXMAP = {}; Object.keys(TAGS).forEach(t => TAGS[t].split(' ').forEach(w => { CTXMAP[w] = t; }));
-  const CHOICES = ['company', 'bank', 'hospital', 'school', 'farm', 'government', 'restaurant', 'factory', 'shop', 'family'];
+  const CHOICES = ['business', 'marketing', 'leadership', 'organization', 'group', 'team', 'startup', 'company', 'bank', 'hospital', 'school', 'farm', 'government', 'restaurant', 'factory', 'shop', 'family'];
 
   const list = () => N.lens || [];
   const get = k => list().find(c => c.k === String(k || '').trim().toLowerCase()) || null;
@@ -33,7 +33,8 @@
   /* items of one side ('pos' or 'neg') ranked for a context: score mixes the importance (1-3) with the relevance */
   function rank(concept, side, ctx) {
     const c = typeof concept === 'string' ? get(concept) : concept; if (!c) return [];
-    return c[side].map((it, i) => { const r = relevance(it, ctx); return { item: it, i, rel: r, score: Math.round((it.m / 3 * 0.55 + r * 0.45) * 100) / 100, hit: !!N.norm(ctx) && r >= 0.9 }; })
+    const cx = (Array.isArray(ctx) ? ctx : [ctx]).map(N.norm).filter(Boolean); /* several contexts: an item counts as fitting if any one of them fits */
+    return c[side].map((it, i) => { const rs = cx.length ? cx.map(x => relevance(it, x)) : [0.5], r = Math.max(...rs); return { item: it, i, rel: r, score: Math.round((it.m / 3 * 0.55 + r * 0.45) * 100) / 100, hit: cx.length > 0 && r >= 0.9, by: cx.filter((x, k) => rs[k] >= 0.9) }; })
       .sort((a, b) => b.score - a.score || a.i - b.i);
   }
   /* search the curated concepts by English key or by the name in any language; starts-with beats contains. [{k, name, cat}] */

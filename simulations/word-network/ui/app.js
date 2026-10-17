@@ -11,7 +11,9 @@ MBALAB.sims.define('word-network', {
     const DIMC = { pos: { val: '#34d399', mkt: '#4dd2ff', cap: '#a78bfa', ppl: '#fbbf24' }, neg: { cost: '#fb923c', risk: '#f87171', eff: '#c084fc', ppl: '#ff6ad5' } };
     const DIMK = { val: 'dVal', mkt: 'dMkt', cap: 'dCap', ppl: 'dPpl', cost: 'dCost', risk: 'dRisk', eff: 'dEff' };
     const isLens = () => mode === 'pos' || mode === 'neg';
-    let lens = { concept: '', ctx: '', sel: -1 }, shown = [];
+    const MAXC = 4, MAXX = 4; /* most concepts / contexts selectable at once */
+    let lens = { concepts: [], ctxs: [], sel: '' }, shown = [];
+    const pushCap = (a, v, max) => { if (a.includes(v)) return a.filter(x => x !== v); const r = a.concat(v); return r.length > max ? r.slice(r.length - max) : r; };
     let mode = 'explore', inputs = [], graph = { nodes: [], edges: [] }, pos = new Map(), q = null, seen = new Set(), frames = 0, raf = 0;
     const cv = $('#wnCv'), ctx = cv.getContext('2d'), SW = 160, SH = 90;
     const still = () => document.body.classList.contains('still') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -37,14 +39,15 @@ MBALAB.sims.define('word-network', {
 
     /* ---------- lens graph: concept in the middle, curated items around it, context as a white ring ---------- */
     function buildLens() {
-      const c = N.lensGet(lens.concept), nodes = [], edges = []; shown = [];
-      if (c) {
-        nodes.push({ w: '#c', label: c.name[LI()], type: 'concept', s: 100, c: '#4dd2ff' });
-        shown = N.lensRank(c, mode, lens.ctx);
-        const hasCtx = !!N.norm(lens.ctx);
-        shown.forEach((r, k) => { const id = '#i' + r.i; nodes.push({ w: id, label: r.item.l[LI()], type: 'item', m: r.item.m, c: DIMC[mode][r.item.d], hit: r.hit, fade: hasCtx && !r.hit, s: r.item.m * 50, k: r.i }); edges.push(['#c', id, 8 + r.item.m * 4]); });
-        if (hasCtx) { nodes.push({ w: '#x', label: N.norm(lens.ctx), type: 'ctx', s: 100, c: '#e5e7eb' }); shown.forEach(r => { if (r.hit) edges.push(['#x', '#i' + r.i, 30]); }); edges.push(['#x', '#c', 20]); }
-      }
+      const nodes = [], edges = []; shown = [];
+      const cs = lens.concepts.map(N.lensGet).filter(Boolean), xs = lens.ctxs;
+      cs.forEach((c, ci) => {
+        const hub = '#c:' + c.k, rows = N.lensRank(c, mode, xs); shown.push({ c, ci, rows });
+        nodes.push({ w: hub, label: c.name[LI()], type: 'concept', s: 100, c: INC[ci % INC.length] });
+        rows.forEach(r => { const id = '#i:' + c.k + ':' + r.i; nodes.push({ w: id, label: r.item.l[LI()], type: 'item', m: r.item.m, c: DIMC[mode][r.item.d], hit: r.hit, fade: xs.length > 0 && !r.hit, s: r.item.m * 50, k: c.k + ':' + r.i }); edges.push([hub, id, 8 + r.item.m * 4]); if (r.hit) r.by.forEach(x => edges.push(['#x:' + x, id, 30])); });
+      });
+      if (cs.length) xs.forEach(x => { nodes.push({ w: '#x:' + x, label: x, type: 'ctx', s: 100, c: '#e5e7eb' }); cs.forEach(c => edges.push(['#x:' + x, '#c:' + c.k, 20])); });
+      for (let a = 1; a < cs.length; a++) edges.push(['#c:' + cs[a - 1].k, '#c:' + cs[a].k, 14]); /* keep the concept hubs loosely together */
       graph = { nodes, edges };
       graph.nodes.forEach((n, i) => { if (!pos.has(n.w)) pos.set(n.w, { x: SW / 2 + (Math.random() - .5) * 40, y: SH / 2 + (Math.random() - .5) * 24, vx: 0, vy: 0 }); n.p = pos.get(n.w); n.i = i; });
       [...pos.keys()].forEach(k => { if (!nodes.some(n => n.w === k)) pos.delete(k); });
@@ -105,7 +108,7 @@ MBALAB.sims.define('word-network', {
       const r = cv.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * SW, y = (e.clientY - r.top) / r.height * SH; let best = null, bd = 1e9;
       graph.nodes.forEach(n => { const d = Math.hypot(n.p.x - x, n.p.y - y); if (d < bd && d < rad(n) + 3.5) { bd = d; best = n; } });
       if (!best) return;
-      if (isLens()) { if (best.type === 'item') { lens.sel = lens.sel === best.k ? -1 : best.k; sfx('tick'); card(); draw(); } return; }
+      if (isLens()) { if (best.type === 'item') { lens.sel = lens.sel === best.k ? '' : best.k; sfx('tick'); card(); draw(); } return; }
       if (best.type !== 'input') addWord(best.w);
     });
     if (window.ResizeObserver) new ResizeObserver(fit).observe(cv);
@@ -160,50 +163,54 @@ MBALAB.sims.define('word-network', {
     }
     function dimChip(side, d) { return `<span class="wn-dim" style="--c:${DIMC[side][d]}"><i></i>${T(DIMK[d])}</span>`; }
     function lensCard(c) {
-      const cc = N.lensGet(lens.concept); if (!cc) { c.hidden = true; return; }
-      c.hidden = false; const hasCtx = !!N.norm(lens.ctx), side = mode, ctxLbl = hasCtx ? T('lensInCtx', { k: N.norm(lens.ctx) }) : '';
-      const dims = [...new Set(shown.map(r => r.item.d))];
-      let h = `<h3>${T(side === 'pos' ? 'lensTitlePos' : 'lensTitleNeg', { c: cc.name[LI()], x: ctxLbl })}</h3><div class="wn-dims">${dims.map(d => dimChip(side, d)).join('')}</div><ul class="wn-items">`;
-      shown.forEach(r => {
-        const on = lens.sel === r.i;
-        h += `<li class="wn-item${on ? ' on' : ''}${r.hit ? ' hit' : ''}" data-it="${r.i}" style="--c:${DIMC[side][r.item.d]}"><b>${r.item.l[LI()]}</b> ${dimChip(side, r.item.d)}${r.hit ? `<em class="wn-fit">✓ ${T('lensFits')}</em>` : ''}<p>${r.item.e[LI()]}</p></li>`;
+      if (!shown.length) { c.hidden = true; return; }
+      c.hidden = false; const xs = lens.ctxs, side = mode, ctxLbl = xs.length ? T('lensInCtx', { k: xs.join(' + ') }) : '';
+      let h = '';
+      shown.forEach(({ c: cc, ci, rows }) => {
+        const dims = [...new Set(rows.map(r => r.item.d))];
+        h += `<h3 style="border-left:4px solid ${INC[ci % INC.length]};padding-left:8px">${T(side === 'pos' ? 'lensTitlePos' : 'lensTitleNeg', { c: cc.name[LI()], x: ctxLbl })}</h3><div class="wn-dims">${dims.map(d => dimChip(side, d)).join('')}</div><ul class="wn-items">`;
+        rows.forEach(r => {
+          const key = cc.k + ':' + r.i, on = lens.sel === key;
+          h += `<li class="wn-item${on ? ' on' : ''}${r.hit ? ' hit' : ''}" data-it="${key}" style="--c:${DIMC[side][r.item.d]}"><b>${r.item.l[LI()]}</b> ${dimChip(side, r.item.d)}${r.hit ? `<em class="wn-fit">✓ ${T('lensFits')}${r.by.length > 1 || xs.length > 1 ? ' (' + r.by.join(', ') + ')' : ''}</em>` : ''}<p>${r.item.e[LI()]}</p></li>`;
+        });
+        h += `</ul>`;
+        const tension = cc.x.map(k => N.lensGet(k)).filter(o => o && !lens.concepts.includes(o.k));
+        if (tension.length) h += `<p class="wn-note">${T('lensTension')}: ` + tension.map(o => `<button type="button" class="ex-chip" data-lc="${o.k}">${o.name[LI()]}</button>`).join(' ') + `</p>`;
+        if (N.has(cc.k)) h += `<p class="wn-note"><button type="button" class="ex-chip" data-direct="${cc.k}">${T('seeDirect', { w: cc.k })}</button></p>`;
       });
-      h += `</ul>`;
-      const tension = cc.x.map(k => N.lensGet(k)).filter(Boolean);
-      if (tension.length) h += `<p class="wn-note">${T('lensTension')}: ` + tension.map(o => `<button type="button" class="ex-chip" data-lc="${o.k}">${o.name[LI()]}</button>`).join(' ') + `</p>`;
-      if (hasCtx && !N.ctxTag(lens.ctx)) h += `<p class="wn-note">${T('lensWeak')}</p>`;
-      if (N.has(cc.k)) h += `<p class="wn-note"><button type="button" class="ex-chip" data-direct="${cc.k}">${T('seeDirect', { w: cc.k })}</button></p>`;
+      if (xs.some(x => !N.ctxTag(x))) h += `<p class="wn-note">${T('lensWeak')}</p>`;
       h += `<p class="wn-note">${T('lensClick')} ${T('lensAuthor')}</p>`;
       c.innerHTML = h;
     }
     $('#wnCard').addEventListener('click', e => {
       const it = e.target.closest('[data-it]'), lc = e.target.closest('[data-lc]'), d = e.target.closest('[data-direct]');
-      if (it) { lens.sel = lens.sel === +it.dataset.it ? -1 : +it.dataset.it; card(); draw(); }
-      else if (lc) { lens.concept = lc.dataset.lc; lens.sel = -1; sfx('tick'); lensBar(); refresh(); }
+      if (it) { lens.sel = lens.sel === it.dataset.it ? '' : it.dataset.it; card(); draw(); }
+      else if (lc) { lens.concepts = pushCap(lens.concepts, lc.dataset.lc, MAXC); lens.sel = ''; sfx('tick'); lensBar(); refresh(); }
       else if (d) { loadWords([d.dataset.direct]); setMode('explore'); }
     });
     function lensBar() {
-      const bar = $('#wnLens'), cur = lens.concept, cc = N.lensGet(cur), own = N.CTX_CHOICES.includes(N.norm(lens.ctx));
-      bar.innerHTML = `<div class="wn-lrow"><span class="wn-empty">${T('lensConcept')}:</span><input id="wnLq" type="search" maxlength="40" spellcheck="false" autocomplete="off" placeholder="${T('lensSearchPh', { n: N.lensList().length })}" aria-label="${T('lensConcept')}">${cc ? `<span class="wn-cur">${cc.name[LI()]}</span>` : ''}</div>
+      const bar = $('#wnLens'), cs = lens.concepts.map(N.lensGet).filter(Boolean), custom = lens.ctxs.filter(x => !N.CTX_CHOICES.includes(x));
+      bar.innerHTML = `<div class="wn-lrow"><span class="wn-empty">${T('lensConcept')}:</span><input id="wnLq" type="search" maxlength="40" spellcheck="false" autocomplete="off" placeholder="${T('lensSearchPh', { n: N.lensList().length })}" aria-label="${T('lensConcept')}">${cs.map(cc => `<button type="button" class="ex-chip on" data-lc="${cc.k}" title="×">${cc.name[LI()]} ×</button>`).join('')}</div>
         <div class="wn-lrow" id="wnLres"></div>
-        <div class="wn-lrow"><span class="wn-empty">${T('lensCtx')}:</span><button type="button" class="ex-chip${!lens.ctx ? ' on' : ''}" data-lx="">${T('lensNone')}</button>` + N.CTX_CHOICES.map(w => `<button type="button" class="ex-chip${N.norm(lens.ctx) === w ? ' on' : ''}" data-lx="${w}">${w}</button>`).join('') + `<input id="wnLx" type="text" maxlength="24" spellcheck="false" placeholder="${T('lensCtxPh')}" value="${own ? '' : lens.ctx}"></div>
-        ${cur ? '' : `<p class="wn-note">${T('lensPick')}</p>`}`;
+        <div class="wn-lrow"><span class="wn-empty">${T('lensCtx')}:</span><button type="button" class="ex-chip${!lens.ctxs.length ? ' on' : ''}" data-lx="">${T('lensNone')}</button>` + N.CTX_CHOICES.concat(custom).map(w => `<button type="button" class="ex-chip${lens.ctxs.includes(w) ? ' on' : ''}" data-lx="${w}">${w}${custom.includes(w) ? ' ×' : ''}</button>`).join('') + `<input id="wnLx" type="text" maxlength="24" spellcheck="false" placeholder="${T('lensCtxPh')}"></div>
+        ${cs.length ? '' : `<p class="wn-note">${T('lensPick')}</p>`}`;
       lensRes('');
     }
     function lensRes(q) {
       const r = $('#wnLres'); if (!r) return;
       const l = q ? N.lensSearch(q, 14) : N.lensList().slice(0, 14);
-      r.innerHTML = (q ? '' : `<span class="wn-empty">${T('lensPopular')}</span>`) + (l.length ? l.map(c => `<button type="button" class="ex-chip${lens.concept === c.k ? ' on' : ''}" data-lc="${c.k}">${c.name[LI()]}</button>`).join('') : `<span class="wn-empty">${T('lensNoMatch')}</span>`);
+      r.innerHTML = (q ? '' : `<span class="wn-empty">${T('lensPopular')}</span>`) + (l.length ? l.map(c => `<button type="button" class="ex-chip${lens.concepts.includes(c.k) ? ' on' : ''}" data-lc="${c.k}">${c.name[LI()]}</button>`).join('') : `<span class="wn-empty">${T('lensNoMatch')}</span>`);
     }
     $('#wnLens').addEventListener('input', e => { if (e.target.id === 'wnLq') lensRes(e.target.value); });
     $('#wnLens').addEventListener('click', e => {
       const lc = e.target.closest('[data-lc]'), lx = e.target.closest('[data-lx]');
-      if (lc) { lens.concept = lc.dataset.lc; lens.sel = -1; sfx('tick'); lensBar(); refresh(); }
-      else if (lx) { lens.ctx = lx.dataset.lx; lens.sel = -1; sfx('tick'); lensBar(); refresh(); }
+      if (lc) { lens.concepts = pushCap(lens.concepts, lc.dataset.lc, MAXC); lens.sel = ''; sfx('tick'); lensBar(); refresh(); }
+      else if (lx) { lens.ctxs = lx.dataset.lx ? pushCap(lens.ctxs, lx.dataset.lx, MAXX) : []; lens.sel = ''; sfx('tick'); lensBar(); refresh(); }
     });
     $('#wnLens').addEventListener('change', e => {
-      if (e.target.id !== 'wnLx') return; const v = N.norm(e.target.value);
-      lens.ctx = v; lens.sel = -1; if (v && !N.has(v) && !N.ctxTag(v)) say(T('unknown', { w: v }), 1); else say('', 0); lensBar(); refresh();
+      if (e.target.id !== 'wnLx') return; const v = N.norm(e.target.value); if (!v) return;
+      if (!lens.ctxs.includes(v)) lens.ctxs = pushCap(lens.ctxs, v, MAXX);
+      lens.sel = ''; if (!N.has(v) && !N.ctxTag(v)) say(T('unknown', { w: v }), 1); else say('', 0); lensBar(); refresh();
     });
     function list() {
       $('#wnList').innerHTML = `<h3>${T('pairsT')}</h3><p class="ex-hint">${T('pairsAsk')}</p><div class="wn-pairs">` + PAIRS.map((p, i) => `<button type="button" class="ex-chip" data-pair="${i}">${p[0]} + ${p[1]}</button>`).join('') + '</div>';
@@ -237,7 +244,7 @@ MBALAB.sims.define('word-network', {
     function setMode(m) {
       const prev = mode; mode = m; q = null; sug.hidden = true; say('', 0);
       ['Exp:explore', 'Pos:pos', 'Neg:neg', 'Qz:quiz'].forEach(x => { const [id, k] = x.split(':'); $('#wn' + id).classList.toggle('on', m === k); });
-      if (isLens() && !lens.concept) { const k = inputs.map(w => w.toLowerCase()).find(w => N.lensGet(w)); if (k) lens.concept = k; }
+      if (isLens() && !lens.concepts.length) { const k = inputs.map(w => w.toLowerCase()).find(w => N.lensGet(w)); if (k) lens.concepts = [k]; }
       $('#wnStage').closest('.ex-sw').style.display = m === 'quiz' ? 'none' : '';
       $('#wnForm').style.display = $('#wnSel').style.display = m === 'explore' ? '' : 'none';
       $('#wnLens').hidden = !isLens(); if (isLens()) lensBar();

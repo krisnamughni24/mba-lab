@@ -27,6 +27,8 @@ const plain = N.lensRank('growth', 'neg', ''), withBank = N.lensRank('growth', '
 assert(plain.length >= 3 && plain.every(x => x.rel === 0.5 && !x.hit), 'no context = neutral relevance');
 assert(withBank[0].hit && withBank[0].item.tg.includes('fin'), 'bank lifts finance-tagged items to the top');
 assert(N.lensRank('growth', 'pos', 'bank').filter(x => x.hit).length >= 2, 'several benefits are tagged for finance');
+const multi = N.lensRank('growth', 'pos', ['bank', 'school']); assert(multi.filter(x => x.hit).length >= N.lensRank('growth', 'pos', 'bank').filter(x => x.hit).length, 'several contexts: an item fits if any context fits');
+assert(N.ctxTag('leadership') === 'biz' && N.ctxTag('marketing') === 'retail', 'leadership / marketing contexts map to sector tags');
 assert(N.ctxTag('Hospital') === 'health' && N.ctxTag('xyz') === '', 'context tag lookup');
 const free = N.lensRank('speed', 'pos', 'children'); assert(free.length >= 3 && free.every(x => x.score >= 0 && x.score <= 1), 'free context word scores stay in range');
 assert(N.lensSearch('grow')[0].k === 'growth' && N.lensSearch('pertumbuhan')[0].k === 'growth' && N.lensSearch('成長')[0].k === 'growth', 'search by key and by localised name');
