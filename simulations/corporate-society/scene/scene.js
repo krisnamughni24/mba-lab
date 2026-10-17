@@ -12,6 +12,12 @@
     const brow = mood === 'low' ? '<path d="M20 25l8 3M40 25l-8 3" stroke="#3a2020" stroke-width="2" stroke-linecap="round"/>' : '';
     return `<svg class="cs-fig ${mood}" viewBox="0 0 60 84" aria-hidden="true" focusable="false"><path d="M8 84v-16q0-14 22-14t22 14v16z" fill="${cl}"/><path d="M26 54l4 10 4-10z" fill="#fff" opacity=".85"/><rect x="26" y="46" width="8" height="9" rx="3" fill="${sk}"/>${f ? `<path d="M14 30q0-20 16-20t16 20v18q-4 4-8 0V30H22v18q-4 4-8 0z" fill="${hr}"/>` : ''}<ellipse cx="30" cy="30" rx="14" ry="16" fill="${sk}"/><path d="M15 28q0-17 15-17t15 17q-8-9-15-9t-15 9z" fill="${hr}"/><g class="eyes"><ellipse cx="24" cy="30" rx="2" ry="2.6" fill="#222"/><ellipse cx="36" cy="30" rx="2" ry="2.6" fill="#222"/></g>${brow}${mouth}</svg>`;
   }
+  /* the head office skyline for the menu hero: towers with blinking windows, a drifting cloud, a tiny commuter walking by */
+  function skyline() {
+    const tw = [[20, 70, 44, 90], [70, 40, 52, 120], [128, 80, 40, 80], [176, 52, 56, 108], [238, 86, 42, 74], [286, 34, 60, 126], [352, 74, 46, 86], [404, 58, 54, 102], [464, 90, 40, 70], [510, 46, 58, 114], [574, 78, 46, 82]];
+    const win = tw.map((b, i) => { let o = ''; for (let r = 0; r < 5; r++) for (let c = 0; c < 3; c++) { if ((i * 7 + r * 3 + c * 5) % 3 === 0) continue; o += `<rect class="w" style="--d:${((i + r + c) % 7) * 0.6}s" x="${b[0] + 7 + c * 14}" y="${b[1] + 8 + r * 15}" width="7" height="8"/>`; } return o; }).join('');
+    return `<svg class="cs-sky" viewBox="0 0 640 160" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><circle class="sun" cx="560" cy="34" r="16"/><g class="cloud"><ellipse cx="120" cy="30" rx="26" ry="8"/><ellipse cx="140" cy="26" rx="18" ry="8"/></g><g class="cloud c2"><ellipse cx="400" cy="46" rx="22" ry="6"/><ellipse cx="416" cy="42" rx="14" ry="6"/></g>${tw.map(b => `<rect class="bd" x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}" rx="2"/>`).join('')}${win}<rect class="st" x="0" y="148" width="640" height="12"/><g class="walker"><circle cx="0" cy="136" r="4"/><rect x="-3" y="140" width="6" height="9" rx="2"/></g></svg>`;
+  }
   /* each place: a few shapes on a 320 x 160 canvas (floor line at y = 118) */
   const ART = {
     desk: '<rect class="f" x="0" y="118" width="320" height="42"/><rect class="m" x="70" y="84" width="96" height="34" rx="3"/><rect class="a" x="86" y="46" width="64" height="38" rx="4"/><rect class="s" x="92" y="52" width="52" height="26" rx="2"/><rect class="m" x="112" y="84" width="12" height="8"/><rect class="m" x="196" y="96" width="30" height="22" rx="3"/><rect class="a" x="204" y="86" width="14" height="10" rx="2"/><circle class="a" cx="258" cy="62" r="14"/><rect class="m" x="256" y="76" width="4" height="42"/>',
@@ -29,6 +35,6 @@
     const who = npc ? `<div class="cs-npc ${mood(o.rel || 50)}"><span class="av" aria-hidden="true">${person(npc, mood(o.rel || 50))}</span><b>${o.name || ''}</b><small>${o.label || ''}</small></div>` : '';
     return `<div class="cs-scene t${slot}">${bg(loc)}<div class="cs-tint"></div><div class="cs-me" aria-hidden="true"><span class="av">${person('me', o.me || 'ok')}</span><i>${PLAYER[o.role] || ''}</i></div>${who}<div class="cs-place">${o.place || ''}</div></div>`;
   }
-  root.corpScene = { html, AVATAR, bg, person };
+  root.corpScene = { html, AVATAR, bg, person, skyline };
   if (typeof module !== 'undefined') module.exports = root.corpScene;
 })();

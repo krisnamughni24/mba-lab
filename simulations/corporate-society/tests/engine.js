@@ -1,7 +1,7 @@
 /* Corporate Society: engine and content checks (pure node). Prints "engine OK" when everything holds. */
 const fs = require('fs'), path = require('path'), assert = require('assert');
 global.MBALAB = {}; const dir = path.join(__dirname, '..', 'engine');
-['content', 'content-roles', 'content-levels', 'content-more1', 'content-more2', 'content-more3', 'content-values', 'engine'].forEach(f => require(path.join(dir, f + '.js')));
+['content', 'content-roles', 'content-levels', 'content-more1', 'content-more2', 'content-more3', 'content-values', 'content-review', 'engine'].forEach(f => require(path.join(dir, f + '.js')));
 const C = MBALAB.corpContent, E = MBALAB.corp, ids = C.events.map(e => e.id), NAMES = Object.keys(C.names);
 assert.strictEqual(new Set(ids).size, ids.length, 'event ids are unique');
 const four = (a, n, w) => assert(Array.isArray(a) && a.length === (n || 4) && a.every(x => x.trim()), w + ' needs ' + (n || 4) + ' non-empty parts');
@@ -49,12 +49,16 @@ assert(share('promoted') > 0 && share('steady') + share('promoted') + share('whi
 /* balance: careful play usually wins, careless play loses the job, random play lands in between */
 const val = (o, s) => { const f = Object.assign({}, o.fx || {}); if (o.g) { const p = typeof o.g.p === 'function' ? o.g.p(s) : o.g.p; ['ok', 'bad'].forEach((b, i) => { const w = i ? 1 - p : p; Object.keys(o.g[b].fx || {}).forEach(k => { f[k] = (f[k] || 0) + w * o.g[b].fx[k]; }); }); }
   const W = { skill: 0.6, perf: 1, rep: 1, integ: 1.2, net: 0.6, energy: 0.4 }; let v = 0; Object.keys(f).forEach(k => { v += W[k] * f[k]; }); Object.keys(o.rel || {}).forEach(k => { v += 0.5 * o.rel[k]; }); return v; };
-const pol = (role, level, seed, mode) => { const s = E.create(role, level, seed); let g = 0; while (!s.over && g++ < 100) { const L = E.locsNow(s), e = E.visit(s, L[Math.floor(s.rnd() * L.length)]), vs = e.opts.map(o => val(o, s)); E.choose(s, e, vs.indexOf(mode === 'smart' ? Math.max(...vs) : Math.min(...vs))); if (!s.over) E.next(s); } return s.over; };
-const tally = mode => { let win = 0, lost = 0, n = 0; ['finance', 'it'].forEach(r => ['junior', 'mid', 'senior'].forEach(l => { for (let k = 1; k <= 100; k++) { const o = pol(r, l, k, mode); n++; if (o === 'promoted') win++; if (o.startsWith('fired')) lost++; } })); return { win: win / n, lost: lost / n }; };
+const pol = (role, level, seed, mode, opt) => { const s = E.create(role, level, seed, opt); let g = 0; while (!s.over && g++ < 100) { const L = E.locsNow(s), e = E.visit(s, L[Math.floor(s.rnd() * L.length)]), vs = e.opts.map(o => val(o, s)); E.choose(s, e, vs.indexOf(mode === 'smart' ? Math.max(...vs) : Math.min(...vs))); if (!s.over) E.next(s); } return s.over; };
+const tally = (mode, opt) => { let win = 0, lost = 0, n = 0; ['finance', 'it'].forEach(r => ['junior', 'mid', 'senior'].forEach(l => { for (let k = 1; k <= 100; k++) { const o = pol(r, l, k, mode, opt); n++; if (o === 'promoted') win++; if (o.startsWith('fired')) lost++; } })); return { win: win / n, lost: lost / n }; };
 const smart = tally('smart'), bad = tally('bad');
 assert(smart.win > 0.5 && smart.lost < 0.05, 'careful play should usually be promoted: ' + JSON.stringify(smart));
 assert(bad.lost > 0.25 && bad.win < 0.05, 'careless play should often lose the job: ' + JSON.stringify(bad));
 assert(share('promoted') < 0.3, 'random play should not usually be promoted');
+/* every working style stays viable, every goal can be tracked, and the review picks a variant */
+Object.keys(E.TRAITS).forEach(tr => { const t = tally('smart', { trait: tr }); assert(t.win > 0.3 && t.lost < 0.1, 'trait ' + tr + ' stays viable: ' + JSON.stringify(t)); });
+E.GOALS.forEach(g => { const s0 = E.create('it', 'mid', 4, { goal: g }); const r = E.goal(s0); assert(r.p >= 0 && r.p <= 1 && typeof r.done === 'boolean', 'goal ' + g); });
+{ const s1 = E.create('finance', 'mid', 2); assert.strictEqual(E.review(s1).id, 'r_ok'); s1.st.perf = 90; s1.st.rep = 90; assert.strictEqual(E.review(s1).id, 'r_great'); s1.st.perf = 10; s1.st.rep = 10; assert.strictEqual(E.review(s1).id, 'r_poor'); assert(!C.events.some(e => e.free && E.fits(e, s1, 'meeting')), 'free events never appear at random'); }
 /* forced follow-ups fire when due */
 const s = E.create('finance', 'junior', 3); s.later.push({ id: 'f_audit_bad', at: s.turn });
 assert.strictEqual(E.visit(s, 'desk').id, 'f_audit_bad', 'a due follow-up comes first');

@@ -10,6 +10,7 @@ MBALAB.sims.define('corporate-society', {
     <section class="sc-play cs-play" id="csPlay" hidden>
       <div class="sc-hud cs-hud" id="csHud"></div>
       <div class="cs-stats" id="csStats"></div>
+      <div class="cs-agenda" id="csAgenda"></div>
       <div class="cs-grid">
         <div class="sc-stage cs-stage" id="csStage"></div>
         <aside class="cs-side" id="csSide"></aside>

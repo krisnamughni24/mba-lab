@@ -20,10 +20,28 @@
   /* what it takes to be promoted at the end of day 8 */
   const BAR = { junior: { perf: 56, rep: 44, skill: 36 }, mid: { perf: 56, rep: 46, net: 32, skill: 42 }, senior: { perf: 56, rep: 50, integ: 52, net: 38, skill: 46 } };
   const C = () => root.corpContent;
+  /* working styles: each shifts the start, some change gambles or nightly recovery. Roughly balanced against each other. */
+  const TRAITS = {
+    analyst: { st: { skill: 8, perf: 2, net: -6 }, gp: 0.05, regen: 0, rel: {} },
+    charmer: { st: { net: 10, rep: 5, integ: -5 }, gp: 0, regen: 0, rel: { peer: 6 } },
+    steady: { st: { energy: 10, integ: 3 }, gp: 0, regen: 5, rel: {} },
+    maverick: { st: { perf: 5, skill: 2 }, gp: 0.12, regen: 0, rel: { boss: -6 } }
+  };
+  /* personal goals: progress is 0..1, done when every part is met. Checked live and at the end. */
+  const avgRel = (s, ks) => ks.reduce((a, k) => a + s.rel[k], 0) / ks.length;
+  const GOALS = {
+    promo: s => { const b = BAR[s.level], ks = Object.keys(b), p = ks.reduce((a, k) => a + Math.min(1, (s.st[k] !== undefined ? s.st[k] : s.rel[k]) / b[k]), 0) / ks.length; return { p, done: meets(s, b) }; },
+    network: s => { const a = s.st.net / 65, r = avgRel(s, ['boss', 'senior', 'peer', 'other']) / 65; return { p: Math.min(1, (Math.min(1, a) + Math.min(1, r)) / 2), done: s.st.net >= 65 && avgRel(s, ['boss', 'senior', 'peer', 'other']) >= 65 }; },
+    integrity: s => { const mn = Math.min(...s.hist.map(h => h.st.integ)); return { p: Math.min(1, s.st.integ / 75 * (mn >= 50 ? 1 : 0.8)), done: s.st.integ >= 75 && mn >= 50 }; },
+    balance: s => { const mn = Math.min(...s.hist.map(h => h.st.energy)); return { p: Math.min(1, (mn >= 25 ? 0.5 : mn / 50) + Math.min(0.5, s.st.perf / 110)), done: mn >= 25 && s.st.perf >= 55 }; },
+    mentor: s => { const a = s.rel.junior / 80, b = s.st.skill / 55; return { p: Math.min(1, (Math.min(1, a) + Math.min(1, b)) / 2), done: s.rel.junior >= 80 && s.st.skill >= 55 }; }
+  };
 
-  function create(role, level, seed) {
-    const s = { role, level, seed, rnd: rng(seed * 7919 + 17), turn: 0, loc: null, st: {}, rel: { boss: 50, senior: 50, peer: 50, junior: 55, other: 45, director: 35 }, flags: {}, done: {}, later: [], log: [], burn: 0, over: null, vals: {}, hist: [] };
+  function create(role, level, seed, opt) {
+    opt = opt || {}; const trait = TRAITS[opt.trait] ? opt.trait : 'steady', goal = GOALS[opt.goal] ? opt.goal : 'promo';
+    const s = { trait, goal, role, level, seed, rnd: rng(seed * 7919 + 17), turn: 0, loc: null, st: {}, rel: { boss: 50, senior: 50, peer: 50, junior: 55, other: 45, director: 35 }, flags: {}, done: {}, later: [], log: [], burn: 0, over: null, vals: {}, hist: [] };
     STATS.forEach(k => { s.st[k] = clamp((START[level][k] || 0) + ((ROLE_SHIFT[role] || {})[k] || 0), 0, 100); });
+    const T = TRAITS[trait]; STATS.forEach(k => { s.st[k] = clamp(s.st[k] + (T.st[k] || 0), 0, 100); }); PEOPLE.forEach(k => { s.rel[k] = clamp(s.rel[k] + (T.rel[k] || 0), 0, 100); });
     snap(s); return s;
   }
   /* a snapshot of the measures for the end-of-run chart */
@@ -54,7 +72,7 @@
   function choose(s, e, i) {
     const o = e.opts[i], rec = { fx: {}, rel: {}, branch: '' };
     apply(s, o, rec);
-    if (o.g) { const p = typeof o.g.p === 'function' ? o.g.p(s) : o.g.p; rec.branch = s.rnd() < p ? 'ok' : 'bad'; apply(s, o.g[rec.branch], rec); }
+    if (o.g) { const p = clamp((typeof o.g.p === 'function' ? o.g.p(s) : o.g.p) + TRAITS[s.trait].gp, 0.05, 0.95); rec.branch = s.rnd() < p ? 'ok' : 'bad'; apply(s, o.g[rec.branch], rec); }
     (o.v || []).forEach(v => { s.vals[v] = (s.vals[v] || 0) + 1; });
     s.done[e.id] = s.turn; s.log.push({ id: e.id, opt: i, turn: s.turn, branch: rec.branch, fx: rec.fx });
     check(s); snap(s); return rec;
@@ -71,7 +89,7 @@
     if (s.st.energy < 30) s.st.perf = clamp(s.st.perf - 2, 0, 100); /* tired people make mistakes */
     if (s.turn % SLOTS === 0) {
       /* the night restores energy, but a day without effort costs ground: backlog, forgotten faces, a cooling boss */
-      const D = DECAY[s.level]; s.st.energy = clamp(s.st.energy + 22, 0, 100); s.st.perf = clamp(s.st.perf - D.perf, 0, 100); s.st.rep = clamp(s.st.rep - D.rep, 0, 100); s.st.net = clamp(s.st.net - D.net, 0, 100); s.st.skill = clamp(s.st.skill - D.skill, 0, 100);
+      const D = DECAY[s.level]; s.st.energy = clamp(s.st.energy + 22 + TRAITS[s.trait].regen, 0, 100); s.st.perf = clamp(s.st.perf - D.perf, 0, 100); s.st.rep = clamp(s.st.rep - D.rep, 0, 100); s.st.net = clamp(s.st.net - D.net, 0, 100); s.st.skill = clamp(s.st.skill - D.skill, 0, 100);
       if (s.st.perf < 50) s.rel.boss = clamp(s.rel.boss - 2, 0, 100);
       check(s); snap(s); if (s.over) return 'end';
       if (s.turn >= DAYS * SLOTS) { s.over = ending(s); return 'end'; } return 'day';
@@ -86,14 +104,18 @@
     if (s.rel.junior >= 85 && s.st.skill >= 66) return 'mentor';
     return 'steady';
   }
+  const goal = s => GOALS[s.goal](s);
+  /* the mid-week review (day 4): a free event from the boss, chosen by how the run is going */
+  function review(s) { const a = (s.st.perf + s.st.rep) / 2, id = a >= 58 ? 'r_great' : a >= 42 ? 'r_ok' : 'r_poor'; s.loc = 'meeting'; return C().events.find(e => e.id === id); }
   /* normalised value profile 0..1 (the most chosen value = 1) */
   function profile(s) { const mx = Math.max(1, ...VALUES.map(v => s.vals[v] || 0)); const o = {}; VALUES.forEach(v => { o[v] = (s.vals[v] || 0) / mx; }); return o; }
   /* 0..3 stars and xp for a finished run */
   function score(s) {
     const avg = (s.st.perf + s.st.rep + s.st.integ) / 3, o = s.over;
     const n = o === 'promoted' || o === 'whistle' ? 3 : o === 'politician' || o === 'mentor' ? 2 : o === 'steady' ? (avg >= 55 ? 2 : 1) : 0;
-    return { stars: n, xp: Math.round(10 + n * 20 + avg / 5) };
+    const g = goal(s), won = g.done && !String(o).startsWith('fired') && o !== 'burnout';
+    return { stars: n, xp: Math.round(10 + n * 20 + avg / 5) + (won ? 25 : 0), goalDone: won };
   }
-  root.corp = { DAYS, SLOTS, STATS, VALUES, PEOPLE, LOCS, BAR, START, create, day, slot, chapter, locsNow, visit, choose, next, ending, score, profile, check, fits };
+  root.corp = { TRAITS, GOALS: Object.keys(GOALS), goal, review, DAYS, SLOTS, STATS, VALUES, PEOPLE, LOCS, BAR, START, create, day, slot, chapter, locsNow, visit, choose, next, ending, score, profile, check, fits };
   if (typeof module !== 'undefined') module.exports = root.corp;
 })();

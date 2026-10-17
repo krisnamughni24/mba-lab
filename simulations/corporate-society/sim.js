@@ -10,6 +10,7 @@ MBALAB.sims.files('corporate-society', {
     "engine/content-more2.js",
     "engine/content-more3.js",
     "engine/content-values.js",
+    "engine/content-review.js",
     "engine/engine.js",
     "scene/scene.js",
     "ui/app.js"
