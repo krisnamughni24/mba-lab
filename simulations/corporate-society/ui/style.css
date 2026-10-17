@@ -231,3 +231,8 @@ body.still .cs-box{animation:none}
 .cs-retire .arm{border-color:var(--rd);color:var(--rd)}
 .cs-career{padding:10px 14px;border-radius:14px;border:1px solid var(--edge);background:var(--panel2);margin:8px 0;font-size:16px}
 @media (max-width:640px){.cs-pick.roles{grid-template-columns:1fr 1fr}.cs-pick.roles .cs-card .d{display:none}.cs-qr .e{font-size:34px}}
+
+.cs-agenda .chap{margin:0;font-weight:700;font-size:14.5px;color:var(--txt2)}
+.cs-agenda .days{grid-template-columns:repeat(20,minmax(0,1fr));gap:3px}
+.cs-agenda .days li{padding:3px 0;border-radius:6px;font-size:0}
+.cs-agenda .days li b{font-size:10.5px}

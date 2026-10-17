@@ -67,11 +67,11 @@ MBALAB.sims.define('corporate-society', {
     }
     /* the week at a glance: eight chapter dots and the three moments of today */
     function agenda() {
-      const d = C.day(s), dq = (d - 1) % C.DAYS + 1, CH = D.chapters || [], slotIc = ['🌅', '☀️', '🌆'];
-      const dots = CH.map((c, i) => `<li class="${i + 1 < dq ? 'past' : i + 1 === dq ? 'now' : ''}" title="${esc(X(c.t))}"><span aria-hidden="true">${c.e}</span><b>${i + 1}</b></li>`).join('');
+      const d = C.day(s), dq = (d - 1) % C.DAYS + 1, CH = D.chapters || [], slotIc = ['🌅', '☀️', '🌆'], cur = CH[C.chapterIdx(d)];
+      const dots = Array.from({ length: C.DAYS }, (_, i) => `<li class="${i + 1 < dq ? 'past' : i + 1 === dq ? 'now' : ''}"><b>${i + 1}</b></li>`).join('');
       const today = [0, 1, 2].map(i => { const turn = (d - 1) * C.SLOTS + i, lg = s.log.filter(x => x.turn === turn).pop(), ee = lg && D.events.find(y => y.id === lg.id), cur = i === C.slot(s) && phase !== 'end';
         return `<li class="${lg ? 'done' : cur ? 'now' : ''}"><span aria-hidden="true">${slotIc[i]}</span><b>${t('slot' + i)}</b><small>${ee ? esc(sub(X(ee.t))) : cur ? '…' : ''}</small></li>`; }).join('');
-      $('#csAgenda').innerHTML = `<ol class="days" aria-label="${esc(t('agendaT'))}">${dots}</ol><ol class="slots">${today}</ol>`;
+      $('#csAgenda').innerHTML = `${cur ? `<p class="chap"><span aria-hidden="true">${cur.e}</span> ${esc(X(cur.t))}</p>` : ''}<ol class="days" aria-label="${esc(t('agendaT'))}">${dots}</ol><ol class="slots">${today}</ol>`;
     }
     function stats() {
       $('#csStats').innerHTML = C.STATS.map(k => { const v = Math.round(s.st[k]), low = v <= 20; return `<div class="cs-stat${low ? ' low' : ''}" title="${esc(t('s_' + k + '_d'))}"><span class="n"><i aria-hidden="true">${SICON[k]}</i>${t('s_' + k)}${low ? `<em>${t('danger')}</em>` : ''}</span><b>${v}</b><span class="bar"><i style="width:${v}%"></i></span></div>`; }).join('');
@@ -102,7 +102,7 @@ MBALAB.sims.define('corporate-society', {
         const P = D.prologue, ch = C.chapter(s); say(t('prologueT'));
         b.innerHTML = `<div class="cs-chapter"><span class="e" aria-hidden="true">📖</span><div><small>${t('prologueT')}</small><h3>${esc(X(P.role[s.role]))}</h3><p class="cs-say">${esc(X(P.level[s.level]))}</p></div></div>${ch ? `<div class="cs-chapter sub"><span class="e" aria-hidden="true">${ch.e}</span><div><small>${esc(t('dayN', { n: 1 }))}</small><h3>${esc(X(ch.t))}</h3><p class="cs-say">${esc(X(ch.s))}</p></div></div>` : ''}<div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('beginDay')}</button></div>`;
       } else if (phase === 'day' || phase === 'quarter') {
-        const ch = C.chapter(s); say(t('newDay'));
+        const dd = C.day(s), fresh = (dd - 1) % C.DAYS === 0 || C.chapterIdx(dd) !== C.chapterIdx(dd - 1), ch = fresh ? C.chapter(s) : null; say(t('newDay'));
         b.innerHTML = `${phase === 'quarter' ? qrCard() : ''}${recap()}${ch ? `<div class="cs-chapter"><span class="e" aria-hidden="true">${ch.e}</span><div><small>${esc(t('chapterT'))} · ${esc(t('dayN', { n: C.day(s) }))}</small><h3>${esc(X(ch.t))}</h3><p class="cs-say">${esc(X(ch.s))}</p></div></div>` : `<h3>${t('newDay')} · ${esc(t('dayN', { n: C.day(s) }))}</h3>`}<p class="cs-sub">${t('newDaySub')}</p><div class="sc-foot"><button type="button" class="sc-main go" data-a="cont">${t('cont')}</button></div>`;
       } else if (phase === 'end') endScreen(b);
     }
@@ -169,7 +169,7 @@ MBALAB.sims.define('corporate-society', {
       else if (act === 'loc' && phase === 'move') { retireArm = false; ev = C.visit(s, v); rec = null; pick = -1; phase = 'event'; render(); }
       else if (act === 'opt' && phase === 'event') { pick = +a.dataset.i; burnSeen = s.burn; rec = C.choose(s, ev, pick); phase = 'result'; render(); if (rec.branch === 'bad') { const g = $('#csStage'); g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake'); } sfx((rec.fx.integ || 0) < 0 ? 'lose' : 'tick'); }
       else if (act === 'cont' && (phase === 'result' || phase === 'day' || phase === 'prologue' || phase === 'quarter')) {
-        if ((phase === 'day' || phase === 'quarter') && (C.day(s) - 1) % C.DAYS === 3 && s.flags.reviewed !== C.day(s)) { s.flags.reviewed = C.day(s); ev = C.review(s); rec = null; pick = -1; phase = 'event'; render(); return; }
+        if ((phase === 'day' || phase === 'quarter') && (C.day(s) - 1) % C.DAYS === C.MID && s.flags.reviewed !== C.day(s)) { s.flags.reviewed = C.day(s); ev = C.review(s); rec = null; pick = -1; phase = 'event'; render(); return; }
         if (phase === 'day' || phase === 'prologue' || phase === 'quarter') { phase = 'move'; render(); return; }
         if (ev && ev.free) { phase = 'move'; render(); return; }
         const r = C.next(s); if (r === 'end') finish(); else if (r === 'day' || r === 'quarter') { phase = r; render(); try { $('#csBox').scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) {} } else { phase = 'move'; render(); }

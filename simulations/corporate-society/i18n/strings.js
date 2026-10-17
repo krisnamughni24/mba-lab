@@ -128,25 +128,25 @@
     end_fired_review_d: ["You missed the bar twice in a row, and the company ended your career.", "Anda gagal memenuhi syarat dua kali berturut-turut, dan perusahaan mengakhiri karier Anda.", "2回連続で基準に届かず、会社はあなたのキャリアに幕を下ろした。", "你连续两次未达标,公司终止了你的职业生涯。"],
     end_legend: ["The legend", "Sang legenda", "伝説の人", "传奇人物"],
     end_legend_d: ["You reached the top and kept your name clean. People will tell stories about how you led.", "Anda mencapai puncak dan menjaga nama tetap bersih. Orang akan bercerita tentang cara Anda memimpin.", "頂点に立ち、名を汚さなかった。あなたの率い方は語り草になる。", "你登上顶峰并保持名声清白,人们会讲述你如何领导。"],
-    heroSub: ["An endless career at a fictional company, PT Nusantara Jaya. Pick a role, meet colleagues, choose where to go, and decide. Every eight days a review can promote you or end it.", "Karier tanpa batas di perusahaan fiktif PT Nusantara Jaya. Pilih peran, temui rekan, pilih tempat yang dituju, lalu ambil keputusan. Setiap delapan hari, evaluasi bisa menaikkan jabatan Anda atau mengakhirinya.", "架空の会社「PT Nusantara Jaya」での終わりなきキャリア。職種を選び、同僚と会い、行き先を選んで決断する。8日ごとの評価で昇進も、終わりもある。", "在虚构公司 PT Nusantara Jaya 的无尽职业生涯。选择岗位、结识同事、选择去向并做出决定。每八天一次考评,可能晋升,也可能被终止。"],
+    heroSub: ["An endless career at a fictional company, PT Nusantara Jaya. Pick a role, meet colleagues, choose where to go, and decide. Every month, a review can promote you or end it.", "Karier tanpa batas di perusahaan fiktif PT Nusantara Jaya. Pilih peran, temui rekan, pilih tempat yang dituju, lalu ambil keputusan. Setiap bulan, evaluasi bisa menaikkan jabatan Anda atau mengakhirinya.", "架空の会社「PT Nusantara Jaya」での終わりなきキャリア。職種を選び、同僚と会い、行き先を選んで決断する。毎月の評価で昇進も、終わりもある。", "在虚构公司 PT Nusantara Jaya 的无尽职业生涯。选择岗位、结识同事、选择去向并做出决定。每个月一次考评,可能晋升,也可能被终止。"],
     start: ["Start the career", "Mulai karier", "キャリアを始める", "开启职业生涯"],
-    how4: ["Every eight days there is a review. Meet the bar to move up; miss it twice in a row and you are out. The top level never ends.", "Setiap delapan hari ada evaluasi. Penuhi syaratnya untuk naik; gagal dua kali berturut-turut dan Anda keluar. Level puncak tidak ada akhirnya.", "8日ごとに評価がある。基準を満たせば昇進、2回連続で外せば解雇。頂点にゴールはない。", "每八天一次考评,达标就晋升,连续两次未达标就出局。顶层没有终点。"],
+    how4: ["Every month (20 working days) there is a review. Meet the bar to move up; miss it twice in a row and you are out. The top level never ends.", "Setiap bulan (20 hari kerja) ada evaluasi. Penuhi syaratnya untuk naik; gagal dua kali berturut-turut dan Anda keluar. Level puncak tidak ada akhirnya.", "毎月(20営業日)評価がある。基準を満たせば昇進、2回連続で外せば解雇。頂点にゴールはない。", "每月(20个工作日)一次考评,达标就晋升,连续两次未达标就出局。顶层没有终点。"],
     dayN: ["Day {n}", "Hari {n}", "{n}日目", "第 {n} 天"],
-    qtrN: ["Quarter {q}", "Kuartal {q}", "第{q}四半期", "第 {q} 季度"],
+    qtrN: ["Month {q}", "Bulan {q}", "第{q}か月", "第 {q} 个月"],
     srEnd: ["Career over: {e}", "Karier berakhir: {e}", "キャリア終了:{e}", "职业生涯结束:{e}"],
-    qrT: ["Quarter {q} review", "Evaluasi kuartal {q}", "第{q}四半期の評価", "第 {q} 季度考评"],
+    qrT: ["Month {q} review", "Evaluasi bulan {q}", "第{q}か月の評価", "第 {q} 个月考评"],
     qrPass: ["Promoted!", "Naik jabatan!", "昇進!", "晋升!"],
     qrPassSub: ["You are now: {lvl}. Expectations rise with the title.", "Kini Anda: {lvl}. Harapan naik bersama jabatan.", "新しい役職:{lvl}。肩書きとともに期待も上がる。", "你现在是:{lvl}。头衔升高,期望也随之升高。"],
     qrTop: ["You held the top", "Anda bertahan di puncak", "頂点を守った", "你守住了顶层"],
     qrTopSub: ["Your legacy grows: {n}. The bar stays high.", "Warisan Anda bertambah: {n}. Syaratnya tetap tinggi.", "レガシーが増えた:{n}。基準は高いままだ。", "你的传承增加了:{n}。门槛依然很高。"],
     qrWarn: ["Warning", "Peringatan", "警告", "警告"],
     qrWarnSub: ["You missed the bar. One more miss in a row ends your career.", "Anda belum memenuhi syarat. Satu kegagalan lagi berturut-turut akan mengakhiri karier Anda.", "基準に届かなかった。もう1回続けば解雇となる。", "你没有达标。再连续一次未达标,职业生涯就结束。"],
-    qrNext: ["Next review in eight working days.", "Evaluasi berikutnya dalam delapan hari kerja.", "次の評価は8営業日後。", "下次考评在八个工作日后。"],
+    qrNext: ["Next review in 20 working days.", "Evaluasi berikutnya dalam 20 hari kerja.", "次の評価は20営業日後。", "下次考评在二十个工作日后。"],
     qrNeed: ["Needed", "Syarat", "必要条件", "所需条件"],
     retire: ["Retire and see my career", "Pensiun dan lihat karier saya", "引退してキャリアを振り返る", "退休并查看我的职业生涯"],
     retireSure: ["Tap again to retire", "Ketuk lagi untuk pensiun", "もう一度押して引退", "再点一次确认退休"],
     careerT: ["Your career", "Karier Anda", "あなたのキャリア", "你的职业生涯"],
-    careerLine: ["{d} days · {q} quarters · {p} promotions", "{d} hari · {q} kuartal · {p} promosi", "{d}日 · {q}四半期 · 昇進{p}回", "{d} 天 · {q} 个季度 · 晋升 {p} 次"]
+    careerLine: ["{d} days · {q} months · {p} promotions", "{d} hari · {q} bulan · {p} promosi", "{d}日 · {q}か月 · 昇進{p}回", "{d} 天 · {q} 个月 · 晋升 {p} 次"]
   });
   Object.keys(K).forEach(k => { ['en', 'id', 'ja', 'zh'].forEach((l, i) => { strings[l][k] = K[k][i]; }); });
   MBALAB.sims.define('corporate-society', { strings });

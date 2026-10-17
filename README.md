@@ -29,7 +29,7 @@ Interactive business simulations over an animated 3D Jakarta (day and night), in
 | Explorer | **Word Network** | Add one word, then two or more, and watch how people's word associations connect them (SWOW-EN data, see `docs/DATA-SOURCES.md`), with Benefits and Trade-offs modes (303 curated concepts, pick several concepts and several contexts) and a predict-the-association quiz. |
 | Test | **Try Out MBA** | Practice questions |
 | Life | **Life 40** | Long-term planning |
-| Game | **Corporate Society** | An endless career at a fictional company in seven roles (Finance, IT, Marketing, HR, Operations, Sales, Legal), junior to department head, with a review every eight days: choose where to go, who to trust and what to do (69 story events with four alternatives each, eight story chapters, a values profile, four working styles, five personal goals, a mid-week review, daily recaps, colleague standing, endings, concepts met). Content is the author's teaching judgement. |
+| Game | **Corporate Society** | An endless career at a fictional company in seven roles (Finance, IT, Marketing, HR, Operations, Sales, Legal), junior to department head, with a review every month (20 working days): choose where to go, who to trust and what to do (69 story events with four alternatives each, eight story chapters, a values profile, four working styles, five personal goals, a mid-week review, daily recaps, colleague standing, endings, concepts met). Content is the author's teaching judgement. |
 
 The full roadmap (about 120 more) is listed as "coming soon" in `data/simulations.js`. Calculation-type simulations are always named "… Calculator".
 

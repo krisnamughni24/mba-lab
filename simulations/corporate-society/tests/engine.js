@@ -26,7 +26,7 @@ Object.keys(C.concepts).forEach(k => four(C.concepts[k], 8, 'concept ' + k));
 assert(C.events.length >= 60, 'at least 60 events');
 assert(C.events.filter(e => e.opts.length === 4).length >= 45, 'most events offer four alternatives');
 C.events.forEach(e => { assert(e.th, e.id + ' has a theme'); e.opts.forEach(o => assert(o.v && o.v.every(v => E.VALUES.includes(v)), e.id + ' option value tag')); });
-assert.strictEqual(C.chapters.length, E.DAYS, 'one chapter per day'); C.chapters.forEach(c => { four(c.t, 4, 'chapter title'); four(c.s, 4, 'chapter story'); assert(c.e && c.th.length); });
+assert.strictEqual(C.chapters.length, 8, 'eight story chapters per month'); C.chapters.forEach(c => { four(c.t, 4, 'chapter title'); four(c.s, 4, 'chapter story'); assert(c.e && c.th.length); });
 E.VALUES.forEach(v => { four(C.values[v].n, 4, 'value name'); four(C.values[v].d, 4, 'value text'); });
 E.ROLES.forEach(r => four(C.prologue.role[r], 4, 'role prologue')); E.LADDER.forEach(l => four(C.prologue.level[l], 4, 'level prologue'));
 /* every place always has something to offer, for every role and level */
@@ -40,7 +40,7 @@ const run = (role, level, seed, pol) => { const s = E.create(role, level, seed);
   while (!s.over && s.turn < E.DAYS * E.SLOTS && guard++ < 100) { const locs = E.locsNow(s), l = locs[Math.floor(s.rnd() * locs.length)], e = E.visit(s, l), i = pol === 'first' ? 0 : pol === 'last' ? e.opts.length - 1 : Math.floor(s.rnd() * e.opts.length); E.choose(s, e, i); E.STATS.forEach(k => assert(s.st[k] >= 0 && s.st[k] <= 100, 'stat range')); if (!s.over) E.next(s); }
   if (!s.over) E.retire(s); return s; };
 assert.deepStrictEqual(run('finance', 'mid', 5).st, run('finance', 'mid', 5).st, 'same seed, same run');
-assert.strictEqual(E.DAYS * E.SLOTS, 24);
+assert.strictEqual(E.DAYS * E.SLOTS, 60);
 /* the job can be lost, and the bar can be met */
 let ends = {}, N = 0;
 E.ROLES.forEach(role => ['junior', 'mid', 'senior'].forEach(level => { for (let k = 0; k < 120; k++) { const s = run(role, level, k + 1); assert(s.over, 'every run ends'); ends[s.over] = (ends[s.over] || 0) + 1; N++; const sc = E.score(s); assert(sc.stars >= 0 && sc.stars <= 3 && sc.xp > 0, 'score'); } }));
@@ -49,7 +49,10 @@ assert(share('promoted') > 0 && share('steady') + share('promoted') + share('whi
 /* balance: careful play usually wins, careless play loses the job, random play lands in between */
 const val = (o, s) => { const f = Object.assign({}, o.fx || {}); if (o.g) { const p = typeof o.g.p === 'function' ? o.g.p(s) : o.g.p; ['ok', 'bad'].forEach((b, i) => { const w = i ? 1 - p : p; Object.keys(o.g[b].fx || {}).forEach(k => { f[k] = (f[k] || 0) + w * o.g[b].fx[k]; }); }); }
   const W = { skill: 0.6, perf: 1, rep: 1, integ: 1.2, net: 0.6, energy: 0.4 }; let v = 0; Object.keys(f).forEach(k => { v += W[k] * f[k]; }); Object.keys(o.rel || {}).forEach(k => { v += 0.5 * o.rel[k]; }); return v; };
-const pol = (role, level, seed, mode, opt) => { const s = E.create(role, level, seed, opt); let g = 0; while (!s.over && s.turn < E.DAYS * E.SLOTS && g++ < 100) { const L = E.locsNow(s), e = E.visit(s, L[Math.floor(s.rnd() * L.length)]), vs = e.opts.map(o => val(o, s)); E.choose(s, e, vs.indexOf(mode === 'smart' ? Math.max(...vs) : Math.min(...vs))); if (!s.over) E.next(s); } const was = s.promos; if (!s.over) E.retire(s); return { o: s.over, promos: was }; };
+/* a performance-minded policy for the long run (energy and integrity count less once they are high) */
+const vl = (o, s) => { const f = Object.assign({}, o.fx || {}); if (o.g) { const p = typeof o.g.p === 'function' ? o.g.p(s) : o.g.p; ['ok', 'bad'].forEach((b, i) => { const w = i ? 1 - p : p; Object.keys(o.g[b].fx || {}).forEach(k => { f[k] = (f[k] || 0) + w * o.g[b].fx[k]; }); }); }
+  const W = { skill: 1.1, perf: 1.8, rep: 1, integ: s.st.integ > 75 ? 0.1 : 0.6, net: 0.6, energy: s.st.energy > 60 ? 0.05 : 0.5 }; let v = 0; Object.keys(f).forEach(k => { v += W[k] * f[k]; }); Object.keys(o.rel || {}).forEach(k => { v += 0.4 * o.rel[k]; }); return v; };
+const pol = (role, level, seed, mode, opt) => { const s = E.create(role, level, seed, opt); let g = 0; while (!s.over && s.turn < E.DAYS * E.SLOTS && g++ < 100) { const L = E.locsNow(s), e = E.visit(s, L[Math.floor(s.rnd() * L.length)]), vs = e.opts.map(o => (mode === 'smart' ? vl : val)(o, s)); E.choose(s, e, vs.indexOf(mode === 'smart' ? Math.max(...vs) : Math.min(...vs))); if (!s.over) E.next(s); } const was = s.promos; if (!s.over) E.retire(s); return { o: s.over, promos: was }; };
 const tally = (mode, opt) => { let win = 0, lost = 0, n = 0; E.ROLES.forEach(r => ['junior', 'mid', 'senior'].forEach(l => { for (let k = 1; k <= 60; k++) { const x = pol(r, l, k, mode, opt); n++; if (x.promos > 0) win++; if (x.o.startsWith('fired')) lost++; } })); return { win: win / n, lost: lost / n }; };
 const smart = tally('smart'), bad = tally('bad');
 assert(smart.win > 0.5 && smart.lost < 0.05, 'careful play should usually be promoted: ' + JSON.stringify(smart));
@@ -59,13 +62,10 @@ assert(share('promoted') < 0.3, 'random play should not usually be promoted');
 Object.keys(E.TRAITS).forEach(tr => { const t = tally('smart', { trait: tr }); assert(t.win > 0.3 && t.lost < 0.1, 'trait ' + tr + ' stays viable: ' + JSON.stringify(t)); });
 E.GOALS.forEach(g => { const s0 = E.create('it', 'mid', 4, { goal: g }); const r = E.goal(s0); assert(r.p >= 0 && r.p <= 1 && typeof r.done === 'boolean', 'goal ' + g); });
 { const s1 = E.create('finance', 'mid', 2); assert.strictEqual(E.review(s1).id, 'r_ok'); s1.st.perf = 90; s1.st.rep = 90; assert.strictEqual(E.review(s1).id, 'r_great'); s1.st.perf = 10; s1.st.rep = 10; assert.strictEqual(E.review(s1).id, 'r_poor'); assert(!C.events.some(e => e.free && E.fits(e, s1, 'meeting')), 'free events never appear at random'); }
-/* a performance-minded policy for the long run (energy and integrity count less once they are high) */
-const vl = (o, s) => { const f = Object.assign({}, o.fx || {}); if (o.g) { const p = typeof o.g.p === 'function' ? o.g.p(s) : o.g.p; ['ok', 'bad'].forEach((b, i) => { const w = i ? 1 - p : p; Object.keys(o.g[b].fx || {}).forEach(k => { f[k] = (f[k] || 0) + w * o.g[b].fx[k]; }); }); }
-  const W = { skill: 1.1, perf: 1.8, rep: 1, integ: s.st.integ > 75 ? 0.1 : 0.6, net: 0.6, energy: s.st.energy > 60 ? 0.05 : 0.5 }; let v = 0; Object.keys(f).forEach(k => { v += W[k] * f[k]; }); Object.keys(o.rel || {}).forEach(k => { v += 0.4 * o.rel[k]; }); return v; };
 /* the career is endless: careful play climbs the ladder over many quarters and the stories never run dry */
 { let reached = 0, rep = 0; E.ROLES.forEach(r => { const s3 = E.create(r, 'junior', 21); let g = 0, seen = {}; while (!s3.over && s3.quarters < 12 && g++ < 2000) { const L = E.locsNow(s3), e = E.visit(s3, L[Math.floor(s3.rnd() * L.length)]), vs = e.opts.map(o => vl(o, s3)); if (seen[e.id]) rep++; seen[e.id] = 1; E.choose(s3, e, vs.indexOf(Math.max(...vs))); if (!s3.over) { const n = E.next(s3); if (n === 'quarter') assert(s3.qr && typeof s3.qr.ok === 'boolean', 'quarter result'); } } if (s3.level === 'head' || s3.quarters >= 10) reached++; });
   assert(reached >= 4, 'careful play lasts many quarters in most roles: ' + reached); assert(rep > 20, 'events come back after their cool-down'); }
-{ const s4 = E.create('legal', 'senior', 3); s4.promos = 0; s4.warn = 1; Object.keys(E.barOf(s4)).forEach(k => { if (s4.st[k] !== undefined) s4.st[k] = 5; }); s4.turn = E.DAYS * E.SLOTS - 1; assert.strictEqual(E.next(s4), 'end'); assert.strictEqual(s4.over, 'fired_review', 'two missed reviews end the career'); }
+{ const s4 = E.create('legal', 'senior', 3); s4.promos = 0; s4.warn = 1; Object.keys(E.barOf(s4)).forEach(k => { if (s4.st[k] !== undefined) s4.st[k] = 30; }); s4.turn = E.DAYS * E.SLOTS - 1; assert.strictEqual(E.next(s4), 'end'); assert.strictEqual(s4.over, 'fired_review', 'two missed reviews end the career'); }
 /* forced follow-ups fire when due */
 const s = E.create('finance', 'junior', 3); s.later.push({ id: 'f_audit_bad', at: s.turn });
 assert.strictEqual(E.visit(s, 'desk').id, 'f_audit_bad', 'a due follow-up comes first');

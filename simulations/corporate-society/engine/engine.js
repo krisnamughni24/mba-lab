@@ -3,12 +3,12 @@
    Five stats (0..100) and the standing with six colleagues decide the ending: lose the job when a critical one hits zero, or reach the level's promotion bar. */
 (function () {
   const root = typeof MBALAB !== 'undefined' ? MBALAB : (globalThis.MBALAB = globalThis.MBALAB || {});
-  const DAYS = 8, SLOTS = 3, STATS = ['perf', 'rep', 'energy', 'integ', 'net', 'skill'], VALUES = ['integrity', 'ambition', 'loyalty', 'fairness', 'balance', 'learning'], PEOPLE = ['boss', 'senior', 'peer', 'junior', 'other', 'director'];
+  const DAYS = 20, CHAPTERS = 8, SLOTS = 3, STATS = ['perf', 'rep', 'energy', 'integ', 'net', 'skill'], VALUES = ['integrity', 'ambition', 'loyalty', 'fairness', 'balance', 'learning'], PEOPLE = ['boss', 'senior', 'peer', 'junior', 'other', 'director'];
   const LOCS = ['desk', 'pantry', 'meeting', 'floor', 'lobby', 'after'];
   /* what a day without effort costs, by level: the higher you are, the faster expectations rise */
-  const DECAY = { junior: { perf: 3, rep: 2, net: 2, skill: 2 }, mid: { perf: 4, rep: 3, net: 2, skill: 3 }, senior: { perf: 4, rep: 3, net: 3, skill: 3 }, head: { perf: 5, rep: 4, net: 3, skill: 3 } };
-  /* the career is endless: every DAYS working days there is a review that can promote you, warn you or end the career. LADDER is the path up. */
-  const LADDER = ['junior', 'mid', 'senior', 'head'], COOL = 36, ROLES = ['finance', 'it', 'marketing', 'hr', 'ops', 'sales', 'legal'];
+  const DECAY = { junior: { perf: 3, rep: 2, net: 1.5, skill: 1 }, mid: { perf: 4, rep: 3, net: 1.5, skill: 1.2 }, senior: { perf: 5, rep: 3, net: 1.8, skill: 1.2 }, head: { perf: 6, rep: 4, net: 2, skill: 1.4 } };
+  /* the career is endless: every DAYS working days (one month) there is a review that can promote you, warn you or end the career. LADDER is the path up. */
+  const LADDER = ['junior', 'mid', 'senior', 'head'], COOL = 60, ROLES = ['finance', 'it', 'marketing', 'hr', 'ops', 'sales', 'legal'];
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const rng = seed => { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
 
@@ -23,7 +23,7 @@
   /* what it takes to be promoted at the end of day 8 */
   const BAR = { junior: { perf: 56, rep: 44, skill: 36 }, mid: { perf: 56, rep: 46, net: 32, skill: 42 }, senior: { perf: 56, rep: 50, integ: 52, net: 38, skill: 46 }, head: { perf: 60, rep: 56, integ: 55, net: 44, skill: 52 } };
   /* roles whose work is judged less on raw output: the performance bar is a little lower */
-  const ROLE_BAR = { hr: { perf: -7 }, ops: { perf: -6 } };
+  const ROLE_BAR = { hr: { perf: -7 }, ops: { perf: -6, rep: -4 }, sales: { rep: -6 } };
   const barOf = s => { const b = Object.assign({}, BAR[s.level]), d = ROLE_BAR[s.role] || {}; Object.keys(d).forEach(k => { if (b[k]) b[k] += d[k]; }); return b; };
   const C = () => root.corpContent;
   /* working styles: each shifts the start, some change gambles or nightly recovery. Roughly balanced against each other. */
@@ -57,7 +57,7 @@
 
   /* does event e fit this run right now? */
   /* the story chapter of the current day: it makes some themes of events more likely */
-  const chapter = s => (C().chapters || [])[(day(s) - 1) % DAYS] || null;
+  const chapterIdx = d => Math.floor(((d - 1) % DAYS) * CHAPTERS / DAYS), chapter = s => (C().chapters || [])[chapterIdx(day(s))] || null;
   const fresh = (e, s) => !(e.id in s.done) || s.turn - s.done[e.id] >= COOL;
   const fits = (e, s, loc) => (!e.loc || e.loc.includes(loc)) && (!e.role || e.role.includes(s.role)) && (!e.level || e.level.includes(s.level) || (s.level === 'head' && e.level.includes('senior'))) && fresh(e, s) && (!e.cond || e.cond(s)) && !e.later_only;
   function pick(s, loc) {
@@ -131,6 +131,6 @@
     const g = goal(s), won = g.done && !String(o).startsWith('fired') && o !== 'burnout';
     return { stars: n, xp: Math.round(10 + n * 20 + avg / 5) + (won ? 25 : 0) + s.promos * 15 + Math.floor(day(s) / 4), goalDone: won };
   }
-  root.corp = { barOf, LADDER, ROLES, retire, TRAITS, GOALS: Object.keys(GOALS), goal, review, DAYS, SLOTS, STATS, VALUES, PEOPLE, LOCS, BAR, START, create, day, slot, chapter, locsNow, visit, choose, next, ending, score, profile, check, fits };
+  root.corp = { chapterIdx, MID: Math.floor(DAYS / 2), barOf, LADDER, ROLES, retire, TRAITS, GOALS: Object.keys(GOALS), goal, review, DAYS, SLOTS, STATS, VALUES, PEOPLE, LOCS, BAR, START, create, day, slot, chapter, locsNow, visit, choose, next, ending, score, profile, check, fits };
   if (typeof module !== 'undefined') module.exports = root.corp;
 })();
