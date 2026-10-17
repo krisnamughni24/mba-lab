@@ -26,7 +26,7 @@
     nbt_p3: ['Each round counts. Running out of rounds means no deal.', 'Setiap ronde berharga. Ronde habis berarti tidak ada kesepakatan.', '各ラウンドが貴重。ラウンドが尽きると合意なしです。', '每一轮都很宝贵，回合用完就没有成交。'],
     nbt_end: ['Read the hidden picture and the takeaways, then try again for more stars.', 'Baca gambaran tersembunyi dan pelajarannya, lalu coba lagi untuk bintang lebih banyak.', '見えなかった全体像と学びを読んで、もう一度星を狙いましょう。', '读一读隐藏的全貌和要点，再试一次争取更多星星。'],
     nbBack: ['← Home', '← Beranda', '← ホーム', '← 首页'],
-    nbTitle: ['BATNA: Price of Patience', 'BATNA: Price of Patience', 'BATNA: Price of Patience', 'BATNA: Price of Patience'],
+    nbTitle: ['BATNA: Price of Patience', 'BATNA: Harga Kesabaran', 'BATNA：忍耐の価格', 'BATNA：耐心的代价'],
     nbPick: ['Choose a mission', 'Pilih misi', 'ミッションを選ぶ', '选择任务'],
     nbPickSub: ['You are the buyer. Close the best deal you can, and know when to walk away.', 'Anda pembeli. Capai kesepakatan terbaik, dan tahu kapan harus pergi.', 'あなたは買い手。最良の条件で合意し、席を立つ判断も身につけよう。', '你是买方。争取最优成交价，也要懂得何时离场。'],
     lvN: ['Level {n}', 'Level {n}', 'レベル {n}', '第 {n} 关'],
