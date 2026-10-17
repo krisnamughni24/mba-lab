@@ -34,6 +34,14 @@
     '<path class="a k-sx" d="M10 84q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0"/><path class="a o k-sx" style="--d:-1s" d="M10 92q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0"/>' +
     '<path class="fc" d="M96 18h2v2h-2z"/>');
 
+  T['word-network'] = S(
+    '<path class="g" d="M52 40L26 22M52 40L30 66M52 40L68 18M52 40L72 76M148 60L176 28M148 60L172 76M148 60L134 24M148 60L128 82"/>' +
+    [[26, 22], [30, 66], [68, 18], [72, 76], [176, 28], [172, 76], [134, 24], [128, 82]].map((p, i) => '<circle class="fg k-bob" style="--d:' + (i * .35) + 's" cx="' + p[0] + '" cy="' + p[1] + '" r="5"/>').join('') +
+    '<path class="a k-draw" pathLength="1" d="M52 40L100 50"/><path class="b k-draw" style="--d:.3s" pathLength="1" d="M148 60L100 50"/>' +
+    '<circle class="fc k-pulse" cx="100" cy="50" r="10"/><circle class="c" cx="100" cy="50" r="15" opacity=".45"/>' +
+    '<circle class="fa k-pulse" style="--d:.4s" cx="52" cy="40" r="9"/><circle class="fb k-pulse" style="--d:.8s" cx="148" cy="60" r="9"/>' +
+    '<circle class="fd k-ride" style="offset-path:path(\'M52 40L100 50L148 60\');--d:0s" cx="0" cy="0" r="3.4"/>');
+
   T['break-even-analysis'] = S(axes +
     '<path class="fd o" d="M128 38.5L186 14V47z"/><path class="b k-draw" pathLength="1" d="M20 62L186 26"/><path class="d k-draw" style="--d:.3s" pathLength="1" d="M20 84L186 14"/>' +
     '<path class="g" d="M128 38.5V86" stroke-dasharray="3 4"/><circle class="fc k-pulse" cx="128" cy="38.5" r="5"/><circle class="c" cx="128" cy="38.5" r="9" opacity=".5"/>');
