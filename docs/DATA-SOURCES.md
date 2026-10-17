@@ -15,4 +15,4 @@
 
 ## Word Network: curated benefits and trade-offs
 
-- File: `simulations/word-network/data/lens.js`. Written by hand (15 business concepts, 5 benefits and 5 trade-offs each, 4 languages). It is the author's teaching judgement, not measured data, and is not derived from SWOW; SWOW is only used to score a free-typed context word against each item's anchor word.
+- Files: `simulations/word-network/data/lens.js` and `lens-2.js` to `lens-15.js`. Written by hand (303 business concepts, about 4 benefits and 4 trade-offs each, 4 languages). It is the author's teaching judgement, not measured data, and is not derived from SWOW; SWOW is only used to score a free-typed context word against each item's anchor word.
