@@ -34,9 +34,9 @@ MBALAB.data.simulations = [
     "category": "leadership",
     "name": {
       "en": "DISC Crisis Room Test",
-      "id": "Tes DISC: Ruang Krisis",
-      "ja": "DISC診断：危機対応ルーム",
-      "zh": "DISC 测试：危机指挥室"
+      "id": "DISC Crisis Room Test",
+      "ja": "DISC Crisis Room Test",
+      "zh": "DISC Crisis Room Test"
     },
     "description": {
       "en": "Lead a team through six crises and reveal your DISC style.",
@@ -302,7 +302,7 @@ MBALAB.data.simulations = [
     "category": "decision-negotiation",
     "name": {
       "en": "BATNA: Patience",
-      "id": "BATNA: Harga Kesabaran",
+      "id": "BATNA: Patience",
       "ja": "BATNA:忍耐の価格",
       "zh": "BATNA：耐心的代价"
     },
@@ -321,7 +321,7 @@ MBALAB.data.simulations = [
     "category": "indonesia-business",
     "name": {
       "en": "Koperasi Tycoon",
-      "id": "Juragan Koperasi",
+      "id": "Koperasi Tycoon",
       "ja": "協同組合：季節ごとに",
       "zh": "合作社：四季经营"
     },
@@ -1423,7 +1423,7 @@ MBALAB.data.simulations = [
     "category": "analytics",
     "name": {
       "en": "A/B Testing Lab",
-      "id": "Lab Uji A/B",
+      "id": "Lab A/B Testing",
       "ja": "A/Bテスト・ラボ",
       "zh": "A/B 测试实验室"
     },

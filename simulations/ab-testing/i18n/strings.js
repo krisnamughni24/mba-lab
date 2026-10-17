@@ -2,7 +2,7 @@
 (() => {
   const K = {
     abBack: ['← Home', '← Beranda', '← ホーム', '← 首页'],
-    abTitle: ['A/B Testing Lab', 'Lab Uji A/B', 'A/Bテスト・ラボ', 'A/B 测试实验室'],
+    abTitle: ['A/B Testing Lab', 'Lab A/B Testing', 'A/Bテスト・ラボ', 'A/B 测试实验室'],
     tabGame: ['Cases', 'Kasus', 'ケース', '案例'], tabLab: ['Lab', 'Lab', 'ラボ', '实验室'],
     gmHero: ['Test it before you ship it', 'Uji dulu sebelum diluncurkan', '出す前に試せ', '先测试，再上线'],
     gmSub: ['Pick a product, choose an idea, design the experiment, watch real visitors flow in, then decide: ship B or keep A? Every case hides a different trap.', 'Pilih produk, pilih ide, rancang eksperimen, lihat pengunjung mengalir langsung, lalu putuskan: luncurkan B atau tetap A? Setiap kasus menyimpan jebakan yang berbeda.', '商品を選び、アイデアを選び、実験を設計し、訪問者の流れを見て、Bを出すかAのままか決めよう。ケースごとに違う罠がある。', '选择产品与创意，设计实验，观看真实访客涌入，然后决定：上线 B 还是保留 A？每个案例都藏着不同的陷阱。'],
